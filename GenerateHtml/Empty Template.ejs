@@ -1,0 +1,11 @@
+<form method="POST" action="/api/posts/data?lang=<%= obj.type %>&doc=<%= obj.caption %>&id=<%= obj.client.id %>">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <textarea class="form-control" id="s1f0" name="s1_f0" placeholder="<%= obj.s1.f0.caption %>"
+                    rows="30" cols="118"> <%= obj.s1.f0.value %> </textarea>
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -1,0 +1,314 @@
+<form method="POST" action="/api/posts/data">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <!-- <label for="Input1"><%= obj.superfield1.filed1.caption %></label> -->
+                <input type="text" class="form-control" id="superfield1filed1" name="superfield1_filed1"
+                    placeholder="<%= obj.superfield1.filed1.caption %>">
+            </div>
+            <div class="form-group col">
+                <!-- <label for="Input2"><%= obj.superfield1.filed2.caption %></label> -->
+                <select class="form-control" name="superfield1_filed2" id="superfield1filed2">
+                    <option selected>Choose Gender...</option>
+                    <option><%= obj.superfield1.filed2.value[0] %></option>
+                    <option><%= obj.superfield1.filed2.value[1] %></option>
+                </select>
+            </div>
+            <div class="form-group col">
+                <!-- <label for="Input3"><%= obj.superfield1.filed3.caption %></label> -->
+                <input type="text" class="form-control" name="superfield1_filed4" id="superfield1filed4"
+                    placeholder="<%= obj.superfield1.filed4.caption %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield1.filed3.caption %></h8>
+        <div class="form-row" name="superfield1_filed3" id="superfield1filed3">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield1_filed3_subfiled1" id="superfield1filed3subfiled1"
+                    placeholder="<%= obj.superfield1.filed3.subfiled1.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield1_filed3_subfiled2" id="superfield1filed3subfiled2"
+                    placeholder="<%= obj.superfield1.filed3.subfiled2.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield1_filed3_subfiled3" id="superfield1filed3subfiled3"
+                    placeholder="<%= obj.superfield1.filed3.subfiled3.caption %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield1.filed5.caption %></h8>
+        <div class="form-row" name="superfield1filed5" id="superfield1filed5">
+            <div class="form-group col-md-4">
+                <input type="text" class="form-control" name="superfield1_filed5_subfiled1" id="superfield1filed5subfiled1"
+                    placeholder="<%= obj.superfield1.filed5.subfiled1.value %>"
+                    value="<%= obj.superfield1.filed5.subfiled1.value %>">
+            </div>
+            <div class="form-group col-md-2">
+                <input type="text" class="form-control" name="superfield1_filed5_subfiled2" id="superfield1filed5subfiled2"
+                    placeholder="<%= obj.superfield1.filed5.subfiled2.caption %>">
+            </div>
+            <div class="form-group col-md-2">
+                <input type="text" class="form-control" name="superfield1_filed5_subfiled3" id="superfield1filed5subfiled3"
+                    placeholder="<%= obj.superfield1.filed5.subfiled3.caption %>">
+            </div>
+            <div class="form-group col-md-2">
+                <input type="text" class="form-control" name="superfield1_filed5_subfiled4" id="superfield1filed5subfiled4"
+                    placeholder="<%= obj.superfield1.filed5.subfiled4.caption %>">
+            </div>
+            <div class="form-group col-md-2">
+                <input type="text" class="form-control" name="superfield1_filed5_subfiled5" id="superfield1filed5subfiled5"
+                    placeholder="<%= obj.superfield1.filed5.subfiled5.caption %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield2.caption %></h8>
+        <div class="form-row" name="superfield2" id="superfield2">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield2_filed1" id="superfield2filed1"
+                    placeholder="<%= obj.superfield2.filed1.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield2_filed2" id="superfield2filed2"
+                    placeholder="<%= obj.superfield2.filed2.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield2_filed3" id="superfield2filed3"
+                    placeholder="<%= obj.superfield2.filed3.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield2_filed4" id="superfield2filed4"
+                    placeholder="<%= obj.superfield2.filed4.caption %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield3.caption %></h8>
+        <div class="form-row" name="superfield3" id="superfield3">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield3_filed1" id="superfield3filed1"
+                    placeholder="<%= obj.superfield3.filed1.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield3_filed2" id="superfield3filed2"
+                    placeholder="<%= obj.superfield3.filed2.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield3_filed3" id="superfield3filed3"
+                    placeholder="<%= obj.superfield3.filed3.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield3_filed4" id="superfield3filed4"
+                    placeholder="<%= obj.superfield3.filed4.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield3_filed5" id="superfield3filed5"
+                    placeholder="<%= obj.superfield3.filed5.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield3_filed6" id="superfield3filed6"
+                    placeholder="<%= obj.superfield3.filed6.caption %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield4.caption %></h8>
+        <div class="form-row" name="superfield4" id="superfield4">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield4_filed1" id="superfield4filed1"
+                    placeholder="<%= obj.superfield4.filed1.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield4_filed2" id="superfield4filed2"
+                    placeholder="<%= obj.superfield4.filed2.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield4_filed3" id="superfield4filed3"
+                    placeholder="<%= obj.superfield4.filed3.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield4_filed4" id="superfield4filed4"
+                    placeholder="<%= obj.superfield4.filed4.caption %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield5.caption %></h8>
+        <div class="form-row" name="superfield5" id="superfield5">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield5_filed1" id="superfield5filed1"
+                    placeholder="<%= obj.superfield5.filed1.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield5_filed2" id="superfield5filed2"
+                    placeholder="<%= obj.superfield5.filed2.caption %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield6.caption %></h8>
+        <div class="form-row" name="superfield6" id="superfield6">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield6_filed1" id="superfield6filed1"
+                    placeholder="<%= obj.superfield6.filed1.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield6_filed2" id="superfield6filed2"
+                    placeholder="<%= obj.superfield6.filed2.caption %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield7.caption %></h8>
+        <div class="form-row" name="superfield7" id="superfield7">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield7_filed1" id="superfield7filed1"
+                    placeholder="<%= obj.superfield7.filed1.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield7_filed2" id="superfield7filed2"
+                    placeholder="<%= obj.superfield7.filed2.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield7_filed3" id="superfield7filed3"
+                    placeholder="<%= obj.superfield7.filed3.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield7_filed4" id="superfield7filed4"
+                    placeholder="<%= obj.superfield7.filed4.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield7_filed5" id="superfield7filed5"
+                    placeholder="<%= obj.superfield7.filed5.caption %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield8.caption %></h8>
+        <div class="form-row" name="superfield8" id="superfield8">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield8_filed1" id="superfield8filed1"
+                    placeholder="<%= obj.superfield8.filed1.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield8_filed2" id="superfield8filed2"
+                    placeholder="<%= obj.superfield8.filed2.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield8_filed3" id="superfield8filed3"
+                    placeholder="<%= obj.superfield8.filed3.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield8_filed4" id="superfield8filed4"
+                    placeholder="<%= obj.superfield8.filed4.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield8_filed5" id="superfield8filed5"
+                    placeholder="<%= obj.superfield8.filed5.caption %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield9.caption %></h8>
+        <div class="form-row" name="superfield9" id="superfield9">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield9_filed1" id="superfield9filed1"
+                    placeholder="<%= obj.superfield9.filed1.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield9_filed2" id="superfield9filed2"
+                    placeholder="<%= obj.superfield9.filed2.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield9_filed3" id="superfield9filed3"
+                    placeholder="<%= obj.superfield9.filed3.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield9_filed4" id="superfield9filed4"
+                    placeholder="<%= obj.superfield9.filed4.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield9_filed5" id="superfield9filed5"
+                    placeholder="<%= obj.superfield9.filed5.caption %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield10.caption %></h8>
+        <div class="form-row" name="superfield10" id="superfield10">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield10_filed1" id="superfield10filed1"
+                    placeholder="<%= obj.superfield10.filed1.caption %>" value="<%= obj.superfield10.filed1.value %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield11.caption %></h8>
+        <div class="form-row" name="superfield11" id="superfield11">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield11_filed1" id="superfield11filed1"
+                    placeholder="<%= obj.superfield11.filed1.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield11_filed2" id="superfield11filed2"
+                    placeholder="<%= obj.superfield11.filed2.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield11_filed3" id="superfield11filed3"
+                    placeholder="<%= obj.superfield11.filed3.caption %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield12.caption %></h8>
+        <div class="form-row" name="superfield12" id="superfield12">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield12_filed1" id="superfield12filed1"
+                    placeholder="<%= obj.superfield12.filed1.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield12_filed2" id="superfield12filed2"
+                    placeholder="<%= obj.superfield12.filed2.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield12_filed3" id="superfield12filed3"
+                    placeholder="<%= obj.superfield12.filed3.caption %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.superfield13.caption %></h8>
+        <div class="form-row" name="superfield13" id="superfield13">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield13_filed1" id="superfield13filed1"
+                    placeholder="<%= obj.superfield13.filed1.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield13_filed2" id="superfield13filed2"
+                    placeholder="<%= obj.superfield13.filed2.caption %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="superfield13_filed3" id="superfield13filed3"
+                    placeholder="<%= obj.superfield13.filed3.caption %>">
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

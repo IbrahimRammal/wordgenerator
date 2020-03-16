@@ -1,0 +1,128 @@
+<form method="POST" action="/api/posts/data?lang=<%= obj.type %>&doc=<%= obj.caption %>&id=<%= obj.client.id %>">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f0" name="s1_f0" placeholder="<%= obj.s1.f0.caption %>"
+                    value="<%= obj.s1.f0.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f1" name="s1_f1" placeholder="<%= obj.s1.f1.caption %>"
+                    value="<%= obj.s1.f1.value %>">
+            </div>
+            <div class="form-group col">
+
+                <input class="form-control awesomplete" list="sex" name="s1_f10" id="s1f10" placeholder="<%= obj.s1.f10.caption %>" value="<%= obj.s1.f10.value %>" required>
+                <datalist id="sex">
+                    <option>male</option>
+                    <option>female</option>
+                </datalist>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s1.f2.caption %></h8>
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f2s1" name="s1_f2_s1"
+                    placeholder="<%= obj.s1.f2.s1.caption %>" value="<%= obj.s1.f2.s1.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f2s2" name="s1_f2_s2"
+                    placeholder="<%= obj.s1.f2.s2.caption %>" value="<%= obj.s1.f2.s2.value %>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f3" id="s1f3" placeholder="<%= obj.s1.f3.caption %>"
+                    value="<%= obj.s1.f3.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f4" id="s1f4" placeholder="<%= obj.s1.f4.caption %>"
+                    value="<%= obj.s1.f4.value %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f5" id="s1f5" placeholder="<%= obj.s1.f5.caption %>"
+                    value="<%= obj.s1.f5.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f6" id="s1f6" placeholder="<%= obj.s1.f6.caption %>"
+                    value="<%= obj.s1.f6.value %>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f8" id="s1f8" placeholder="<%= obj.s1.f8.caption %>"
+                    value="<%= obj.s1.f8.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f9" id="s1f9" placeholder="<%= obj.s1.f9.caption %>"
+                    value="<%= obj.s1.f9.value %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+            <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s1.f7.caption %></h8>
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f7_s1" id="s1f7s1"
+                    placeholder="<%= obj.s1.f7.s1.caption %>" value="<%= obj.s1.f7.s1.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f7_s2" id="s1f7s2"
+                    placeholder="<%= obj.s1.f7.s2.caption %>" value="<%= obj.s1.f7.s2.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f77" id="s1f77"
+                    placeholder="<%= obj.s1.f77.caption %>" value="<%= obj.s1.f77.value %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f11" id="s1f11" placeholder="<%= obj.s1.f11.caption %>"
+                    value="<%= obj.s1.f11.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f12" id="s1f12" placeholder="<%= obj.s1.f12.caption %>"
+                    value="<%= obj.s1.f12.value %>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f13" id="s1f13" placeholder="<%= obj.s1.f13.caption %>"
+                    value="<%= obj.s1.f13.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f14" id="s1f14" placeholder="<%= obj.s1.f14.caption %>"
+                    value="<%= obj.s1.f14.value %>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f16" id="s1f16" placeholder="<%= obj.s1.f16.caption %>"
+                    value="<%= obj.s1.f16.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f15" id="s1f15" placeholder="<%= obj.s1.f15.caption %>"
+                    value="<%= obj.s1.f15.value %>">
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
