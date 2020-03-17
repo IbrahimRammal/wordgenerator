@@ -1,0 +1,137 @@
+{
+    "type": "English",
+    "client": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "createuser": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "modifieduser": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "s1": {
+        "caption": "Client",
+        "f1": {
+            "caption": "Name of Company",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Commercial Name",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Legal Form",
+            "value": ""
+        }
+    },
+    "s2": {
+        "caption": "Main Office Address:",
+        "f1": {
+            "caption": "District",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Region",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Area",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Street",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Building",
+            "value": ""
+        },
+        "f6": {
+            "caption": "Floor",
+            "value": ""
+        },
+        "f7": {
+            "caption": "Telephone",
+            "value": ""
+        },
+        "f8": {
+            "caption": "Fax",
+            "value": ""
+        },
+        "f9": {
+            "caption": "P.O. Box No",
+            "value": ""
+        },
+        "f10": {
+            "caption": "Zone",
+            "value": ""
+        },
+        "f11": {
+            "caption": "Registration No.",
+            "value": ""
+        },
+        "f12": {
+            "caption": "Given on",
+            "value": ""
+        },
+        "f13": {
+            "caption": "Head of the Revenues Department",
+            "value": "Louay Al Hajj Shehade"
+        }
+    },
+    "s3": {
+        "caption": "Company Registration Card",
+        "f1": {
+            "caption": "Name of Company",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Commercial Name",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Registration No.",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Given on",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Head of the Revenues Department",
+            "value": "Louay Al Hajj Shehade"
+        }
+    },
+    "date": "",
+    "caption": "MoF Registration",
+    "leftheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "centerheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "rightheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "centerfooter": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    }
+}

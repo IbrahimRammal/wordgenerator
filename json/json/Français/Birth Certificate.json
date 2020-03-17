@@ -1,0 +1,368 @@
+{
+    "type": "Français",
+    "client": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "createuser": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "modifieduser": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "s0": {
+        "name": "s1_f1",
+        "surname": "s2_f1_s2",
+        "father": "s2_f1_s1",
+        "mother" : "s3_f1_s1",
+		"mothersurname" : "s3_f1_s2",
+        "nationaltiy": "",
+        "sex": "s1_f2",
+        "familystatus": "",
+        "governorate": "",
+        "district": "",
+        "city": "",
+        "quarter": "",
+        "street": "",
+        "building": "",
+        "floor": "",
+        "mobile": "",
+        "work": "",
+        "fax": "",
+        "email": "",
+        "profession": "",
+        "address": "",
+        "telephone": "",
+        "religion": "s2_f2",
+        "placeofbirthlocal" : "s1_f3_s1",
+        "placeofbirthdistrict" : "s1_f3_s2",
+        "dateofbirth": "s1_f4",
+        "placeregistry": "s5_f1",
+        "noregistry" : "s6_f1"
+    },
+    "s1": {
+        "caption": "client",
+        "f1": {
+            "caption": "Prénom du nouveau-né",
+            "value": ""
+        },
+        "f2": {
+            "caption": "sexe",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Lieu de Naissance",
+            "s1": {
+                "caption": "Localité",
+                "value": ""
+            },
+            "s2": {
+                "caption": "District",
+                "value": ""
+            },
+            "s3": {
+                "caption": "Nom de l’hôpital",
+                "value": ""
+            }
+        },
+        "f4": {
+            "caption": "Date de Naissance",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Déclaration du médecin accoucheur",
+            "s1": {
+                "caption": "Je,        , déclare que j’ai assisté à l’accouchement susmentionné.",
+                "value": ""
+            },
+            "s2": {
+                "caption": "Address",
+                "value": ""
+            },
+            "s3": {
+                "caption": "Spécialité",
+                "value": ""
+            },
+            "s4": {
+                "caption": "Signature",
+                "value": ""
+            },
+            "s5": {
+                "caption": "Date",
+                "value": ""
+            }
+        }
+    },
+    "s2": {
+        "caption": "Le père ",
+        "f1": {
+            "caption": "Prénom et Prénom",
+            "s1": {
+                "caption": "Prénom",
+                "value": ""
+            },
+            "s2": {
+                "caption": "Prénom",
+                "value": ""
+            }
+        },
+        "f2": {
+            "caption": "Rite",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Date de naissance ",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Métier ",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Téléphone",
+            "value": ""
+        }
+    },
+    "s3": {
+        "caption": "La mère ",
+        "f1": {
+            "caption": "Prénom et Prénom",
+            "s1": {
+                "caption": "Prénom",
+                "value": ""
+            },
+            "s2": {
+                "caption": "Prénom",
+                "value": ""
+            }
+        },
+        "f2": {
+            "caption": "Rite",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Date de naissance",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Adresse du domicile",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Localité",
+            "value": ""
+        },
+        "f6": {
+            "caption": "District",
+            "value": ""
+        }
+    },
+    "s4": {
+        "caption": "Demandeur de l’acte",
+        "f1": {
+            "caption": "Prénom et Prénom",
+            "s1": {
+                "caption": "Prénom",
+                "value": ""
+            },
+            "s2": {
+                "caption": "Prénom",
+                "value": ""
+            }
+        },
+        "f2": {
+            "caption": "Date",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Address",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Signature",
+            "value": ""
+        }
+    },
+    "s5": {
+        "caption": "Registre original des parents",
+        "f1": {
+            "caption": "Localité",
+            "value": ""
+        },
+        "f2": {
+            "caption": "District",
+            "value": ""
+        }
+    },
+    "s6": {
+        "caption": "Numéro et type du registre",
+        "f1": {
+            "caption": "Numéro",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Type du registre et rite",
+            "value": ""
+        }
+    },
+    "s7": {
+        "caption": "Témoin",
+        "f1": {
+            "caption": "Prénom et nom",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date de naissance",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Address",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Occupation",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Signature",
+            "value": "Signature"
+        }
+    },
+    "s8": {
+        "caption": "Témoin",
+        "f1": {
+            "caption": "Prénom et nom",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date de naissance",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Address",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Occupation",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Signature",
+            "value": ""
+        }
+    },
+    "s9": {
+        "caption": "Le Maire",
+        "f1": {
+            "caption": "Localité",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date",
+            "value": ""
+        },
+        "f3": {
+            "caption": "District",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Prénom et nom of The Maire",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Signature and Seal",
+            "value": ""
+        }
+    },
+    "s10": {
+        "caption": "Cet acte est présenté auprès du bureau de l’état civil de: ",
+        "f1": {
+            "caption": "Place",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date",
+            "value": ""
+        }
+    },
+    "s11": {
+        "caption": "Registre d’entrée",
+        "f1": {
+            "caption": "Numéro",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Signature of the Civil Status Officer",
+            "value": ""
+        }
+    },
+    "s12": {
+        "caption": "Exécution",
+        "f1": {
+            "caption": "Numéro",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Signature of the Civil Status Officer",
+            "value": ""
+        }
+    },
+    "s13": {
+        "caption": "L’officier de l’état civil",
+        "f1": {
+            "caption": "Prénom",
+            "value": ""
+        },
+        "f2": {
+            "caption": "(Signature and Seal)",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Delivered on",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Localité",
+            "value": ""
+        }
+    },
+    "date": "",
+    "caption": "Birth Certificate",
+    "leftheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "centerheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "rightheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "centerfooter": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    }
+}

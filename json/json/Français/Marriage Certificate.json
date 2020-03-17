@@ -1,0 +1,371 @@
+{
+    "type": "Français",
+    "client": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "createuser": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "modifieduser": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "s0": {
+        "name": "s1_f1_s1",
+        "surname": "s1_f1_s2",
+        "father": "s1_f3",
+        "nationaltiy": "",
+        "mother" : "s1_f4",
+        "mothersurname" : "",
+        "sex": "",
+        "familystatus": "",
+        "governorate": "",
+        "district": "",
+        "city": "",
+        "quarter": "",
+        "street": "",
+        "building": "",
+        "floor": "",
+        "mobile": "",
+        "work": "",
+        "fax": "",
+        "email": "",
+        "profession": "s1_f5",
+        "address": "",
+        "telephone": "",
+        "religion": "s1_f6",
+        "placeofbirthlocal" : "s1_f2_s1",
+        "placeofbirthdistrict" : "s1_f2_s2",
+        "dateofbirth": "s1_f22",
+        "placeregistry": "s1_f7_s2",
+        "noregistry" : "s1_f7_s3"
+    },
+    "s1": {
+        "caption": "The husband",
+        "f1": {
+            "caption": "Prénom et nom",
+            "s1": {
+                "caption": "nom",
+                "value": ""
+            },
+            "s2": {
+                "caption": "Prénom",
+                "value": ""
+            }
+        },
+        "f2": {
+            "caption": "Lieu et Date de Naissance",
+            "s1": {
+                "caption": "Localité ",
+                "value": ""
+            },
+            "s2": {
+                "caption": "District",
+                "value": ""
+            },
+            "s3": {
+                "caption": "Nom de l'hôpital",
+                "value": ""
+            }
+        },
+        "f22": {
+            "caption": "date de naissance",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Prénom du Père",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Prénom de la mère ",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Profession",
+            "value": ""
+        },
+        "f6": {
+            "caption": "Rite",
+            "value": ""
+        },
+        "f7": {
+            "caption": "Original Registry",
+            "s1": {
+                "caption": "Localité ",
+                "value": ""
+            },
+            "s2": {
+                "caption": "District",
+                "value": ""
+            },
+            "s3": {
+                "caption": "Registry No.",
+                "value": ""
+            }
+        }
+    },
+    "s2": {
+        "caption": "The wife",
+        "f1": {
+            "caption": "Prénom et nom",
+            "s1": {
+                "caption": "nom",
+                "value": ""
+            },
+            "s2": {
+                "caption": "Prénom",
+                "value": ""
+            }
+        },
+        "f2": {
+            "caption": "Lieu et Date de Naissance",
+            "s1": {
+                "caption": "Localité ",
+                "value": ""
+            },
+            "s2": {
+                "caption": "District",
+                "value": ""
+            },
+            "s3": {
+                "caption": "Nom de l'hôpital",
+                "value": ""
+            }
+        },
+        "f22": {
+            "caption": "date de naissance",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Prénom du Père",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Prénom de la mère ",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Status",
+            "value": ""
+        },
+        "f6": {
+            "caption": "Rite",
+            "value": ""
+        },
+        "f7": {
+            "caption": "Original Registry",
+            "s1": {
+                "caption": "Localité ",
+                "value": ""
+            },
+            "s2": {
+                "caption": "District",
+                "value": ""
+            },
+            "s3": {
+                "caption": "Registry No.",
+                "value": ""
+            }
+        }
+    },
+    "s3": {
+        "caption": "Religious Permission",
+        "f1": {
+            "caption": "Religious Authority allowing the contract",
+            "value": ""
+        },
+        "f2": {
+            "caption": "No.",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Date",
+            "value": ""
+        }
+    },
+    "s4": {
+        "caption": "Contract Place and Date",
+        "f1": {
+            "caption": "Date",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Court place",
+            "value": ""
+        }, 
+        "f3": {
+            "caption": "District",
+            "value": ""
+        }, 
+        "f4": {
+            "caption": "Hour",
+            "value": ""
+        }
+    },
+    "s5": {
+        "caption": "Signature of the Husband or Wife",
+        "f1": {
+            "caption": "Prénom et nom",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date",
+            "value": ""
+        }
+    },
+    "s6": {
+        "caption": "Validation of the Religious Chief",
+        "f1": {
+            "caption": "Date",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Rite",
+            "value": ""
+        },
+        "f3": {
+            "caption": "District",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Full Name",
+            "value": ""
+        }
+    },
+    "s7": {
+        "caption": "Témoin",
+        "f1": {
+            "caption": "Prénom et nom",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date de naissance",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Address",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Lieu et numéro de registre ",
+            "value": ""
+        }
+    },
+    "s8": {
+        "caption": "Témoin",
+        "f1": {
+            "caption": "Prénom et nom",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date de naissance",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Address",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Lieu et numéro de registre ",
+            "value": ""
+        }
+    },
+    "s9": {
+        "caption": "Le Maire",
+        "f5": {
+            "caption": "Maire de la localité de",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Localité ",
+            "value": ""
+        },
+        "f2": {
+            "caption": "District",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Date",
+            "value": ""
+        },
+        "f1": {
+            "caption": "Prénom et nom of the Mayor",
+            "value": ""
+        }
+    },
+    "s11": {
+        "caption": "Registre d’entrée",
+        "f1": {
+            "caption": "Numéro",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date",
+            "value": ""
+        }
+    },
+    "s12": {
+        "caption": "Exécution",
+        "f1": {
+            "caption": "Numéro",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date",
+            "value": ""
+        }
+    },
+    "s10": {
+        "caption": "This certificate is submitted to the Bureau of Personal Status on",
+        "f1": {
+            "caption": "This certificate is submitted to the Bureau of Personal Status on",
+            "value": ""
+        }
+    },
+    "s13": {
+        "caption": "Signature et cachet de l'Officier de L'état Civil de ",
+        "f1": {
+            "caption": "Place",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Full Name",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Date",
+            "value": ""
+        }
+    },
+    "date": "",
+    "caption": "Marriage Certificate",
+    "leftheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "centerheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "rightheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "centerfooter": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    }
+}

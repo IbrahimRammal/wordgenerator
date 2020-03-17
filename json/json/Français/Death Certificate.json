@@ -1,0 +1,363 @@
+{
+    "type": "Français",
+    "client": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "createuser": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "modifieduser": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "s0": {
+        "name": "",
+        "Nom": "",
+        "father": "",
+        "mother" : "",
+        "nationaltiy": "",
+        "mothersurname" : "",
+        "sex": "",
+        "familystatus": "",
+        "governorate": "",
+        "district": "",
+        "city": "",
+        "quarter": "",
+        "street": "",
+        "building": "",
+        "floor": "",
+        "mobile": "",
+        "work": "",
+        "fax": "",
+        "email": "",
+        "profession": "",
+        "address": "",
+        "telephone": "",
+        "religion": "",
+        "placeofbirthlocal" : "",
+        "placeofbirthdistrict" : "",
+        "dateofbirth": "",
+        "placeregistry": "",
+        "noregistry" : ""
+    },
+    "s1": {
+        "caption": "Prénom et Nom du Décédé",
+        "f1": {
+            "caption": "Prénom et nom of the deceased",
+            "value": ""
+        },
+        "f8": {
+            "caption": "sexe",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Lieu et Date de Naissance",
+            "s1": {
+                "caption": "Localité ",
+                "value": ""
+            },
+            "s2": {
+                "caption": "District",
+                "value": ""
+            }
+        },
+        "f22": {
+            "caption": "date de naissance",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Prénom du Père",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Prénom et Nom de la Mère ",
+            "s1": {
+                "caption": "Prénom de la mère",
+                "value":""
+            },
+            "s2":{
+                "caption": "nom de la mère",
+                "value":""
+            }
+        },
+        "f5": {
+            "caption": "État Civil",
+            "value": ""
+        },
+        "f6": {
+            "caption": "Nombre d´enfants vivants ",
+            "value": ""
+        },
+        "f7": {
+            "caption": "Epoux(se) ",
+            "value": ""
+        },
+        "f11": {
+            "caption": "Date du Décès",
+            "s1": {
+                "caption": "Heure et minute",
+                "value": ""
+            },
+            "s2": {
+                "caption": "journée",
+                "value": ""
+            },
+            "s3": {
+                "caption": "Mois",
+                "value": ""
+            },
+            "s4": {
+                "caption": "Année",
+                "value": ""
+            }
+        },
+        "f9": {
+            "caption": "Occupation ",
+            "value": ""
+        },
+        "f10": {
+            "caption": "Numéro de la Carte d´Identité ",
+            "value": ""
+        },
+        "f12": {
+            "caption": "Lieu du Décès ",
+            "s1": {
+                "caption": "Lieu du Décès ",
+                "value": ""
+            },
+            "s2": {
+                "caption": "District",
+                "value": ""
+            },
+            "s3": {
+                "caption": "Nom de l'hôpital",
+                "value": ""
+            }
+        },
+        "f13": {
+            "caption": "Domicile du Décédé ",
+            "s1": {
+                "caption": "Domicile du Décédé ",
+                "value": ""
+            },
+            "s2": {
+                "caption": "District",
+                "value": ""
+            }
+        },
+        "f14": {
+            "caption": "Lieu et numéro du Registre",
+            "s1": {
+                "caption": "Lieu et numéro du Registre",
+                "value": ""
+            },
+            "s2": {
+                "caption": "District",
+                "value": ""
+            },
+            "s3": {
+                "caption": "Rite",
+                "value": ""
+            }
+        }
+    },
+    "s2": {
+        "caption": "Cause du Décès",
+        "f1": {
+            "caption": "Prénom et nom",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Section 1 : The disease or condition directly leading to death :",
+            "value": "The disease or condition directly leading to death :"
+        },
+        "f3": {
+            "caption": "a-",
+            "value": ""
+        },
+        "f4": {
+            "caption": "b-",
+            "value": ""
+        },
+        "f5": {
+            "caption": "c-",
+            "value": ""
+        }
+    },
+    "s3": {
+        "caption": "Si une intervention chirurgicale a été effectuée, mentionnez la date et   le plus important résultat de cette intervention ",
+        "f1": {
+            "caption": "Date de l’intervention ",
+            "value": ""
+        },
+        "f2": {
+            "caption": "le plus important résultat de cette intervention ",
+            "value": ""
+        }
+    },
+    "s4": {
+        "caption": "Mentionnez spécifiquement si c’est un accident de suicide ou meurtre",
+        "f1": {
+            "caption": "Mentionnez spécifiquement si c’est un accident de suicide ou meurtre",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Comment l’accident a eu lieu ",
+            "value": ""
+        }
+    },
+    "s5": {
+        "caption": "Nom du médecin ",
+        "f1": {
+            "caption": "Nom du médecin ",
+            "value": ""
+        }
+    },
+    "s6": {
+        "caption": "Examinateur du corps du  Décédé ",
+        "f1": {
+            "caption": "Nom",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Address",
+            "value": ""
+        }
+    },
+    "s7": {
+        "caption": "Informant ou témoin ",
+        "f1": {
+            "caption": "Prénom et nom",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date de naissance",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Address",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Lieu et numéro de registre ",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Grade de parenté avec le décédé ",
+            "value": ""
+        }
+    },
+    "s8": {
+        "caption": "Informant ou témoin ",
+        "f1": {
+            "caption": "Prénom et nom",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date de naissance",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Address",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Lieu et numéro de registre ",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Grade de parenté avec le décédé ",
+            "value": ""
+        }
+    },
+    "s9": {
+        "caption": "This certificate was presented",
+        "f1": {
+            "caption": "This certificate was presented to the Civil Status Department of Beirut ",
+            "value": ""
+        }
+    },
+    "s10": {
+        "caption": "Registre d’entrée",
+        "f1": {
+            "caption": "Numéro",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date",
+            "value": ""
+        }
+    },
+    "s11": {
+        "caption": "Exécution",
+        "f1": {
+            "caption": "Numéro",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date",
+            "value": ""
+        }
+    },
+    "s12": {
+        "caption": "Le Maire",
+        "f1": {
+            "caption": "The Maire de la localité de",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Prénom",
+            "value": ""
+        }
+    },
+    "s13": {
+        "caption": "L’officier de l’état civil",
+        "f1": {
+            "caption": "Localité",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Delivered on",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Nom",
+            "value": ""
+        }
+    },
+    "date": "",
+    "caption": "Death Certificate",
+    "leftheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "centerheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "rightheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "centerfooter": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    }
+}

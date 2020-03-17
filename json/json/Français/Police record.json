@@ -1,0 +1,165 @@
+{
+    "type": "Français",
+    "client": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "createuser": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "modifieduser": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "s0": {
+        "name": "s1_f4_s1",
+        "surname": "s1_f4_s2",
+        "father": "s1_f5",
+        "nationaltiy": "s1_f10",
+        "mother" : "s1_f6",
+        "mothersurname" : "",
+        "sex": "s1_f8",
+        "familystatus": "",
+        "governorate": "",
+        "district": "",
+        "city": "",
+        "quarter": "",
+        "street": "",
+        "building": "",
+        "floor": "",
+        "mobile": "",
+        "work": "",
+        "fax": "",
+        "email": "",
+        "profession": "",
+        "address": "",
+        "telephone": "",
+        "placeofbirthlocal" : "s1_f7_s1",
+        "placeofbirthdistrict" : "s1_f7_s2",
+        "dateofbirth": "s1_f77",
+        "placeregistry": "s1_f9_s1",
+        "noregistry" : "s1_f9_s2"
+    },
+    "s1": {
+        "caption": "client",
+        "f0": {
+            "caption": "No.",
+            "value": ""
+        },
+        "f1": {
+            "caption": "Beirut, 30/01/2019",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Sergeant in chief",
+            "value": ""
+        },
+        "f3": {
+            "caption": "Police record No.",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Prénom et nom",
+            "s1":{
+                "caption": "nom",
+                "value": ""
+            },
+            "s2":{
+                "caption": "Prénom",
+                "value": ""
+            }
+        },
+        "f5": {
+            "caption": "Prénom du Père",
+            "value": ""
+        },
+        "f6": {
+            "caption": "Prénom de la mère ",
+            "value": ""
+        },
+        "f7": {
+            "caption": "Lieu et Date de Naissance ",
+            "s1": {
+                "caption": "Localité ",
+                "value": ""
+            },
+            "s2": {
+                "caption": "District",
+                "value": ""
+            },
+            "s3": {
+                "caption": "Nom de l'hôpital",
+                "value": ""
+            }
+        },
+        "f77": {
+            "caption": "Date de naissance",
+            "value": ""
+        },
+        "f8": {
+            "caption": "Sex",
+            "value": ""
+        },
+        "f9": {
+            "caption": "Civil reg. No & place",
+            "s1": {
+                "caption": "Civil reg. Place",
+                "value": ""
+            },
+            "s2": {
+                "caption": "Civil reg. No",
+                "value": ""
+            }
+        },
+        "f10": {
+            "caption": "Nationalité",
+            "value": ""
+        },
+        "f11": {
+            "caption": "No Convictions or Convictions",
+            "value": "No Convictions or Convictions"
+        },
+        "f12": {
+            "caption": "Deliverd in Beirut,30/01/2019",
+            "value": ""
+        },
+        "f13": {
+            "caption": "Head of the Central Judicial Records Bureau Major ",
+            "value": ""
+        },
+        "f14": {
+            "caption": "No.",
+            "value": ""
+        }
+    },
+    "date": "",
+    "caption": "Police record",
+    "leftheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "centerheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "rightheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "centerfooter": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    }
+}
