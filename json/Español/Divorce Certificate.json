@@ -46,125 +46,125 @@
         "noregistry" : "s1_f7_s3"
     },
     "s1": {
-        "caption": "The divorcé",
+        "caption": "El Marido",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Nombre y apellido",
             "s1": {
-                "caption": "Name",
+                "caption": "Nombre",
                 "value": ""
             },
             "s2": {
-                "caption": "Surname",
+                "caption": "apellido",
                 "value": ""
             }
         },
         "f2": {
-            "caption": "Place and Date of birth",
+            "caption": "lugar y fecha de nacimiento",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localidad",
                 "value": ""
             },
             "s2": {
-                "caption": "District",
+                "caption": "Distrito",
                 "value": ""
             }
         },
         "f22": {
-            "caption": "date of birth",
+            "caption": "fecha de nacimiento",
             "value": ""
         },
         "f3": {
-            "caption": "Father’s name",
+            "caption": "Nombre del Padre",
             "value": ""
         },
         "f4": {
-            "caption": "Mother’s name",
+            "caption": "Nombre y apellido de la madre",
             "value": ""
         },
         "f5": {
-            "caption": "Religion",
+            "caption": "Religión",
             "value": ""
         },
         "f6": {
-            "caption": "Profession",
+            "caption": "Profesión",
             "value": ""
         },
         "f7": {
-            "caption": "Original Registry",
+            "caption": "Registro original",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localidad",
                 "value": ""
             },
             "s2": {
-                "caption": "District",
+                "caption": "Distrito",
                 "value": ""
             },
             "s3": {
-                "caption": "Registry No.",
+                "caption": "Registro  No.",
                 "value": ""
             }
         }
     },
     "s2": {
-        "caption": "The divorcée",
+        "caption": "La Divorciada",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Nombre y apellido",
             "s1": {
-                "caption": "Name",
+                "caption": "Nombre",
                 "value": ""
             },
             "s2": {
-                "caption": "Surname",
+                "caption": "apellido",
                 "value": ""
             }
         },
         "f2": {
-            "caption": "Place and Date of birth",
+            "caption": "lugar y fecha de nacimiento",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localidad",
                 "value": ""
             },
             "s2": {
-                "caption": "District",
+                "caption": "Distrito",
                 "value": ""
             }
         },
         "f22": {
-            "caption": "date of birth",
+            "caption": "fecha de nacimiento",
             "value": ""
         },
         "f3": {
-            "caption": "Father’s name",
+            "caption": "Nombre del Padre",
             "value": ""
         },
         "f4": {
-            "caption": "Mother’s name",
+            "caption": "Nombre y apellido de la madre",
             "value": ""
         },
         "f5": {
-            "caption": "Religion",
+            "caption": "Religión",
             "value": ""
         },
         "f6": {
-            "caption": "Original Registry",
+            "caption": "Registro original",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localidad",
                 "value": ""
             },
             "s2": {
-                "caption": "District",
+                "caption": "Distrito",
                 "value": ""
             },
             "s3": {
-                "caption": "Registry No.",
+                "caption": "Registro  No.",
                 "value": ""
             }
         }
     },
     "s3": {
-        "caption": "Religion Permission",
+        "caption": "Permisión religiosa ",
         "f1": {
-            "caption": "Religion Authority allowing divorce",
+            "caption": "Autoridad religiosa permitiendo el divorcio ",
             "value": ""
         },
         "f2": {
@@ -172,134 +172,134 @@
             "value": ""
         },
         "f3": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         }
     },
     "s4": {
-        "caption": "Divorce Place and Date",
+        "caption": "Contrato Lugar y fecha",
         "f1": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         },
         "f2": {
-            "caption": "decides to confirm the divorce",
+            "caption": "decide confirmar el divorcio",
             "value": ""
         }
     },
     "s5": {
-        "caption": "Signature of the divorcé",
+        "caption": "Firma de la Divorciada",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Nombre y apellido",
             "value": ""
         },
         "f2": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         }
     },
     "s6": {
-        "caption": "Validation of the Religion Chief",
+        "caption": "Validación del jefe religioso",
         "f1": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         },
         "f2": {
-            "caption": "Religion",
+            "caption": "Religión",
             "value": ""
         },
         "f3": {
-            "caption": "District",
-            "value": "Beirut"
+            "caption": "Distrito",
+            "value": ""
         },
         "f4": {
-            "caption": "Full Name",
+            "caption": "Nombre",
             "value": ""
         }
     },
     "s7": {
-        "caption": "Witness",
+        "caption": "Testigo",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Nombre y apellido",
             "value": ""
         },
         "f2": {
-            "caption": "Date of Birth",
+            "caption": "fecha de nacimiento",
             "value": ""
         },
         "f3": {
-            "caption": "Address",
+            "caption": "Dirección",
             "value": ""
         },
         "f4": {
-            "caption": "Place and No. of registry",
+            "caption": "Lugar y número de registro",
             "value": ""
         }
     },
     "s8": {
-        "caption": "Witness",
+        "caption": "Testigo",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Nombre y apellido",
             "value": ""
         },
         "f2": {
-            "caption": "Date of Birth",
+            "caption": "fecha de nacimiento",
             "value": ""
         },
         "f3": {
-            "caption": "Address",
+            "caption": "Dirección",
             "value": ""
         },
         "f4": {
-            "caption": "Place and No. of registry",
+            "caption": "Lugar y número de registro",
             "value": ""
         }
     },
     "s9": {
-        "caption": "The Mayor",
+        "caption": "El Alcalde",
         "f1": {
-            "caption": "Locality",
+            "caption": "Localidad",
             "value": ""
         },
         "f2": {
-            "caption": "District",
+            "caption": "Distrito",
             "value": ""
         },
         "f3": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         },
         "f4": {
-            "caption": "Name and Surname of the Mayor",
+            "caption": "nombre y apellido del alcalde",
             "value": ""
         }
     },
     "s11": {
-        "caption": "Entry Register",
+        "caption": "Registro de entrada",
         "f1": {
-            "caption": "Number",
+            "caption": "Numero",
             "value": ""
         },
         "f2": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         }
     },
     "s12": {
-        "caption": "Execution",
+        "caption": "Ejecución",
         "f1": {
-            "caption": "Number",
+            "caption": "Numero",
             "value": ""
         },
         "f2": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         }
     },
     "s10": {
-        "caption": "This Certificate is submitted to the",
+        "caption": "Este certificato ha sido presentado al registro de estado civil",
         "f1": {
-            "caption": "This Certificate is submitted to the",
+            "caption": "Este certificato ha sido presentado al registro de estado civil",
             "value": ""
         }
     },
@@ -307,25 +307,25 @@
         "caption": "Secretario Judicial del tribunal religioso",
         "f1": {
             "caption": "Secretario Judicial del tribunal religioso",
-            "value": "Secretario Judicial del tribunal religioso sunní en Beirut"
+            "value": ""
         },
         "f2": {
             "caption": "Secretario Name",
-            "value": "Jeque Marwan Abdel Rahman Kosok"
+            "value": ""
         }
     },
     "s14": {
-        "caption": "Civil Status Officer",
+        "caption": "Oficial del estado civil",
         "f2": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         },
         "f1": {
-            "caption": "Officer Name",
+            "caption": "Nombre del oficial",
             "value": ""
         },
         "f3": {
-            "caption": "Locality",
+            "caption": "Localidad del oficial",
             "value": ""
         }
     },

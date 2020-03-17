@@ -51,11 +51,11 @@
             "value": ""
         },
         "f1": {
-            "caption": "Beirut, 30/01/2019",
+            "caption": "lugar entregado",
             "value": ""
         },
         "f2": {
-            "caption": "Sergeant in chief",
+            "caption": "Sargento",
             "value": ""
         },
         "f3": {
@@ -63,45 +63,45 @@
             "value": ""
         },
         "f4": {
-            "caption": "Name and Surname",
+            "caption": "Nombre y apellido",
             "s1":{
-                "caption": "Name",
+                "caption": "Nombre",
                 "value": ""
             },
             "s2":{
-                "caption": "Surname",
+                "caption": "apellido",
                 "value": ""
             }
         },
         "f5": {
-            "caption": "Father’s name",
+            "caption": "Nombre del Padre",
             "value": ""
         },
         "f6": {
-            "caption": "Mother’s name",
+            "caption": "Nombre y apellido de la madre",
             "value": ""
         },
         "f7": {
-            "caption": "Place and Date of birth ",
+            "caption": "lugar y fecha de nacimiento ",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localidad",
                 "value": ""
             },
             "s2": {
-                "caption": "District",
+                "caption": "Distrito",
                 "value": ""
             },
             "s3": {
-                "caption": "Hospital Name",
+                "caption": "Hospital",
                 "value": ""
             }
         },
         "f77": {
-            "caption": "Date of Birth",
+            "caption": "fecha de nacimiento",
             "value": ""
         },
         "f8": {
-            "caption": "Sex",
+            "caption": "Sexo",
             "value": ""
         },
         "f9": {
@@ -120,15 +120,15 @@
             "value": ""
         },
         "f11": {
-            "caption": "No Convictions or Convictions",
-            "value": "No Convictions or Convictions"
+            "caption": "No Condenas o Condenas",
+            "value": "No Condenas o Condenas"
         },
         "f12": {
-            "caption": "Deliverd in Beirut,30/01/2019",
+            "caption": "fecha de entrega",
             "value": ""
         },
         "f13": {
-            "caption": "Head of the Central Judicial Records Bureau Major ",
+            "caption": "Jefe de la Oficina Central de Registros Judiciales",
             "value": ""
         },
         "f14": {

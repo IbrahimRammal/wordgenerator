@@ -51,30 +51,30 @@
             "value": ""
         },
         "f2": {
-            "caption": "District",
+            "caption": "Distrito",
             "value": ""
         },
         "f3": {
-            "caption": "Place and Number of Registry",
+            "caption": "Lugar y número del registro",
             "s1": {
-                "caption": "Place of Registry",
+                "caption": "Lugar del registro",
                 "value": ""
             },
             "s2": {
-                "caption": "Number of Registry",
+                "caption": "Número del registro",
                 "value": ""
             }
         },
         "f4": {
-            "caption": "Delivered",
+            "caption": "Entregado",
             "value": ""
         },
         "f5": {
-            "caption": "The Civil Status Officer Name",
+            "caption": "El nombre del oficial de estado civil",
             "value": ""
         },
         "f6": {
-            "caption": "Officer Locality",
+            "caption": "Oficial de la localidad",
             "value": ""
         }
     },

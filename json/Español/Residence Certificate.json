@@ -47,101 +47,101 @@
     "s1": {
         "caption": "Header",
         "f1": {
-            "caption": "Governorate",
+            "caption": "Gobernación",
             "value": ""
         },
         "f2": {
-            "caption": "District",
+            "caption": "Distrito",
             "value": ""
         },
         "f3": {
-            "caption": "Mayor of",
+            "caption": "ALCALDE DE",
             "value": ""
         },
         "f4": {
-            "caption": "Serial No.",
+            "caption": "No. de serie",
             "value": ""
         },
         "f5": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         }
     },
     "s2": {
         "caption": "Client",
         "f1": {
-            "caption": "First Name",
+            "caption": "Nombre",
             "value": ""
         },
         "f2": {
-            "caption": "Surname",
+            "caption": "apellido",
             "value": ""
         },
         "f3": {
-            "caption": "Father's Name",
+            "caption": "Nombre del padre ",
             "value": ""
         },
         "f4": {
-            "caption": "Mother's Name",
+            "caption": "Nombre de la madre ",
             "value": ""
         },
         "f5": {
-            "caption": "Mother's Surname",
+            "caption": "Apellido de la madre ",
             "value": ""
         },
         "f6": {
-            "caption": "Place and Date of Birth",
+            "caption": "Lugar y fecha de nacimiento",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localidad",
                 "value": ""
             },
             "s2": {
-                "caption": "District",
+                "caption": "Distrito",
                 "value": ""
             },
             "s3": {
-                "caption": "Hospital Name",
+                "caption": "Hospital",
                 "value": ""
             }
         },
         "f7": {
-            "caption": "Date of Birth",
+            "caption": "fecha de nacimiento",
             "value": ""
         },
         "f8": {
-            "caption": "Civil Registry Place",
+            "caption": "Lugar de registro civil",
             "value": ""
         },
         "f9": {
-            "caption": "District",
+            "caption": "Distrito",
             "value": ""
         },
         "f10": {
-            "caption": "Governorate",
+            "caption": "Gobernación",
             "value": ""
         },
         "f11": {
-            "caption": "Civil Registry No",
+            "caption": "No  DE REGISTRO CIVIL",
             "value": ""
         },
         "f12": {
-            "caption": "Sex",
+            "caption": "Sexo",
             "value": ""
         },
         "f13": {
-            "caption": "Familty Status",
+            "caption": "Estado civil",
             "value": ""
         },
         "f14": {
-            "caption": "Spouse's Name",
+            "caption": "Nombre de la esposa",
             "value": ""
         },
         "f15": {
-            "caption": "Spouse's Surname",
+            "caption": "Apellido de la esposa",
             "value": ""
         },
         "f16": {
-            "caption": "After confirming from",
+            "caption": "Después de confirmar de",
             "value": ""
         },
         "f17": {
@@ -149,50 +149,50 @@
             "value": ""
         },
         "f18": {
-            "caption": "Released on",
+            "caption": "Emitido el",
             "value": ""
         }
     },
     "s3": {
-        "caption": "Current Residential Address",
+        "caption": "DIRECCION DE RESIDENCIA ACTUAL",
         "f1": {
-            "caption": "Governorate",
+            "caption": "Gobernación",
             "value": ""
         },
         "f2": {
-            "caption": "District",
+            "caption": "Distrito",
             "value": ""
         },
         "f3": {
-            "caption": "City",
+            "caption": "Ciudad",
             "value": ""
         },
         "f4": {
-            "caption": "Quarter",
+            "caption": "Barrio",
             "value": ""
         },
         "f5": {
-            "caption": "Street",
+            "caption": "Calle",
             "value": ""
         },
         "f6": {
-            "caption": "Bldg.",
+            "caption": "Edificio",
             "value": ""
         },
         "f7": {
-            "caption": "Floor",
+            "caption": "Piso",
             "value": ""
         },
         "f8": {
-            "caption": "Tel. (Residence)",
+            "caption": "Tel. (Residencia)",
             "value": ""
         },
         "f9": {
-            "caption": "Mobile",
+            "caption": "Móvil",
             "value": ""
         },
         "f10": {
-            "caption": "Work",
+            "caption": "Trabajo",
             "value": ""
         },
         "f11": {
@@ -200,28 +200,28 @@
             "value": ""
         },
         "f12": {
-            "caption": "Email",
+            "caption": "Correo electrónico",
             "value": ""
         },
         "f13": {
-            "caption": "This certificate is for use by",
+            "caption": "Este certificado se utiliza para",
             "value": ""
         }
     },
     "s4": {
-        "caption": "Mayor",
+        "caption": "Alcalde",
         "f1": {
-            "caption": "Full Name",
+            "caption": "Nombre del alcalde",
             "value": ""
         },
         "f2": {
-            "caption": "Full name of the concerned or his representative",
+            "caption": "Nombre completo y firma del interesado o de su representante",
             "s1": {
-                "caption": "First Name",
+                "caption": "Nombre",
                 "value": ""
             },
             "s2": {
-                "caption": "Last Name",
+                "caption": "apellido",
                 "value": ""
             }
         }

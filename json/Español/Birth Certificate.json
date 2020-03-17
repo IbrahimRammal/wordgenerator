@@ -48,7 +48,7 @@
     "s1": {
         "caption": "client",
         "f1": {
-            "caption": "Name of the New born",
+            "caption": "Nombre del recién nacido",
             "value": ""
         },
         "f2": {
@@ -56,282 +56,282 @@
             "value": ""
         },
         "f3": {
-            "caption": "Place of Birth",
+            "caption": "Lugar de nacimiento",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localidad",
                 "value": ""
             },
             "s2": {
-                "caption": "District",
+                "caption": "Distrito",
                 "value": ""
             },
             "s3": {
-                "caption": "Hospital Name",
+                "caption": "Hospital",
                 "value": ""
             }
         },
         "f4": {
-            "caption": "Date of Birth",
+            "caption": "fecha de nacimiento",
             "value": ""
         },
         "f5": {
-            "caption": "Statement of the obstetrician",
+            "caption": "declaración del obstetra",
             "s1": {
                 "caption": "Yo,     , declaro que he atendido el nacimiento del arriba mencionado.",
                 "value": ""
             },
             "s2": {
-                "caption": "Address",
+                "caption": "Dirección",
                 "value": ""
             },
             "s3": {
-                "caption": "Profession",
+                "caption": "Profesión",
                 "value": ""
             },
             "s4": {
-                "caption": "Signature",
+                "caption": "Firma",
                 "value": ""
             },
             "s5": {
-                "caption": "Date",
+                "caption": "Fecha",
                 "value": ""
             }
         }
     },
     "s2": {
-        "caption": "The Father",
+        "caption": "El padre ",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Nombre y apellido",
             "s1": {
-                "caption": "Name",
+                "caption": "Nombre",
                 "value": ""
             },
             "s2": {
-                "caption": "Surname",
+                "caption": "apellido",
                 "value": ""
             }
         },
         "f2": {
-            "caption": "Religion",
+            "caption": "Religión",
             "value": ""
         },
         "f3": {
-            "caption": "Date of Birth",
+            "caption": "fecha de nacimiento",
             "value": ""
         },
         "f4": {
-            "caption": "Profession",
+            "caption": "Profesión",
             "value": ""
         }
     },
     "s3": {
-        "caption": "The Mother",
+        "caption": "La madre ",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Nombre y apellido",
             "s1": {
-                "caption": "Name",
+                "caption": "Nombre",
                 "value": ""
             },
             "s2": {
-                "caption": "Surname",
+                "caption": "apellido",
                 "value": ""
             }
         },
         "f2": {
-            "caption": "Religion",
+            "caption": "Religión",
             "value": ""
         },
         "f3": {
-            "caption": "Date of Birth",
+            "caption": "fecha de nacimiento",
             "value": ""
         },
         "f4": {
-            "caption": "Home Address",
+            "caption": "Domicilio",
             "value": ""
         },
         "f5": {
-            "caption": "Locality",
+            "caption": "Localidad",
             "value": ""
         },
         "f6": {
-            "caption": "District",
+            "caption": "Distrito",
             "value": ""
         }
     },
     "s4": {
-        "caption": "The claimant of the certificate",
+        "caption": "Solicitante del certificado",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Nombre y apellido",
             "s1": {
-                "caption": "Name",
+                "caption": "Nombre",
                 "value": ""
             },
             "s2": {
-                "caption": "Surname",
+                "caption": "apellido",
                 "value": ""
             }
         },
         "f2": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         },
         "f3": {
-            "caption": "Address",
+            "caption": "Domicilio",
             "value": ""
         },
         "f4": {
-            "caption": "Signature",
+            "caption": "Firma",
             "value": ""
         }
     },
     "s5": {
-        "caption": "Parents' original registry",
+        "caption": "Registro original de los padres",
         "f1": {
-            "caption": "Locality",
+            "caption": "Localidad",
             "value": ""
         },
         "f2": {
-            "caption": "District",
+            "caption": "Distrito",
             "value": ""
         }
     },
     "s6": {
-        "caption": "Number and type of registry",
+        "caption": "Número y tipo de registro",
         "f1": {
-            "caption": "Number",
+            "caption": "Número",
             "value": ""
         },
         "f2": {
-            "caption": "Type of registry and religion",
+            "caption": "Tipo de registro y religión",
             "value": ""
         }
     },
     "s7": {
-        "caption": "Witness",
+        "caption": "Testigo",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Nombre y apellido",
             "value": ""
         },
         "f2": {
-            "caption": "Date of Birth",
+            "caption": "fecha de nacimiento",
             "value": ""
         },
         "f3": {
-            "caption": "Address",
+            "caption": "Domicilio",
             "value": ""
         },
         "f4": {
-            "caption": "Profession",
+            "caption": "Ocupación",
             "value": ""
         },
         "f5": {
-            "caption": "Signature",
-            "value": "Signature"
+            "caption": "Firma",
+            "value": "Firma"
         }
     },
     "s8": {
-        "caption": "Witness",
+        "caption": "Testigo",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Nombre y apellido",
             "value": ""
         },
         "f2": {
-            "caption": "Date of Birth",
+            "caption": "fecha de nacimiento",
             "value": ""
         },
         "f3": {
-            "caption": "Address",
+            "caption": "Domicilio",
             "value": ""
         },
         "f4": {
-            "caption": "Profession",
+            "caption": "Ocupación",
             "value": ""
         },
         "f5": {
-            "caption": "Signature",
+            "caption": "Firma",
             "value": ""
         }
     },
     "s9": {
-        "caption": "The Mayor",
+        "caption": "El Alcalde",
         "f1": {
-            "caption": "Locality",
+            "caption": "Localidad",
             "value": ""
         },
         "f2": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         },
         "f3": {
-            "caption": "District",
+            "caption": "Distrito",
             "value": ""
         },
         "f4": {
-            "caption": "Name and Surname of The Mayor",
+            "caption": "Nombre y apellido del alcalde",
             "value": ""
         },
         "f5": {
-            "caption": "Signature and Seal",
+            "caption": "Firma y sello",
             "value": ""
         }
     },
     "s10": {
-        "caption": "This certificate is submitted to the Bureau of Personal Status on: ",
+        "caption": "El certificado ha sido presentado a la oficina de estado personal: ",
         "f1": {
-            "caption": "Place",
+            "caption": "sitio",
             "value": ""
         },
         "f2": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         }
     },
     "s11": {
-        "caption": "Entry Register",
+        "caption": "Registro de entrada",
         "f1": {
-            "caption": "Number",
+            "caption": "Numero",
             "value": ""
         },
         "f2": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         },
         "f3": {
-            "caption": "Signature of the Civil Status Officer",
+            "caption": "Firma del oficial de estado civil",
             "value": ""
         }
     },
     "s12": {
-        "caption": "Execution",
+        "caption": "Ejecución",
         "f1": {
-            "caption": "Number",
+            "caption": "Numero",
             "value": ""
         },
         "f2": {
-            "caption": "Date",
+            "caption": "Fecha",
             "value": ""
         },
         "f3": {
-            "caption": "Signature of the Civil Status Officer",
+            "caption": "Firma del oficial de estado civil",
             "value": ""
         }
     },
     "s13": {
         "caption": "Civil Status Officer",
         "f1": {
-            "caption": "Officer Name",
+            "caption": "nombre del oficial",
             "value": ""
         },
         "f2": {
-            "caption": "(Signature and Seal)",
+            "caption": "(Firma y Sello)",
             "value": ""
         },
         "f3": {
-            "caption": "Delivered on",
+            "caption": "entregado en",
             "value": ""
         },
         "f4": {
-            "caption": "Locality",
+            "caption": "Localidad del oficial",
             "value": ""
         }
     },

@@ -52,89 +52,89 @@
             "value": ""
         },
         "f1": {
-            "caption": "District",
+            "caption": "Distrito",
             "value": ""
         },
         "f2": {
-            "caption": "Place and Number of Registry",
+            "caption": "Lugar y número del registro",
             "s1":{
-                "caption": "Place of Registry",
+                "caption": "Lugar del registro",
                 "value": ""
             },
             "s2":{
-                "caption": "Number of Registry",
+                "caption": "número del registro",
                 "value": ""
             }
         },
         "f3": {
-            "caption": "Name",
+            "caption": "Nombre",
             "value": ""
         },
         "f4": {
-            "caption": "Surname",
+            "caption": "apellido",
             "value": ""
         },
         "f5": {
-            "caption": "Father’s name",
+            "caption": "Nombre del Padre",
             "value": ""
         },
         "f6": {
-            "caption": "Mother’s name",
+            "caption": "Nombre y apellido de la madre",
             "value": ""
         },
         "f7": {
-            "caption": "Place and Date of birth",
+            "caption": "lugar y fecha de nacimiento",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localidad",
                 "value": ""
             },
             "s2": {
-                "caption": "District",
+                "caption": "Distrito",
                 "value": ""
             },
             "s3": {
-                "caption": "Hospital Name",
+                "caption": "Hospital",
                 "value": ""
             }
         },
         "f77":{
-            "caption": "Date of birth",
+            "caption": "Fecha de nacimiento",
             "value": ""
         },
         "f8": {
-            "caption": "Religion",
+            "caption": "Religión",
             "value": ""
         },
         "f9": {
-            "caption": "Marital status ",
+            "caption": "Estado civil",
             "value": ""
         },
         "f10": {
-            "caption": "Sex",
+            "caption": "Sexo",
             "value": ""
         },
         "f11": {
-            "caption": "Note",
+            "caption": "Observaciones",
             "value": ""
         },
         "f12": {
-            "caption": "Applicant",
+            "caption": "Solicitante",
             "value": ""
         },
         "f13": {
-            "caption": "Identified by ",
+            "caption": "Identificado por",
             "value": ""
         },
         "f14": {
-            "caption": "Date of Application",
+            "caption": "Emitido el",
             "value": ""
         },
         "f15": {
-            "caption": "Civil Status officer Name ",
+            "caption": "Nombre del oficial de estado civil",
             "value": ""
         },
         "f16": {
-            "caption": "Civil Status officer of ",
+            "caption": "Estado del oficial de estado civil",
             "value": ""
         }
     },
