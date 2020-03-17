@@ -55,15 +55,15 @@
             "value": ""
         },
         "f3": {
-            "caption": "Center",
+            "caption": "Centre",
             "value": ""
         },
         "f4": {
-            "caption": "Number of the Insured",
+            "caption": "Numéro de l'assuré",
             "value": ""
         },
         "f5": {
-            "caption": "Name of the Insured",
+            "caption": "Prénom et Nom de l'assuré ",
             "value": ""
         },
         "f6": {
@@ -71,11 +71,11 @@
             "value": ""
         },
         "f7": {
-            "caption": "Civil Register",
+            "caption": "Numéro de Registre ",
             "value": ""
         },
         "f8": {
-            "caption": "Name of Mother",
+            "caption": "Nom de la mère ",
             "value": ""
         },
         "f9": {
@@ -83,11 +83,11 @@
             "value": ""
         },
         "f10": {
-            "caption": "Type of Work",
+            "caption": "Type du travail",
             "value": ""
         },
         "f11": {
-            "caption": "Name of official issuing the attestion",
+            "caption": "Délivreur de l’attestation",
             "value": ""
         }
     },

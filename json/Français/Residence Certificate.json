@@ -74,7 +74,7 @@
             "value": ""
         },
         "f2": {
-            "caption": "Prénom",
+            "caption": "Nom",
             "value": ""
         },
         "f3": {
@@ -86,7 +86,7 @@
             "value": ""
         },
         "f5": {
-            "caption": "nom de la mère",
+            "caption": "Nom de la mère",
             "value": ""
         },
         "f6": {
@@ -125,23 +125,23 @@
             "value": ""
         },
         "f12": {
-            "caption": "Sex",
+            "caption": "Sexe",
             "value": ""
         },
         "f13": {
-            "caption": "Familty Status",
+            "caption": "Etat civil",
             "value": ""
         },
         "f14": {
-            "caption": "Spouse's Name",
+            "caption": "Prénom de l’époux",
             "value": ""
         },
         "f15": {
-            "caption": "Spouse's Surname",
+            "caption": "Nom de l’époux",
             "value": ""
         },
         "f16": {
-            "caption": "After confirming from",
+            "caption": "Apres confirmation de",
             "value": ""
         },
         "f17": {
@@ -149,7 +149,7 @@
             "value": ""
         },
         "f18": {
-            "caption": "Released on",
+            "caption": "Délivrée le",
             "value": ""
         }
     },
@@ -164,7 +164,7 @@
             "value": ""
         },
         "f3": {
-            "caption": "City",
+            "caption": "Ville",
             "value": ""
         },
         "f4": {
@@ -184,15 +184,15 @@
             "value": ""
         },
         "f8": {
-            "caption": "Tel. (Residence)",
+            "caption": "Tel. (Résidence)",
             "value": ""
         },
         "f9": {
-            "caption": "Mobile",
+            "caption": "Cellulaire",
             "value": ""
         },
         "f10": {
-            "caption": "Work",
+            "caption": "Travail",
             "value": ""
         },
         "f11": {
@@ -200,28 +200,28 @@
             "value": ""
         },
         "f12": {
-            "caption": "Email",
+            "caption": "Courrier électronique",
             "value": ""
         },
         "f13": {
-            "caption": "This certificate is for use by",
+            "caption": "Ce certificat a été délivré pour utilisation",
             "value": ""
         }
     },
     "s4": {
         "caption": "la mère",
         "f1": {
-            "caption": "Full Name",
+            "caption": "Nom",
             "value": ""
         },
         "f2": {
-            "caption": "Full name of the concerned or his representative",
+            "caption": "Nom et signature de la personne concernée",
             "s1": {
                 "caption": "Prénom",
                 "value": ""
             },
             "s2": {
-                "caption": "Last Name",
+                "caption": "Nom",
                 "value": ""
             }
         }

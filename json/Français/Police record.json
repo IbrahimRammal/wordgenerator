@@ -51,25 +51,25 @@
             "value": ""
         },
         "f1": {
-            "caption": "Beirut, 30/01/2019",
+            "caption": "Délivré en",
             "value": ""
         },
         "f2": {
-            "caption": "Sergeant in chief",
+            "caption": "Sergent-chef",
             "value": ""
         },
         "f3": {
-            "caption": "Police record No.",
+            "caption": "Casier Judiciaire",
             "value": ""
         },
         "f4": {
             "caption": "Prénom et nom",
             "s1":{
-                "caption": "nom",
+                "caption": "Prénom",
                 "value": ""
             },
             "s2":{
-                "caption": "Prénom",
+                "caption": "Nom",
                 "value": ""
             }
         },
@@ -78,7 +78,7 @@
             "value": ""
         },
         "f6": {
-            "caption": "Prénom de la mère ",
+            "caption": "Prénom et Nom de la Mère",
             "value": ""
         },
         "f7": {
@@ -101,17 +101,17 @@
             "value": ""
         },
         "f8": {
-            "caption": "Sex",
+            "caption": "Sexe",
             "value": ""
         },
         "f9": {
-            "caption": "Civil reg. No & place",
+            "caption": "Lieu et No. de Registre",
             "s1": {
-                "caption": "Civil reg. Place",
+                "caption": "Lieu de Registre",
                 "value": ""
             },
             "s2": {
-                "caption": "Civil reg. No",
+                "caption": "No. de Registre",
                 "value": ""
             }
         },
@@ -120,15 +120,15 @@
             "value": ""
         },
         "f11": {
-            "caption": "No Convictions or Convictions",
-            "value": "No Convictions or Convictions"
+            "caption": "Pas de Condamnation ou Condamnation",
+            "value": "Pas de Condamnation ou Condamnation"
         },
         "f12": {
-            "caption": "Deliverd in Beirut,30/01/2019",
+            "caption": "Publié le",
             "value": ""
         },
         "f13": {
-            "caption": "Head of the Central Judicial Records Bureau Major ",
+            "caption": "LE CHEF DU BUREAU DU CASIER JUDICIAIRE Colonel",
             "value": ""
         },
         "f14": {

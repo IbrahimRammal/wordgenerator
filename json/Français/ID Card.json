@@ -47,7 +47,7 @@
     "s1": {
         "caption": "client",
         "f0": {
-            "caption": "I.D. Nº",
+            "caption": "Nº",
             "value": ""
         },
         "f1": {
@@ -59,17 +59,17 @@
             "value": ""
         },
         "f3": {
-            "caption": "Name of the Father",
+            "caption": "Prénom du Père",
             "value": ""
         },
         "f4": {
-            "caption": "Prénom et nom of the Mother",
+            "caption": "Prénom et Nom de la Mère",
             "s1": {
                 "caption": "Prénom",
                 "value": ""
             },
             "s2": {
-                "caption": "Prénom",
+                "caption": "Nom",
                 "value": ""
             }
         },
@@ -93,19 +93,19 @@
             "value": ""
         },
         "f7": {
-            "caption": "Sex",
+            "caption": "Sexe",
             "value": ""
         },
         "f8": {
-            "caption": "Family status",
+            "caption": "Etat Civil",
             "value": ""
         },
         "f9": {
-            "caption": "Registry Nº ",
+            "caption": "No de Registre ",
             "value": ""
         },
         "f10": {
-            "caption": "Localité  or village",
+            "caption": "lieu de Registre",
             "value": ""
         },
         "f11": {
@@ -113,19 +113,19 @@
             "value": ""
         },
         "f12": {
-            "caption": "Gouvernorat",
+            "caption": "Caza",
             "value": ""
         },
         "f13": {
-            "caption": "Date of issuance",
+            "caption": "Date de Délivrance",
             "value": ""
         },
         "f14": {
-            "caption": "The Civil Status Officer of ",
+            "caption": "localité de la Officier",
             "value": ""
         },
         "f15": {
-            "caption": "Prénom ",
+            "caption": "Nom de la Officier",
             "value": ""
         }
     },

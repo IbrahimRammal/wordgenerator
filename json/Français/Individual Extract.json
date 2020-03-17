@@ -56,22 +56,22 @@
             "value": ""
         },
         "f2": {
-            "caption": "Lieu et numéro du registre ",
+            "caption": "Lieu et numéro du registre",
             "s1":{
-                "caption": "Lieu d'immatriculation",
+                "caption": "Lieu du registre",
                 "value": ""
             },
             "s2":{
-                "caption": "Numéro d'enregistrement",
+                "caption": "numéro du registre",
                 "value": ""
             }
         },
         "f3": {
-            "caption": "nom",
+            "caption": "Prénom",
             "value": ""
         },
         "f4": {
-            "caption": "Prénom",
+            "caption": "Nom",
             "value": ""
         },
         "f5": {
@@ -79,7 +79,7 @@
             "value": ""
         },
         "f6": {
-            "caption": "Prénom de la mère ",
+            "caption": "Prénom et Nom de la mère",
             "value": ""
         },
         "f7": {
@@ -102,39 +102,39 @@
             "value": ""
         },
         "f8": {
-            "caption": "Rite",
+            "caption": "Religion",
             "value": ""
         },
         "f9": {
-            "caption": "État Civil  ",
+            "caption": "État Civil",
             "value": ""
         },
         "f10": {
-            "caption": "Sex",
+            "caption": "Sexe",
             "value": ""
         },
         "f11": {
-            "caption": "Note",
+            "caption": "Remarque",
             "value": ""
         },
         "f12": {
-            "caption": "Applicant",
+            "caption": "Requérant",
             "value": ""
         },
         "f13": {
-            "caption": "Identified by ",
+            "caption": "Identifié par ",
             "value": ""
         },
         "f14": {
-            "caption": "Date of Application",
+            "caption": "Délivré le",
             "value": ""
         },
         "f15": {
-            "caption": "L’officier de l’état civil Name ",
+            "caption": "Nom de la Officier",
             "value": ""
         },
         "f16": {
-            "caption": "L’officier de l’état civil of ",
+            "caption": "localité de la Officier",
             "value": ""
         }
     },

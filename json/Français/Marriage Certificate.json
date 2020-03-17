@@ -46,15 +46,15 @@
         "noregistry" : "s1_f7_s3"
     },
     "s1": {
-        "caption": "The husband",
+        "caption": "L´époux",
         "f1": {
             "caption": "Prénom et nom",
             "s1": {
-                "caption": "nom",
+                "caption": "Prénom",
                 "value": ""
             },
             "s2": {
-                "caption": "Prénom",
+                "caption": "Nom",
                 "value": ""
             }
         },
@@ -82,7 +82,7 @@
             "value": ""
         },
         "f4": {
-            "caption": "Prénom de la mère ",
+            "caption": "Prénom et Nom de la Mère",
             "value": ""
         },
         "f5": {
@@ -90,11 +90,11 @@
             "value": ""
         },
         "f6": {
-            "caption": "Rite",
+            "caption": "Religion",
             "value": ""
         },
         "f7": {
-            "caption": "Original Registry",
+            "caption": "Registre Civil ",
             "s1": {
                 "caption": "Localité ",
                 "value": ""
@@ -104,21 +104,21 @@
                 "value": ""
             },
             "s3": {
-                "caption": "Registry No.",
+                "caption": "Registre Civil No.",
                 "value": ""
             }
         }
     },
     "s2": {
-        "caption": "The wife",
+        "caption": "L´épouse",
         "f1": {
             "caption": "Prénom et nom",
             "s1": {
-                "caption": "nom",
+                "caption": "Prénom",
                 "value": ""
             },
             "s2": {
-                "caption": "Prénom",
+                "caption": "Nom",
                 "value": ""
             }
         },
@@ -146,19 +146,19 @@
             "value": ""
         },
         "f4": {
-            "caption": "Prénom de la mère ",
+            "caption": "Prénom et Nom de la Mère",
             "value": ""
         },
         "f5": {
-            "caption": "Status",
+            "caption": "État Civil",
             "value": ""
         },
         "f6": {
-            "caption": "Rite",
+            "caption": "Religion",
             "value": ""
         },
         "f7": {
-            "caption": "Original Registry",
+            "caption": "Registre Civil ",
             "s1": {
                 "caption": "Localité ",
                 "value": ""
@@ -168,7 +168,7 @@
                 "value": ""
             },
             "s3": {
-                "caption": "Registry No.",
+                "caption": "Registre Civil No.",
                 "value": ""
             }
         }
@@ -189,13 +189,13 @@
         }
     },
     "s4": {
-        "caption": "Contract Place and Date",
+        "caption": "Lieu et Date du Contrat de Mariage",
         "f1": {
             "caption": "Date",
             "value": ""
         },
         "f2": {
-            "caption": "Court place",
+            "caption": "Lieu de conclusion de ce contrat de Mariage ",
             "value": ""
         }, 
         "f3": {
@@ -203,12 +203,12 @@
             "value": ""
         }, 
         "f4": {
-            "caption": "Hour",
+            "caption": "Heure",
             "value": ""
         }
     },
     "s5": {
-        "caption": "Signature of the Husband or Wife",
+        "caption": "Signature de l’époux",
         "f1": {
             "caption": "Prénom et nom",
             "value": ""
@@ -219,13 +219,13 @@
         }
     },
     "s6": {
-        "caption": "Validation of the Religious Chief",
+        "caption": "Certification de L'Autorité Religieuse",
         "f1": {
             "caption": "Date",
             "value": ""
         },
         "f2": {
-            "caption": "Rite",
+            "caption": "du juge du tribunal religieux",
             "value": ""
         },
         "f3": {
@@ -233,7 +233,7 @@
             "value": ""
         },
         "f4": {
-            "caption": "Full Name",
+            "caption": "Nom",
             "value": ""
         }
     },
@@ -252,7 +252,7 @@
             "value": ""
         },
         "f4": {
-            "caption": "Lieu et numéro de registre ",
+            "caption": "Occupation",
             "value": ""
         }
     },
@@ -271,7 +271,7 @@
             "value": ""
         },
         "f4": {
-            "caption": "Lieu et numéro de registre ",
+            "caption": "Occupation",
             "value": ""
         }
     },
@@ -294,7 +294,7 @@
             "value": ""
         },
         "f1": {
-            "caption": "Prénom et nom of the Mayor",
+            "caption": "Prénom et Nom",
             "value": ""
         }
     },
@@ -321,20 +321,20 @@
         }
     },
     "s10": {
-        "caption": "This certificate is submitted to the Bureau of Personal Status on",
+        "caption": "Cet acte de mariage est délivré au Bureau de",
         "f1": {
-            "caption": "This certificate is submitted to the Bureau of Personal Status on",
+            "caption": "Cet acte de mariage est délivré au Bureau de",
             "value": ""
         }
     },
     "s13": {
         "caption": "Signature et cachet de l'Officier de L'état Civil de ",
         "f1": {
-            "caption": "Place",
+            "caption": "localité",
             "value": ""
         },
         "f2": {
-            "caption": "Full Name",
+            "caption": "Nom",
             "value": ""
         },
         "f3": {
