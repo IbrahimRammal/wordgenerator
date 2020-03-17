@@ -12,11 +12,25 @@
                     <option>female</option>
                 </select> -->
 
-                <input class="form-control awesomplete" list="sex" name="s1_f8" id="s1f8" placeholder="<%= obj.s1.f8.caption %>" value="<%= obj.s1.f8.value %>" required>
+                <input class="form-control awesomplete" list="sex" name="s1_f8" id="s1f8"
+                    placeholder="<%= obj.s1.f8.caption %>" value="<%= obj.s1.f8.value %>">
+                <%if (obj.type == "English") { %>
                 <datalist id="sex">
                     <option>male</option>
                     <option>female</option>
                 </datalist>
+                <% } else if (obj.type == "Français") {%>
+                <datalist id="sex">
+                    <option>mâle</option>
+                    <option>femelle</option>
+                </datalist>
+                <% } else if (obj.type == "Español") {%>
+                <datalist id="sex">
+                    <option>masculino</option>
+                    <option>femenino</option>
+                </datalist>
+                <% } else {%>
+                <% }%>
             </div>
         </div>
     </div>
@@ -52,12 +66,12 @@
     <div class="form-group">
         <div class="form-row">
             <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f4_s1" id="s1f4s1" placeholder="<%= obj.s1.f4.s1.caption %>"
-                    value="<%= obj.s1.f4.s1.value %>">
+                <input type="text" class="form-control" name="s1_f4_s1" id="s1f4s1"
+                    placeholder="<%= obj.s1.f4.s1.caption %>" value="<%= obj.s1.f4.s1.value %>">
             </div>
             <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f4_s2" id="s1f4s2" placeholder="<%= obj.s1.f4.s2.caption %>"
-                    value="<%= obj.s1.f4.s2.value %>">
+                <input type="text" class="form-control" name="s1_f4_s2" id="s1f4s2"
+                    placeholder="<%= obj.s1.f4.s2.caption %>" value="<%= obj.s1.f4.s2.value %>">
             </div>
         </div>
         <div class="form-group">
@@ -175,7 +189,7 @@
             </div>
         </div> -->
         <div class="form-group">
-                <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s2.f2.caption %></h8>
+            <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s2.f2.caption %></h8>
             <div class="form-row">
                 <div class="form-group col">
                     <input type="text" class="form-control" name="s2_f3" id="s2f3"

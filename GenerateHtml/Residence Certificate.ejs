@@ -106,10 +106,23 @@
                 </select> -->
 
                 <input class="form-control awesomplete" list="sex" name="s2_f12" id="s2f12" placeholder="<%= obj.s2.f12.caption %>" value="<%= obj.s2.f12.value %>" required>
-                <datalist id="sex">
-                    <option>male</option>
-                    <option>female</option>
-                </datalist>
+                <%if (obj.type == "English") { %>
+                    <datalist id="sex">
+                        <option>male</option>
+                        <option>female</option>
+                    </datalist>
+                    <% } else if (obj.type == "Français") {%>
+                    <datalist id="sex">
+                        <option>mâle</option>
+                        <option>femelle</option>
+                    </datalist>
+                    <% } else if (obj.type == "Español") {%>
+                    <datalist id="sex">
+                        <option>masculino</option>
+                        <option>femenino</option>
+                    </datalist>
+                    <% } else {%>
+                    <% }%>
             </div>
         </div>
     </div>
