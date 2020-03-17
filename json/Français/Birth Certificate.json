@@ -48,17 +48,17 @@
     "s1": {
         "caption": "client",
         "f1": {
-            "caption": "Name of the New born",
+            "caption": "Prénom du nouveau-né",
             "value": ""
         },
         "f2": {
-            "caption": "sex",
+            "caption": "sexe",
             "value": ""
         },
         "f3": {
-            "caption": "Place of Birth",
+            "caption": "Lieu de Naissance",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localité",
                 "value": ""
             },
             "s2": {
@@ -66,16 +66,16 @@
                 "value": ""
             },
             "s3": {
-                "caption": "Hospital Name",
+                "caption": "Nom de l’hôpital",
                 "value": ""
             }
         },
         "f4": {
-            "caption": "Date of Birth",
+            "caption": "Date de Naissance",
             "value": ""
         },
         "f5": {
-            "caption": "Statement of the obstetrician",
+            "caption": "Déclaration du médecin accoucheur",
             "s1": {
                 "caption": "Je,        , déclare que j’ai assisté à l’accouchement susmentionné.",
                 "value": ""
@@ -85,7 +85,7 @@
                 "value": ""
             },
             "s3": {
-                "caption": "Profession",
+                "caption": "Spécialité",
                 "value": ""
             },
             "s4": {
@@ -99,28 +99,28 @@
         }
     },
     "s2": {
-        "caption": "The Father",
+        "caption": "Le père ",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Prénom et Prénom",
             "s1": {
-                "caption": "Name",
+                "caption": "Prénom",
                 "value": ""
             },
             "s2": {
-                "caption": "Surname",
+                "caption": "Prénom",
                 "value": ""
             }
         },
         "f2": {
-            "caption": "Religion",
+            "caption": "Rite",
             "value": ""
         },
         "f3": {
-            "caption": "Date of Birth",
+            "caption": "Date de naissance ",
             "value": ""
         },
         "f4": {
-            "caption": "Profession",
+            "caption": "Métier ",
             "value": ""
         },
         "f5": {
@@ -129,32 +129,32 @@
         }
     },
     "s3": {
-        "caption": "The Mother",
+        "caption": "La mère ",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Prénom et Prénom",
             "s1": {
-                "caption": "Name",
+                "caption": "Prénom",
                 "value": ""
             },
             "s2": {
-                "caption": "Surname",
+                "caption": "Prénom",
                 "value": ""
             }
         },
         "f2": {
-            "caption": "Religion",
+            "caption": "Rite",
             "value": ""
         },
         "f3": {
-            "caption": "Date of Birth",
+            "caption": "Date de naissance",
             "value": ""
         },
         "f4": {
-            "caption": "Home Address",
+            "caption": "Adresse du domicile",
             "value": ""
         },
         "f5": {
-            "caption": "Locality",
+            "caption": "Localité",
             "value": ""
         },
         "f6": {
@@ -163,15 +163,15 @@
         }
     },
     "s4": {
-        "caption": "The claimant of the certificate",
+        "caption": "Demandeur de l’acte",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Prénom et Prénom",
             "s1": {
-                "caption": "Name",
+                "caption": "Prénom",
                 "value": ""
             },
             "s2": {
-                "caption": "Surname",
+                "caption": "Prénom",
                 "value": ""
             }
         },
@@ -189,9 +189,9 @@
         }
     },
     "s5": {
-        "caption": "Parents' original registry",
+        "caption": "Registre original des parents",
         "f1": {
-            "caption": "Locality",
+            "caption": "Localité",
             "value": ""
         },
         "f2": {
@@ -200,24 +200,24 @@
         }
     },
     "s6": {
-        "caption": "Number and type of registry",
+        "caption": "Numéro et type du registre",
         "f1": {
-            "caption": "Number",
+            "caption": "Numéro",
             "value": ""
         },
         "f2": {
-            "caption": "Type of registry and religion",
+            "caption": "Type du registre et rite",
             "value": ""
         }
     },
     "s7": {
-        "caption": "Witness",
+        "caption": "Témoin",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Prénom et nom",
             "value": ""
         },
         "f2": {
-            "caption": "Date of Birth",
+            "caption": "Date de naissance",
             "value": ""
         },
         "f3": {
@@ -225,7 +225,7 @@
             "value": ""
         },
         "f4": {
-            "caption": "Profession",
+            "caption": "Occupation",
             "value": ""
         },
         "f5": {
@@ -234,13 +234,13 @@
         }
     },
     "s8": {
-        "caption": "Witness",
+        "caption": "Témoin",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Prénom et nom",
             "value": ""
         },
         "f2": {
-            "caption": "Date of Birth",
+            "caption": "Date de naissance",
             "value": ""
         },
         "f3": {
@@ -248,7 +248,7 @@
             "value": ""
         },
         "f4": {
-            "caption": "Profession",
+            "caption": "Occupation",
             "value": ""
         },
         "f5": {
@@ -257,9 +257,9 @@
         }
     },
     "s9": {
-        "caption": "The Mayor",
+        "caption": "Le Maire",
         "f1": {
-            "caption": "Locality",
+            "caption": "Localité",
             "value": ""
         },
         "f2": {
@@ -271,7 +271,7 @@
             "value": ""
         },
         "f4": {
-            "caption": "Name and Surname of The Mayor",
+            "caption": "Prénom et nom of The Maire",
             "value": ""
         },
         "f5": {
@@ -280,7 +280,7 @@
         }
     },
     "s10": {
-        "caption": "This certificate is submitted to the Bureau of Personal Status on: ",
+        "caption": "Cet acte est présenté auprès du bureau de l’état civil de: ",
         "f1": {
             "caption": "Place",
             "value": ""
@@ -291,9 +291,9 @@
         }
     },
     "s11": {
-        "caption": "Entry Register",
+        "caption": "Registre d’entrée",
         "f1": {
-            "caption": "Number",
+            "caption": "Numéro",
             "value": ""
         },
         "f2": {
@@ -306,9 +306,9 @@
         }
     },
     "s12": {
-        "caption": "Execution",
+        "caption": "Exécution",
         "f1": {
-            "caption": "Number",
+            "caption": "Numéro",
             "value": ""
         },
         "f2": {
@@ -321,9 +321,9 @@
         }
     },
     "s13": {
-        "caption": "Civil Status Officer",
+        "caption": "L’officier de l’état civil",
         "f1": {
-            "caption": "Officer Name",
+            "caption": "Prénom",
             "value": ""
         },
         "f2": {
@@ -335,7 +335,7 @@
             "value": ""
         },
         "f4": {
-            "caption": "Locality",
+            "caption": "Localité",
             "value": ""
         }
     },

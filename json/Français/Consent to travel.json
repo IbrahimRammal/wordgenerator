@@ -48,7 +48,7 @@
     "s1": {
         "caption": "Header",
         "f1": {
-            "caption": "Governorate",
+            "caption": "Gouvernorat",
             "value": ""
         },
         "f2": {
@@ -56,11 +56,11 @@
             "value": ""
         },
         "f3": {
-            "caption": "Mayor of",
+            "caption": "Maire de la localité de",
             "value": ""
         },
         "f4": {
-            "caption": "Serial No.",
+            "caption": "No de série",
             "value": ""
         },
         "f5": {
@@ -69,32 +69,32 @@
         }
     },
     "s2": {
-        "caption": "The Guardian",
+        "caption": "Le père (ou le tuteur)",
         "f1": {
-            "caption": "First Name",
+            "caption": "Prénom",
             "value": ""
         },
         "f2": {
-            "caption": "Surname",
+            "caption": "Nom",
             "value": ""
         },
         "f3": {
-            "caption": "Father's Name",
+            "caption": "Prénom du père ",
             "value": ""
         },
         "f4": {
-            "caption": "Mother's Name and Surname",
+            "caption": "Prénom et nom de la mère",
             "s1": {
-                "caption": "Mother's Name",
+                "caption": "Prénom de la mère",
                 "value": ""
             },
             "s2": {
-                "caption": "Mother's Surname",
+                "caption": "nom de la mère",
                 "value": ""
             }
         },
         "f5": {
-            "caption": "Place of Birth",
+            "caption": "Lieu de naissance",
             "s1": {
                 "caption": "Locality",
                 "value": ""
@@ -109,23 +109,23 @@
             }
         },
         "f6": {
-            "caption": "Date of Birth",
+            "caption": "Date de naissance",
             "value": ""
         },
         "f7": {
-            "caption": "Civil Registry Place",
+            "caption": "Lieu du registre",
             "value": ""
         },
         "f8": {
-            "caption": "Telephone",
+            "caption": "Numéro de téléphone",
             "value": ""
         },
         "f9": {
-            "caption": "Civil Registry No",
+            "caption": "Numéro du registre",
             "value": ""
         },
         "f10": {
-            "caption": "Holder of",
+            "caption": "Portant la",
             "value": ""
         },
         "f11": {
@@ -133,32 +133,32 @@
             "value": ""
         },
         "f12": {
-            "caption": "Issued on",
+            "caption": "Délivrée le ",
             "value": ""
         }
     },
     "s3": {
-        "caption": "The Mother",
+        "caption": "La mère ",
         "f1": {
-            "caption": "First Name",
+            "caption": "Prénom",
             "value": ""
         },
         "f2": {
-            "caption": "Surname",
+            "caption": "Nom",
             "value": ""
         },
         "f3": {
-            "caption": "Father's Name",
+            "caption": "Prénom du père",
             "value": ""
         },
         "f4": {
-            "caption": "Mother's Name and Surname",
+            "caption": "Prénom et nom de la mère",
             "s1": {
-                "caption": "Mother's Name",
+                "caption": "Prénom de la mère",
                 "value": ""
             },
             "s2": {
-                "caption": "Mother's Surname",
+                "caption": "nom de la mère",
                 "value": ""
             }
         },
@@ -178,11 +178,11 @@
             }
         },
         "f6": {
-            "caption": "Date of Birth",
+            "caption": "Date de naissance",
             "value": ""
         },
         "f7": {
-            "caption": "Holder of",
+            "caption": "Portant la",
             "value": ""
         },
         "f8": {
@@ -190,14 +190,14 @@
             "value": ""
         },
         "f9": {
-            "caption": "Issued on",
+            "caption": "Délivrée le ",
             "value": ""
         }
     },
     "s4": {
-        "caption": "CURRENT RESIDENTIAL ADDRESS",
+        "caption": "Adresse résidentielle",
         "f1": {
-            "caption": "Governorate",
+            "caption": "Gouvernorat",
             "value": ""
         },
         "f2": {
@@ -205,23 +205,23 @@
             "value": ""
         },
         "f3": {
-            "caption": "City",
+            "caption": "Localité",
             "value": ""
         },
         "f4": {
-            "caption": "Quarter",
+            "caption": "Quartier",
             "value": ""
         },
         "f5": {
-            "caption": "Street",
+            "caption": "Rue",
             "value": ""
         },
         "f6": {
-            "caption": "Bldg.",
+            "caption": "Immeuble",
             "value": ""
         },
         "f7": {
-            "caption": "Floor",
+            "caption": "Etage",
             "value": ""
         },
         "f8": {
@@ -230,13 +230,13 @@
         }
     },
     "s5": {
-        "caption": "Son's or daughter's full name",
+        "caption": "Nom complet du fils ou de la fille",
         "f1": {
-            "caption": "Son/Daughter",
+            "caption": "Fils/fille",
             "value": ""
         },
         "f2": {
-            "caption": "Son or Daughter full name",
+            "caption": "Nom complet du fils ou de la fille",
             "value": ""
         },
         "f3": {
@@ -245,13 +245,13 @@
         }
     },
     "s6": {
-        "caption": "Mayor",
+        "caption": "la mère",
         "f1": {
-            "caption": "Mayor Name",
+            "caption": "Prénom et nom du maire ",
             "value": ""
         },
         "f2": {
-            "caption": "Telephone",
+            "caption": "Numéro de téléphone",
             "value": ""
         }
     },

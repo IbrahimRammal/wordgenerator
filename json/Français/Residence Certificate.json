@@ -47,7 +47,7 @@
     "s1": {
         "caption": "Header",
         "f1": {
-            "caption": "Governorate",
+            "caption": "Gouvernorat",
             "value": ""
         },
         "f2": {
@@ -55,11 +55,11 @@
             "value": ""
         },
         "f3": {
-            "caption": "Mayor of",
+            "caption": "Maire de la localité de",
             "value": ""
         },
         "f4": {
-            "caption": "Serial No.",
+            "caption": "No de série",
             "value": ""
         },
         "f5": {
@@ -70,29 +70,29 @@
     "s2": {
         "caption": "Client",
         "f1": {
-            "caption": "First Name",
+            "caption": "Prénom",
             "value": ""
         },
         "f2": {
-            "caption": "Surname",
+            "caption": "Prénom",
             "value": ""
         },
         "f3": {
-            "caption": "Father's Name",
+            "caption": "Prénom du père ",
             "value": ""
         },
         "f4": {
-            "caption": "Mother's Name",
+            "caption": "Prénom de la mère",
             "value": ""
         },
         "f5": {
-            "caption": "Mother's Surname",
+            "caption": "nom de la mère",
             "value": ""
         },
         "f6": {
-            "caption": "Place and Date of Birth",
+            "caption": "Lieu et Date de Naissance",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localité ",
                 "value": ""
             },
             "s2": {
@@ -100,16 +100,16 @@
                 "value": ""
             },
             "s3": {
-                "caption": "Hospital Name",
+                "caption": "Nom de l'hôpital",
                 "value": ""
             }
         },
         "f7": {
-            "caption": "Date of Birth",
+            "caption": "Date de naissance",
             "value": ""
         },
         "f8": {
-            "caption": "Civil Registry Place",
+            "caption": "Lieu du registre",
             "value": ""
         },
         "f9": {
@@ -117,11 +117,11 @@
             "value": ""
         },
         "f10": {
-            "caption": "Governorate",
+            "caption": "Gouvernorat",
             "value": ""
         },
         "f11": {
-            "caption": "Civil Registry No",
+            "caption": "Numéro du registre",
             "value": ""
         },
         "f12": {
@@ -154,9 +154,9 @@
         }
     },
     "s3": {
-        "caption": "Current Residential Address",
+        "caption": "Adresse résidentielle",
         "f1": {
-            "caption": "Governorate",
+            "caption": "Gouvernorat",
             "value": ""
         },
         "f2": {
@@ -168,19 +168,19 @@
             "value": ""
         },
         "f4": {
-            "caption": "Quarter",
+            "caption": "Quartier",
             "value": ""
         },
         "f5": {
-            "caption": "Street",
+            "caption": "Rue",
             "value": ""
         },
         "f6": {
-            "caption": "Bldg.",
+            "caption": "Immeuble",
             "value": ""
         },
         "f7": {
-            "caption": "Floor",
+            "caption": "Etage",
             "value": ""
         },
         "f8": {
@@ -209,7 +209,7 @@
         }
     },
     "s4": {
-        "caption": "Mayor",
+        "caption": "la mère",
         "f1": {
             "caption": "Full Name",
             "value": ""
@@ -217,7 +217,7 @@
         "f2": {
             "caption": "Full name of the concerned or his representative",
             "s1": {
-                "caption": "First Name",
+                "caption": "Prénom",
                 "value": ""
             },
             "s2": {

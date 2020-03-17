@@ -55,26 +55,26 @@
             "value": ""
         },
         "f3": {
-            "caption": "Place and Number of Registry",
+            "caption": "Lieu et numéro du registre ",
             "s1": {
-                "caption": "Place of Registry",
+                "caption": "Lieu d'immatriculation",
                 "value": ""
             },
             "s2": {
-                "caption": "Number of Registry",
+                "caption": "Numéro d'enregistrement",
                 "value": ""
             }
         },
         "f4": {
-            "caption": "Delivered",
+            "caption": "Délivré le ",
             "value": ""
         },
         "f5": {
-            "caption": "The Civil Status Officer Name",
+            "caption": "nom de l'officier",
             "value": ""
         },
         "f6": {
-            "caption": "Officer Locality",
+            "caption": "Localité de l'officier",
             "value": ""
         }
     },

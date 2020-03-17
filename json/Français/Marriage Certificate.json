@@ -48,20 +48,20 @@
     "s1": {
         "caption": "The husband",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Prénom et nom",
             "s1": {
-                "caption": "Name",
+                "caption": "nom",
                 "value": ""
             },
             "s2": {
-                "caption": "Surname",
+                "caption": "Prénom",
                 "value": ""
             }
         },
         "f2": {
-            "caption": "Place and Date of Birth",
+            "caption": "Lieu et Date de Naissance",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localité ",
                 "value": ""
             },
             "s2": {
@@ -69,20 +69,20 @@
                 "value": ""
             },
             "s3": {
-                "caption": "Hospital Name",
+                "caption": "Nom de l'hôpital",
                 "value": ""
             }
         },
         "f22": {
-            "caption": "Date of birth",
+            "caption": "date de naissance",
             "value": ""
         },
         "f3": {
-            "caption": "Father’s name",
+            "caption": "Prénom du Père",
             "value": ""
         },
         "f4": {
-            "caption": "Mother’s name",
+            "caption": "Prénom de la mère ",
             "value": ""
         },
         "f5": {
@@ -90,13 +90,13 @@
             "value": ""
         },
         "f6": {
-            "caption": "Religion",
+            "caption": "Rite",
             "value": ""
         },
         "f7": {
             "caption": "Original Registry",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localité ",
                 "value": ""
             },
             "s2": {
@@ -112,20 +112,20 @@
     "s2": {
         "caption": "The wife",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Prénom et nom",
             "s1": {
-                "caption": "Name",
+                "caption": "nom",
                 "value": ""
             },
             "s2": {
-                "caption": "Surname",
+                "caption": "Prénom",
                 "value": ""
             }
         },
         "f2": {
-            "caption": "Place and Date of Birth",
+            "caption": "Lieu et Date de Naissance",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localité ",
                 "value": ""
             },
             "s2": {
@@ -133,20 +133,20 @@
                 "value": ""
             },
             "s3": {
-                "caption": "Hospital Name",
+                "caption": "Nom de l'hôpital",
                 "value": ""
             }
         },
         "f22": {
-            "caption": "Date of birth",
+            "caption": "date de naissance",
             "value": ""
         },
         "f3": {
-            "caption": "Father’s name",
+            "caption": "Prénom du Père",
             "value": ""
         },
         "f4": {
-            "caption": "Mother’s name",
+            "caption": "Prénom de la mère ",
             "value": ""
         },
         "f5": {
@@ -154,13 +154,13 @@
             "value": ""
         },
         "f6": {
-            "caption": "Religion",
+            "caption": "Rite",
             "value": ""
         },
         "f7": {
             "caption": "Original Registry",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localité ",
                 "value": ""
             },
             "s2": {
@@ -210,7 +210,7 @@
     "s5": {
         "caption": "Signature of the Husband or Wife",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Prénom et nom",
             "value": ""
         },
         "f2": {
@@ -225,7 +225,7 @@
             "value": ""
         },
         "f2": {
-            "caption": "Religion",
+            "caption": "Rite",
             "value": ""
         },
         "f3": {
@@ -238,13 +238,13 @@
         }
     },
     "s7": {
-        "caption": "Witness",
+        "caption": "Témoin",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Prénom et nom",
             "value": ""
         },
         "f2": {
-            "caption": "Date of Birth",
+            "caption": "Date de naissance",
             "value": ""
         },
         "f3": {
@@ -252,18 +252,18 @@
             "value": ""
         },
         "f4": {
-            "caption": "Place and No. of registry",
+            "caption": "Lieu et numéro de registre ",
             "value": ""
         }
     },
     "s8": {
-        "caption": "Witness",
+        "caption": "Témoin",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Prénom et nom",
             "value": ""
         },
         "f2": {
-            "caption": "Date of Birth",
+            "caption": "Date de naissance",
             "value": ""
         },
         "f3": {
@@ -271,18 +271,18 @@
             "value": ""
         },
         "f4": {
-            "caption": "Place and No. of registry",
+            "caption": "Lieu et numéro de registre ",
             "value": ""
         }
     },
     "s9": {
-        "caption": "The Mayor",
+        "caption": "Le Maire",
         "f5": {
-            "caption": "Mayor of",
+            "caption": "Maire de la localité de",
             "value": ""
         },
         "f4": {
-            "caption": "Locality",
+            "caption": "Localité ",
             "value": ""
         },
         "f2": {
@@ -294,14 +294,14 @@
             "value": ""
         },
         "f1": {
-            "caption": "Name and Surname of the Mayor",
+            "caption": "Prénom et nom of the Mayor",
             "value": ""
         }
     },
     "s11": {
-        "caption": "Entry Register",
+        "caption": "Registre d’entrée",
         "f1": {
-            "caption": "Number",
+            "caption": "Numéro",
             "value": ""
         },
         "f2": {
@@ -310,9 +310,9 @@
         }
     },
     "s12": {
-        "caption": "Execution",
+        "caption": "Exécution",
         "f1": {
-            "caption": "Number",
+            "caption": "Numéro",
             "value": ""
         },
         "f2": {

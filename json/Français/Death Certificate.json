@@ -17,7 +17,7 @@
     },
     "s0": {
         "name": "",
-        "surname": "",
+        "Nom": "",
         "father": "",
         "mother" : "",
         "nationaltiy": "",
@@ -46,19 +46,19 @@
         "noregistry" : ""
     },
     "s1": {
-        "caption": "client",
+        "caption": "Prénom et Nom du Décédé",
         "f1": {
-            "caption": "Name and Surname of the deceased",
+            "caption": "Prénom et nom of the deceased",
             "value": ""
         },
         "f8": {
-            "caption": "sex",
+            "caption": "sexe",
             "value": ""
         },
         "f2": {
-            "caption": "Place and Date of birth",
+            "caption": "Lieu et Date de Naissance",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localité ",
                 "value": ""
             },
             "s2": {
@@ -67,67 +67,67 @@
             }
         },
         "f22": {
-            "caption": "date of birth",
+            "caption": "date de naissance",
             "value": ""
         },
         "f3": {
-            "caption": "Father’s name",
+            "caption": "Prénom du Père",
             "value": ""
         },
         "f4": {
-            "caption": "Mother’s name and surname ",
+            "caption": "Prénom et Nom de la Mère ",
             "s1": {
-                "caption": "Mother's Name",
+                "caption": "Prénom de la mère",
                 "value":""
             },
             "s2":{
-                "caption": "Mother's Surname",
+                "caption": "nom de la mère",
                 "value":""
             }
         },
         "f5": {
-            "caption": "Marital Status ",
+            "caption": "État Civil",
             "value": ""
         },
         "f6": {
-            "caption": "Number of living children ",
+            "caption": "Nombre d´enfants vivants ",
             "value": ""
         },
         "f7": {
-            "caption": "Husband of",
+            "caption": "Epoux(se) ",
             "value": ""
         },
         "f11": {
-            "caption": "Date of death",
+            "caption": "Date du Décès",
             "s1": {
-                "caption": "Hour & minute",
+                "caption": "Heure et minute",
                 "value": ""
             },
             "s2": {
-                "caption": "Day",
+                "caption": "journée",
                 "value": ""
             },
             "s3": {
-                "caption": "Month",
+                "caption": "Mois",
                 "value": ""
             },
             "s4": {
-                "caption": "Year",
+                "caption": "Année",
                 "value": ""
             }
         },
         "f9": {
-            "caption": "Profession",
+            "caption": "Occupation ",
             "value": ""
         },
         "f10": {
-            "caption": "ID Serial Number",
+            "caption": "Numéro de la Carte d´Identité ",
             "value": ""
         },
         "f12": {
-            "caption": "Place of death",
+            "caption": "Lieu du Décès ",
             "s1": {
-                "caption": "Place of death",
+                "caption": "Lieu du Décès ",
                 "value": ""
             },
             "s2": {
@@ -135,14 +135,14 @@
                 "value": ""
             },
             "s3": {
-                "caption": "Hospital Name",
+                "caption": "Nom de l'hôpital",
                 "value": ""
             }
         },
         "f13": {
-            "caption": "Residence of the deceased",
+            "caption": "Domicile du Décédé ",
             "s1": {
-                "caption": "Residence of the deceased",
+                "caption": "Domicile du Décédé ",
                 "value": ""
             },
             "s2": {
@@ -151,9 +151,9 @@
             }
         },
         "f14": {
-            "caption": "Place and Number of Register",
+            "caption": "Lieu et numéro du Registre",
             "s1": {
-                "caption": "Place and Number of Register",
+                "caption": "Lieu et numéro du Registre",
                 "value": ""
             },
             "s2": {
@@ -161,15 +161,15 @@
                 "value": ""
             },
             "s3": {
-                "caption": "Sect",
+                "caption": "Rite",
                 "value": ""
             }
         }
     },
     "s2": {
-        "caption": "Cause of death",
+        "caption": "Cause du Décès",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Prénom et nom",
             "value": ""
         },
         "f2": {
@@ -190,38 +190,38 @@
         }
     },
     "s3": {
-        "caption": "If a surgical intervention has been done, mention the date and the most significant result ",
+        "caption": "Si une intervention chirurgicale a été effectuée, mentionnez la date et   le plus important résultat de cette intervention ",
         "f1": {
-            "caption": "Date of intervention",
+            "caption": "Date de l’intervention ",
             "value": ""
         },
         "f2": {
-            "caption": "Result",
+            "caption": "le plus important résultat de cette intervention ",
             "value": ""
         }
     },
     "s4": {
-        "caption": "Mention if this is suicide or murder",
+        "caption": "Mentionnez spécifiquement si c’est un accident de suicide ou meurtre",
         "f1": {
-            "caption": "Mention if this is suicide or murder",
+            "caption": "Mentionnez spécifiquement si c’est un accident de suicide ou meurtre",
             "value": ""
         },
         "f2": {
-            "caption": "How did it happen",
+            "caption": "Comment l’accident a eu lieu ",
             "value": ""
         }
     },
     "s5": {
-        "caption": "Pysiscian's name",
+        "caption": "Nom du médecin ",
         "f1": {
-            "caption": "Pysiscian's name",
+            "caption": "Nom du médecin ",
             "value": ""
         }
     },
     "s6": {
-        "caption": "Person who examined the deceased’s body ",
+        "caption": "Examinateur du corps du  Décédé ",
         "f1": {
-            "caption": "Name",
+            "caption": "Nom",
             "value": ""
         },
         "f2": {
@@ -230,13 +230,13 @@
         }
     },
     "s7": {
-        "caption": "Witness or informer",
+        "caption": "Informant ou témoin ",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Prénom et nom",
             "value": ""
         },
         "f2": {
-            "caption": "Date of Birth",
+            "caption": "Date de naissance",
             "value": ""
         },
         "f3": {
@@ -244,22 +244,22 @@
             "value": ""
         },
         "f4": {
-            "caption": "Place and No. of registry",
+            "caption": "Lieu et numéro de registre ",
             "value": ""
         },
         "f5": {
-            "caption": "Degree of kinship to the deceased",
+            "caption": "Grade de parenté avec le décédé ",
             "value": ""
         }
     },
     "s8": {
-        "caption": "Witness or informer",
+        "caption": "Informant ou témoin ",
         "f1": {
-            "caption": "Name and Surname",
+            "caption": "Prénom et nom",
             "value": ""
         },
         "f2": {
-            "caption": "Date of Birth",
+            "caption": "Date de naissance",
             "value": ""
         },
         "f3": {
@@ -267,11 +267,11 @@
             "value": ""
         },
         "f4": {
-            "caption": "Place and No. of registry",
+            "caption": "Lieu et numéro de registre ",
             "value": ""
         },
         "f5": {
-            "caption": "Degree of kinship to the deceased",
+            "caption": "Grade de parenté avec le décédé ",
             "value": ""
         }
     },
@@ -283,9 +283,9 @@
         }
     },
     "s10": {
-        "caption": "Entry Register",
+        "caption": "Registre d’entrée",
         "f1": {
-            "caption": "Number",
+            "caption": "Numéro",
             "value": ""
         },
         "f2": {
@@ -294,9 +294,9 @@
         }
     },
     "s11": {
-        "caption": "Execution",
+        "caption": "Exécution",
         "f1": {
-            "caption": "Number",
+            "caption": "Numéro",
             "value": ""
         },
         "f2": {
@@ -305,9 +305,9 @@
         }
     },
     "s12": {
-        "caption": "The Mayor",
+        "caption": "Le Maire",
         "f1": {
-            "caption": "The Mayor of",
+            "caption": "The Maire de la localité de",
             "value": ""
         },
         "f2": {
@@ -315,14 +315,14 @@
             "value": ""
         },
         "f3": {
-            "caption": "Name",
+            "caption": "Prénom",
             "value": ""
         }
     },
     "s13": {
-        "caption": "Civil Status Officer",
+        "caption": "L’officier de l’état civil",
         "f1": {
-            "caption": "Civil Status Officer of",
+            "caption": "Localité",
             "value": ""
         },
         "f2": {
@@ -330,7 +330,7 @@
             "value": ""
         },
         "f3": {
-            "caption": "Officer name",
+            "caption": "Nom",
             "value": ""
         }
     },

@@ -56,17 +56,17 @@
             "value": ""
         },
         "f2": {
-            "caption": "Name",
+            "caption": "Prénom",
             "value": ""
         },
         "f3": {
-            "caption": "Father’s name",
+            "caption": "Prénom du Père",
             "value": ""
         },
         "f4": {
-            "caption": "Place of Birth",
+            "caption": "Lieu de naissance",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localité ",
                 "value": ""
             },
             "s2": {
@@ -75,47 +75,47 @@
             }
         },
         "f5": {
-            "caption": "No. of Registry",
+            "caption": "Numéro de Registre",
             "value": ""
         },
         "f6": {
-            "caption": "Form Number",
+            "caption": "Numéro du formulaire ",
             "value": ""
         },
         "f7": {
-            "caption": "Surname",
+            "caption": "Nom",
             "value": ""
         },
         "f8": {
-            "caption": "Mother’s name",
+            "caption": "Prénom de la mère ",
             "value": ""
         },
         "f9": {
-            "caption": "Date of birth",
+            "caption": "date de naissance",
             "value": ""
         },
         "f10": {
-            "caption": "Nationality",
+            "caption": "Nationalité",
             "value": ""
         },
         "f11": {
-            "caption": "License",
+            "caption": "Permis",
             "value": ""
         },
         "f12": {
-            "caption": "License Type",
+            "caption": "Genre du permis",
             "value": ""
         },
         "f13": {
-            "caption": "Issued at",
+            "caption": "Lieu d’émission",
             "value": ""
         },
         "f14": {
-            "caption": "License Date",
+            "caption": "Date du permis",
             "value": ""
         },
         "f15": {
-            "caption": "Valid until",
+            "caption": "Valable jusqu’à",
             "value": ""
         },
         "f16": {

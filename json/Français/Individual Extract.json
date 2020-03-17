@@ -56,36 +56,36 @@
             "value": ""
         },
         "f2": {
-            "caption": "Place and Number of Registry",
+            "caption": "Lieu et numéro du registre ",
             "s1":{
-                "caption": "Place of Registry",
+                "caption": "Lieu d'immatriculation",
                 "value": ""
             },
             "s2":{
-                "caption": "Number of Registry",
+                "caption": "Numéro d'enregistrement",
                 "value": ""
             }
         },
         "f3": {
-            "caption": "Name",
+            "caption": "nom",
             "value": ""
         },
         "f4": {
-            "caption": "Surname",
+            "caption": "Prénom",
             "value": ""
         },
         "f5": {
-            "caption": "Father’s name",
+            "caption": "Prénom du Père",
             "value": ""
         },
         "f6": {
-            "caption": "Mother’s name",
+            "caption": "Prénom de la mère ",
             "value": ""
         },
         "f7": {
-            "caption": "Place and Date of birth",
+            "caption": "Lieu et Date de Naissance",
             "s1": {
-                "caption": "Locality",
+                "caption": "Localité ",
                 "value": ""
             },
             "s2": {
@@ -93,20 +93,20 @@
                 "value": ""
             },
             "s3": {
-                "caption": "Hospital Name",
+                "caption": "Nom de l'hôpital",
                 "value": ""
             }
         },
         "f77":{
-            "caption": "Date of birth",
+            "caption": "date de naissance",
             "value": ""
         },
         "f8": {
-            "caption": "Religion",
+            "caption": "Rite",
             "value": ""
         },
         "f9": {
-            "caption": "Marital status ",
+            "caption": "État Civil  ",
             "value": ""
         },
         "f10": {
@@ -130,11 +130,11 @@
             "value": ""
         },
         "f15": {
-            "caption": "Civil Status officer Name ",
+            "caption": "L’officier de l’état civil Name ",
             "value": ""
         },
         "f16": {
-            "caption": "Civil Status officer of ",
+            "caption": "L’officier de l’état civil of ",
             "value": ""
         }
     },
