@@ -15,7 +15,7 @@ const verify = require('./middleware/verifyToken');
 const app = express()
 
 
-app.use(express.static(path.join("/home/ubt/wordgenerator", 'public')));
+app.use(express.static(path.join("/home/ubt/gitWordGenerator/wordgenerator", 'public')));
 
 //Import ROutes
 const authRoute = require('./routers/auth');
