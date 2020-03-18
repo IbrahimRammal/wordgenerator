@@ -59,7 +59,7 @@
             "value": ""
         },
         "f3": {
-            "caption": "Police record No.",
+            "caption": "Ficha Policial No.",
             "value": ""
         },
         "f4": {
@@ -105,13 +105,13 @@
             "value": ""
         },
         "f9": {
-            "caption": "Civil reg. No & place",
+            "caption": "Número y lugar del registro civil",
             "s1": {
-                "caption": "Civil reg. Place",
+                "caption": "lugar del registro civil",
                 "value": ""
             },
             "s2": {
-                "caption": "Civil reg. No",
+                "caption": "Número del registro civil",
                 "value": ""
             }
         },
