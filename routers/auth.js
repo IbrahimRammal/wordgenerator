@@ -10,8 +10,18 @@ const { registerValidation, loginValidation } = require('../validate/validation'
 
 
 
-router.post('/registerd', async (req,res) => {
+router.post('/register', async (req,res) => {
 
+    var superKey = req.body['challenge'];
+
+    if(superKey == "123")
+    {
+    }
+    else{
+        return
+    }
+
+    delete req.body['challenge'];
     delete req.body['passwordConf'];
     //console.log(req.body);
     //Lets validate the data before we a user
