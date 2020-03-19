@@ -282,7 +282,7 @@
     "s10": {
         "caption": "Cet acte est présenté auprès du bureau de l’état civil de: ",
         "f1": {
-            "caption": "Place",
+            "caption": "le lieu",
             "value": ""
         },
         "f2": {
@@ -331,7 +331,7 @@
             "value": ""
         },
         "f3": {
-            "caption": "Delivered on",
+            "caption": "Livré le",
             "value": ""
         },
         "f4": {

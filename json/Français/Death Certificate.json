@@ -212,9 +212,9 @@
         }
     },
     "s5": {
-        "caption": "Nom du médecin ",
+        "caption": "Nom du médecin",
         "f1": {
-            "caption": "Nom du médecin ",
+            "caption": "Nom du médecin",
             "value": ""
         }
     },
@@ -276,9 +276,9 @@
         }
     },
     "s9": {
-        "caption": "This certificate was presented",
+        "caption": "Cet acte est présenté auprès du bureau de l’état civil de",
         "f1": {
-            "caption": "This certificate was presented to the Civil Status Department of Beirut ",
+            "caption": "localité",
             "value": ""
         }
     },
