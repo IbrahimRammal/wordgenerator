@@ -301,6 +301,14 @@ const policeSchema = mongoose.Schema({
       value: {
         type: 'String'
       }
+    },
+    f22: {
+      caption: {
+        type: 'String'
+      },
+      value: {
+        type: 'String'
+      }
     }
   },
   date: {

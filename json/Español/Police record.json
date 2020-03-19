@@ -55,7 +55,11 @@
             "value": ""
         },
         "f2": {
-            "caption": "Sargento",
+            "caption": "rango",
+            "value": ""
+        },
+        "f22": {
+            "caption": "nombre",
             "value": ""
         },
         "f3": {
@@ -128,7 +132,7 @@
             "value": ""
         },
         "f13": {
-            "caption": "Jefe de la Oficina Central de Registros Judiciales",
+            "caption": "Jefe de la Oficina Central de Registros Judiciales: rango y nombre",
             "value": ""
         },
         "f14": {

@@ -55,7 +55,11 @@
             "value": ""
         },
         "f2": {
-            "caption": "Sergent-chef",
+            "caption": "rang",
+            "value": ""
+        },
+        "f22": {
+            "caption": "nom",
             "value": ""
         },
         "f3": {
@@ -128,7 +132,7 @@
             "value": ""
         },
         "f13": {
-            "caption": "LE CHEF DU BUREAU DU CASIER JUDICIAIRE Colonel",
+            "caption": "LE CHEF DU BUREAU DU CASIER JUDICIAIRE: rang et nom",
             "value": ""
         },
         "f14": {
