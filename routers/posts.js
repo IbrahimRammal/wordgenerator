@@ -352,9 +352,9 @@ router.post('/template', verify, async (req, res) => {
 // make the access only from the server
 router.get('/r', async (req, res) => {
   var passedVariable = req.query.valid
-  console.log(passedVariable)
+  //console.log(passedVariable)
   var passedpassVariable = req.query.pass + '.docx'
-  console.log(passedpassVariable)
+  //console.log(passedpassVariable)
   res.download(passedVariable, passedpassVariable, err => {
     if (err) {
       // handle error
@@ -557,20 +557,39 @@ router.post('/data', verify, async (req, res) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
       
         var datetime = ""
+
+        // check if original or not
+        //docArray['o1'] = "True Copy of the Original";
+        //req.body["original"]
+        console.log("check if checked")
+
+        var originalFlag = true
+        if (req.body["original"] == null){
+          originalFlag = false
+        }
+        console.log()
+
+        docArray['o1'] = ""
         
         if (req.query.lang != null && req.query.lang == 'Français') {
+          if(originalFlag) docArray['o1'] = "Véritable copie de l'original" ;
           datetime = event.toLocaleDateString('fr-GB', options);
         } else if (req.query.lang != null && req.query.lang == 'Arabic') {
+
           datetime = event.toLocaleDateString('ar-EG', options);
         } else  if (req.query.lang != null && req.query.lang == 'English') {
-          datetime = event.toLocaleDateString('en-GB', options);
+          if(originalFlag) docArray['o1'] = "True Copy of the Original";
+          datetime = event.toLocaleDateString('en-US', { year: 'numeric',  day: 'numeric', month: 'long' });
         } else if (req.query.lang != null && req.query.lang== 'Español') {
+          if(originalFlag) docArray['o1'] = "Copia verdadera del original";
           datetime = event.toLocaleDateString('es-GB', options);
         }
         else {}
 
         data['date'] = datetime;
         docArray['date'] = datetime;
+
+
 
         // data['date'] = dateFormat(new Date(), "mmm d yyyy");
         // docArray['date'] = dateFormat(new Date(), "mmm d yyyy");

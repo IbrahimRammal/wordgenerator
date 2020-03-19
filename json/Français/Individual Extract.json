@@ -20,8 +20,8 @@
         "surname": "s1_f4",
         "father": "s1_f5",
         "nationaltiy": "",
-        "mother" : "s1_f6",
-        "mothersurname" : "",
+        "mother": "s1_f6",
+        "mothersurname": "",
         "sex": "s1_f10",
         "familystatus": "s1_f9",
         "governorate": "",
@@ -39,11 +39,11 @@
         "address": "",
         "telephone": "",
         "religion": "s1_f8",
-        "placeofbirthlocal" : "s1_f7_s1",
-        "placeofbirthdistrict" : "s1_f7_s2",
+        "placeofbirthlocal": "s1_f7_s1",
+        "placeofbirthdistrict": "s1_f7_s2",
         "dateofbirth": "s1_f77",
         "placeregistry": "s1_f2_s1",
-        "noregistry" : "s1_f2_s2"
+        "noregistry": "s1_f2_s2"
     },
     "s1": {
         "caption": "client",
@@ -57,11 +57,11 @@
         },
         "f2": {
             "caption": "Lieu et numéro du registre",
-            "s1":{
+            "s1": {
                 "caption": "Lieu du registre",
                 "value": ""
             },
-            "s2":{
+            "s2": {
                 "caption": "numéro du registre",
                 "value": ""
             }
@@ -97,7 +97,7 @@
                 "value": ""
             }
         },
-        "f77":{
+        "f77": {
             "caption": "date de naissance",
             "value": ""
         },
@@ -139,6 +139,7 @@
         }
     },
     "date": "",
+    "original": "0",
     "caption": "Individual Extract",
     "leftheader": {
         "title": "R B P S T",

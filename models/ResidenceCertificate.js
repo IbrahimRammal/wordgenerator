@@ -484,6 +484,9 @@ const residenceSchema = mongoose.Schema({
   "date": {
     "type": "String"
   },
+  "original": {
+    "type": "String"
+  },
   "caption": {
     "type": "String"
   },

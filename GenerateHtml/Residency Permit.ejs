@@ -91,5 +91,20 @@
                 </div>
             </div>
         </div>
+        <%if (obj.original == "0") { %>
+            <input type="checkbox" id="original" name="original">
+            <% } else { %>
+            <input type="checkbox" id="original" name="original" checked>
+            <% }%>
+        
+            <%if (obj.type == "English") { %>
+            <label for="original">True Copy of the Original</label>
+            <% } else if (obj.type == "Français") {%>
+            <label for="original">Véritable copie de l'original</label>
+            <% } else if (obj.type == "Español") {%>
+            <label for="original">Copia verdadera del original</label>
+            <% } else {%>
+            <% }%>
+            <br>
         <button type="submit" class="btn btn-primary">Submit</button>
 </form>

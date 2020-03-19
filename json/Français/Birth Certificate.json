@@ -19,8 +19,8 @@
         "name": "s1_f1",
         "surname": "s2_f1_s2",
         "father": "s2_f1_s1",
-        "mother" : "s3_f1_s1",
-		"mothersurname" : "s3_f1_s2",
+        "mother": "s3_f1_s1",
+        "mothersurname": "s3_f1_s2",
         "nationaltiy": "",
         "sex": "s1_f2",
         "familystatus": "",
@@ -39,11 +39,11 @@
         "address": "",
         "telephone": "",
         "religion": "s2_f2",
-        "placeofbirthlocal" : "s1_f3_s1",
-        "placeofbirthdistrict" : "s1_f3_s2",
+        "placeofbirthlocal": "s1_f3_s1",
+        "placeofbirthdistrict": "s1_f3_s2",
         "dateofbirth": "s1_f4",
         "placeregistry": "s5_f1",
-        "noregistry" : "s6_f1"
+        "noregistry": "s6_f1"
     },
     "s1": {
         "caption": "client",
@@ -340,6 +340,7 @@
         }
     },
     "date": "",
+    "original": "0",
     "caption": "Birth Certificate",
     "leftheader": {
         "title": "R B P S T",
