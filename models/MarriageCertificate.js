@@ -670,6 +670,14 @@ const marriageSchema = mongoose.Schema({
       value: {
         type: 'String'
       }
+    },
+    f2: {
+      caption: {
+        type: 'String'
+      },
+      value: {
+        type: 'String'
+      }
     }
   },
   s13: {

@@ -219,7 +219,7 @@
         }
     },
     "s6": {
-        "caption": "Certification de L'Autorité Religieuse",
+        "caption": "Certification de L'Autorité Religieuse: Titre",
         "f1": {
             "caption": "Date",
             "value": ""
@@ -323,12 +323,16 @@
     "s10": {
         "caption": "Cet acte de mariage est délivré au Bureau de",
         "f1": {
-            "caption": "Cet acte de mariage est délivré au Bureau de",
+            "caption": "le lieu",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date",
             "value": ""
         }
     },
     "s13": {
-        "caption": "Signature et cachet de l'Officier de L'état Civil de ",
+        "caption": "l'Officier de L'état Civil de ",
         "f1": {
             "caption": "localité",
             "value": ""

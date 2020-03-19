@@ -219,7 +219,7 @@
         }
     },
     "s6": {
-        "caption": "Validation of the Religious Chief",
+        "caption": "Validation of the religious chief: Title",
         "f1": {
             "caption": "Date",
             "value": ""
@@ -323,14 +323,18 @@
     "s10": {
         "caption": "This certificate is submitted to the Bureau of Personal Status on",
         "f1": {
-            "caption": "This certificate is submitted to the Bureau of Personal Status on",
+            "caption": "Place",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date",
             "value": ""
         }
     },
     "s13": {
         "caption": "Civil Status Officer",
         "f1": {
-            "caption": "Place",
+            "caption": "Locality",
             "value": ""
         },
         "f2": {
