@@ -162,9 +162,9 @@
         }
     },
     "s3": {
-        "caption": "Religion Permission",
+        "caption": "Religious Permission",
         "f1": {
-            "caption": "Religion Authority allowing divorce",
+            "caption": "Religious Authority allowing divorce",
             "value": ""
         },
         "f2": {
@@ -199,13 +199,13 @@
         }
     },
     "s6": {
-        "caption": "Validation of the Religion Chief",
+        "caption": "Validation of the religious Chief: Title",
         "f1": {
             "caption": "Date",
             "value": ""
         },
         "f2": {
-            "caption": "Religion",
+            "caption": "Title",
             "value": ""
         },
         "f3": {
@@ -299,19 +299,23 @@
     "s10": {
         "caption": "This Certificate is submitted to the",
         "f1": {
-            "caption": "This Certificate is submitted to the",
+            "caption": "Place",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Date",
             "value": ""
         }
     },
     "s13": {
-        "caption": "Secretario Judicial del tribunal religioso",
+        "caption": "Judicial Secretary of the religious court Name and Place",
         "f1": {
-            "caption": "Secretario Judicial del tribunal religioso",
-            "value": "Secretario Judicial del tribunal religioso sunní en Beirut"
+            "caption": "Judicial Secretary of the religious court : Name and Place",
+            "value": ""
         },
         "f2": {
-            "caption": "Secretario Name",
-            "value": "Jeque Marwan Abdel Rahman Kosok"
+            "caption": "Secretary Name",
+            "value": ""
         }
     },
     "s14": {
@@ -325,7 +329,7 @@
             "value": ""
         },
         "f3": {
-            "caption": "Locality",
+            "caption": "Officer Locality",
             "value": ""
         }
     },

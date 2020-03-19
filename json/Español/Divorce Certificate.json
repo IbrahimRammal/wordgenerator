@@ -199,13 +199,13 @@
         }
     },
     "s6": {
-        "caption": "Validación del jefe religioso",
+        "caption": "Validación del jefe religioso: título",
         "f1": {
             "caption": "Fecha",
             "value": ""
         },
         "f2": {
-            "caption": "Religión",
+            "caption": "título",
             "value": ""
         },
         "f3": {
@@ -299,14 +299,18 @@
     "s10": {
         "caption": "Este certificato ha sido presentado al registro de estado civil",
         "f1": {
-            "caption": "Este certificato ha sido presentado al registro de estado civil",
+            "caption": "Lugar",
+            "value": ""
+        },
+        "f2": {
+            "caption": "fecha",
             "value": ""
         }
     },
     "s13": {
         "caption": "Secretario Judicial del tribunal religioso",
         "f1": {
-            "caption": "Secretario Judicial del tribunal religioso",
+            "caption": "Secretario Judicial del tribunal religioso: Nombre y lugar",
             "value": ""
         },
         "f2": {
