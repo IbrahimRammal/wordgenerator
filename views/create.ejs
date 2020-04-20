@@ -3,6 +3,11 @@
 
 <head>
   <%- include('header'); -%>
+  <!-- Latest compiled and minified CSS -->
+
+  <style>
+
+  </style>
 </head>
 
 <body id="page-top">
@@ -18,9 +23,8 @@
       <div class="form-group">
         <div class="row">
           <div class="col">
-            <select class="form-control form-control-xs selectpicker" name="" data-live-search="true"
-              data-title="Language" id="client_list" data-width="100%">
-              <option value="" selected>Client Select ...</option>
+            <select class="mdb-select md-form" searchable="Search here.." id="client_list">
+              <option value="" disabled selected>Client Select ...</option>
               <%  if(locals.clientname && typeof clientname != 'undefined') { %>
               <% for (var x = 0; x < clientname.length; x++) { %>
               <option value="<%= clientname[x]['_id'] %>"><%= clientname[x]['fullname'] %></option>
@@ -33,9 +37,11 @@
       <div class="form-group">
         <div class="row">
           <div class="col">
-            <select class="form-control form-control-xs selectpicker" name="" data-size="3" data-live-search="true"
+            <select class="mdb-select md-form" searchable="Search here.." id="lan_list">
+              <option value="" disabled selected>Language Select ...</option>
+            <!-- <select class="form-control form-control-xs selectpicker" name="" data-size="3" data-live-search="true"
               data-title="Language" id="lan_list" data-width="100%">
-              <option value="" selected>Language Select ...</option>
+              <option value="" selected>Language Select ...</option> -->
               <option value="English">English</option>
               <option value="Français">Français</option>
               <option value="Español">Español</option>
@@ -43,9 +49,11 @@
             </select>
           </div>
           <div class="col">
-            <select class="form-control form-control-xs selectpicker" name="" data-size="7" data-live-search="true"
+            <select class="mdb-select md-form" searchable="Search here.." id="tem_list">
+              <option value="" disabled selected>Document Select ...</option>
+            <!-- <select class="form-control form-control-xs selectpicker" name="" data-size="7" data-live-search="true"
               data-title="Template" id="tem_list" data-width="100%">
-              <option value="" selected>Document Select ...</option>
+              <option value="" selected>Document Select ...</option> -->
               <!-- <option value="marriage">Marriage Certificate</option> -->
             </select>
           </div>
@@ -84,6 +92,19 @@
         <!-- Card Body -->
         <div class="card-body">
           <div id="panel">
+
+          </div>
+        </div>
+      </div>
+
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary" id="card_label">Paid Form</h6>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <div id="paid">
 
           </div>
         </div>
@@ -185,6 +206,7 @@
                   var strClient = g.options[g.selectedIndex].value;
                   var strTemplate = f.options[f.selectedIndex].text;
                   var strType = e.options[e.selectedIndex].text;
+                  $('#paid').hide(paid);
                   //window.alert(strClient);
                   // Grab the template
                   if (strType != "Language Select ..." && strTemplate != "Document Select ..." && g.options[g.selectedIndex].text != "Client Select ...") {
@@ -196,7 +218,10 @@
                       data: { type: strType, template: strTemplate, client: strClient },
                       success: function (fixtures) {
                         var html = fixtures['html'];
+                        var paid = fixtures['paid'];
                         $('#panel').html(html);
+                        //$('#paid').html(paid);
+                        $('#card_label').html(strType + ' > ' + strTemplate);
                       },
                       error: function (jqXHR, textStatus, err) {
                         alert('text status ' + textStatus + ', err ' + err)
@@ -207,6 +232,43 @@
                     alert("Please pick a language and document, client !");
                   }
                 }
+
+                // $("#my_form").submit(function (event) {
+                //   event.preventDefault(); //prevent default action 
+                //   var post_url = $(this).attr("action"); //get form action url
+                //   var form_data = $(this).serialize(); //Encode form elements for submission
+
+                //   $.post(post_url, form_data, function (response) {
+                //     //$("#server-results").html(response);
+                //     alert('done!!');
+                //   });
+
+                // $("#my_form").on("submit", function (event) {
+                //   event.preventDefault(); //prevent default action 
+                //   var post_url = $(this).attr("action"); //get form action url
+                //   var form_data = $(this).serialize(); //Encode form elements for submission
+
+                //   $.post(post_url, formData).complete(function () {
+                //     console.log("Success");
+                //   });
+                // });
+
+
+                // $("#my_form").submit(function (event) {
+                //   event.preventDefault(); //prevent default action 
+                //   var post_url = $(this).attr("action"); //get form action url
+                //   var request_method = $(this).attr("method"); //get form GET/POST method
+                //   var form_data = $(this).serialize(); //Encode form elements for submission
+
+                //   $.ajax({
+                //     url: post_url,
+                //     type: request_method,
+                //     data: form_data,
+                //     success: function (result) {
+                //       $("#server-results").html(response);
+                //     }
+                //   });
+                // });
 
                 function filterFunction() {
                   var input, filter, ul, li, a, i;
@@ -223,8 +285,17 @@
                     }
                   }
                 }
-              </script>
 
+                // Material Select Initialization
+                $(document).ready(function () {
+                  $('.mdb-select').materialSelect();
+                });
+
+                $(document).ready(function () {
+                  $('.dropdown-toggle').dropdown()
+                });
+
+              </script>
 
 </body>
 

@@ -29,6 +29,11 @@ var PizZip = require('pizzip')
 var Docxtemplater = require('docxtemplater')
 var path = require('path')
 
+//model client paider
+const Paid = require('../models/Paid')
+
+const paidpath = './GenerateHtml/paidform.ejs'
+
 const {
   registerValidation,
   loginValidation,
@@ -56,6 +61,20 @@ router.post('/selector', verify, async (req, res) => {
     // const file = fs.readFileSync('./GenerateHtml/selector.ejs', 'utf-8')
     // var fixture_template = ejs.compile(file, { client: true })
     // const html = fixture_template({ obj: data })
+
+    res.send({ html: data })
+  } catch (err) {
+    // send to client feed back of error or save the error for the super admin me :)
+    console.log(err)
+    // res.status(500).send({ error: 'Something failed!' })
+  }
+})
+
+
+router.post('/clientpaidselect', verify, async (req, res) => {
+  try {
+
+    let data = JSON.parse(rawdata)
 
     res.send({ html: data })
   } catch (err) {
@@ -332,12 +351,22 @@ router.post('/template', verify, async (req, res) => {
 
         /// /////////
 
-        // caution englishdocument.ejs
+        // Document Template form box
+        //app.engine('html', require('ejs-locals'));
+
         const file = fs.readFileSync(htmlpath, 'utf-8')
         var fixture_template = ejs.compile(file, { client: true })
         const html = fixture_template({ obj: data })
+
+        // Document Paid Form
+        // Need to load paid template with data from stored on mango
+        // Need to put paid client id on data json
+        const paidfile = fs.readFileSync(paidpath, 'utf-8')
+        var paid_template = ejs.compile(paidfile, { client: true })
+        const paid = paid_template({ obj: data })
+    
         // console.log(html)
-        res.send({ html: html })
+        res.send({ html: html , paid: paid})
         return
       }
     }
@@ -350,7 +379,7 @@ router.post('/template', verify, async (req, res) => {
 })
 
 // make the access only from the server
-router.get('/r', async (req, res) => {
+router.get('/r', verify, async (req, res) => {
   var passedVariable = req.query.valid
   //console.log(passedVariable)
   var passedpassVariable = req.query.pass + '.docx'
@@ -463,6 +492,63 @@ router.get('/jsonok/:type', verify, async (req, res) => {
 //   })
 // })
 
+router.post('/paid', verify, async (req, res) => {
+  try {
+    //On paid post request get all user information
+    //Get the doc id form client id on post request
+    //Check if paid client allready exits 
+    //If true update the paid information with the new doc
+    //If not create new paid account with doc information
+    console.log(req.query.doc)
+    if (
+      !isEmptyOrSpaces(req.query.lang) &&
+      !isEmptyOrSpaces(req.query.doc) &&
+      !isEmptyOrSpaces(req.query.id) &&
+      !isEmptyOrSpaces(req.query.docid)
+    ) {
+        console.log(req.query)
+
+        //need to make unique id combination different from _id to make update more easer
+        var clientpaid = {
+          'first': "",
+          'middle': "",
+          'last': "",
+          'address': "",
+          'phone': "",
+          'type': "",
+          'paid': "",
+          'remain': "",
+          'docid' : req.query.docid
+        }
+
+        //maybe need try catch
+        Object.keys(req.body).forEach(function(key) {
+         clientpaid[key] = req.body[key]
+        })
+
+        var fullname = clientpaid['first'] + clientpaid['middle'] + clientpaid['last']
+        var data = addPaidClient(fullname, fullname + clientpaid['phone'], clientpaid)
+
+        var modelCheck = req.query.doc
+        modelCheck = modelCheck.replace(/\s/g, '')
+
+
+        data[req.query.lang][modelCheck].push(clientpaid)
+
+        const paid = new Paid(data)
+        const savedPaid = await paid.save()
+
+        console.log(data[req.query.lang][modelCheck])
+
+        res.send("success")
+    } 
+  }catch (err) {
+    console.log(err)
+    res.send("error")
+  }
+})
+
+
 router.post('/data', verify, async (req, res) => {
   try {
     // req.query.lang req.query.lang doc
@@ -488,6 +574,9 @@ router.post('/data', verify, async (req, res) => {
         let docArray = { clients: [], users: [] } // sar fe mwskleh bel array fams:[]
         let jsonObj = []
 
+        //Search all filed had been submit when get to the paid form break from this loop and then make another keys's
+        //For paid client form to enter or check if there is already one there
+        
         Object.keys(req.body).forEach(function(key) {
           let keys = key.split('_')
           console.log(keys)
@@ -569,7 +658,7 @@ router.post('/data', verify, async (req, res) => {
         }
         console.log()
 
-        docArray['o1'] = ""
+        docArray['o1'] = "0"
         
         if (req.query.lang != null && req.query.lang == 'Français') {
           if(originalFlag) docArray['o1'] = "Véritable copie de l'original" ;
@@ -589,6 +678,15 @@ router.post('/data', verify, async (req, res) => {
         data['date'] = datetime;
         docArray['date'] = datetime;
 
+        //track if original or not
+        data['original'] = docArray['o1']
+
+        //return to defualt state ""
+        if(docArray['o1'] == "0") docArray['o1'] = ""
+
+        // console.log(docArray['o1'])
+        console.log(data['o1']) 
+
 
 
         // data['date'] = dateFormat(new Date(), "mmm d yyyy");
@@ -601,8 +699,10 @@ router.post('/data', verify, async (req, res) => {
         var id = req.query.id
         modelCheck = modelCheck.replace(/\s/g, '')
 
+
         let clientData = await Client.findOne({ _id: id })
         data['client']['id'] = id
+        
 
         if (data.hasOwnProperty('s0')) {
           Object.keys(data.s0).forEach(function(key) {
@@ -614,17 +714,17 @@ router.post('/data', verify, async (req, res) => {
               // console.log(data1.s0[key])
               if (keys.length == 2) {
                 if (clientData.s0.hasOwnProperty(key)) {
-                  console.log('key: ' + key)
-                  console.log('mongodata: ' + clientData.s0[key])
-                  console.log(keys[0] + ' ' + keys[1])
+                  // console.log('key: ' + key)
+                  // console.log('mongodata: ' + clientData.s0[key])
+                  // console.log(keys[0] + ' ' + keys[1])
                   clientData.s0[key] = data[keys[0]][keys[1]]['value']
-                  console.log(data[keys[0]][keys[1]]['value'])
+                  // console.log(data[keys[0]][keys[1]]['value'])
                 }
                 // data1.s0[key] = req.body[key]
               } else if (keys.length == 3) {
                 if (clientData.s0.hasOwnProperty(key)) {
                   clientData.s0[key] = data[keys[0]][keys[1]][keys[2]]['value']
-                  console.log(data[keys[0]][keys[1]][keys[2]]['value'])
+                  // console.log(data[keys[0]][keys[1]][keys[2]]['value'])
                 }
               } else {
               }
@@ -632,9 +732,22 @@ router.post('/data', verify, async (req, res) => {
           })
         }
 
+
+        var downloadLinkGenerator = downloadLink(datetime, req.query.doc,clientData['fullname'])
+
+        var part1 = encodeURIComponent(downloadLinkGenerator[0])
+        var part2 = encodeURIComponent(downloadLinkGenerator[1])
+
+        data['download'] = '/api/posts/r/?valid=' + part1 + '&pass=' + part2
+        console.log(data['download'])
+
+
+        var docid = ""
+
         if (modelCheck.includes('Birth')) {
           const birth = new Birth(data)
           const savedBirth = await birth.save()
+          docid = savedBirth._id
 
           console.log('saved birth: ' + savedBirth._id)
 
@@ -643,6 +756,7 @@ router.post('/data', verify, async (req, res) => {
         } else if (modelCheck.includes('Divorce')) {
           const divorce = new Divorce(data)
           const savedDivorce = await divorce.save()
+          docid = savedDivorce._id
 
           console.log(savedDivorce._id)
 
@@ -651,6 +765,8 @@ router.post('/data', verify, async (req, res) => {
         } else if (modelCheck.includes('Death')) {
           const death = new Death(data)
           const savedDeath = await death.save()
+          docid = savedDeath._id
+
           console.log(savedDeath._id)
 
           clientData[langCheck][modelCheck] = savedDeath._id
@@ -658,6 +774,8 @@ router.post('/data', verify, async (req, res) => {
         } else if (modelCheck.includes('Marriage')) {
           const marriage = new Marriage(data)
           const savedMarriage = await marriage.save()
+          docid = savedMarriage._id
+
           console.log(savedMarriage._id)
 
           clientData[langCheck][modelCheck] = savedMarriage._id
@@ -665,6 +783,8 @@ router.post('/data', verify, async (req, res) => {
         } else if (modelCheck.includes('Work')) {
           const work = new WPermit(data)
           const savedwork = await work.save()
+          docid = savedwork._id
+
           console.log(savedwork._id)
 
           clientData[langCheck][modelCheck] = savedwork._id
@@ -672,6 +792,8 @@ router.post('/data', verify, async (req, res) => {
         } else if (modelCheck.includes('ResidencyPermit')) {
           const residencypermit = new RPermit(data)
           const savedresidencypermit = await residencypermit.save()
+          docid = savedresidencypermit._id
+
           console.log(savedresidencypermit._id)
 
           clientData[langCheck][modelCheck] = savedresidencypermit._id
@@ -679,67 +801,100 @@ router.post('/data', verify, async (req, res) => {
         } else if (modelCheck.includes('Card')) {
           const card = new IDCard(data)
           const cardid = await card.save()
+          docid = cardid._id
+
           console.log(cardid._id)
+
           clientData[langCheck][modelCheck] = cardid._id
           await clientData.save()
         } else if (modelCheck.includes('MoF')) {
           const mof = new MoF(data)
           const mofid = await mof.save()
+          docid = mofid._id
+
           console.log(mofid._id)
+
           clientData[langCheck][modelCheck] = mofid._id
           await clientData.save()
         } else if (modelCheck.includes('Residence')) {
           const residence = new Residence(data)
           const residenceid = await residence.save()
+          docid = residenceid._id
+
           console.log(residenceid._id)
+
           clientData[langCheck][modelCheck] = residenceid._id
           await clientData.save()
         } else if (modelCheck.includes('PrivateDriver')) {
           const private = new Private(data)
           const privateid = await private.save()
+          docid = privateid._id
+
           console.log(privateid._id)
+
           clientData[langCheck][modelCheck] = privateid._id
           await clientData.save()
         } else if (modelCheck.includes('Police')) {
           const police = new Police(data)
           const policeid = await police.save()
+          docid = policeid._id
+
           console.log(policeid._id)
+
           clientData[langCheck][modelCheck] = policeid._id
           await clientData.save()
         } else if (modelCheck.includes('NSSF')) {
           const nssf = new NSSF(data)
           const nssfid = await nssf.save()
+          docid = nssfid._id
+
           console.log(nssfid._id)
+
           clientData[langCheck][modelCheck] = nssfid._id
           await clientData.save()
         } else if (modelCheck.includes('Individual')) {
           const individual = new Individual(data)
           const individualid = await individual.save()
+          docid = individualid._id
+
           console.log(individualid._id)
+
           clientData[langCheck][modelCheck] = individualid._id
           await clientData.save()
         } else if (modelCheck.includes('Family')) {
           const family = new Family(data)
           const familyid = await family.save()
+          docid = familyid._id
+
           console.log(familyid._id)
+
           clientData[langCheck][modelCheck] = familyid._id
           await clientData.save()
         } else if (modelCheck.includes('Consent')) {
           const consent = new Consent(data)
           const consentid = await consent.save()
+          docid = consentid._id
+
           console.log(consentid._id)
+
           clientData[langCheck][modelCheck] = consentid._id
           await clientData.save()
         } else if (modelCheck.includes('Driver')) {
           const driver = new Driver(data)
           const driverid = await driver.save()
+          docid = driverid._id
+
           console.log(driverid._id)
+
           clientData[langCheck][modelCheck] = driverid._id
           await clientData.save()
         } else if (modelCheck.includes('Empty')) {
           const empty = new ETemplate(data)
           const emptyid = await empty.save()
+          docid = emptyid._id
+
           console.log(emptyid._id)
+
           clientData[langCheck][modelCheck] = emptyid._id
           await clientData.save()
         } else {
@@ -756,7 +911,28 @@ router.post('/data', verify, async (req, res) => {
         var string1 = encodeURIComponent(outputPath[0])
         var string2 = encodeURIComponent(outputPath[1])
 
-        res.redirect('/api/posts/r/?valid=' + string1 + '&pass=' + string2)
+        //download button on the form as a button
+        //res.redirect('/api/posts/r/?valid=' + string1 + '&pass=' + string2)
+        console.log('/api/posts/r/?valid=' + string1 + '&pass=' + string2)
+
+        var link = '/api/posts/r/?valid=' + string1 + '&pass=' + string2
+
+        var query = Paid.find({}, { s0: 0, __v: 0 })
+        query.exec(function(err, result) {
+          if (!err) {
+
+            const paidfile = fs.readFileSync(paidpath, 'utf-8')
+            var paid_template = ejs.compile(paidfile, { client: true })
+            const paid = paid_template({ obj: data, clientname: result, docid: docid })
+        
+            // console.log(html)
+            res.send({ link: link, paid: paid})
+
+          } else {
+            console.log(err)
+          }
+        })
+
       }
     } else {
       //
@@ -766,6 +942,13 @@ router.post('/data', verify, async (req, res) => {
     // res.status(500).send(err)
   }
 })
+
+function downloadLink(datetime, modelCheck, clientName){
+
+  var outputPath = './Output/' + modelCheck + ' - ' + clientName + ' - ' + datetime + '.docx'
+
+  return [outputPath, modelCheck + ' - ' + clientName +' - ' + datetime];
+}
 
 // add mongo id for the user
 function GenerateDocx(data, docxPath, docArray, modelCheck, clientName) {
@@ -805,21 +988,6 @@ function GenerateDocx(data, docxPath, docArray, modelCheck, clientName) {
 
   var datetime = docArray['date']
   
-  // if (req.query.lang != null && req.query.lang == 'Français') {
-  //   datetime = event.toLocaleDateString('fr-GB', options);
-  // } else if (req.query.lang != null && req.query.lang == 'Arabic') {
-  //   datetime = event.toLocaleDateString('ar-EG', options);
-  // } else  if (req.query.lang != null && req.query.lang == 'English') {
-  //   datetime = event.toLocaleDateString('en-GB', options);
-  // } else if (req.query.lang != null && req.query.lang== 'Español') {
-  //   datetime = event.toLocaleDateString('es-GB', options);
-  // }
-  // else {}
-
-  // console.log(event.toLocaleDateString('fr-EG', options));
-  
-
-  //var datetime = dateFormat(new Date(), "mmm d, yyyy")
 
   var outputPath = './Output/' + modelCheck + ' - ' + clientName +' - ' + datetime + '.docx'
   // Get the path that been enter in mongo file for the client and save it with these path
@@ -828,6 +996,127 @@ function GenerateDocx(data, docxPath, docArray, modelCheck, clientName) {
   //[outputPath, modelCheck + ' ' + datetime];
   //return outputPath
   return [outputPath, modelCheck + ' - ' + clientName +' - ' + datetime];
+}
+
+function addPaidClient(a,b,obj)
+{
+  try {
+    console.log('addPaid')
+    //var targetinfo = req.body
+    if (!isEmptyOrSpaces(a) && !isEmptyOrSpaces(b)) {
+      var data = {
+        "combineid": b,
+        "fullname": a,
+        "name": obj.first,
+        "surname": obj.last,
+        "father": obj.middle,
+        "mother": "",
+        "mothersurname": "",
+        "nationaltiy": "",
+        "sex": "",
+        "familystatus": "",
+        "governorate": "",
+        "district": "",
+        "city": "",
+        "quarter": "",
+        "street": "",
+        "building": "",
+        "floor": "",
+        "mobile": obj.phone,
+        "work": "",
+        "fax": "",
+        "email": "",
+        "profession": "",
+        "address": obj.address,
+        "telephone": "",
+        "religion": "",
+        "placeofbirthlocal": "",
+        "placeofbirthdistrict": "",
+        "dateofbirth": "",
+        "placeregistry": "",
+        "noregistry": "",
+        "Arabic": {
+          "EmptyTemplate": []
+        },
+        "English": {
+          "BirthCertificate": [],
+          "Consenttotravel": [],
+          "DeathCertificate": [],
+          "DivorceCertificate": [],
+          "Driverslicensecertificate": [],
+          "PrivateDriverslicense": [],
+          "FamilyExtract": [],
+          "IDCard": [],
+          "IndividualExtract": [],
+          "MarriageCertificate": [],
+          "MoFRegistration": [],
+          "NSSFServiceCertificate": [],
+          "Policerecord": [],
+          "ResidenceCertificate": [],
+          "ResidencyPermit": [],
+          "WorkPermit": [],
+          "EmptyTemplate": []
+        },
+        "Español": {
+          "BirthCertificate": [],
+          "Consenttotravel": [],
+          "DeathCertificate": [],
+          "DivorceCertificate": [],
+          "Driverslicensecertificate": [],
+          "PrivateDriverslicense": [],
+          "FamilyExtract": [],
+          "IDCard": [],
+          "IndividualExtract": [],
+          "MarriageCertificate": [],
+          "MoFRegistration": [],
+          "NSSFServiceCertificate": [],
+          "Policerecord": [],
+          "ResidenceCertificate": [],
+          "ResidencyPermit": [],
+          "WorkPermit": [],
+          "EmptyTemplate": []
+        },
+        "Français": {
+          "BirthCertificate": [],
+          "Consenttotravel": [],
+          "DeathCertificate": [],
+          "DivorceCertificate": [],
+          "Driverslicensecertificate": [],
+          "PrivateDriverslicense": [],
+          "FamilyExtract": [],
+          "IDCard": [],
+          "IndividualExtract": [],
+          "MarriageCertificate": [],
+          "MoFRegistration": [],
+          "NSSFServiceCertificate": [],
+          "Policerecord": [],
+          "ResidenceCertificate": [],
+          "ResidencyPermit": [],
+          "WorkPermit": [],
+          "EmptyTemplate": []
+        }
+      }
+
+      // let promise = new Promise((resolve, reject) => {
+      //   setTimeout(() => resolve("done!"), 1000)
+      // });
+      //^^^^^^^^^^^^^^^^^^^^^^^66
+      // const paid = new Paid(data)
+      // const savedPaid = await paid.save()
+
+      //console.log('save new client :' + savedClient)
+
+      // wait 3 seconds
+      //^^^^^^^^^^^^^^^^^^^^^^^66
+      // await new Promise((resolve, reject) => setTimeout(resolve, 500));
+
+      // console.log(savedPaid['_id'] + "asdfsadfds")
+      return data
+      //return savedPaid['_id']
+    }
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 async function addClient(a)
@@ -945,30 +1234,9 @@ async function addClient(a)
       console.log(savedClient['_id'] + "asdfsadfds")
 
       return savedClient['_id']
-
-      // var query = Client.find({}).select({"_id": 1, "s0": 0});
-      //render select pickers
-
-      // var query = Client.find({}, { s0: 0, __v: 0 })
-      // query.exec(function(err, result) {
-      //   if (!err) {
-      //     // let rawdata = "";
-      //     // console.log(rawdata);
-      //     // rawdata = result
-      //     let dataReturn = result
-
-      //     console.log(result)
-
-      //     //res.send({ html: dataReturn })
-      //   } else {
-      //     console.log(err)
-      //   }
-      // })
     }
   } catch (err) {
     console.log(err)
-    // res.send({ html: 'No Template added yet!' })
-    // res.status(500).send({ error: 'Something failed!' })
   }
 }
 

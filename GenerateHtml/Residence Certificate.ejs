@@ -1,4 +1,5 @@
-<form method="POST" action="/api/posts/data?lang=<%= obj.type %>&doc=<%= obj.caption %>&id=<%= obj.client.id %>">
+<form method="POST" action="/api/posts/data?lang=<%= obj.type %>&doc=<%= obj.caption %>&id=<%= obj.client.id %>"
+    id="my_form">
     <div class="form-group">
         <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s1.caption %></h8>
         <div class="form-row">
@@ -98,31 +99,32 @@
             </div>
             <div class="form-group col">
                 <!-- <label for="Input2"><%= obj.s1.f2.caption %></label> -->
-                
+
                 <!-- <select class="form-control" name="s2_f12" id="s2f12" required>
                     <option selected><%= obj.s2.f12.value %></option>
                     <option>Male</option>
                     <option>Female</option>
                 </select> -->
 
-                <input class="form-control awesomplete" list="sex" name="s2_f12" id="s2f12" placeholder="<%= obj.s2.f12.caption %>" value="<%= obj.s2.f12.value %>" required>
+                <input class="form-control awesomplete" list="sex" name="s2_f12" id="s2f12"
+                    placeholder="<%= obj.s2.f12.caption %>" value="<%= obj.s2.f12.value %>" required>
                 <%if (obj.type == "English") { %>
-                    <datalist id="sex">
-                        <option>male</option>
-                        <option>female</option>
-                    </datalist>
-                    <% } else if (obj.type == "Français") {%>
-                    <datalist id="sex">
-                        <option>mâle</option>
-                        <option>femelle</option>
-                    </datalist>
-                    <% } else if (obj.type == "Español") {%>
-                    <datalist id="sex">
-                        <option>masculino</option>
-                        <option>femenino</option>
-                    </datalist>
-                    <% } else {%>
-                    <% }%>
+                <datalist id="sex">
+                    <option>male</option>
+                    <option>female</option>
+                </datalist>
+                <% } else if (obj.type == "Français") {%>
+                <datalist id="sex">
+                    <option>mâle</option>
+                    <option>femelle</option>
+                </datalist>
+                <% } else if (obj.type == "Español") {%>
+                <datalist id="sex">
+                    <option>masculino</option>
+                    <option>femenino</option>
+                </datalist>
+                <% } else {%>
+                <% }%>
             </div>
         </div>
     </div>
@@ -254,29 +256,71 @@
         <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s4.f2.caption %></h8>
         <div class="form-row">
             <div class="form-group col">
-                <input type="text" class="form-control" name="s4_f2_s1" id="s4f2s1" placeholder="<%= obj.s4.f2.s1.caption %>"
-                    value="<%= obj.s4.f2.s1.value %>">
+                <input type="text" class="form-control" name="s4_f2_s1" id="s4f2s1"
+                    placeholder="<%= obj.s4.f2.s1.caption %>" value="<%= obj.s4.f2.s1.value %>">
             </div>
             <div class="form-group col">
-                <input type="text" class="form-control" name="s4_f2_s2" id="s4f2s2" placeholder="<%= obj.s4.f2.s2.caption %>"
-                    value="<%= obj.s4.f2.s2.value %>">
+                <input type="text" class="form-control" name="s4_f2_s2" id="s4f2s2"
+                    placeholder="<%= obj.s4.f2.s2.caption %>" value="<%= obj.s4.f2.s2.value %>">
             </div>
         </div>
     </div>
     <%if (obj.original == "0") { %>
-        <input type="checkbox" id="original" name="original">
-        <% } else { %>
-        <input type="checkbox" id="original" name="original" checked>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="original" id="original">
+
+    <!-- <input type="checkbox" id="original" name="original"> -->
+    <% } else { %>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="original" id="original" checked>
+
+        <!-- <input type="checkbox" id="original" name="original" checked> -->
         <% }%>
-    
+
         <%if (obj.type == "English") { %>
-        <label for="original">True Copy of the Original</label>
-        <% } else if (obj.type == "Français") {%>
-        <label for="original">Véritable copie de l'original</label>
-        <% } else if (obj.type == "Español") {%>
-        <label for="original">Copia verdadera del original</label>
-        <% } else {%>
-        <% }%>
-        <br>
-    <button type="submit" class="btn btn-primary">Submit</button>
+        <label class="form-check-label" for="original">True Copy of the Original</label>
+    </div>
+    <!-- <label for="original">True Copy of the Original</label> -->
+    <% } else if (obj.type == "Français") {%>
+    <label class="form-check-label" for="original">Véritable copie de l'original</label>
+    </div>
+    <!-- <label for="original">Véritable copie de l'original</label> -->
+    <% } else if (obj.type == "Español") {%>
+    <label class="form-check-label" for="original">Copia verdadera del origina</label>
+    </div>
+    <!-- <label for="original">Copia verdadera del original</label> -->
+    <% } else {%>
+    <% }%>
+    <br>
+    <br>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        <a href="" style="display: none;" name="download" id="download" class="btn btn-secondary">Download</a>
+    </div>
 </form>
+
+
+<!-- <script src="paidscript.js"></script> -->
+
+<script>
+    $("#my_form").submit(function (event) {
+        event.preventDefault(); //prevent default action 
+        var post_url = $(this).attr("action"); //get form action url
+        var request_method = $(this).attr("method"); //get form GET/POST method
+        var form_data = $(this).serialize(); //Encode form elements for submission
+
+        $.ajax({
+            url: post_url,
+            type: request_method,
+            data: form_data,
+            success: function (result) {
+                //alert(result);
+                //$("#download").html(result);
+                $("#download").show();
+                $("#download").attr("href", result['link']);
+                $('#paid').show();
+                $('#paid').html(result['paid']);
+            }
+        });
+    });
+</script>

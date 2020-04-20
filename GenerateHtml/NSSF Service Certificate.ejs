@@ -1,39 +1,19 @@
-<form method="POST" action="/api/posts/data?lang=<%= obj.type %>&doc=<%= obj.caption %>&id=<%= obj.client.id %>">
+<form method="POST" action="/api/posts/data?lang=<%= obj.type %>&doc=<%= obj.caption %>&id=<%= obj.client.id %>"
+    id="my_form">
     <div class="form-group">
         <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s1.caption %></h8>
         <div class="form-row">
             <div class="form-group col">
-                <input type="text" class="form-control" id="s1f1" name="s1_f1" placeholder="<%= obj.s1.f1.caption %>" value="<%= obj.s1.f1.value %>">
+                <input type="text" class="form-control" id="s1f1" name="s1_f1" placeholder="<%= obj.s1.f1.caption %>"
+                    value="<%= obj.s1.f1.value %>">
             </div>
             <div class="form-group col">
-                <input type="text" class="form-control" id="s1f2" name="s1_f2" placeholder="<%= obj.s1.f2.caption %>" value="<%= obj.s1.f2.value %>">
+                <input type="text" class="form-control" id="s1f2" name="s1_f2" placeholder="<%= obj.s1.f2.caption %>"
+                    value="<%= obj.s1.f2.value %>">
             </div>
             <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f3" id="s1f3" placeholder="<%= obj.s1.f3.caption %>" value="<%= obj.s1.f3.value %>">
-            </div>
-        </div>
-    </div>
-    <hr class="sidebar-divider">
-    <div class="form-group">
-        <div class="form-row">
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f4" id="s1f4" placeholder="<%= obj.s1.f4.caption %>" value="<%= obj.s1.f4.value %>">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f5" id="s1f5" placeholder="<%= obj.s1.f5.caption %>" value="<%= obj.s1.f5.value %>">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f6" id="s1f6" placeholder="<%= obj.s1.f6.caption %>" value="<%= obj.s1.f6.value %>">
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f7" id="s1f7" placeholder="<%= obj.s1.f7.caption %>" value="<%= obj.s1.f7.value %>">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f8" id="s1f8" placeholder="<%= obj.s1.f8.caption %>" value="<%= obj.s1.f8.value %>">
+                <input type="text" class="form-control" name="s1_f3" id="s1f3" placeholder="<%= obj.s1.f3.caption %>"
+                    value="<%= obj.s1.f3.value %>">
             </div>
         </div>
     </div>
@@ -41,15 +21,45 @@
     <div class="form-group">
         <div class="form-row">
             <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f9" id="s1f9" placeholder="<%= obj.s1.f9.caption %>" value="<%= obj.s1.f9.value %>">
+                <input type="text" class="form-control" name="s1_f4" id="s1f4" placeholder="<%= obj.s1.f4.caption %>"
+                    value="<%= obj.s1.f4.value %>">
             </div>
             <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f10" id="s1f10"
-                    placeholder="<%= obj.s1.f10.caption %>" value="<%= obj.s1.f10.value %>">
+                <input type="text" class="form-control" name="s1_f5" id="s1f5" placeholder="<%= obj.s1.f5.caption %>"
+                    value="<%= obj.s1.f5.value %>">
             </div>
             <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f11" id="s1f11"
-                    placeholder="<%= obj.s1.f11.caption %>" value="<%= obj.s1.f11.value %>">
+                <input type="text" class="form-control" name="s1_f6" id="s1f6" placeholder="<%= obj.s1.f6.caption %>"
+                    value="<%= obj.s1.f6.value %>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f7" id="s1f7" placeholder="<%= obj.s1.f7.caption %>"
+                    value="<%= obj.s1.f7.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f8" id="s1f8" placeholder="<%= obj.s1.f8.caption %>"
+                    value="<%= obj.s1.f8.value %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f9" id="s1f9" placeholder="<%= obj.s1.f9.caption %>"
+                    value="<%= obj.s1.f9.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f10" id="s1f10" placeholder="<%= obj.s1.f10.caption %>"
+                    value="<%= obj.s1.f10.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f11" id="s1f11" placeholder="<%= obj.s1.f11.caption %>"
+                    value="<%= obj.s1.f11.value %>">
             </div>
         </div>
     </div>
@@ -65,10 +75,12 @@
                     id="s2clientsestablishment<%= i %>" placeholder="Name of Establishment">
             </div>
             <div class="form-group col">
-                <input type="text" class="form-control" name="s2_clients_emp_<%= i %>" id="s2clientsemp<%= i %>" placeholder="Date of Employment">
+                <input type="text" class="form-control" name="s2_clients_emp_<%= i %>" id="s2clientsemp<%= i %>"
+                    placeholder="Date of Employment">
             </div>
             <div class="form-group col">
-                <input type="text" class="form-control" name="s2_clients_ter_<%= i %>" id="s2clientster<%= i %>" placeholder="Date of Termination
+                <input type="text" class="form-control" name="s2_clients_ter_<%= i %>" id="s2clientster<%= i %>"
+                    placeholder="Date of Termination
                     ">
             </div>
             <div class="form-group col">
@@ -79,19 +91,61 @@
     </div>
     <% } %>
     <%if (obj.original == "0") { %>
-        <input type="checkbox" id="original" name="original">
-        <% } else { %>
-        <input type="checkbox" id="original" name="original" checked>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="original" id="original">
+
+    <!-- <input type="checkbox" id="original" name="original"> -->
+    <% } else { %>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="original" id="original" checked>
+
+        <!-- <input type="checkbox" id="original" name="original" checked> -->
         <% }%>
-    
+
         <%if (obj.type == "English") { %>
-        <label for="original">True Copy of the Original</label>
-        <% } else if (obj.type == "Français") {%>
-        <label for="original">Véritable copie de l'original</label>
-        <% } else if (obj.type == "Español") {%>
-        <label for="original">Copia verdadera del original</label>
-        <% } else {%>
-        <% }%>
-        <br>
-    <button type="submit" class="btn btn-primary">Submit</button>
+        <label class="form-check-label" for="original">True Copy of the Original</label>
+    </div>
+    <!-- <label for="original">True Copy of the Original</label> -->
+    <% } else if (obj.type == "Français") {%>
+    <label class="form-check-label" for="original">Véritable copie de l'original</label>
+    </div>
+    <!-- <label for="original">Véritable copie de l'original</label> -->
+    <% } else if (obj.type == "Español") {%>
+    <label class="form-check-label" for="original">Copia verdadera del origina</label>
+    </div>
+    <!-- <label for="original">Copia verdadera del original</label> -->
+    <% } else {%>
+    <% }%>
+    <br>
+    <br>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        <a href="" style="display: none;" name="download" id="download" class="btn btn-secondary">Download</a>
+    </div>
 </form>
+
+
+<!-- <script src="paidscript.js"></script> -->
+
+<script>
+    $("#my_form").submit(function (event) {
+        event.preventDefault(); //prevent default action 
+        var post_url = $(this).attr("action"); //get form action url
+        var request_method = $(this).attr("method"); //get form GET/POST method
+        var form_data = $(this).serialize(); //Encode form elements for submission
+
+        $.ajax({
+            url: post_url,
+            type: request_method,
+            data: form_data,
+            success: function (result) {
+                //alert(result);
+                //$("#download").html(result);
+                $("#download").show();
+                $("#download").attr("href", result['link']);
+                $('#paid').show();
+                $('#paid').html(result['paid']);
+            }
+        });
+    });
+</script>

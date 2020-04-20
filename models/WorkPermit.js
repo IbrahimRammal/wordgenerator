@@ -217,6 +217,9 @@ const workpermitSchema = mongoose.Schema(
         "original": {
           "type": "String"
         },
+        "download": {
+          "type": "String"
+        },
         "caption": {
           "type": "String"
         },

@@ -691,6 +691,9 @@ const deathSchema = mongoose.Schema({
   "original": {
     "type": "String"
   },
+  "download": {
+    "type": "String"
+  },
   caption: {
     type: 'String'
   },

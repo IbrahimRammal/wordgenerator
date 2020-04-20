@@ -1,11 +1,43 @@
-<form method="POST" action="/api/posts/data?lang=<%= obj.type %>&doc=<%= obj.caption %>&id=<%= obj.client.id %>">
-    <div class="form-group">
-        <div class="form-row">
-            <div class="form-group col">
-                <textarea class="form-control" id="s1f0" name="s1_f0" placeholder="<%= obj.s1.f0.caption %>"
-                    rows="30" cols="118"> <%= obj.s1.f0.value %> </textarea>
-            </div>
-        </div>
+<form method="POST" action="/api/posts/data?lang=<%= obj.type %>&doc=<%= obj.caption %>&id=<%= obj.client.id %>"
+  id="my_form">
+  <div class="form-group">
+    <div class="form-row">
+      <div class="form-group col">
+        <textarea class="form-control" id="s1f0" name="s1_f0" placeholder="<%= obj.s1.f0.caption %>" rows="30"
+          cols="118"> <%= obj.s1.f0.value %> </textarea>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+  <br>
+  <br>
+  <div class="btn-group" role="group" aria-label="Basic example">
+    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+    <a href="" style="display: none;" name="download" id="download" class="btn btn-secondary">Download</a>
+  </div>
 </form>
+
+
+<!-- <script src="paidscript.js"></script> -->
+
+<script>
+  $("#my_form").submit(function (event) {
+    event.preventDefault(); //prevent default action 
+    var post_url = $(this).attr("action"); //get form action url
+    var request_method = $(this).attr("method"); //get form GET/POST method
+    var form_data = $(this).serialize(); //Encode form elements for submission
+
+    $.ajax({
+      url: post_url,
+      type: request_method,
+      data: form_data,
+      success: function (result) {
+        //alert(result);
+        //$("#download").html(result);
+        $("#download").show();
+        $("#download").attr("href", result['link']);
+                $('#paid').show();
+                $('#paid').html(result['paid']);
+      }
+    });
+  });
+</script>
