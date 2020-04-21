@@ -44,174 +44,215 @@
             </div>
         </div>
     </div>
-    <% for (var i = 0; i < obj.s2.fams.length; i++) { %>
-    <hr class="sidebar-divider">
-    <!-- <% if (i >= 5 && i < obj.s2.fams.length - 1) { %>
-    <button onclick="myFunction()">Click Me</button>
-    <% } %> -->
-    <!-- <div id="<%= i %>" style="display: <%= i < 5 ? 'block;': 'block;'  %>"> -->
-    <%if (obj.type == "English") { %>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_nsname_<%= i %>" id="s2famsnsname<%= i %>"
-                    placeholder="Name and Surname">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_faname_<%= i %>" id="s2famsfaname<%= i %>"
-                    placeholder="Father Name">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_moname_<%= i %>" id="s2famsmoname<%= i %>"
-                    placeholder="Mother Name">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_pdbirth_<%= i %>" id="s2famspdbirth<%= i %>"
-                    placeholder="Place and Birth Date">
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_sect_<%= i %>" id="s2famssect<%= i %>"
-                    placeholder="sect">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_stat_<%= i %>" id="s2famsstat<%= i %>"
-                    placeholder="Family Status">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_s_<%= i %>" id="s2famss<%= i %>"
-                    placeholder="Sex">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_remark_<%= i %>" id="s2famsremark<%= i %>"
-                    placeholder="remark">
-            </div>
-        </div>
-    </div>
-    <% } else if (obj.type == "Français") {%>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_nsname_<%= i %>" id="s2famsnsname<%= i %>"
-                    placeholder="Nom et surnom">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_faname_<%= i %>" id="s2famsfaname<%= i %>"
-                    placeholder="Nom du père">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_moname_<%= i %>" id="s2famsmoname<%= i %>"
-                    placeholder="Nom de la mère">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_pdbirth_<%= i %>" id="s2famspdbirth<%= i %>"
-                    placeholder="Lieu et date de naissance">
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_sect_<%= i %>" id="s2famssect<%= i %>"
-                    placeholder="Religion">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_stat_<%= i %>" id="s2famsstat<%= i %>"
-                    placeholder="État Civil">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_s_<%= i %>" id="s2famss<%= i %>"
-                    placeholder="Sexe">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_remark_<%= i %>" id="s2famsremark<%= i %>"
-                    placeholder="Remarques">
-            </div>
-        </div>
-    </div>
 
-    <% } else if (obj.type == "Español") {%>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_nsname_<%= i %>" id="s2famsnsname<%= i %>"
-                    placeholder="Nombre y apellido">
+
+
+    <!-- Collapse methode  -->
+    <!--Accordion wrapper-->
+    <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+        <!-- Accordion card -->
+        <div class="card">
+
+
+            <% for (var i = 0; i < obj.s2.fams.length; i++) { %>
+            <hr class="sidebar-divider">
+            <%if (obj.type == "English") { %>
+
+            <%if (i % 5 == 0) { %>
+            <!-- Card header -->
+            <div class="card-header" role="tab" id="headingOne<%= i %>">
+                <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne<%= i %>" 
+                    aria-expanded= "<%- i == 0 ? 'ture' : 'false' %>"
+                    aria-controls="collapseOne<%= i %>">
+                    <h5 class="mb-0">
+                        Collapsible Group Item #<%= i %> <i class="fas fa-angle-down rotate-icon"></i>
+                    </h5>
+                </a>
             </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_faname_<%= i %>" id="s2famsfaname<%= i %>"
-                    placeholder="Nombre del padre">
+
+            <!-- Card body -->
+            <div id="collapseOne<%= i %>" class="collapse <%- i == 0 ? 'show' : '' %>"" role="tabpanel" aria-labelledby="headingOne<%= i %>"
+                data-parent="#accordionEx">
+                <div class="card-body">
+
+                    <% } %>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_fams_nsname_<%= i %>"
+                                    id="s2famsnsname<%= i %>" placeholder="Name and Surname">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_fams_faname_<%= i %>"
+                                    id="s2famsfaname<%= i %>" placeholder="Father Name">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_fams_moname_<%= i %>"
+                                    id="s2famsmoname<%= i %>" placeholder="Mother Name">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_fams_pdbirth_<%= i %>"
+                                    id="s2famspdbirth<%= i %>" placeholder="Place and Birth Date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_fams_sect_<%= i %>"
+                                    id="s2famssect<%= i %>" placeholder="sect">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_fams_stat_<%= i %>"
+                                    id="s2famsstat<%= i %>" placeholder="Family Status">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_fams_s_<%= i %>" id="s2famss<%= i %>"
+                                    placeholder="Sex">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_fams_remark_<%= i %>"
+                                    id="s2famsremark<%= i %>" placeholder="remark">
+                            </div>
+                        </div>
+                    </div>
+
+                    <% if ( (i+1) % 5 == 0) {%>
+                </div>
             </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_moname_<%= i %>" id="s2famsmoname<%= i %>"
-                    placeholder="Nombre y apellido de la madre">
+        
+            <% }%>
+
+            <% } else if (obj.type == "Français") {%>
+           
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_nsname_<%= i %>" id="s2famsnsname<%= i %>"
+                            placeholder="Nom et surnom">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_faname_<%= i %>" id="s2famsfaname<%= i %>"
+                            placeholder="Nom du père">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_moname_<%= i %>" id="s2famsmoname<%= i %>"
+                            placeholder="Nom de la mère">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_pdbirth_<%= i %>"
+                            id="s2famspdbirth<%= i %>" placeholder="Lieu et date de naissance">
+                    </div>
+                </div>
             </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_pdbirth_<%= i %>" id="s2famspdbirth<%= i %>"
-                    placeholder="Lugar y fecha de nacimiento">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_sect_<%= i %>" id="s2famssect<%= i %>"
+                            placeholder="Religion">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_stat_<%= i %>" id="s2famsstat<%= i %>"
+                            placeholder="État Civil">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_s_<%= i %>" id="s2famss<%= i %>"
+                            placeholder="Sexe">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_remark_<%= i %>" id="s2famsremark<%= i %>"
+                            placeholder="Remarques">
+                    </div>
+                </div>
             </div>
+
+            <% } else if (obj.type == "Español") {%>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_nsname_<%= i %>" id="s2famsnsname<%= i %>"
+                            placeholder="Nombre y apellido">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_faname_<%= i %>" id="s2famsfaname<%= i %>"
+                            placeholder="Nombre del padre">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_moname_<%= i %>" id="s2famsmoname<%= i %>"
+                            placeholder="Nombre y apellido de la madre">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_pdbirth_<%= i %>"
+                            id="s2famspdbirth<%= i %>" placeholder="Lugar y fecha de nacimiento">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_sect_<%= i %>" id="s2famssect<%= i %>"
+                            placeholder="Religión">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_stat_<%= i %>" id="s2famsstat<%= i %>"
+                            placeholder="Estado civil">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_s_<%= i %>" id="s2famss<%= i %>"
+                            placeholder="Sexo">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_fams_remark_<%= i %>" id="s2famsremark<%= i %>"
+                            placeholder="Observación">
+                    </div>
+                </div>
+            </div>
+
+            <% } else {%>
+
+            <% }%>
+            <!-- </div> -->
+            <% } %>
         </div>
-    </div>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_sect_<%= i %>" id="s2famssect<%= i %>"
-                    placeholder="Religión">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_stat_<%= i %>" id="s2famsstat<%= i %>"
-                    placeholder="Estado civil">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_s_<%= i %>" id="s2famss<%= i %>"
-                    placeholder="Sexo">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_fams_remark_<%= i %>" id="s2famsremark<%= i %>"
-                    placeholder="Observación">
-            </div>
+
         </div>
-    </div>
-    <% } else {%>
+        <br>
+        <!-- Accordion wrapper -->
 
-    <% }%>
-    <!-- </div> -->
-    <% } %>
+            <%if (obj.original == "0") { %>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="original" id="original">
 
-    <%if (obj.original == "0") { %>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input" name="original" id="original">
+                <!-- <input type="checkbox" id="original" name="original"> -->
+                <% } else { %>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="original" id="original" checked>
 
-    <!-- <input type="checkbox" id="original" name="original"> -->
-    <% } else { %>
-    <div class="form-check">
-        <input type="checkbox" class="form-check-input" name="original" id="original" checked>
+                    <!-- <input type="checkbox" id="original" name="original" checked> -->
+                    <% }%>
 
-        <!-- <input type="checkbox" id="original" name="original" checked> -->
+                    <%if (obj.type == "English") { %>
+                    <label class="form-check-label" for="original">True Copy of the Original</label>
+                </div>
+                <!-- <label for="original">True Copy of the Original</label> -->
+                <% } else if (obj.type == "Français") {%>
+                <label class="form-check-label" for="original">Véritable copie de l'original</label>
+            </div>
+            <!-- <label for="original">Véritable copie de l'original</label> -->
+            <% } else if (obj.type == "Español") {%>
+            <label class="form-check-label" for="original">Copia verdadera del origina</label>
+        </div>
+        <!-- <label for="original">Copia verdadera del original</label> -->
+        <% } else {%>
         <% }%>
-
-        <%if (obj.type == "English") { %>
-        <label class="form-check-label" for="original">True Copy of the Original</label>
-    </div>
-    <!-- <label for="original">True Copy of the Original</label> -->
-    <% } else if (obj.type == "Français") {%>
-    <label class="form-check-label" for="original">Véritable copie de l'original</label>
-    </div>
-    <!-- <label for="original">Véritable copie de l'original</label> -->
-    <% } else if (obj.type == "Español") {%>
-    <label class="form-check-label" for="original">Copia verdadera del origina</label>
-    </div>
-    <!-- <label for="original">Copia verdadera del original</label> -->
-    <% } else {%>
-    <% }%>
-    <br>
-    <br>
-    <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-        <a  href="" style="display: none;" name="download" id="download" class="btn btn-secondary">Download</a>
-    </div>
+        <br>
+        <br>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+            <a href="" style="display: none;" name="download" id="download" class="btn btn-secondary">Download</a>
+        </div>
 </form>
 
 
@@ -219,7 +260,7 @@
 
 <script>
 
-function myFunction(myDIV) {
+    function myFunction(myDIV) {
         var x = document.getElementById(myDIV);
         if (x.style.display === "none") {
             x.style.display = "block";
@@ -228,25 +269,24 @@ function myFunction(myDIV) {
         }
     }
 
-$("#my_form").submit(function (event) {
-    event.preventDefault(); //prevent default action 
-    var post_url = $(this).attr("action"); //get form action url
-    var request_method = $(this).attr("method"); //get form GET/POST method
-    var form_data = $(this).serialize(); //Encode form elements for submission
+    $("#my_form").submit(function (event) {
+        event.preventDefault(); //prevent default action 
+        var post_url = $(this).attr("action"); //get form action url
+        var request_method = $(this).attr("method"); //get form GET/POST method
+        var form_data = $(this).serialize(); //Encode form elements for submission
 
-    $.ajax({
-      url: post_url,
-      type: request_method,
-      data: form_data,
-      success: function (result) {
-        //alert(result);
-        //$("#download").html(result);
-        $("#download").show();
-        $("#download").attr("href", result['link']);
+        $.ajax({
+            url: post_url,
+            type: request_method,
+            data: form_data,
+            success: function (result) {
+                //alert(result);
+                //$("#download").html(result);
+                $("#download").show();
+                $("#download").attr("href", result['link']);
                 $('#paid').show();
                 $('#paid').html(result['paid']);
-      }
+            }
+        });
     });
-  });
 </script>
-

@@ -2,12 +2,25 @@
   id="my_form">
   <div class="form-group">
     <div class="form-row">
-      <div class="form-group col">
+      <!-- <div class="form-group col">
         <textarea class="form-control" id="s1f0" name="s1_f0" placeholder="<%= obj.s1.f0.caption %>" rows="30"
           cols="118"> <%= obj.s1.f0.value %> </textarea>
+      </div> -->
+      <div class="md-form">
+        <i class="fas fa-pencil-alt prefix"></i>
+        <textarea id="s1f0" name="s1_f0" class="md-textarea form-control" rows="30"
+        cols="118"> <%= obj.s1.f0.value %>  </textarea>
+        <label for="s1f0">Write here!</label>
       </div>
     </div>
   </div>
+  <!-- <div class="md-form">
+    <textarea id="form7" class="md-textarea form-control" rows="3"></textarea>
+    <label for="form7">Material textarea</label>
+  </div> -->
+  <!--Textarea with icon prefix-->
+
+
   <br>
   <br>
   <div class="btn-group" role="group" aria-label="Basic example">
