@@ -6,7 +6,7 @@
         <div class="form-group col">
             <!-- <label for="paid_list">Clients paid history</label> -->
             <select class="mdb-select md-form" searchable="Search here.." id="paid_list">
-                <option value="" disabled selected>Select from Pre Clients paid ....</option>
+                <option value="op1" disabled selected>Select from Pre Clients paid ....</option>
                 <!-- <select class="form-control form-control-xs selectpicker" name="" data-live-search="true" data-title="Language"
             id="paid_list" data-width="100%"> -->
                 <!-- <option value="" selected>Client Select ...</option> -->
@@ -73,6 +73,17 @@
 <script>
 
     $("#clear").click(function () {
+
+
+        //$('#paid_list').materialSelect();
+
+        $("#paid_list").val("op1"); 
+
+        $("#first").prop("disabled", false);
+        $("#middle").prop("disabled", false);
+        $("#last").prop("disabled", false);
+        $("#address").prop("disabled", false);
+        $("#phone").prop("disabled", false);
         $('#clear').hide();
         $("#paid_form").closest('form').find("input[type=text], textarea").val("");
     });
@@ -80,28 +91,39 @@
 
     $("#paid_list").on('change', function () {
         $('#clear').show();
-        var paid = $("paid_list").val();
+        var paid = $("#paid_list").val();
         var g = document.getElementById("paid_list");
         var strPaidClient = g.options[g.selectedIndex].value;
 
-        var first = $("first").val();
-        var middle = $("middle").val();
-        var last = $("last").val();
-        var address = $("address").val();
-        var phone = $("phone").val();
-        var remain = $("remain").val();
-        var paid = $("paid").val();
-        var type = $("type").val();
+        // var first = $("#first").val();
+        // var middle = $("#middle").val();
+        // var last = $("#last").val();
+        // var address = $("#address").val();
+        // var phone = $("#phone").val();
+        // var remain = $("#remain").val();
+        // var paid = $("#paid").val();
+        // var type = $("#type").val();
 
-
+        //var href = $("#download").attr('href');
+        //var href = ""
 
         $.ajax({
             url: '/api/posts/clientpaidselect',
             type: 'POST',
             dataType: "json",
             cache: true,
-            data: { first: first, middle: middle, last: last, address: address, phone: phone, remain: remain, paid: paid, type: type, client: strPaidClient },
+            data: { client: strPaidClient },
             success: function (fixtures) {
+                $("#first").val(fixtures['first']);
+                $("#first").prop("disabled", true);
+                $("#last").val(fixtures['last']);
+                $("#last").prop("disabled", true);
+                $("#middle").val(fixtures['middle']);
+                $("#middle").prop("disabled", true);
+                $("#phone").val(fixtures['phone']);
+                $("#phone").prop("disabled", true);
+                $("#address").val(fixtures['address']);
+                $("#address").prop("disabled", true);
                 //toastr["success"]("Payment succefully inserted", "Payment saved")
             },
             error: function (jqXHR, textStatus, err) {
@@ -113,13 +135,22 @@
     });
 
 
+    //href: href ,first: first, middle: middle, last: last, address: address, phone: phone, remain: remain, paid: paid, type: type, 
+
+
     $("#paid_form").submit(function (event) {
         event.preventDefault(); //prevent default action 
         var post_url = $(this).attr("action"); //get form action url
         var request_method = $(this).attr("method"); //get form GET/POST method
         var form_data = $(this).serialize(); //Encode form elements for submission
 
+        var href = $("#download").attr('href');
 
+        var g = document.getElementById("paid_list");
+        var client = ""
+        client = g.options[g.selectedIndex].value;
+
+        form_data += "&href=" + href + "&client=" + client
 
         $.ajax({
             url: post_url,

@@ -73,11 +73,33 @@ router.post('/selector', verify, async (req, res) => {
 
 router.post('/clientpaidselect', verify, async (req, res) => {
   try {
+    if (
+      !isEmptyOrSpaces(req.body.client)
+    ) {
+      let id = req.body.client
 
-    let data = JSON.parse(rawdata)
+      console.log("id : " + id)
 
-    res.send({ html: data })
-  } catch (err) {
+      var docSaved = ''
+      var schemaData = ''
+
+      docSaved = await Paid.find(
+        { _id: id },
+        { _id: 0, fullname: 0, s0: 0, __v: 0, Arabic: 0, English: 0, Français: 0, Español: 0 }
+      )
+
+      console.log(docSaved)
+
+      res.send({         
+        "first": docSaved[0].name,
+        "last": docSaved[0].surname,
+        "middle": docSaved[0].father,
+        "phone": docSaved[0].mobile,
+        "address": docSaved[0].address
+      })
+
+    } 
+  }catch (err) {
     // send to client feed back of error or save the error for the super admin me :)
     console.log(err)
     // res.status(500).send({ error: 'Something failed!' })
@@ -479,19 +501,6 @@ router.get('/jsonok/:type', verify, async (req, res) => {
   res.send(data)
 })
 
-// router.get('/r', async (req, res) => {
-//   var passedVariable = req.query.valid
-//   console.log(passedVariable)
-//   res.download(passedVariable, 'BirthCertificate.docx', err => {
-//     if (err) {
-//       // handle error
-//     } else {
-//       // user get the downloaded docx
-//       // console.log('hello')
-//     }
-//   })
-// })
-
 router.post('/paid', verify, async (req, res) => {
   try {
     //On paid post request get all user information
@@ -510,6 +519,7 @@ router.post('/paid', verify, async (req, res) => {
 
         //need to make unique id combination different from _id to make update more easer
         var clientpaid = {
+          'clientID' : req.query.id,
           'first': "",
           'middle': "",
           'last': "",
@@ -518,31 +528,83 @@ router.post('/paid', verify, async (req, res) => {
           'type': "",
           'paid': "",
           'remain': "",
-          'docid' : req.query.docid
+          'docid' : req.query.docid,
+          'href' : req.query.href
         }
 
+        // this only in use if the paid client is new
+        clientpaid['first'] = req.body.first
+        clientpaid['middle'] = req.body.middle
+        clientpaid['last'] = req.body.last
+        clientpaid['address'] = req.body.address
+        clientpaid['phone'] = req.body.phone
+        clientpaid['type'] = req.body.type
+        clientpaid['paid'] = req.body.paid
+        clientpaid['remain'] = req.body.remain
+        clientpaid['docid'] = req.query.docid
+        clientpaid['href'] = req.body.href
+
+        console.log("clientpaid" + clientpaid['first'])
+
+        var paidClientSelectedID = req.body['client']
+
+        console.log("paidClientSelectedID" + paidClientSelectedID)
+
         //maybe need try catch
-        Object.keys(req.body).forEach(function(key) {
-         clientpaid[key] = req.body[key]
-        })
+        // Object.keys(req.body).forEach(function(key) {
+        //  clientpaid[key] = req.body[key]
+        // })
 
         var fullname = clientpaid['first'] + clientpaid['middle'] + clientpaid['last']
-        var data = addPaidClient(fullname, fullname + clientpaid['phone'], clientpaid)
+        
+
 
         var modelCheck = req.query.doc
         modelCheck = modelCheck.replace(/\s/g, '')
 
+        
+        if(!isEmptyOrSpaces(paidClientSelectedID) && paidClientSelectedID == "op1")
+        {
+          var data = addPaidClient(fullname, fullname + clientpaid['phone'], clientpaid)
+          data[req.query.lang][modelCheck].push(clientpaid)
 
-        data[req.query.lang][modelCheck].push(clientpaid)
+          const paid = new Paid(data)
+          const savedPaid = await paid.save()
 
-        const paid = new Paid(data)
-        const savedPaid = await paid.save()
+          console.log(data[req.query.lang][modelCheck])
+        }
+        else {
+          //var query = req.query.lang + '.' + modelCheck
+          var language = req.query.lang
+          var query = language + "." + modelCheck 
 
-        console.log(data[req.query.lang][modelCheck])
+          console.log("query: " + query)
+
+          //"proj_managers.$[a].projects.$[b].tags": { "$each": tags }
+
+          // var paid = await Paid.updateOne(
+          //   { _id: paidClientSelectedID }, 
+          //   { $push: { query : clientpaid  }}
+          // );
+          
+          var paid = await Paid.updateOne({ _id: paidClientSelectedID }, 
+            { $push: { language : clientpaid } }, function(
+            err,
+            result
+          ) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(result);
+            }
+          });
+
+          console.log("Paid Push : " + paid)
+        } 
 
         res.send("success")
     } 
-  }catch (err) {
+  } catch (err) {
     console.log(err)
     res.send("error")
   }
