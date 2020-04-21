@@ -383,12 +383,14 @@ router.post('/template', verify, async (req, res) => {
         // Document Paid Form
         // Need to load paid template with data from stored on mango
         // Need to put paid client id on data json
-        const paidfile = fs.readFileSync(paidpath, 'utf-8')
-        var paid_template = ejs.compile(paidfile, { client: true })
-        const paid = paid_template({ obj: data })
+
+        // const paidfile = fs.readFileSync(paidpath, 'utf-8')
+        // var paid_template = ejs.compile(paidfile, { client: true })
+        // const paid = paid_template({ obj: data })
     
         // console.log(html)
-        res.send({ html: html , paid: paid})
+        //res.send({ html: html , paid: paid})
+        res.send({ html: html})
         return
       }
     }
