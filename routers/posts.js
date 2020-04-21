@@ -578,33 +578,37 @@ router.post('/paid', verify, async (req, res) => {
         else {
           //var query = req.query.lang + '.' + modelCheck
           var language = req.query.lang
-          var query = language + "." + modelCheck 
+          var query = {}
+          var criteria = language + "." + modelCheck 
+          query[criteria] = clientpaid
 
-          console.log("query: " + query)
+          console.log("query: " + query[criteria])
 
-          //"proj_managers.$[a].projects.$[b].tags": { "$each": tags }
 
-          // var paid = await Paid.updateOne(
-          //   { _id: paidClientSelectedID }, 
-          //   { $push: { query : clientpaid  }}
-          // );
-          
-          var paid = await Paid.updateOne({ _id: paidClientSelectedID }, 
-            { $push: { language : clientpaid } }, function(
-            err,
-            result
-          ) {
-            if (err) {
-              console.log(err);
-            } else {
-              console.log(result);
-            }
-          });
 
-          console.log("Paid Push : " + paid)
+          //{_id: id, "language.modelCheck.docid": {$nin: [clientpaid.docid] }},
+
+          const paid = await Paid.findOneAndUpdate(
+            {_id: paidClientSelectedID},
+            {$push: query },
+            { upsert: true, new: true }
+            // {new: true},
+            //{new: true , useFindAndModify: false},
+           
+            // function (err, updatedUser){
+            //   if (err) {
+            //     res.send("error")
+            //     console.log(err);
+            //   } else {
+            //     res.send("success")
+            //     console.log(updatedUser[language][modelCheck]);
+            //   }
+            // }
+         );
         } 
 
         res.send("success")
+
     } 
   } catch (err) {
     console.log(err)

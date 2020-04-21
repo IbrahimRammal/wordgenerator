@@ -64,7 +64,7 @@
     </div>
     <br>
     <div class="btn-group" role="group" aria-label="Basic example">
-        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" id="paidsubmit" name="submit" class="btn btn-primary">Submit</button>
         <button style="display: none;" name="clear" id="clear" class="btn btn-secondary">clear </button>
     </div>
 </form>
@@ -77,7 +77,7 @@
 
         //$('#paid_list').materialSelect();
 
-        $("#paid_list").val("op1"); 
+        $("#paid_list").val("op1");
 
         $("#first").prop("disabled", false);
         $("#middle").prop("disabled", false);
@@ -157,10 +157,16 @@
             type: request_method,
             data: form_data,
             success: function (result) {
-                if (result == "success")
+                if (result == "success") {
                     toastr["success"]("Payment succefully inserted", "Payment saved")
-                else
+                    $("#paidsubmit").prop("disabled", true);
+                    setTimeout(function () {// wait for 5 secs(2)
+                        location.reload(); // then reload the page.(3)
+                    }, 1500);
+                }
+                else {
                     toastr["error"]("Payment not inserted", "Payment error")
+                }
                 //$("#download").html(result);
                 // $("#download").show();
                 // $("#download").attr("href", result['link']);
