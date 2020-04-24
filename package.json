@@ -9,6 +9,8 @@
   "license": "MIT",
   "dependencies": {
     "@hapi/joi": "^15.1.1",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.4",
     "docxtemplater": "^3.14.3",

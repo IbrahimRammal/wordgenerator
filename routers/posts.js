@@ -1,3 +1,4 @@
+// const compression = require('compression');
 const router = require('express').Router()
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
@@ -29,10 +30,14 @@ var PizZip = require('pizzip')
 var Docxtemplater = require('docxtemplater')
 var path = require('path')
 
+var mongoose = require('mongoose');
+
 //model client paider
 const Paid = require('../models/Paid')
 
 const paidpath = './GenerateHtml/paidform.ejs'
+
+var testdb =  require('../db/test');
 
 const {
   registerValidation,
@@ -417,6 +422,239 @@ router.get('/r', verify, async (req, res) => {
     }
   })
 })
+
+
+// get all todos
+router.post('/GetData', verify , async (req, res) => {
+
+  console.log(req.body); 
+
+  var result = []
+
+  var query = await Client.find({}, { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 })
+
+  //Format the json
+  for(var i = 0;i < query.length; i++){
+    let temp = {"_id":query[i]._id, "fullname": query[i].fullname, "name":query[i].s0.name, "surname":query[i].s0.surname, 
+    "father": query[i].s0.father, "mother": query[i].s0.mother, "sex": query[i].s0.sex, 
+    "placeofbirthlocal": query[i].s0.placeofbirthlocal, "dateofbirth":  query[i].s0.dateofbirth,"noregistry": query[i].s0.noregistry }
+    result.push(temp)
+  }
+
+  console.log(result)
+  res.send(result)
+
+});
+
+
+router.post('/BatchData',verify, async  (req, res) => {
+  try{
+  // console.log(req.body.value);   
+  var a = req.body.value;
+  console.log(a);  
+
+  // a.forEach(function (el) {
+  //   Object.keys(el).forEach(function (property) {
+  //     if (el[property] === '') {
+  //       el[property] = '';
+  //     }
+  //   });
+  // });
+  
+
+  var data = ""
+
+  var respnseAddID = "";
+  if (req.body.action == "insert") {   
+    if (!isEmptyOrSpaces(a.fullname)) {
+      data = {
+        "fullname": a.fullname,
+        "s0": {
+          "name": isUndefinedOrNull(a.name) ? "" : a.name,
+          "surname": isUndefinedOrNull(a.surname) ? "" : a.surname,
+          "father": isUndefinedOrNull(a.father) ? "" : a.father,
+          "mother": isUndefinedOrNull(a.mother) ? "" : a.mother,
+          "mothersurname": "",
+          "nationaltiy": "",
+          "sex": isUndefinedOrNull(a.sex) ? "" : a.sex,
+          "familystatus": "",
+          "governorate": "",
+          "district": "",
+          "city": "",
+          "quarter": "",
+          "street": "",
+          "building": "",
+          "floor": "",
+          "mobile": "",
+          "work": "",
+          "fax": "",
+          "email": "",
+          "profession": "",
+          "address": "",
+          "telephone": "",
+          "religion": "",
+          "placeofbirthlocal": isUndefinedOrNull(a.placeofbirthlocal) ? "" : a.placeofbirthlocal,
+          "placeofbirthdistrict": "",
+          "dateofbirth": isUndefinedOrNull(a.dateofbirth) ? "" : a.dateofbirth,
+          "placeregistry": "",
+          "noregistry": isUndefinedOrNull(a.noregistry) ? "" : a.noregistry
+        },
+        "Arabic": {
+          "EmptyTemplate": ""
+        },
+        "English": {
+          "BirthCertificate": "",
+          "Consenttotravel": "",
+          "DeathCertificate": "",
+          "DivorceCertificate": "",
+          "Driverslicensecertificate": "",
+          "PrivateDriverslicense": "",
+          "FamilyExtract": "",
+          "IDCard": "",
+          "IndividualExtract": "",
+          "MarriageCertificate": "",
+          "MoFRegistration": "",
+          "NSSFServiceCertificate": "",
+          "Policerecord": "",
+          "ResidenceCertificate": "",
+          "ResidencyPermit": "",
+          "WorkPermit": "",
+          "EmptyTemplate": ""
+        },
+        "Español": {
+          "BirthCertificate": "",
+          "Consenttotravel": "",
+          "DeathCertificate": "",
+          "DivorceCertificate": "",
+          "Driverslicensecertificate": "",
+          "PrivateDriverslicense": "",
+          "FamilyExtract": "",
+          "IDCard": "",
+          "IndividualExtract": "",
+          "MarriageCertificate": "",
+          "MoFRegistration": "",
+          "NSSFServiceCertificate": "",
+          "Policerecord": "",
+          "ResidenceCertificate": "",
+          "ResidencyPermit": "",
+          "WorkPermit": "",
+          "EmptyTemplate": ""
+        },
+        "Français": {
+          "BirthCertificate": "",
+          "Consenttotravel": "",
+          "DeathCertificate": "",
+          "DivorceCertificate": "",
+          "Driverslicensecertificate": "",
+          "PrivateDriverslicense": "",
+          "FamilyExtract": "",
+          "IDCard": "",
+          "IndividualExtract": "",
+          "MarriageCertificate": "",
+          "MoFRegistration": "",
+          "NSSFServiceCertificate": "",
+          "Policerecord": "",
+          "ResidenceCertificate": "",
+          "ResidencyPermit": "",
+          "WorkPermit": "",
+          "EmptyTemplate": ""
+        }
+      }
+
+      // let promise = new Promise((resolve, reject) => {
+      //   setTimeout(() => resolve("done!"), 1000)
+      // });
+      
+      const client = new Client(data)
+      const savedClient = await client.save()
+
+      console.log('save new client :' + savedClient)
+
+      // wait 3 seconds
+      //await new Promise((resolve, reject) => setTimeout(resolve, 500));
+
+      console.log(savedClient['_id'] + "asdfsadfds")
+      respnseAddID = savedClient['_id']
+    }
+
+      //return savedClient['_id']
+  }   
+  if (req.body.action == "update") { 
+
+    console.log(req.body)
+    
+    await Client.findById(req.body['key'], function (err, user) {
+      if (err) {
+          console.log(err)
+      }
+      else {
+          //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
+          user.fullname = a.fullname
+          user.s0.name =  isUndefinedOrNull(a.name) ? "" : a.name 
+          user.s0.surname =  isUndefinedOrNull(a.surname) ? "" : a.surname
+          user.s0.father =  isUndefinedOrNull(a.father) ? "" : a.father
+          user.s0.mother =  isUndefinedOrNull(a.mother) ? "" : a.mother
+          user.s0.sex =  isUndefinedOrNull(a.sex) ? "" : a.sex
+          user.s0.placeofbirthlocal =  isUndefinedOrNull(a.placeofbirthlocal) ? "" : a.placeofbirthlocal
+          user.s0.dateofbirth =  isUndefinedOrNull(a.dateofbirth) ? "" : a.dateofbirth
+          user.s0.noregistry =  isUndefinedOrNull(a.noregistry) ? "" : a.noregistry
+  
+          user.save(function (err) {
+              if (err) {
+                  //handleError(err)
+                  console.log(err)
+              }
+              else {
+                res.send({})
+
+                return
+                    }
+                });
+            }
+        });
+        //res.send({})
+
+        return
+ 
+  }   
+  if (req.body.action == "remove") {   
+    console.log(req.body)
+    //console.log("removed" + a)
+    // var query = {}
+    // var criteria = language + "." + modelCheck 
+    // query[criteria] = clientpaid
+
+    var keyID = mongoose.Types.ObjectId(req.body.key);
+    console.log("removed" + req.body['key'])
+    await Client.findByIdAndDelete(req.body['key'], function (err) {
+      if(err) console.log(err);
+      console.log("Successful deletion");
+    });
+
+    res.send({})
+
+    return
+
+  }   
+  //var query = await Client.find({}, { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 })
+
+  var sendId = respnseAddID != "" ? respnseAddID : a['_id'];
+
+
+  let result = {"_id":respnseAddID, "fullname": data.fullname, "name":data.s0.name, "surname":data.s0.surname, 
+  "father": data.s0.father, "mother": data.s0.mother, "sex": data.s0.sex, 
+  "placeofbirthlocal": data.s0.placeofbirthlocal, "dateofbirth":  data.s0.dateofbirth,"noregistry": data.s0.noregistry}
+        
+  //console.log("Add client : " + JSON.stringify(result))
+  res.send(result)
+
+
+} catch (err) {
+  console.log(err)
+  res.send("error")
+}
+});
+
 
 router.get('/jsonget', verify, async (req, res) => {
 
@@ -1306,6 +1544,10 @@ async function addClient(a)
   } catch (err) {
     console.log(err)
   }
+}
+
+function isUndefinedOrNull(str){
+  return str == null
 }
 
 function isEmptyOrSpaces(str) {

@@ -10,6 +10,9 @@ const port = process.env.PORT
 const verify = require('./middleware/verifyToken');
 
 
+// const compression = require('compression');
+
+
 //const userRouter = require('./routers/user')
 
 const app = express()
@@ -30,10 +33,21 @@ app.use(bodyParser.urlencoded({
     extended: true
   }));
 
+
+  ////////////////////////
+//   app.use(function (req, res, next) {   
+//     res.header("Access-Control-Allow-Origin", "*");   
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");   
+//     next();   
+// }); 
+  //////////////////////////
+
 //Middleware
 app.use(express.json())
 
 app.use(cookieParser());
+
+// app.use(compression());
 
 //Route Middlewares
 app.use('/api/user', authRoute);
