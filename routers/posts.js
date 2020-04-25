@@ -431,14 +431,6 @@ router.post('/Paid/GetData', verify , async (req, res) => {
 
   var query = await Paid.find({}, { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 })
 
-  //Format the json
-  // for(var i = 0;i < query.length; i++){
-  //   let temp = {"_id":query[i]._id, "fullname": query[i].fullname, "name":query[i].s0.name, "surname":query[i].s0.surname, 
-  //   "father": query[i].s0.father, "mother": query[i].s0.mother, "sex": query[i].s0.sex, 
-  //   "placeofbirthlocal": query[i].s0.placeofbirthlocal, "dateofbirth":  query[i].s0.dateofbirth,"noregistry": query[i].s0.noregistry }
-  //   result.push(temp)
-  // }
-
   console.log(query)
   res.send(query)
 
@@ -563,15 +555,6 @@ router.post('/BatchData',verify, async  (req, res) => {
   // console.log(req.body.value);   
   var a = req.body.value;
   console.log(a);  
-
-  // a.forEach(function (el) {
-  //   Object.keys(el).forEach(function (property) {
-  //     if (el[property] === '') {
-  //       el[property] = '';
-  //     }
-  //   });
-  // });
-  
 
   var data = ""
 
