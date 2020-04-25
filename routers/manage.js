@@ -25,26 +25,20 @@ router.get('/users', verify, async (req, res) => {
   }
 })
 
+router.get('/paid', verify, async (req, res) => {
+  // console.log(req.body); 
+
+res.render('paid',{ 
+  // req.session.
+  name: req.name,
+  email: req.email
+  //data: data
+});
+
+})
+
 router.get('/clients', verify, async (req, res) => {
     // console.log(req.body); 
-
-  // var query = await Client.find({}, { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 })
-
-  // //console.log(JSON.stringify(query));
-
-  // query = JSON.stringify(query);
-  // //console.log(query)
-
-  // let data = JSON.parse(query)
-
-  //   res.status(200).send({
-  //   success: 'true',
-  //   message: 'todos retrieved successfully',
-  //   result: data,
-  //   Count: data.length
-  // })
-
-  //res.status(200).send({result: data, count: data.length})
 
   res.render('view',{ 
     // req.session.
@@ -52,15 +46,7 @@ router.get('/clients', verify, async (req, res) => {
     email: req.email
     //data: data
 });
-  // try {
-  //   res.render('clients',{ 
-  //       name: req.name,
-  //       email: req.email
-  //   });
-  // } catch (err) {
-  //   console.log(err)
-  //   // res.status(500).send({ error: 'Something failed!' })
-  // }
+
 })
 
 module.exports = router

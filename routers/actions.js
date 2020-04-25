@@ -43,26 +43,6 @@ router.get('/create',verify ,(req,res) => {
 router.get('/view',verify , async (req,res) => {
 
 
-  // console.log(req.body); 
-
-  // var query = await Client.find({}, { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 })
-
-  // //console.log(JSON.stringify(query));
-
-  // query = JSON.stringify(query);
-  // //console.log(query)
-
-  // let data = JSON.parse(query)
-
-  //   res.status(200).send({
-  //   success: 'true',
-  //   message: 'todos retrieved successfully',
-  //   result: data,
-  //   Count: data.length
-  // })
-
-  //res.status(200).send({result: data, count: data.length})
-
   res.render('view',{ 
       // req.session.
       name: req.name,
@@ -70,6 +50,21 @@ router.get('/view',verify , async (req,res) => {
       //data: data
   });
 });
+
+
+router.get('/paid',verify , async (req,res) => {
+
+
+  res.render('paid',{ 
+      // req.session.
+      name: req.name,
+      email: req.email
+      //data: data
+  });
+});
+
+
+
 
 
 module.exports = router;
