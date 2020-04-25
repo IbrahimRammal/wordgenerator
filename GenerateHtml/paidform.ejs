@@ -51,13 +51,22 @@
     </div>
     <div class="form-group">
         <div class="form-row">
-            <div class="form-group col">
+            <!-- <div class="form-group col"> -->
+                <select class="mdb-select md-form" searchable="Search Type.." name="type" id="type" value="<%= %>"
+                    required>
+                    <option value="" disabled selected>Type Select ...</option>
+                    <option value="Pronto">Pronto</option>
+                    <option value="Sworn legal">Sworn legal</option>
+                    <option value="non legal">non legal</option>
+                </select>
+            <!-- </div> -->
+            <!-- <div class="form-group col">
                 <input type="text" class="form-control" name="type" id="type" placeholder="Type" value="<%= %>">
-            </div>
-            <div class="form-group col">
+            </div> -->
+            <div class="md-form col" style="padding-left: 35px;">
                 <input type="text" class="form-control" name="paid" id="paid" placeholder="Paid" value="<%= %>">
             </div>
-            <div class="form-group col">
+            <div class="md-form col">
                 <input type="text" class="form-control" name="remain" id="remain" placeholder="Remain" value="<%= %>">
             </div>
         </div>
@@ -176,8 +185,10 @@
     });
 
 
+    
 
     $(document).ready(function () {
         $('#paid_list').materialSelect();
+        $('#type').materialSelect();
     });
 </script>

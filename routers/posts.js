@@ -423,6 +423,117 @@ router.get('/r', verify, async (req, res) => {
   })
 })
 
+router.post('/Paid/GetData', verify , async (req, res) => {
+
+  console.log(req.body); 
+
+  var result = []
+
+  var query = await Paid.find({}, { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 })
+
+  //Format the json
+  // for(var i = 0;i < query.length; i++){
+  //   let temp = {"_id":query[i]._id, "fullname": query[i].fullname, "name":query[i].s0.name, "surname":query[i].s0.surname, 
+  //   "father": query[i].s0.father, "mother": query[i].s0.mother, "sex": query[i].s0.sex, 
+  //   "placeofbirthlocal": query[i].s0.placeofbirthlocal, "dateofbirth":  query[i].s0.dateofbirth,"noregistry": query[i].s0.noregistry }
+  //   result.push(temp)
+  // }
+
+  console.log(query)
+  res.send(query)
+
+});
+
+router.post('/Paid/BatchData',verify, async  (req, res) => {
+  try{
+    // console.log(req.body.value);   
+    var a = req.body.value;
+    console.log(a);  
+
+    
+
+    var data = ""
+
+    var result = ""
+
+    var respnseAddID = "";
+    if (req.body.action == "insert") {
+
+      var userPaid = {}
+
+      userPaid.fullname = a.fullname
+      userPaid.first =  isUndefinedOrNull(a.name) ? "" : a.name 
+      userPaid.last =  isUndefinedOrNull(a.surname) ? "" : a.surname
+      userPaid.middle =  isUndefinedOrNull(a.father) ? "" : a.father
+      userPaid.phone =  isUndefinedOrNull(a.mobile) ? "" : a.mobile
+      userPaid.address =  isUndefinedOrNull(a.address) ? "" : a.address
+
+      var data = addPaidClient(a.fullname, userPaid.fullname + userPaid.phone, userPaid)
+      //data[req.query.lang][modelCheck].push(clientpaid)
+
+      const paid = new Paid(data)
+      const savedPaid = await paid.save()
+
+      result = {"_id":savedPaid._id, "fullname": savedPaid.fullname, "name":savedPaid.name, "surname":savedPaid.surname, 
+      "father": savedPaid.father, "mobile": savedPaid.mobile, "address": savedPaid.address, 
+      "combineid": savedPaid.combineid}
+
+
+      // console.log("New Client Paid: " + json.stringify(paid))
+      
+    }   
+    if (req.body.action == "update") { 
+
+      console.log(req.body)
+      
+      await Paid.findById(req.body['key'], function (err, user) {
+        if (err) {
+            console.log(err)
+        }
+        else {
+          
+            //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
+            user.fullname = a.fullname
+            var combineid= a.fullname
+            combineid += isUndefinedOrNull(a.mobile) ? "" : a.mobile
+            user.combineid = combineid
+            user.name =  isUndefinedOrNull(a.name) ? "" : a.name 
+            user.surname =  isUndefinedOrNull(a.surname) ? "" : a.surname
+            user.father =  isUndefinedOrNull(a.father) ? "" : a.father
+            user.mobile =  isUndefinedOrNull(a.mobile) ? "" : a.mobile
+            user.address =  isUndefinedOrNull(a.address) ? "" : a.address
+
+            // console.log("New Client Paid: " + json.stringify(user))
+
+            user.save(function (err) {
+              if (err) {
+                  //handleError(err)
+                  console.log(err)
+              }
+              else {
+                // res.send({})
+
+                // return
+                    }
+                });
+            }
+        });
+    }   
+    if (req.body.action == "remove") {   
+      console.log(req.body)
+
+
+    }   
+
+    res.send(result)
+
+  } 
+  catch (err) {
+    console.log(err)
+    res.send("error")
+  }
+});
+
 
 // get all todos
 router.post('/GetData', verify , async (req, res) => {
@@ -784,11 +895,11 @@ router.post('/paid', verify, async (req, res) => {
         clientpaid['docid'] = req.query.docid
         clientpaid['href'] = req.body.href
 
-        console.log("clientpaid" + clientpaid['first'])
+        // console.log("clientpaid" + clientpaid['first'])
 
         var paidClientSelectedID = req.body['client']
 
-        console.log("paidClientSelectedID" + paidClientSelectedID)
+        //console.log("paidClientSelectedID" + paidClientSelectedID)
 
         //maybe need try catch
         // Object.keys(req.body).forEach(function(key) {
@@ -811,7 +922,7 @@ router.post('/paid', verify, async (req, res) => {
           const paid = new Paid(data)
           const savedPaid = await paid.save()
 
-          console.log(data[req.query.lang][modelCheck])
+          console.log("New Client Paid: " + data[req.query.lang][modelCheck])
         }
         else {
           //var query = req.query.lang + '.' + modelCheck
@@ -830,23 +941,12 @@ router.post('/paid', verify, async (req, res) => {
             {_id: paidClientSelectedID},
             {$push: query },
             { upsert: true, new: true }
-            // {new: true},
-            //{new: true , useFindAndModify: false},
-           
-            // function (err, updatedUser){
-            //   if (err) {
-            //     res.send("error")
-            //     console.log(err);
-            //   } else {
-            //     res.send("success")
-            //     console.log(updatedUser[language][modelCheck]);
-            //   }
-            // }
          );
+
+         console.log("New Client Paid: " + paid[req.query.lang][modelCheck])
         } 
 
         res.send("success")
-
     } 
   } catch (err) {
     console.log(err)

@@ -8,7 +8,7 @@ $( document ).ready(function() {
 
 
     var hostUrl = '/api/posts/'
-    let ajax = new ej.base.Ajax(hostUrl + "GetData", "post");
+    let ajax = new ej.base.Ajax(hostUrl + "Paid/GetData", "post");
     ajax.send();
     ajax.onSuccess = function (result) {
         //grid.dataSource = JSON.parse(data);
@@ -22,9 +22,9 @@ $( document ).ready(function() {
             // offline: true
             json: JSON.parse(result),
             adaptor: new ej.data.RemoteSaveAdaptor(), //remote save adaptor 
-            insertUrl: hostUrl + "BatchData", 
-            updateUrl: hostUrl + "BatchData", 
-            removeUrl: hostUrl + "BatchData"
+            insertUrl: hostUrl + "Paid/BatchData", 
+            updateUrl: hostUrl + "Paid/BatchData", 
+            removeUrl: hostUrl + "Paid/BatchData"
         });
 
         //alert(result)
@@ -42,7 +42,7 @@ $( document ).ready(function() {
             // searchSettings: { fields: ['fullname'] , operator: 'contains', key: 'test', ignoreCase: true},
             toolbar: ['Add', 'Edit', 'Delete', 'Search','','','','','','','PdfExport'], //ExcelExport
             //toolbar: ['Search'],
-            editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Dialog' },
+            editSettings: { allowEditing: true, allowAdding: true, mode: 'Dialog' }, //, allowDeleting: true
             columns: [
                 {
                     field: 'fullname', headerText: 'fullname',
@@ -56,28 +56,28 @@ $( document ).ready(function() {
                     validationRules: { required: true }, width: 100
                 },
                 {
-                    field: 'surname', headerText: 'surname', textAlign: 'Left',
+                    field: 'surname', headerText: 'surname', textAlign: 'Left', validationRules: { required: true },
                     width: 100
                 },
                 {
-                    field: 'father', headerText: 'father', textAlign: 'Left',
+                    field: 'father', headerText: 'father', textAlign: 'Left', validationRules: { required: true },
                     width: 100
                 },
                 {
-                    field: 'mother', headerText: 'mother', textAlign: 'Left', width: 100
+                    field: 'mobile', headerText: 'phone', textAlign: 'Left', width: 100, validationRules: { required: true }
                 },
                 {
-                    field: 'sex', headerText: 'sex', textAlign: 'Left', width: 70 
-                },
-                {
-                    field: 'placeofbirthlocal', headerText: 'Place Of Birth', textAlign: 'Left', width: 120
-                },
-                {
-                    field: 'dateofbirth', headerText: 'Date Of Birth', type: 'date', textAlign: 'Center', width: 120, format: { type:'date', format:'dd.MM.yyyy' } ,editType: 'datepickeredit', edit: { params: { format:'dd.MM.yyyy' }  }
-                },
-                {
-                    field: 'noregistry', headerText: 'Registry', textAlign: 'Left', width: 100
+                    field: 'address', headerText: 'address', textAlign: 'Left', width: 100 , validationRules: { required: true }
                 }
+                // {
+                //     field: 'placeofbirthlocal', headerText: 'Place Of Birth', textAlign: 'Left', width: 120
+                // },
+                // {
+                //     field: 'dateofbirth', headerText: 'Date Of Birth', type: 'date', textAlign: 'Center', width: 120, format: { type:'date', format:'dd.MM.yyyy' } ,editType: 'datepickeredit', edit: { params: { format:'dd.MM.yyyy' }  }
+                // },
+                // {
+                //     field: 'noregistry', headerText: 'Registry', textAlign: 'Left', width: 100
+                // }
             ],
             pageSettings: { pageCount: 5 },
         });
