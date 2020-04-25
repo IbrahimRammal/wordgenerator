@@ -7,7 +7,7 @@ $( document ).ready(function() {
 
 
 
-    var hostUrl = 'http://192.168.0.100:4000/api/posts/'
+    var hostUrl = '/api/posts/'
     let ajax = new ej.base.Ajax(hostUrl + "GetData", "post");
     ajax.send();
     ajax.onSuccess = function (result) {
