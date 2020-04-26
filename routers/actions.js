@@ -18,7 +18,7 @@ router.get('/create',verify ,(req,res) => {
         //rawdata = result
         let dataReturn = result
 
-        console.log(result)
+        //console.log(result)
   
         res.render('create',{ 
             // req.session.
