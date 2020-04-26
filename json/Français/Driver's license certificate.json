@@ -131,7 +131,8 @@
             "value": ""
         }
     },
-    "date": "", "original": "0", "download":"",
+    "date": "", "original": "0",   "download": "",
+  "category": "",
     "caption": "Driver's license certificate",
     "leftheader": {
         "title": "R B P S T",

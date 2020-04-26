@@ -42,7 +42,7 @@ $( document ).ready(function() {
             // searchSettings: { fields: ['fullname'] , operator: 'contains', key: 'test', ignoreCase: true},
             toolbar: ['Add', 'Edit', 'Delete', 'Search','','','','','','','PdfExport'], //ExcelExport
             //toolbar: ['Search'],
-            editSettings: { allowEditing: true, allowAdding: true, mode: 'Dialog' }, //, allowDeleting: true
+            editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Dialog' }, //, allowDeleting: true
             columns: [
                 {
                     field: 'fullname', headerText: 'fullname',

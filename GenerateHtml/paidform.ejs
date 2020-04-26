@@ -41,7 +41,7 @@
                     value="<%= %>">
             </div>
             <div class="form-group col">
-                <input type="text" class="form-control" name="phone" id="phone" placeholder="Phone" value="<%= %>"
+                <input type="number" class="form-control" name="mobile" id="mobile" placeholder="Phone" value="<%= %>"
                     required>
             </div>
             <!-- <div class="form-group col">
@@ -52,7 +52,7 @@
     <div class="form-group">
         <div class="form-row">
             <!-- <div class="form-group col"> -->
-                <select class="mdb-select md-form" searchable="Search Type.." name="type" id="type" value="<%= %>"
+                <select class="mdb-select md-form" searchable="Search Type.." name="category" id="category" value="<%= %>"
                     required>
                     <option value="" disabled selected>Type Select ...</option>
                     <option value="Pronto">Pronto</option>
@@ -64,10 +64,13 @@
                 <input type="text" class="form-control" name="type" id="type" placeholder="Type" value="<%= %>">
             </div> -->
             <div class="md-form col" style="padding-left: 35px;">
-                <input type="text" class="form-control" name="paid" id="paid" placeholder="Paid" value="<%= %>">
+                <input type="number" class="form-control" name="paid" id="paid" placeholder="Paid" value="<%= %>">
             </div>
+            <!-- <div class="md-form col">
+                <input type="number" style="display: none;" class="form-control" name="remain" id="remain" placeholder="Remain" value="<%= %>">
+            </div> -->
             <div class="md-form col">
-                <input type="text" class="form-control" name="remain" id="remain" placeholder="Remain" value="<%= %>">
+                <input type="number" class="form-control" name="total" id="total" placeholder="Total" value="<%= %>">
             </div>
         </div>
     </div>
@@ -92,7 +95,7 @@
         $("#middle").prop("disabled", false);
         $("#last").prop("disabled", false);
         $("#address").prop("disabled", false);
-        $("#phone").prop("disabled", false);
+        $("#mobile").prop("disabled", false);
         $('#clear').hide();
         $("#paid_form").closest('form').find("input[type=text], textarea").val("");
     });
@@ -129,8 +132,8 @@
                 $("#last").prop("disabled", true);
                 $("#middle").val(fixtures['middle']);
                 $("#middle").prop("disabled", true);
-                $("#phone").val(fixtures['phone']);
-                $("#phone").prop("disabled", true);
+                $("#mobile").val(fixtures['phone']);
+                $("#mobile").prop("disabled", true);
                 $("#address").val(fixtures['address']);
                 $("#address").prop("disabled", true);
                 //toastr["success"]("Payment succefully inserted", "Payment saved")
@@ -189,6 +192,6 @@
 
     $(document).ready(function () {
         $('#paid_list').materialSelect();
-        $('#type').materialSelect();
+        $('#category').materialSelect();
     });
 </script>

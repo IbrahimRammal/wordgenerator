@@ -49,4 +49,16 @@ router.get('/clients', verify, async (req, res) => {
 
 })
 
+router.get('/payment', verify, async (req, res) => {
+  // console.log(req.body); 
+
+res.render('payment',{ 
+  // req.session.
+  name: req.name,
+  email: req.email
+  //data: data
+});
+
+})
+
 module.exports = router

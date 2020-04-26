@@ -130,7 +130,8 @@
             }
         ]
     },
-    "date": "", "original": "0", "download":"",
+    "date": "", "original": "0",   "download": "",
+  "category": "",
     "caption": "NSSF Service Certificate",
     "leftheader": {
         "title": "R B P S T",

@@ -267,7 +267,8 @@
             "value": ""
         }
     },
-    "date": "", "original": "0", "download":"",
+    "date": "", "original": "0",   "download": "",
+  "category": "",
     "caption": "Consent to travel",
     "leftheader": {
         "title": "R B P S T",

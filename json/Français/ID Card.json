@@ -130,7 +130,8 @@
         }
     },
     "date": "",
-    "original": "0", "download":"",
+    "original": "0",   "download": "",
+  "category": "",
     "caption": "ID Card",
     "leftheader": {
         "title": "R B P S T",
