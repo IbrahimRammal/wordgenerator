@@ -25,7 +25,7 @@ const RPermit = require("../models/ResidencyPermit");
 const WPermit = require("../models/WorkPermit");
 const ETemplate = require("../models/EmptyTemplate");
 const Client = require("../models/Clients");
-const dateFormat = require("dateformat");
+//const dateFormat = require("dateformat");
 var PizZip = require("pizzip");
 var Docxtemplater = require("docxtemplater");
 var path = require("path");
@@ -430,24 +430,229 @@ router.get("/r", verify, async (req, res) => {
 });
 
 router.post("/Payment/GetData", verify, async (req, res) => {
-  //console.log(req.body);
-
   var result = [];
+  var subresult = [];
 
-  var query = await Paid.find(
-    {},
-    { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
-  );
+  console.log(req.query);
+  console.log(req.body);
 
-  for (var i = 0; i < query.length; i++) {
-    for(var j = 0; j < query[i]["payment"].length; j++)
-    {
-      console.log(query[i].payment[j])
+  var action = req.query.action;
+  var id = req.query.id;
+
+  var query;
+
+  if (isEmptyOrSpaces(id) && action == "all") {
+    query = await Paid.find(
+      {},
+      { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
+    );
+  } else if (action == "sub") {
+    var getById;
+    //var getById = id;
+    if (isUndefinedOrNull(id) || isEmptyOrSpaces(id)) {
+      getById = req.body.where[0].value;
+    } else {
+      var getById = id;
     }
+    console.log("body.id: " + getById);
+    query = await Paid.findById(getById, function (err, user) {
+      for (var j = 0; j < user["payment"].length; j++) {
+        console.log(user["payment"][j].href);
+        let subParent = {
+          //put parent id temor
+          _id: getById,
+          paymentid: user["payment"][j]._id,
+          fullname: user["payment"][j].fullname,
+          docid: user["payment"][j].docid,
+          href: user["payment"][j].href,
+          category: user["payment"][j].category,
+          language: user["payment"][j].language,
+          docModel: user["payment"][j].docModel,
+          total: user["payment"][j].total,
+          remain: user["payment"][j].remain,
+          paid: user["payment"][j].paid,
+        };
+
+        result.push(subParent);
+
+        //console.log("subParent: " + JSON.stringify(subParent));
+      }
+    });
+    res.send({ result: result, count: result.length });
+    // res.send(result);
+    return;
+    console.log(query);
+  } else {
+    res.send({});
+    return;
   }
 
-  console.log(query);
-  res.send(query);
+  //Get all payment
+  for (var i = 0; i < query.length; i++) {
+    let totalpaidprice = 0;
+    let totalremainprice = 0;
+    let totalvalueprice = 0;
+    let unit = 0;
+
+    let parent = {
+      _id: "",
+      fullname: "",
+      mobile: "",
+      address: "",
+      unit: "",
+      paid: "",
+      remain: "",
+      total: "",
+      subtasks: [],
+    };
+
+    parent._id = query[i]._id;
+    parent.fullname = query[i].fullname;
+    parent.mobile = query[i].mobile;
+    parent.address = query[i].address;
+    for (var j = 0; j < query[i]["payment"].length; j++) {
+      let subParent = {
+        _id: query[i]["payment"][j]._id,
+        fullname: query[i]["payment"][j].fullname,
+        docid: query[i]["payment"][j].docid,
+        href: query[i]["payment"][j].href,
+        category: query[i]["payment"][j].category,
+        language: query[i]["payment"][j].language,
+        docModel: query[i]["payment"][j].docModel,
+        total: query[i]["payment"][j].total,
+        remains: query[i]["payment"][j].remains,
+        paid: query[i]["payment"][j].paid,
+      };
+
+      unit = j + 1;
+      totalpaidprice += query[i]["payment"][j].paid;
+      totalremainprice += query[i]["payment"][j].remain;
+      totalvalueprice += query[i]["payment"][j].total;
+      // totalvalueprice += Number(query[i]["payment"][j].total)
+      //   ? 0
+      //   : parseInt(query[i]["payment"][j].total, 10);
+      // totalremainprice += Number(query[i]["payment"][j].paid)
+      //   ? 0
+      //   : parseInt(query[i]["payment"][j].paid, 10);
+      // totalvalueprice += Number(query[i]["payment"][j].remain)
+      //   ? 0
+      //   : parseInt(query[i]["payment"][j].remain, 10);
+
+      if (action == "sub") {
+        console.log("sudfasdjfkl jaslkdjf klasjdf lkjaskldj fklsdj ");
+        result.push(subParent);
+        console.log("result: " + JSON.stringify(result));
+      }
+
+      //console.log("subParent: " + JSON.stringify(subParent));
+    }
+    //after finish loop parent json
+
+    console.log(
+      "totalpaidprice: " +
+        totalpaidprice +
+        "totalremainprice: " +
+        totalremainprice +
+        "totalvalueprice: " +
+        totalvalueprice
+    );
+    parent.unit = unit;
+    parent.paid = totalpaidprice;
+    parent.remain = totalremainprice;
+    parent.total = totalvalueprice;
+
+    if (action == "all") result.push(parent);
+    //console.log("parent: " + parent);
+    //console.log("subParent: " + JSON.stringify(parent));
+  }
+
+  //console.log("result: " + result);
+  //console.log("result: " + JSON.stringify(result));
+  res.send(result);
+});
+
+//i miss some thing
+router.post("/Paid/BatchData", verify, async (req, res) => {
+  try {
+    // console.log(req.body.value);
+    var a = req.body.value;
+
+    var result = "";
+
+    var respnseAddID = "";
+    if (req.body.action == "insert") {
+      var userPaid = {};
+      userPaid.fullname = a.fullname;
+      userPaid.first = isUndefinedOrNull(a.name) ? "" : a.name;
+      userPaid.last = isUndefinedOrNull(a.surname) ? "" : a.surname;
+      userPaid.middle = isUndefinedOrNull(a.father) ? "" : a.father;
+      userPaid.phone = isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+      userPaid.address = isUndefinedOrNull(a.address) ? "" : a.address;
+      var data = addPaidClient(
+        a.fullname,
+        userPaid.fullname + userPaid.phone,
+        userPaid
+      );
+      //data[req.query.lang][modelCheck].push(clientpaid)
+      const paid = new Paid(data);
+      const savedPaid = await paid.save();
+      result = {
+        _id: savedPaid._id,
+        fullname: savedPaid.fullname,
+        name: savedPaid.name,
+        surname: savedPaid.surname,
+        father: savedPaid.father,
+        mobile: savedPaid.mobile,
+        address: savedPaid.address,
+        combineid: savedPaid.combineid,
+      };
+      //console.log("New Client Paid: " + json.stringify(paid))
+    }
+    if (req.body.action == "update") {
+      console.log(req.body);
+      await Paid.findById(req.body["key"], function (err, user) {
+        if (err) {
+          console.log(err);
+        } else {
+          //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
+          user.fullname = a.fullname;
+          // var combineid = a.fullname;
+          // combineid += isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+          user.combineid =
+            a.fullname + isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+          user.name = isUndefinedOrNull(a.name) ? "" : a.name;
+          user.surname = isUndefinedOrNull(a.surname) ? "" : a.surname;
+          user.father = isUndefinedOrNull(a.father) ? "" : a.father;
+          user.mobile = isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+          user.address = isUndefinedOrNull(a.address) ? "" : a.address;
+          // console.log("New Client Paid: " + json.stringify(user))
+          user.save(function (err) {
+            if (err) {
+              //handleError(err)
+              console.log(err);
+            } else {
+              // res.send({})
+              // return
+            }
+          });
+        }
+      });
+    }
+    if (req.body.action == "remove") {
+      console.log(req.body);
+      var keyID = mongoose.Types.ObjectId(req.body.key);
+      console.log("removed" + req.body["key"]);
+      await Paid.findByIdAndDelete(req.body["key"], function (err) {
+        if (err) console.log(err);
+        console.log("Successful deletion");
+      });
+    }
+
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.send("error");
+  }
 });
 
 router.post("/Paid/GetData", verify, async (req, res) => {
@@ -525,7 +730,8 @@ router.post("/Paid/BatchData", verify, async (req, res) => {
           user.fullname = a.fullname;
           // var combineid = a.fullname;
           // combineid += isUndefinedOrNull(a.mobile) ? "" : a.mobile;
-          user.combineid = a.fullname + isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+          user.combineid =
+            a.fullname + isUndefinedOrNull(a.mobile) ? "" : a.mobile;
           user.name = isUndefinedOrNull(a.name) ? "" : a.name;
           user.surname = isUndefinedOrNull(a.surname) ? "" : a.surname;
           user.father = isUndefinedOrNull(a.father) ? "" : a.father;
@@ -906,19 +1112,17 @@ router.get("/jsonok/:type", verify, async (req, res) => {
 
 router.post("/paid", verify, async (req, res) => {
   try {
-    //On paid post request get all user information
-    //Get the doc id form client id on post request
-    //Check if paid client allready exits
-    //If true update the paid information with the new doc
-    //If not create new paid account with doc information
-    //console.log(req.query.doc);
     if (
       !isEmptyOrSpaces(req.query.lang) &&
       !isEmptyOrSpaces(req.query.doc) &&
       !isEmptyOrSpaces(req.query.id) &&
       !isEmptyOrSpaces(req.query.docid)
     ) {
-      //console.log(req.query);
+      // console.log(req.query.href);
+
+      //const encoded = encodeURIComponent(req.body.href);
+      const encoded = req.body.href;
+      console.log("encode url: " + encoded);
 
       var modelCheck = req.query.doc;
       modelCheck = modelCheck.replace(/\s/g, "");
@@ -949,23 +1153,24 @@ router.post("/paid", verify, async (req, res) => {
             address: user.s0.address,
             clientID: req.query.id,
             docid: req.query.docid,
-            href: req.query.href,
+            href: encoded,
             language: req.query.lang,
             docModel: modelCheck,
             docid: req.query.docid,
-            href: req.query.href,
             paid: req.body.paid,
-            remain: req.body.remain,
-            total: "",
+            total: req.body.total,
+            category: req.body.category,
             createUser: "",
             updateUser: "",
             createTime: datetime,
             updateTime: datetime,
             numberOfUpdate: 0,
+            remain: req.body.remain,
           };
         }
       });
 
+      console.log("href: " + decodeURI(clientPaymentHistory.href));
       //need to make unique id combination different from _id to make update more easer
 
       var clientpaid = {
@@ -974,8 +1179,8 @@ router.post("/paid", verify, async (req, res) => {
         middle: "",
         last: "",
         address: "",
-        phone: "",
-        type: "",
+        mobile: "",
+        category: "",
         paid: "",
         remain: "",
         docid: req.query.docid,
@@ -987,8 +1192,8 @@ router.post("/paid", verify, async (req, res) => {
       clientpaid["middle"] = req.body.middle;
       clientpaid["last"] = req.body.last;
       clientpaid["address"] = req.body.address;
-      clientpaid["phone"] = req.body.phone;
-      clientpaid["type"] = req.body.type;
+      clientpaid["mobile"] = req.body.mobile;
+      clientpaid["category"] = req.body.category;
       clientpaid["paid"] = req.body.paid;
       clientpaid["remain"] = req.body.remain;
       clientpaid["docid"] = req.query.docid;
@@ -1006,9 +1211,7 @@ router.post("/paid", verify, async (req, res) => {
       // })
 
       var fullname =
-        clientPaymentHistory["first"] +
-        clientpaid["middle"] +
-        clientpaid["last"];
+        clientpaid["first"] + clientpaid["middle"] + clientpaid["last"];
 
       if (
         !isEmptyOrSpaces(paidClientSelectedID) &&
@@ -1029,9 +1232,9 @@ router.post("/paid", verify, async (req, res) => {
 
         paid.payment.push(clientPaymentHistory);
 
-        paid.mobile = clientpaid.phone;
+        paid.mobile = clientpaid.mobile;
         paid.address = clientpaid.address;
-        paid.combineid = fullname + clientpaid["phone"];
+        paid.combineid = fullname + clientpaid["mobile"];
         paid.fullname = fullname;
         paid.name = clientpaid.first;
         paid.surname = clientpaid.last;
@@ -1227,7 +1430,7 @@ router.post("/data", verify, async (req, res) => {
         if (docArray["o1"] == "0") docArray["o1"] = "";
 
         // console.log(docArray['o1'])
-        console.log(data["o1"]);
+        //console.log(data["o1"]);
 
         // data['date'] = dateFormat(new Date(), "mmm d yyyy");
         // docArray['date'] = dateFormat(new Date(), "mmm d yyyy");

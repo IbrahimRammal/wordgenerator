@@ -334,7 +334,8 @@
             "value": ""
         }
     },
-    "date": "", "original": "0", "download":"",
+    "date": "", "original": "0",   "download": "",
+  "category": "",
     "caption": "Death Certificate",
     "leftheader": {
         "title": "R B P S T",

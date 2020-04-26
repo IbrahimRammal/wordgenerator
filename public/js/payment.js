@@ -1,73 +1,235 @@
-$( document ).ready(function() {
+$(document).ready(function () {
+  ej.grids.Grid.Inject(ej.grids.DetailRow);
 
-    var value = 'Frozen seafood';
-    var listObj;
-    var foods = [
-        { food: 'Frozen seafood' },
-        { food: 'Dairy' },
-        { food: 'Edible' },
-        { food: 'Solid Crystals' },
-    ];
+  var hostUrl = "/api/posts/";
 
-    var customAggregateFn = function (data) {
-        var sampleData = ej.grids.getObject('result', data);
-        var countLength;
-        countLength = 0;
-        sampleData.filter(function (item) {
-            var data = ej.grids.getObject('category', item);
-            if (data === value) {
-                countLength++;
-            }
-        });
-        return countLength;
-    };
-    var treeGridObj = new ej.treegrid.TreeGrid({
-        dataSource: window.summaryData,
-        childMapping: 'subtasks',
-        width: 'auto',
-        height: 400,
-        treeColumnIndex: 1,
-        dataBound: function () {
-            if (!ej.base.isNullOrUndefined(listObj)) {
-                listObj.destroy();
-            }
-            listObj = new ej.dropdowns.DropDownList({
-                dataSource: foods,
-                fields: { value: 'food' },
-                placeholder: 'Select a Category',
-                width: '125px',
-                value: value,
-                change: function () {
-                    setTimeout(function () {
-                        value = listObj.value.toString();
-                        treeGridObj.refresh();
-                    }, 300);
-                }
-            });
-            listObj.appendTo('#customers');
-        },
-        columns: [
-            { field: 'ID', headerText: 'S.No', width: 60, textAlign: 'Right' },
-            { field: 'Name', headerText: 'Shipment Name', width: 170 },
-            { field: 'category', headerText: 'Category', width: 180 },
-            { field: 'units', headerText: 'Unit', width: 60 },
-            { field: 'unitPrice', headerText: 'Unit Price($)', width: 85,  format: 'C0',  type: 'number', textAlign: 'Right' },
-            { field: 'price', headerText: 'Price($)', width: 90,  format: 'C', textAlign: 'Right', type: 'number' },
-        ],
-        aggregates: [{
-            showChildSummary: false,
-            columns: [{
-                    type: 'Custom',
-                    customAggregate: customAggregateFn,
-                    columnName: 'category',
-                    format: 'C2',
-                    footerTemplate: 'Count of <input type="text" id="customers" /> : ${Custom}'
-                }]
-        }],
-        actionFailure: function (args){
-
-        }
+  let ajax = new ej.base.Ajax(
+    hostUrl + "Payment/GetData?action=all&id=",
+    "post"
+  );
+  ajax.send();
+  ajax.onSuccess = function (result) {
+    var data = new ej.data.DataManager({
+      json: JSON.parse(result),
+      adaptor: new ej.data.RemoteSaveAdaptor(), //remote save adaptor
+      insertUrl: hostUrl + "Payment/BatchData",
+      updateUrl: hostUrl + "Payment/BatchData",
+      removeUrl: hostUrl + "Payment/BatchData",
     });
 
-    treeGridObj.appendTo('#TreeGrid');
+    var dataChild = new ej.data.DataManager({
+      url: hostUrl + "Payment/GetData?action=sub&id=",
+      adaptor: new ej.data.UrlAdaptor(),
+      crossDomain: true,
+    });
+
+    var grid = new ej.grids.Grid({
+      dataSource: data,
+      allowSorting: true,
+      columns: [
+        {
+          field: "_id",
+          headerText: "_id",
+          isPrimaryKey: true,
+          textAlign: "center",
+          width: 120,
+          visible: false,
+        },
+        {
+          field: "fullname",
+          headerText: "fullname",
+          validationRules: { required: true },
+          width: 100,
+        },
+        {
+          field: "mobile",
+          headerText: "mobile",
+          textAlign: "Left",
+          validationRules: { required: true },
+          width: 100,
+        },
+        {
+          field: "address",
+          headerText: "address",
+          textAlign: "Left",
+          validationRules: { required: true },
+          width: 100,
+        },
+        {
+          field: "unit",
+          headerText: "Count",
+          textAlign: "Left",
+          validationRules: { required: true },
+          width: 100,
+        },
+        {
+          field: "total",
+          headerText: "Total Price",
+          width: 85,
+          // format: "C0",
+          type: "number",
+          textAlign: "Left",
+        },
+        {
+          field: "paid",
+          headerText: "Paid Price",
+          width: 90,
+          // format: "C",
+          textAlign: "Left",
+          type: "number",
+        },
+        // {
+        //   field: "remain",
+        //   headerText: "Remain Price",
+        //   width: 90,
+        //   // format: "C",
+        //   textAlign: "Right",
+        //   type: "number",
+        // },
+      ],
+      childGrid: {
+        dataSource: dataChild,
+        queryString: "_id",
+        allowPaging: true,
+        allowSelection: true,
+        // queryCellInfo: function (args) {
+        //   if (args.column.type == "number" || args.column.type == "number") {
+        //     var val = ej.getObject(args.column.field, args.data);
+        //     if (ej.isNullOrUndefined(val) || val == "")
+        //       $(args.cell).text("0");
+        //   }
+        // },
+        columns: [
+          {
+            field: "paymentid",
+            headerText: "paymentid",
+            isPrimaryKey: true,
+            textAlign: "center",
+            width: 120,
+            visible: false,
+          },
+          {
+            field: "fullname",
+            headerText: "fullname",
+            validationRules: { required: true },
+            width: 100,
+          },
+          {
+            field: "docid",
+            headerText: "docid",
+            textAlign: "Left",
+            validationRules: { required: true },
+            width: 100,
+            visible: false,
+          },
+          {
+            field: "category",
+            headerText: "type",
+            textAlign: "Left",
+            validationRules: { required: true },
+            width: 100,
+          },
+          {
+            field: "language",
+            headerText: "language",
+            textAlign: "Left",
+            validationRules: { required: true },
+            width: 100,
+          },
+          {
+            field: "docModel",
+            headerText: "docModel",
+            width: 85,
+            textAlign: "Left",
+          },
+          {
+            field: "total",
+            headerText: "Total Price",
+            width: 90,
+            // format: "C",
+            textAlign: "Right",
+            type: "number",
+          },
+          {
+            field: "paid",
+            headerText: "Paid Price",
+            width: 90,
+            // format: "C",
+            textAlign: "Right",
+            type: "number",
+          },
+          {
+            field: "Download",
+            headerText: "Download",
+            width: 90,
+            defaultValue: "Download",
+            // format: "C",
+            textAlign: "Right",
+            // visible: false
+            // type: "number",
+          },
+          {
+            field: "href",
+            headerText: "DocLink",
+            width: 90,
+            // format: "C",
+            textAlign: "Right",
+            visible: false,
+            // type: "number",
+          },
+          // {
+          //   field: "total",
+          //   headerText: "Total Price",
+          //   width: 90,
+          //   format: "C",
+          //   textAlign: "Right",
+          //   type: "number",
+          // },
+        ],
+      },
+      // recordClick: click,
+      // detailDataBound: onExpand,
+    });
+    grid.appendTo("#Grid");
+
+    // var childGrid;
+
+    function click(args) {
+      if (args.cell.find("a").hasClass("symbol")) {
+        $("#commanddialog").ejDialog({ showOnInit: false });
+        $("#commanddialog").ejDialog("open");
+      }
+    }
+
+    function onExpand(args) {
+      // console.log( grid.childGrid);
+      childGrid = this.childGrid;
+      //console.log(childGrid);
+      var hostUrl = "/api/posts/";
+      let ajax = new ej.base.Ajax(
+        hostUrl + "Payment/GetData?action=sub&id=" + args.data._id,
+        "post"
+      );
+      ajax.send();
+      ajax.onSuccess = function (result) {
+        grid.childGrid.dataSource = JSON.parse(result);
+        //console.log( grid.childGrid.dataSource);
+        //grid.childGrid.dataSource
+        // dataChild = new ej.data.DataManager({
+        //   json: JSON.parse(result),
+        //   adaptor: new ej.data.RemoteSaveAdaptor(), //remote save adaptor
+        //   insertUrl: hostUrl + "Payment/BatchData",
+        //   updateUrl: hostUrl + "Payment/BatchData",
+        //   removeUrl: hostUrl + "Payment/BatchData",
+        // });
+
+        console.log(this.childGrid.dataSource);
+        // //console.log(this.childGrid.dataSource);
+        // //console.log(result);
+        //dataChild.json = JSON.parse(result)
+        // //childGrid.dataSource = JSON.parse(result); // assign data source for child grid.
+        // console.log(childGrid.dataSource);
+      };
+    }
+  };
 });
