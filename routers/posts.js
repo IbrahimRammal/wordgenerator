@@ -415,14 +415,18 @@ router.post("/template", verify, async (req, res) => {
 
 // make the access only from the server
 router.get("/r", verify, async (req, res) => {
+  console.log("download request: " + req.query.valid)
   var passedVariable = req.query.valid;
   //console.log(passedVariable)
   var passedpassVariable = req.query.pass + ".docx";
+  console.log("passedpassVariable: " + passedpassVariable)
   //console.log(passedpassVariable)
   res.download(passedVariable, passedpassVariable, (err) => {
     if (err) {
       // handle error
+      console.log(err)
     } else {
+      
       // user get the downloaded docx
       // console.log('hello')
     }
@@ -471,6 +475,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
           total: user["payment"][j].total,
           remain: user["payment"][j].remain,
           paid: user["payment"][j].paid,
+          Download: "download"
         };
 
         result.push(subParent);
