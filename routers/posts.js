@@ -436,6 +436,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
   var result = [];
   var subresult = [];
 
+  console.log("start action");
   console.log(req.query);
   console.log(req.body);
 
@@ -450,22 +451,51 @@ router.post("/Payment/GetData", verify, async (req, res) => {
 
       await Paid.updateOne(
         {
-            "_id": req.body.value._id,
-            "payment._id": req.body.key
+          _id: req.body.value._id,
+          "payment._id": req.body.key,
         },
         {
-            "$set": { "payment.$.category": req.body.value.category, "payment.$.total": req.body.value.total, "payment.$.paid": req.body.value.paid}
+          $set: {
+            "payment.$.category": req.body.value.category,
+            "payment.$.total": req.body.value.total,
+            "payment.$.paid": req.body.value.paid,
+          },
         },
-        function(error, updatedData) {
-            if(error) {
-               // return res.status(400).send(error);
-            }
-            console.log(updatedData);
-            //return res.status(200).send(updatedData);
+        function (error, updatedData) {
+          if (error) {
+            // return res.status(400).send(error);
+          }
+          console.log(updatedData);
+          //return res.status(200).send(updatedData);
         }
       );
 
       console.log("Finsh reipte update");
+      res.send({});
+      return;
+    }
+    if (req.body.action == "remove") {
+      //console.log(req.body);
+      //var keyID = mongoose.Types.ObjectId(req.body.key);
+      console.log("removed" + req.body["key"]);
+      // Equivalent to `parent.children.pull(_id)`
+      var key = req.body["key"];
+      var keys = [];
+      keys = key.split("_");
+
+      await Paid.findById(keys[0], function (err, user) {
+        if (err) {
+          console.log(err);
+        } else {
+          user.payment.id(keys[1]).remove();
+          // Equivalent to `parent.child = null`
+          //user.child.remove();
+          user.save(function (err) {
+            if (err) return handleError(err);
+            console.log("the subdocs were removed");
+          });
+        }
+      });
       res.send({});
       return;
     }
@@ -490,6 +520,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
           let subParent = {
             //put parent id temor
             _id: getById,
+            combineid: getById + "_" + user["payment"][j]._id,
             paymentid: user["payment"][j]._id,
             fullname: user["payment"][j].fullname,
             docid: user["payment"][j].docid,

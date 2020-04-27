@@ -146,14 +146,25 @@ $(document).ready(function () {
           allowDeleting: true,
           mode: "Dialog",
           newRowPosition: "Top",
+          showDeleteConfirmDialog: true,
         },
         toolbar: ["Add", "Edit", "Delete", "Update", "Cancel"],
         columns: [
           {
+            field: "combineid",
+            headerText: "combineid",
+            isPrimaryKey: true,
+            validationRules: { required: true },
+            textAlign: "center",
+            width: 120,
+            visible: false,
+            allowEditing: false,
+          },
+          {
             field: "paymentid",
             headerText: "paymentid",
-            isPrimaryKey: true,
-            validationRules: { required: true, number: true },
+            //isPrimaryKey: true,
+            validationRules: { required: true },
             textAlign: "center",
             width: 120,
             visible: false,
@@ -257,6 +268,7 @@ $(document).ready(function () {
             // format: "C",
             textAlign: "Right",
             allowEditing: false,
+            //commands: [{ buttonOption: { content: 'Download', cssClass: 'e-flat', click: onClick } }] //, click: onClick
             // visible: false
             // type: "number",
           },
@@ -274,7 +286,6 @@ $(document).ready(function () {
         rowSelected: rowSelected,
         actionBegin: function (args) {
           if (args.requestType === "beginEdit" || args.requestType === "add") {
-            
             for (var i = 0; i < this.columns.length; i++) {
               if (
                 this.columns[i].field == "Download" ||
@@ -297,11 +308,22 @@ $(document).ready(function () {
           }
         },
         actionComplete: function (args) {
+          //console.log(args.requestType);
+          if (args.requestType === "delete") {
+            return;
+          }
           let dialog = args.dialog;
-          dialog.height = 350;
+          // dialog.height = 350;
           // change the header of the dialog
-          dialog.header = args.requestType === 'beginEdit' ? 'Edit Record' : 'New Record';
+          dialog.header =
+            args.requestType === "beginEdit" ? "Edit Record" : "New Record";
+
           if (args.requestType === "save") {
+            let dialog = args.dialog;
+            // dialog.height = 350;
+            // change the header of the dialog
+            dialog.header =
+              args.requestType === "beginEdit" ? "Edit Record" : "New Record";
             //Change header remains
             console.log(args);
             for (var i = 0; i < this.columns.length; i++) {
@@ -352,6 +374,28 @@ $(document).ready(function () {
       // detailDataBound: onExpand,
     });
     grid.appendTo("#Grid");
+
+    // function onClick(args)
+    // {
+    //   var urlDownload = args.data.href;
+    //   var currentDate = new Intl.DateTimeFormat("fr-CA", {
+    //     year: "numeric",
+    //     month: "2-digit",
+    //     day: "2-digit",
+    //   }).format(Date.now());
+    //   window.location =
+    //     args.data.href +
+    //     "&pass=" +
+    //     args.data.fullname +
+    //     "_" +
+    //     args.data.category +
+    //     "_" +
+    //     args.data.language +
+    //     "_" +
+    //     args.data.docModel +
+    //     "_" +
+    //     currentDate;
+    // }
 
     function currencyFormatter(field, data, column) {
       //console.log(column);
