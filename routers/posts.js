@@ -415,18 +415,17 @@ router.post("/template", verify, async (req, res) => {
 
 // make the access only from the server
 router.get("/r", verify, async (req, res) => {
-  console.log("download request: " + req.query.valid)
+  console.log("download request: " + req.query.valid);
   var passedVariable = req.query.valid;
   //console.log(passedVariable)
   var passedpassVariable = req.query.pass + ".docx";
-  console.log("passedpassVariable: " + passedpassVariable)
+  console.log("passedpassVariable: " + passedpassVariable);
   //console.log(passedpassVariable)
   res.download(passedVariable, passedpassVariable, (err) => {
     if (err) {
       // handle error
-      console.log(err)
+      console.log(err);
     } else {
-      
       // user get the downloaded docx
       // console.log('hello')
     }
@@ -440,144 +439,174 @@ router.post("/Payment/GetData", verify, async (req, res) => {
   console.log(req.query);
   console.log(req.body);
 
-  var action = req.query.action;
-  var id = req.query.id;
+  try {
+    var action = req.query.action;
+    var id = req.query.id;
 
-  var query;
+    var query;
 
-  if (isEmptyOrSpaces(id) && action == "all") {
-    query = await Paid.find(
-      {},
-      { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
-    );
-  } else if (action == "sub") {
-    var getById;
-    //var getById = id;
-    if (isUndefinedOrNull(id) || isEmptyOrSpaces(id)) {
-      getById = req.body.where[0].value;
-    } else {
-      var getById = id;
+    if (req.body.action == "update") {
+      console.log(req.body.value._id);
+
+      await Paid.updateOne(
+        {
+            "_id": req.body.value._id,
+            "payment._id": req.body.key
+        },
+        {
+            "$set": { "payment.$.category": req.body.value.category, "payment.$.total": req.body.value.total, "payment.$.paid": req.body.value.paid}
+        },
+        function(error, updatedData) {
+            if(error) {
+               // return res.status(400).send(error);
+            }
+            console.log(updatedData);
+            //return res.status(200).send(updatedData);
+        }
+      );
+
+      console.log("Finsh reipte update");
+      res.send({});
+      return;
     }
-    console.log("body.id: " + getById);
-    query = await Paid.findById(getById, function (err, user) {
-      for (var j = 0; j < user["payment"].length; j++) {
-        console.log(user["payment"][j].href);
+
+    if (isEmptyOrSpaces(id) && action == "all") {
+      query = await Paid.find(
+        {},
+        { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
+      );
+    } else if (action == "sub") {
+      var getById;
+      //var getById = id;
+      if (isUndefinedOrNull(id) || isEmptyOrSpaces(id)) {
+        getById = req.body.where[0].value;
+      } else {
+        var getById = id;
+      }
+      console.log("body.id: " + getById);
+      query = await Paid.findById(getById, function (err, user) {
+        for (var j = 0; j < user["payment"].length; j++) {
+          console.log(user["payment"][j].href);
+          let subParent = {
+            //put parent id temor
+            _id: getById,
+            paymentid: user["payment"][j]._id,
+            fullname: user["payment"][j].fullname,
+            docid: user["payment"][j].docid,
+            href: user["payment"][j].href,
+            category: user["payment"][j].category,
+            language: user["payment"][j].language,
+            docModel: user["payment"][j].docModel,
+            total: user["payment"][j].total,
+            remain: user["payment"][j].remain,
+            paid: user["payment"][j].paid,
+            Download: "download",
+          };
+
+          result.push(subParent);
+
+          //console.log("subParent: " + JSON.stringify(subParent));
+        }
+      });
+      res.send({ result: result, count: result.length });
+      // res.send(result);
+      return;
+      console.log(query);
+    } else {
+      res.send({});
+      return;
+    }
+
+    //Get all payment
+    for (var i = 0; i < query.length; i++) {
+      let totalpaidprice = 0;
+      let totalremainprice = 0;
+      let totalvalueprice = 0;
+      let unit = 0;
+
+      let parent = {
+        _id: "",
+        fullname: "",
+        mobile: "",
+        address: "",
+        unit: "",
+        paid: "",
+        remain: "",
+        total: "",
+        subtasks: [],
+      };
+
+      parent._id = query[i]._id;
+      parent.fullname = query[i].fullname;
+      parent.mobile = query[i].mobile;
+      parent.address = query[i].address;
+      for (var j = 0; j < query[i]["payment"].length; j++) {
         let subParent = {
-          //put parent id temor
-          _id: getById,
-          paymentid: user["payment"][j]._id,
-          fullname: user["payment"][j].fullname,
-          docid: user["payment"][j].docid,
-          href: user["payment"][j].href,
-          category: user["payment"][j].category,
-          language: user["payment"][j].language,
-          docModel: user["payment"][j].docModel,
-          total: user["payment"][j].total,
-          remain: user["payment"][j].remain,
-          paid: user["payment"][j].paid,
-          Download: "download"
+          _id: query[i]["payment"][j]._id,
+          fullname: query[i]["payment"][j].fullname,
+          docid: query[i]["payment"][j].docid,
+          href: query[i]["payment"][j].href,
+          category: query[i]["payment"][j].category,
+          language: query[i]["payment"][j].language,
+          docModel: query[i]["payment"][j].docModel,
+          total: query[i]["payment"][j].total,
+          remains: query[i]["payment"][j].remains,
+          paid: query[i]["payment"][j].paid,
         };
 
-        result.push(subParent);
+        unit = j + 1;
+        totalpaidprice += query[i]["payment"][j].paid;
+        totalremainprice += query[i]["payment"][j].remain;
+        totalvalueprice += query[i]["payment"][j].total;
+        // totalvalueprice += Number(query[i]["payment"][j].total)
+        //   ? 0
+        //   : parseInt(query[i]["payment"][j].total, 10);
+        // totalremainprice += Number(query[i]["payment"][j].paid)
+        //   ? 0
+        //   : parseInt(query[i]["payment"][j].paid, 10);
+        // totalvalueprice += Number(query[i]["payment"][j].remain)
+        //   ? 0
+        //   : parseInt(query[i]["payment"][j].remain, 10);
+
+        if (action == "sub") {
+          console.log("sudfasdjfkl jaslkdjf klasjdf lkjaskldj fklsdj ");
+          result.push(subParent);
+          console.log("result: " + JSON.stringify(result));
+        }
 
         //console.log("subParent: " + JSON.stringify(subParent));
       }
-    });
-    res.send({ result: result, count: result.length });
-    // res.send(result);
-    return;
-    console.log(query);
-  } else {
-    res.send({});
-    return;
-  }
+      //after finish loop parent json
 
-  //Get all payment
-  for (var i = 0; i < query.length; i++) {
-    let totalpaidprice = 0;
-    let totalremainprice = 0;
-    let totalvalueprice = 0;
-    let unit = 0;
+      console.log(
+        "totalpaidprice: " +
+          totalpaidprice +
+          "totalremainprice: " +
+          totalremainprice +
+          "totalvalueprice: " +
+          totalvalueprice
+      );
+      parent.unit = unit;
+      parent.paid = totalpaidprice;
+      parent.remain = totalremainprice;
+      parent.total = totalvalueprice;
 
-    let parent = {
-      _id: "",
-      fullname: "",
-      mobile: "",
-      address: "",
-      unit: "",
-      paid: "",
-      remain: "",
-      total: "",
-      subtasks: [],
-    };
-
-    parent._id = query[i]._id;
-    parent.fullname = query[i].fullname;
-    parent.mobile = query[i].mobile;
-    parent.address = query[i].address;
-    for (var j = 0; j < query[i]["payment"].length; j++) {
-      let subParent = {
-        _id: query[i]["payment"][j]._id,
-        fullname: query[i]["payment"][j].fullname,
-        docid: query[i]["payment"][j].docid,
-        href: query[i]["payment"][j].href,
-        category: query[i]["payment"][j].category,
-        language: query[i]["payment"][j].language,
-        docModel: query[i]["payment"][j].docModel,
-        total: query[i]["payment"][j].total,
-        remains: query[i]["payment"][j].remains,
-        paid: query[i]["payment"][j].paid,
-      };
-
-      unit = j + 1;
-      totalpaidprice += query[i]["payment"][j].paid;
-      totalremainprice += query[i]["payment"][j].remain;
-      totalvalueprice += query[i]["payment"][j].total;
-      // totalvalueprice += Number(query[i]["payment"][j].total)
-      //   ? 0
-      //   : parseInt(query[i]["payment"][j].total, 10);
-      // totalremainprice += Number(query[i]["payment"][j].paid)
-      //   ? 0
-      //   : parseInt(query[i]["payment"][j].paid, 10);
-      // totalvalueprice += Number(query[i]["payment"][j].remain)
-      //   ? 0
-      //   : parseInt(query[i]["payment"][j].remain, 10);
-
-      if (action == "sub") {
-        console.log("sudfasdjfkl jaslkdjf klasjdf lkjaskldj fklsdj ");
-        result.push(subParent);
-        console.log("result: " + JSON.stringify(result));
-      }
-
-      //console.log("subParent: " + JSON.stringify(subParent));
+      if (action == "all") result.push(parent);
+      //console.log("parent: " + parent);
+      //console.log("subParent: " + JSON.stringify(parent));
     }
-    //after finish loop parent json
 
-    console.log(
-      "totalpaidprice: " +
-        totalpaidprice +
-        "totalremainprice: " +
-        totalremainprice +
-        "totalvalueprice: " +
-        totalvalueprice
-    );
-    parent.unit = unit;
-    parent.paid = totalpaidprice;
-    parent.remain = totalremainprice;
-    parent.total = totalvalueprice;
-
-    if (action == "all") result.push(parent);
-    //console.log("parent: " + parent);
-    //console.log("subParent: " + JSON.stringify(parent));
+    //console.log("result: " + result);
+    //console.log("result: " + JSON.stringify(result));
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.send({});
   }
-
-  //console.log("result: " + result);
-  //console.log("result: " + JSON.stringify(result));
-  res.send(result);
 });
 
 //i miss some thing
-router.post("/Paid/BatchData", verify, async (req, res) => {
+router.post("/Payment/BatchData", verify, async (req, res) => {
   try {
     // console.log(req.body.value);
     var a = req.body.value;
