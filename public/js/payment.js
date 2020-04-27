@@ -1,6 +1,25 @@
 $(document).ready(function () {
-  ej.grids.Grid.Inject(ej.grids.DetailRow);
+  var categoryObj;
 
+  var category = [
+    { categoryName: "Pronto", categoryId: "1" },
+    { categoryName: "Sworn legal", categoryId: "2" },
+    { categoryName: "non legal", categoryId: "3" },
+  ];
+
+  //ej.grids.Grid.Inject(ej.grids.DetailRow);
+  ej.grids.Grid.Inject(
+    ej.grids.DetailRow,
+    ej.grids.PdfExport,
+    ej.grids.ExcelExport,
+    ej.grids.Sort,
+    ej.grids.Group,
+    ej.grids.Search,
+    ej.grids.Edit,
+    ej.grids.Toolbar,
+    ej.grids.Page,
+    ej.grids.Filter
+  );
   var hostUrl = "/api/posts/";
 
   let ajax = new ej.base.Ajax(
@@ -17,6 +36,14 @@ $(document).ready(function () {
       removeUrl: hostUrl + "Payment/BatchData",
     });
 
+    // var dataManagerChild = new ej.data.DataManager({
+    //   json: JSON.parse(JSON.stringify(userData)),
+    //   adaptor: new ej.data.RemoteSaveAdaptor(), //remote save adaptor
+    //   insertUrl: hostUrl + "Payment/BatchData",
+    //   updateUrl: hostUrl + "Payment/BatchData",
+    //   removeUrl: hostUrl + "Payment/BatchData",
+    // });
+
     var dataChild = new ej.data.DataManager({
       url: hostUrl + "Payment/GetData?action=sub&id=",
       adaptor: new ej.data.UrlAdaptor(),
@@ -25,7 +52,14 @@ $(document).ready(function () {
 
     var grid = new ej.grids.Grid({
       dataSource: data,
+      allowPaging: true,
+      allowGrouping: true,
+      //allowFiltering: true,
       allowSorting: true,
+      allowMultiSorting: true,
+      toolbar: ["Search"], //ExcelExport
+      // allowExcelExport: true,
+      allowPdfExport: true,
       columns: [
         {
           field: "_id",
@@ -69,7 +103,7 @@ $(document).ready(function () {
           // format: "C0",
           type: "number",
           textAlign: "Left",
-          valueAccessor: currencyFormatter
+          valueAccessor: currencyFormatter,
         },
         {
           field: "paid",
@@ -78,9 +112,14 @@ $(document).ready(function () {
           // format: "C",
           textAlign: "Left",
           type: "number",
-          valueAccessor: currencyFormatter
+          valueAccessor: currencyFormatter,
         },
-        { headerText: 'Remains', valueAccessor: totalRemains, textAlign: 'Right', width: 150 }, 
+        {
+          headerText: "Remains",
+          valueAccessor: totalRemains,
+          textAlign: "Right",
+          width: 150,
+        },
         // {
         //   field: "remain",
         //   headerText: "Remain Price",
@@ -95,28 +134,37 @@ $(document).ready(function () {
         queryString: "_id",
         allowPaging: true,
         allowSelection: true,
+        //allowGrouping: true,
+        //allowFiltering: true,
+        //allowSorting: true,
+        //allowMultiSorting: true,
+        toolbar: ["Search"], //ExcelExport
         selectionSettings: { mode: "Both" },
-        // queryCellInfo: function (args) {
-        //   if (args.column.type == "number" || args.column.type == "number") {
-        //     var val = ej.getObject(args.column.field, args.data);
-        //     if (ej.isNullOrUndefined(val) || val == "")
-        //       $(args.cell).text("0");
-        //   }
-        // },
+        pageSettings: { pageCount: 5 },
+        editSettings: {
+          allowEditing: true,
+          allowDeleting: true,
+          mode: "Dialog",
+          newRowPosition: "Top",
+        },
+        toolbar: ["Add", "Edit", "Delete", "Update", "Cancel"],
         columns: [
           {
             field: "paymentid",
             headerText: "paymentid",
             isPrimaryKey: true,
+            validationRules: { required: true, number: true },
             textAlign: "center",
             width: 120,
             visible: false,
+            allowEditing: false,
           },
           {
             field: "fullname",
             headerText: "fullname",
             validationRules: { required: true },
             width: 100,
+            allowEditing: false,
           },
           {
             field: "docid",
@@ -125,6 +173,7 @@ $(document).ready(function () {
             validationRules: { required: true },
             width: 100,
             visible: false,
+            allowEditing: false,
           },
           {
             field: "category",
@@ -132,6 +181,38 @@ $(document).ready(function () {
             textAlign: "Left",
             validationRules: { required: true },
             width: 100,
+            edit: {
+              create: function () {
+                categoryElem = document.createElement("input");
+                return categoryElem;
+              },
+              read: function () {
+                return categoryObj.text;
+              },
+              destroy: function () {
+                categoryObj.destroy();
+              },
+              write: function () {
+                categoryObj = new ej.dropdowns.DropDownList({
+                  dataSource: category,
+                  fields: { value: "categoryId", text: "categoryName" },
+                  change: function () {
+                    //stateObj.enabled = true;
+                    // var tempQuery = new Query().where(
+                    //   "categoryId",
+                    //   "equal",
+                    //   categoryObj.value
+                    // );
+                    //stateObj.query = tempQuery;
+                    //stateObj.text = null;
+                    //stateObj.dataBind();
+                  },
+                  placeholder: "Select a category",
+                  floatLabelType: "Never",
+                });
+                categoryObj.appendTo(categoryElem);
+              },
+            },
           },
           {
             field: "language",
@@ -139,12 +220,14 @@ $(document).ready(function () {
             textAlign: "Left",
             validationRules: { required: true },
             width: 100,
+            allowEditing: false,
           },
           {
             field: "docModel",
             headerText: "docModel",
             width: 85,
             textAlign: "Left",
+            allowEditing: false,
           },
           {
             field: "total",
@@ -153,7 +236,8 @@ $(document).ready(function () {
             // format: "C",
             textAlign: "Right",
             type: "number",
-            valueAccessor: currencyFormatter
+            valueAccessor: currencyFormatter,
+            //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
           },
           {
             field: "paid",
@@ -162,7 +246,8 @@ $(document).ready(function () {
             // format: "C",
             textAlign: "Right",
             type: "number",
-            valueAccessor: currencyFormatter
+            valueAccessor: currencyFormatter,
+            //validationRules: { required: true, minLength: [customFn, 'Need to be less than total value']}
           },
           {
             field: "Download",
@@ -171,6 +256,7 @@ $(document).ready(function () {
             defaultValue: "Download",
             // format: "C",
             textAlign: "Right",
+            allowEditing: false,
             // visible: false
             // type: "number",
           },
@@ -181,18 +267,57 @@ $(document).ready(function () {
             // format: "C",
             textAlign: "Right",
             visible: false,
+            allowEditing: false,
             // type: "number",
           },
-          // {
-          //   field: "total",
-          //   headerText: "Total Price",
-          //   width: 90,
-          //   format: "C",
-          //   textAlign: "Right",
-          //   type: "number",
-          // },
         ],
         rowSelected: rowSelected,
+        actionBegin: function (args) {
+          if (args.requestType === "beginEdit" || args.requestType === "add") {
+            
+            for (var i = 0; i < this.columns.length; i++) {
+              if (
+                this.columns[i].field == "Download" ||
+                this.columns[i].field == "fullname" ||
+                this.columns[i].field == "docModel" ||
+                this.columns[i].field == "language"
+              ) {
+                this.columns[i].visible = false;
+              } else if (
+                this.columns[i].field == "total" ||
+                this.columns[i].field == "paid"
+              ) {
+                //console.log(args.rowData[this.columns[i].field]);
+                //var str = args.data[this.columns[i].field];
+                //args.data[this.columns[i].field] = str.replace("LBP", "");
+                // str.replace("LBP", "");
+                // data[field] + " LBP"
+              }
+            }
+          }
+        },
+        actionComplete: function (args) {
+          let dialog = args.dialog;
+          dialog.height = 350;
+          // change the header of the dialog
+          dialog.header = args.requestType === 'beginEdit' ? 'Edit Record' : 'New Record';
+          if (args.requestType === "save") {
+            //Change header remains
+            console.log(args);
+            for (var i = 0; i < this.columns.length; i++) {
+              if (
+                this.columns[i].field == "Download" ||
+                this.columns[i].field == "fullname" ||
+                this.columns[i].field == "docModel" ||
+                this.columns[i].field == "language"
+              ) {
+                this.columns[i].visible = true;
+              } else if (this.columns[i].field == "fullname") {
+                this.columns[i].visible = true;
+              }
+            }
+          }
+        },
         actionFailure: (e) => {
           var span = document.createElement("span");
           grid.element.parentNode.insertBefore(span, grid.element);
@@ -204,21 +329,24 @@ $(document).ready(function () {
           //console.log(args.currentCell.outerText);
           if (args.currentCell.outerText == "download") {
             var urlDownload = args.data.href;
-            var currentDate = new Intl.DateTimeFormat("fr-CA", {year: "numeric", month: "2-digit", day: "2-digit"}).format(Date.now());
-            window.location = args.data.href + "&pass=" + args.data.fullname + "_" + args.data.category + "_" + args.data.language + "_" + args.data.docModel + "_" + currentDate;
-            //$.get(urlDownload)
-            // $.ajax({
-            //   url: urlDownload,
-            //   type: "GET",
-            //   //dataType: "json", // added data type
-            //   success: function (res) {
-            //     //console.log(res);
-            //     //alert(res);
-            //   },
-            // });
+            var currentDate = new Intl.DateTimeFormat("fr-CA", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            }).format(Date.now());
+            window.location =
+              args.data.href +
+              "&pass=" +
+              args.data.fullname +
+              "_" +
+              args.data.category +
+              "_" +
+              args.data.language +
+              "_" +
+              args.data.docModel +
+              "_" +
+              currentDate;
           }
-          //args.selectedCellsInfo
-          //args.pivotValues
         },
       },
       // detailDataBound: onExpand,
@@ -232,10 +360,14 @@ $(document).ready(function () {
     }
 
     function totalRemains(field, data, column) {
-      return data.total + data.paid + " LBP";
-      }
+      return data.total - data.paid + " LBP";
+    }
 
-    // var childGrid;
+    // var customFn = function(args) {
+    //   console.log(args);
+    //   return args['value'].length >= 5;
+    //   };
+
     function rowSelected(args) {
       var selectedrowindex = grid.getSelectedRowIndexes(); // get the selected row indexes.
       //alert(selectedrowindex); // to alert the selected row indexes.
@@ -249,35 +381,30 @@ $(document).ready(function () {
       }
     }
 
+    var flag = 0;
     function onExpand(args) {
-      // console.log( grid.childGrid);
-      childGrid = this.childGrid;
-      //console.log(childGrid);
       var hostUrl = "/api/posts/";
-      let ajax = new ej.base.Ajax(
-        hostUrl + "Payment/GetData?action=sub&id=" + args.data._id,
-        "post"
-      );
-      ajax.send();
-      ajax.onSuccess = function (result) {
-        grid.childGrid.dataSource = JSON.parse(result);
-        //console.log( grid.childGrid.dataSource);
-        //grid.childGrid.dataSource
-        // dataChild = new ej.data.DataManager({
-        //   json: JSON.parse(result),
-        //   adaptor: new ej.data.RemoteSaveAdaptor(), //remote save adaptor
-        //   insertUrl: hostUrl + "Payment/BatchData",
-        //   updateUrl: hostUrl + "Payment/BatchData",
-        //   removeUrl: hostUrl + "Payment/BatchData",
-        // });
+      var proxy = this;
 
-        console.log(this.childGrid.dataSource);
-        // //console.log(this.childGrid.dataSource);
-        // //console.log(result);
-        //dataChild.json = JSON.parse(result)
-        // //childGrid.dataSource = JSON.parse(result); // assign data source for child grid.
-        // console.log(childGrid.dataSource);
-      };
+      // setTimeout(function () {
+      //   //Ajax post back
+      // }, 1000);
+
+      $.ajax({
+        url: hostUrl + "Payment/GetData?action=sub&id=" + args.data._id,
+        method: "post",
+        // dataType: "json",
+        success: function (userData) {
+          var dataManagerChild = new ej.data.DataManager({
+            json: JSON.parse(JSON.stringify(userData)),
+            adaptor: new ej.data.RemoteSaveAdaptor(), //remote save adaptor
+            insertUrl: hostUrl + "Payment/BatchData",
+            updateUrl: hostUrl + "Payment/BatchData",
+            removeUrl: hostUrl + "Payment/BatchData",
+          });
+          proxy.childGrid.dataSource = dataManagerChild;
+        },
+      });
     }
   };
 });
