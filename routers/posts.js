@@ -34,9 +34,11 @@ var mongoose = require("mongoose");
 
 //model client paider
 const PaidModel = require("../models/Paid");
+const Expense = require("../models/Expense");
 
 const Paid = PaidModel.Paid;
 const Payment = PaidModel.Payment;
+
 
 const paidpath = "./GenerateHtml/paidform.ejs";
 
@@ -431,6 +433,107 @@ router.get("/r", verify, async (req, res) => {
     }
   });
 });
+
+
+router.post("/Expense/GetData", verify, async (req, res) => {
+
+  var query = await Expense.find(
+    {},
+  );
+
+  console.log(query);
+  res.send(query);
+});
+
+router.post("/Expense/BatchData", verify, async (req, res) => {
+  try {
+    // console.log(req.body.value);
+    var a = req.body.value;
+    console.log(a);
+
+    var data = "";
+
+    var result = "";
+
+    var respnseAddID = "";
+    if (req.body.action == "insert") {
+      var receipt = {};
+
+      var now = new Date();
+      //this.updated_at = now;
+
+      receipt.fullname = isUndefinedOrNull(a.fullname) ? "" : a.fullname;
+      receipt.phone = isUndefinedOrNull(a.phone) ? "" : a.phone;
+      receipt.category = isUndefinedOrNull(a.category) ? "" : a.category;
+      receipt.paid = isUndefinedOrNull(a.paid) ? "" : a.paid;
+      receipt.total = isUndefinedOrNull(a.total) ? "" : a.total;
+      //receipt.created_at = now;
+      //receipt.updated_at = now;
+      receipt.note = isUndefinedOrNull(a.note) ? "" : a.note;
+      receipt.address = isUndefinedOrNull(a.address) ? "" : a.address;
+      receipt.paymentMode = isUndefinedOrNull(a.paymentMode) ? "" : a.paymentMode;
+
+      const expense = new Expense(receipt);
+      const savedPaid = await expense.save();
+
+      result = receipt;
+
+      // console.log("New Client Paid: " + json.stringify(paid))
+    }
+    if (req.body.action == "update") {
+      console.log(a.paymentMode);
+
+      await Expense.findById(req.body["key"], function (err, receiptRecored) {
+        if (err) {
+          console.log(err);
+        } else {
+          //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
+          receiptRecored.fullname = isUndefinedOrNull(a.fullname) ? "" : a.fullname;
+          receiptRecored.phone = isUndefinedOrNull(a.phone) ? 0 : a.phone;
+          receiptRecored.category = isUndefinedOrNull(a.category) ? "" : a.category;
+          receiptRecored.paid = isUndefinedOrNull(a.paid) ? 0 : a.paid;
+          receiptRecored.total = isUndefinedOrNull(a.total) ? 0 : a.total;
+          receiptRecored.paymentMode = isUndefinedOrNull(a.paymentMode) ? "" : a.paymentMode;
+          //receiptRecored.created_at = now;
+          //receiptRecored.updated_at = now;
+          receiptRecored.note = isUndefinedOrNull(a.note) ? "" : a.note;
+          receiptRecored.address = isUndefinedOrNull(a.address) ? "" : a.address;
+
+          console.log(receiptRecored);
+
+          result = receiptRecored;
+          
+          // console.log("New Client Paid: " + json.stringify(receiptRecored))
+
+          receiptRecored.save(function (err) {
+            if (err) {
+              //handleError(err)
+              console.log(err);
+            } else {
+              // res.send({})
+              // return
+            }
+          });
+        }
+      });
+    }
+    if (req.body.action == "remove") {
+      console.log(req.body);
+      var keyID = mongoose.Types.ObjectId(req.body.key);
+      console.log("removed" + req.body["key"]);
+      await Expense.findByIdAndDelete(req.body["key"], function (err) {
+        if (err) console.log(err);
+        console.log("Successful deletion");
+      });
+    }
+
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.send("error");
+  }
+});
+
 
 router.post("/Payment/GetData", verify, async (req, res) => {
   var result = [];
