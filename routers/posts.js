@@ -461,14 +461,15 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
 
       var now = new Date();
       //this.updated_at = now;
+      var now = new Date();
 
       receipt.fullname = isUndefinedOrNull(a.fullname) ? "" : a.fullname;
       receipt.phone = isUndefinedOrNull(a.phone) ? "" : a.phone;
       receipt.category = isUndefinedOrNull(a.category) ? "" : a.category;
       receipt.paid = isUndefinedOrNull(a.paid) ? "" : a.paid;
       receipt.total = isUndefinedOrNull(a.total) ? "" : a.total;
-      //receipt.created_at = now;
-      //receipt.updated_at = now;
+      receipt.created_at = now;
+      receipt.updated_at = now;
       receipt.note = isUndefinedOrNull(a.note) ? "" : a.note;
       receipt.address = isUndefinedOrNull(a.address) ? "" : a.address;
       receipt.paymentMode = isUndefinedOrNull(a.paymentMode) ? "" : a.paymentMode;
@@ -487,6 +488,7 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
         if (err) {
           console.log(err);
         } else {
+          var now = new Date();
           //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
           receiptRecored.fullname = isUndefinedOrNull(a.fullname) ? "" : a.fullname;
           receiptRecored.phone = isUndefinedOrNull(a.phone) ? 0 : a.phone;
@@ -494,8 +496,8 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
           receiptRecored.paid = isUndefinedOrNull(a.paid) ? 0 : a.paid;
           receiptRecored.total = isUndefinedOrNull(a.total) ? 0 : a.total;
           receiptRecored.paymentMode = isUndefinedOrNull(a.paymentMode) ? "" : a.paymentMode;
-          //receiptRecored.created_at = now;
-          //receiptRecored.updated_at = now;
+          receiptRecored.created_at = isUndefinedOrNull(a.created_at) ? "" : a.created_at;
+          receiptRecored.updated_at = now;
           receiptRecored.note = isUndefinedOrNull(a.note) ? "" : a.note;
           receiptRecored.address = isUndefinedOrNull(a.address) ? "" : a.address;
 

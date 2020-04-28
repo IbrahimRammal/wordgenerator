@@ -197,7 +197,7 @@ $(document).ready(function () {
           format: "dd/MM/yyyy hh:mm a",
         },
         {
-          field: "updatedAt",
+          field: "updated_at",
           headerText: "updated_at",
           textAlign: "Left",
           width: 140,
