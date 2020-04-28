@@ -503,7 +503,7 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
 
           console.log(receiptRecored);
 
-          result = receiptRecored;
+          //result = receiptRecored;
           
           // console.log("New Client Paid: " + json.stringify(receiptRecored))
 

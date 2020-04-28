@@ -228,31 +228,31 @@ $(document).ready(function () {
           width: 100,
         },
       ],
-      actionBegin: function (args) {
-        if (args.requestType === "beginEdit" || args.requestType === "add") {
-          for (var i = 0; i < this.columns.length; i++) {
-            if (
-              this.columns[i].field == "created_at" ||
-              this.columns[i].field == "updatedAt"
-            ) {
-              this.columns[i].visible = false;
-            }
-          }
-        }
-      },
+    //   actionBegin: function (args) {
+    //     if (args.requestType === "beginEdit" || args.requestType === "add") {
+    //       for (var i = 0; i < this.columns.length; i++) {
+    //         if (
+    //           this.columns[i].field == "created_at" ||
+    //           this.columns[i].field == "updated_at"
+    //         ) {
+    //           //this.columns[i].visible = false;
+    //         }
+    //       }
+    //     }
+    //   },
       actionComplete: function (args) {
         //console.log(args.requestType);
-        if (args.requestType === "delete") {
-          return;
-        }
-        let dialog = args.dialog;
-        // dialog.height = 350;
-        // change the header of the dialog
-        if( dialog != null)
-        dialog.header =
-          args.requestType === "beginEdit" ? "Edit Record" : "New Record";
+        // if (args.requestType === "delete") {
+        //   return;
+        // }
+        // let dialog = args.dialog;
+        // // dialog.height = 350;
+        // // change the header of the dialog
+        // if( dialog != null)
+        // dialog.header =
+        //   args.requestType === "beginEdit" ? "Edit Record" : "New Record";
 
-        if (args.requestType === "save") {
+        if (args.requestType === "save" || args.requestType === "beginEdit") {
           let dialog = args.dialog;
           // dialog.height = 350;
           // change the header of the dialog
@@ -263,9 +263,9 @@ $(document).ready(function () {
           for (var i = 0; i < this.columns.length; i++) {
             if (
               this.columns[i].field == "created_at" ||
-              this.columns[i].field == "updatedAt"
+              this.columns[i].field == "updated_at"
             ) {
-              this.columns[i].visible = true;
+              //this.columns[i].visible = true;
             }
           }
         }
