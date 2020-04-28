@@ -135,7 +135,7 @@ $(document).ready(function () {
         allowPaging: true,
         allowSelection: true,
         //allowGrouping: true,
-        //allowFiltering: true,
+        // allowFiltering: true,
         //allowSorting: true,
         //allowMultiSorting: true,
         toolbar: ["Search"], //ExcelExport

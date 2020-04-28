@@ -439,6 +439,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
   console.log("start action");
   console.log(req.query);
   console.log(req.body);
+  var flag = 0;
 
   try {
     var action = req.query.action;
@@ -452,7 +453,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
       await Paid.updateOne(
         {
           _id: req.body.value._id,
-          "payment._id": req.body.key,
+          "payment._id": req.body.value.paymentid,
         },
         {
           $set: {
@@ -498,6 +499,11 @@ router.post("/Payment/GetData", verify, async (req, res) => {
       });
       res.send({});
       return;
+    }
+    if (!isUndefinedOrNull(req.body.where) && req.body.where.length > 1) {
+      // console.log(req.body.where);
+      // res.send({});
+      // return;
     }
 
     if (isEmptyOrSpaces(id) && action == "all") {
