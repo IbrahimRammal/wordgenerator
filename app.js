@@ -56,10 +56,11 @@ app.use('/api/actions', actionRoute);
 app.use('/api/manage', actionManage);
 
 app.get('*',verify, function(req, res, next) {
-    res.render('blank',{ 
-      name: req.name,
-      email: req.email
-  });
+  res.redirect('/api/actions/dashboard');
+  //   res.render('dashbord',{ 
+  //     name: req.name,
+  //     email: req.email
+  // });
 });
 
 app.get('*', function(req, res, next) {
