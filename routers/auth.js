@@ -86,12 +86,14 @@ router.post("/login", async (req, res) => {
       console.log(result);
 
       //res.render('create',{
-      res.render("dashboard", {
-        // req.session.
-        name: user.name,
-        email: user.email,
-        clientname: result,
-      });
+      // res.render("dashboard", {
+      //   // req.session.
+      //   name: user.name,
+      //   email: user.email,
+      //   clientname: result,
+      // });
+      res.redirect('/api/actions/dashboard');
+
     } else {
       console.log(err);
     }
