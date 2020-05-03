@@ -25,6 +25,7 @@ module.exports = async function (req,res,next) {
         req.name = user.name;
         req.email = user.email;
         req.password = user.password;
+        
         next();
     } catch (err) {
         console.log('Invalid Token');

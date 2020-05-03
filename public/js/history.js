@@ -2,12 +2,9 @@ $(document).ready(function () {
   // this.default = function () {
   //ej.grids.Grid.Inject(ej.grids.Search, ej.grids.Edit, ej.grids.Toolbar,ej.grids.Page, ej.grids.Filter);
   ej.grids.Grid.Inject(
-    ej.grids.PdfExport,
-    ej.grids.ExcelExport,
     ej.grids.Sort,
     ej.grids.Group,
     ej.grids.Search,
-    ej.grids.Edit,
     ej.grids.Toolbar,
     ej.grids.Page,
     ej.grids.Filter
@@ -42,13 +39,13 @@ $(document).ready(function () {
       allowPaging: true,
       // allowSearching : true,
       allowGrouping: true,
-      // allowFiltering: true,
+      allowFiltering: true,
       allowSorting: true,
       allowMultiSorting: true,
       // allowExcelExport: true,
-      allowPdfExport: true,
+      // allowPdfExport: true,
       // searchSettings: { fields: ['fullname'] , operator: 'contains', key: 'test', ignoreCase: true},
-      toolbar: ["Search", "PdfExport"], //ExcelExport
+      toolbar: ["Search"], //ExcelExport
       //toolbar: ['Search'],
       editSettings: {
         allowEditing: true,
@@ -97,11 +94,11 @@ $(document).ready(function () {
       pageSettings: { pageCount: 5 },
     });
 
-    grid.toolbarClick = function (args) {
-      if (args["item"].id === "Grid_pdfexport") {
-        grid.pdfExport();
-      }
-    };
+    // grid.toolbarClick = function (args) {
+    //   if (args["item"].id === "Grid_pdfexport") {
+    //     grid.pdfExport();
+    //   }
+    // };
 
     grid.appendTo("#Grid");
   };

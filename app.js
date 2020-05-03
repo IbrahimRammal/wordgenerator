@@ -1,74 +1,86 @@
-var express = require('express')
-var path = require('path')
-var session = require('express-session');
-var cookieParser = require('cookie-parser')
+var express = require("express");
+var path = require("path");
+var session = require("express-session");
+var cookieParser = require("cookie-parser");
 // var ejs = require('ejs')
-var bodyParser = require('body-parser')
+var bodyParser = require("body-parser");
 // var fs = require('fs');
 // var https = require('https');
-const port = process.env.PORT
-const verify = require('./middleware/verifyToken');
-
+const port = process.env.PORT;
+const verify = require("./middleware/verifyToken");
 
 // const compression = require('compression');
 
-
 //const userRouter = require('./routers/user')
 
-const app = express()
+const app = express();
 
-
-app.use(express.static(path.join("/home/ubt/gitWordGenerator/wordgenerator", 'public')));
+app.use(
+  express.static(
+    path.join("/home/ubt/gitWordGenerator/wordgenerator", "public")
+  )
+);
 
 //Import ROutes
-const authRoute = require('./routers/auth');
-const postRoute = require('./routers/posts');
-const actionRoute = require('./routers/actions');
-const actionManage = require('./routers/manage');
+const authRoute = require("./routers/auth");
+const postRoute = require("./routers/posts");
+const actionRoute = require("./routers/actions");
+const actionManage = require("./routers/manage");
 
 //connect to mongoose
-require('./db/db');
+require("./db/db");
 
-app.use(bodyParser.urlencoded({
-    extended: true
-  }));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
-
-  ////////////////////////
-//   app.use(function (req, res, next) {   
-//     res.header("Access-Control-Allow-Origin", "*");   
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");   
-//     next();   
-// }); 
-  //////////////////////////
+////////////////////////
+//   app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
+//////////////////////////
 
 //Middleware
-app.use(express.json())
+app.use(express.json());
 
 app.use(cookieParser());
 
 // app.use(compression());
 
 //Route Middlewares
-app.use('/api/user', authRoute);
-app.use('/api/posts', postRoute);
-app.use('/api/actions', actionRoute);
-app.use('/api/manage', actionManage);
+app.use("/api/user", authRoute);
+app.use("/api/posts", postRoute);
+app.use("/api/actions", actionRoute);
+app.use("/api/manage", actionManage);
 
-app.get('*',verify, function(req, res, next) {
-  res.redirect('/api/actions/dashboard');
-  //   res.render('dashbord',{ 
+app.get("/", verify, function (req, res, next) {
+  res.redirect("/api/actions/dashboard");
+  //   res.render('dashbord',{
   //     name: req.name,
   //     email: req.email
   // });
 });
 
-app.get('*', function(req, res, next) {
-  res.render('login');
+// app.get("*", verify, function (req, res, next) {
+//   // if (req.keep != null && req.keep != "true") {
+//   //   res.redirect("/api/actions/dashboard");
+//   //   res.render("dashbord", {
+//   //     name: req.name,
+//   //     email: req.email,
+//   //   });
+//   // }
+// });
+
+app.get("*", function (req, res, next) {
+  res.render("login");
 });
 
-app.set('view engine', 'ejs')
+app.set("view engine", "ejs");
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`)
-})
+  console.log(`Server running on port ${port}`);
+});

@@ -70,4 +70,14 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="../../vendor/MDB/js/mdb.min.js"></script>
 
+<script>
+        $(document).ready(function () {
+        // get current URL path and assign 'active' class
+        var pathname = window.location.pathname;
+        $('.navbar-nav > li > a[href="' + pathname + '"]')
+          .parent()
+          .addClass("active");
+      });
+</script>
+
 
