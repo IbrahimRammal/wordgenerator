@@ -208,6 +208,7 @@
       // });
 
       $("#lan_list").on("change", function () {
+        $("#tem_list").empty();
         var lan = $(this).val();
         if (lan != null && lan != "Language Select ...") {
           $.ajax({
@@ -221,16 +222,29 @@
               var select = $("#tem_list");
               var selectedOption = "Document Select ...";
 
-              if (select.prop) {
-                var options = select.prop("options");
-              } else {
-                var options = select.attr("options");
-              }
-              $("option", select).remove();
+              // if (select.prop) {
+              //   var options = select.prop("options");
+              // } else {
+              //   var options = select.attr("options");
+              // }
+              // $("option", select).remove();
+
+              // $.each(newOptions, function (val, text) {
+              //   options[options.length] = new Option(text, val);
+              // });
+
+              // $("#tem_list").empty();
 
               $.each(newOptions, function (val, text) {
-                options[options.length] = new Option(text, val);
+                //var clientjson = JSON.parse(text) val
+                // options[options.length] = new Option(text["fullname"], text["_id"])
+                var id = val;
+                var name = text;
+                $("#tem_list").append(
+                  $("<option value='" + id + "'>" + name + "</option>")
+                );
               });
+
               //val.options.length = 0;
 
               //select.val(selectedOption);
@@ -340,7 +354,9 @@
         $(".dropdown-toggle").dropdown();
       });
 
-
+      $(".mdb-select").on("contentChanged", function () {
+        $(this).material_select();
+      });
     </script>
   </body>
 </html>

@@ -131,6 +131,7 @@ function headerserv () {
   }
   
   function callAjaxInsert (parameters, url, handleData) {
+    $("#lan_list").material_select();
     var result = ''
     method = 'POST'
     var params = {
@@ -156,19 +157,31 @@ function headerserv () {
           var newOptions = fixtures['html']
   
           var select = $('#client_list')
-          var selectedOption = 'Client Select ...'
+          // var selectedOption = 'Client Select ...'
   
-          if (select.prop) {
-            var options = select.prop('options')
-          } else {
-            var options = select.attr('options')
-          }
-          $('option', select).remove()
+          // if (select.prop) {
+          //   var options = select.prop('options')
+          // } else {
+          //   var options = select.attr('options')
+          // }
+          // $('option', select).remove()
+
+          $('#client_list').empty(); 
   
           $.each(newOptions, function (val, text) {
             //var clientjson = JSON.parse(text) val
-            options[options.length] = new Option(text["fullname"], text["_id"])
+            // options[options.length] = new Option(text["fullname"], text["_id"])
+            var id = text['_id'];
+            var name = text['fullname'];
+            $('#client_list').append($("<option value='" + id + "'>" + name +"</option>"));
           })
+
+          // $('#client_list').material_select();
+
+
+
+
+
           // console.log("data");
           // console.log(data.update);
           // alert(data.update)
