@@ -52,22 +52,21 @@ $( document ).ready(function() {
                     field: '_id', headerText: 'Client ID', isPrimaryKey: true, textAlign: 'center', width: 120, visible: false 
                 }, 
                 {
-                    field: 'name', headerText: 'name', textAlign: 'Left',
-                    validationRules: { required: true }, width: 100
+                    field: 'name', headerText: 'name', textAlign: 'Left', width: 100
                 },
                 {
-                    field: 'surname', headerText: 'surname', textAlign: 'Left', validationRules: { required: true },
+                    field: 'surname', headerText: 'surname', textAlign: 'Left',
                     width: 100
                 },
                 {
-                    field: 'father', headerText: 'father', textAlign: 'Left', validationRules: { required: true },
+                    field: 'father', headerText: 'father', textAlign: 'Left',
                     width: 100
                 },
                 {
-                    field: 'mobile', headerText: 'phone', textAlign: 'Left', width: 100, validationRules: { required: true }
+                    field: 'mobile', headerText: 'phone', textAlign: 'Left', width: 100
                 },
                 {
-                    field: 'address', headerText: 'address', textAlign: 'Left', width: 100 , validationRules: { required: true }
+                    field: 'address', headerText: 'address', textAlign: 'Left', width: 100
                 }
                 // {
                 //     field: 'placeofbirthlocal', headerText: 'Place Of Birth', textAlign: 'Left', width: 120

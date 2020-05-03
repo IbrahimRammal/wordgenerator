@@ -41,7 +41,6 @@ const History = require("../models/History");
 const Paid = PaidModel.Paid;
 const Payment = PaidModel.Payment;
 
-
 const paidpath = "./GenerateHtml/paidform.ejs";
 
 var testdb = require("../db/test");
@@ -436,14 +435,10 @@ router.get("/r", verify, async (req, res) => {
   });
 });
 
-
 router.post("/Expense/GetData", verify, async (req, res) => {
+  var query = await Expense.find({});
 
-  var query = await Expense.find(
-    {},
-  );
-
-  console.log(query);
+  // console.log(query);
   res.send(query);
 });
 
@@ -459,14 +454,19 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
 
     var respnseAddID = "";
     if (req.body.action == "insert") {
-      createHistoryLog(req.email,"Insert Expense", "Insert Expense for client " + a.fullname, req.id);
+      createHistoryLog(
+        req.email,
+        "Insert Expense",
+        "Insert Expense for client " + a.fullname,
+        req.id
+      );
       var receipt = {};
 
       var now = new Date();
       //this.updated_at = now;
       var now = new Date();
 
-      console.log("insert pyament" + user);
+      console.log("insert pyament" + a);
 
       receipt.fullname = isUndefinedOrNull(a.fullname) ? "" : a.fullname;
       receipt.phone = isUndefinedOrNull(a.phone) ? "" : a.phone;
@@ -477,7 +477,9 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
       receipt.updated_at = now;
       receipt.note = isUndefinedOrNull(a.note) ? "" : a.note;
       receipt.address = isUndefinedOrNull(a.address) ? "" : a.address;
-      receipt.paymentMode = isUndefinedOrNull(a.paymentMode) ? "" : a.paymentMode;
+      receipt.paymentMode = isUndefinedOrNull(a.paymentMode)
+        ? ""
+        : a.paymentMode;
 
       const expense = new Expense(receipt);
       const savedPaid = await expense.save();
@@ -488,7 +490,12 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
     }
     if (req.body.action == "update") {
       console.log(a.paymentMode);
-      createHistoryLog(req.email,"Update Expense", "Update Expense for client " + a.fullname, req.id);
+      await createHistoryLog(
+        req.email,
+        "Update Expense",
+        "Update Expense for client " + a.fullname,
+        req.id
+      );
 
       await Expense.findById(req.body["key"], function (err, receiptRecored) {
         if (err) {
@@ -496,21 +503,31 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
         } else {
           var now = new Date();
           //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
-          receiptRecored.fullname = isUndefinedOrNull(a.fullname) ? "" : a.fullname;
+          receiptRecored.fullname = isUndefinedOrNull(a.fullname)
+            ? ""
+            : a.fullname;
           receiptRecored.phone = isUndefinedOrNull(a.phone) ? 0 : a.phone;
-          receiptRecored.category = isUndefinedOrNull(a.category) ? "" : a.category;
+          receiptRecored.category = isUndefinedOrNull(a.category)
+            ? ""
+            : a.category;
           receiptRecored.paid = isUndefinedOrNull(a.paid) ? 0 : a.paid;
           receiptRecored.total = isUndefinedOrNull(a.total) ? 0 : a.total;
-          receiptRecored.paymentMode = isUndefinedOrNull(a.paymentMode) ? "" : a.paymentMode;
-          receiptRecored.created_at = isUndefinedOrNull(a.created_at) ? "" : a.created_at;
+          receiptRecored.paymentMode = isUndefinedOrNull(a.paymentMode)
+            ? ""
+            : a.paymentMode;
+          receiptRecored.created_at = isUndefinedOrNull(a.created_at)
+            ? ""
+            : a.created_at;
           receiptRecored.updated_at = now;
           receiptRecored.note = isUndefinedOrNull(a.note) ? "" : a.note;
-          receiptRecored.address = isUndefinedOrNull(a.address) ? "" : a.address;
+          receiptRecored.address = isUndefinedOrNull(a.address)
+            ? ""
+            : a.address;
 
           console.log(receiptRecored);
 
           //result = receiptRecored;
-          
+
           // console.log("New Client Paid: " + json.stringify(receiptRecored))
 
           receiptRecored.save(function (err) {
@@ -529,12 +546,20 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
       console.log(req.body);
       var keyID = mongoose.Types.ObjectId(req.body.key);
       console.log("removed" + req.body["key"]);
-      const anyThing = await Expense.findById(req.body["key"], function (err, user) { 
+      const anyThing = await Expense.findById(req.body["key"], function (
+        err,
+        user
+      ) {
         console.log("delete pyament" + user);
         // createHistoryLog(req.email,"Delete Expense", "Delete Expense for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
       });
-        
-      await createHistoryLog(req.email,"Delete Expense", "Delete Expense for client " + isUndefinedOrNull(anyThing.fullname) ? "" : anyThing.fullname, req.id);
+
+      await createHistoryLog(
+        req.email,
+        "Delete Expense",
+        "Delete Expense for client " + anyThing.fullname,
+        req.id
+      );
 
       await Expense.findByIdAndDelete(req.body["key"], function (err, user) {
         console.log("delete pyament" + user);
@@ -550,7 +575,6 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
     res.send("error");
   }
 });
-
 
 router.post("/Payment/GetData", verify, async (req, res) => {
   var result = [];
@@ -570,7 +594,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
     if (req.body.action == "update") {
       console.log(req.body.value._id);
 
-      await Paid.updateOne(
+      var dummyData = await Paid.updateOne(
         {
           _id: req.body.value._id,
           "payment._id": req.body.value.paymentid,
@@ -586,10 +610,17 @@ router.post("/Payment/GetData", verify, async (req, res) => {
           if (error) {
             // return res.status(400).send(error);
           }
-          createHistoryLog(req.email,"Update Payment", "Update Payment for client " + isUndefinedOrNull(updatedData.fullname) ? "" : user.fullname, req.id);
+
           console.log(updatedData);
           //return res.status(200).send(updatedData);
         }
+      );
+
+      await createHistoryLog(
+        req.email,
+        "Update Payment",
+        "Update Payment for client " + dummyData.fullname,
+        req.id
       );
 
       console.log("Finsh reipte update");
@@ -609,20 +640,25 @@ router.post("/Payment/GetData", verify, async (req, res) => {
         if (err) {
           console.log(err);
         } else {
-          console.log()
+          console.log();
           // createHistoryLog(req.email,"Delete Payment", "Delete Payment for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
           user.payment.id(keys[1]).remove();
           // Equivalent to `parent.child = null`
           //user.child.remove();
           user.save(function (err) {
             if (err) return handleError(err);
-            
+
             console.log("the subdocs were removed");
           });
         }
       });
 
-      await createHistoryLog(req.email,"Delete Payment", "Delete Payment form client " + isUndefinedOrNull(anything.fullname) ? "" : anything.fullname, req.id);
+      await createHistoryLog(
+        req.email,
+        "Delete Payment",
+        "Delete Payment from client " + anything.fullname,
+        req.id
+      );
       res.send({});
       return;
     }
@@ -778,7 +814,12 @@ router.post("/Payment/BatchData", verify, async (req, res) => {
 
     var respnseAddID = "";
     if (req.body.action == "insert") {
-      createHistoryLog(req.email,"Insert New Payment", "Insert New Payment for client " + a.fullname, req.id);
+      createHistoryLog(
+        req.email,
+        "Insert New Payment",
+        "Insert New Payment for client " + a.fullname,
+        req.id
+      );
       var userPaid = {};
       userPaid.fullname = a.fullname;
       userPaid.first = isUndefinedOrNull(a.name) ? "" : a.name;
@@ -807,13 +848,17 @@ router.post("/Payment/BatchData", verify, async (req, res) => {
       //console.log("New Client Paid: " + json.stringify(paid))
     }
     if (req.body.action == "update") {
-      createHistoryLog(req.email,"Update Payment", "Update Payment for client " + a.fullname, req.id);
+      await createHistoryLog(
+        req.email,
+        "Update Payment",
+        "Update Payment for client " + a.fullname,
+        req.id
+      );
       console.log(req.body);
-      await Paid.findById(req.body["key"], function (err, user) {
+      var anyThing = await Paid.findById(req.body["key"], function (err, user) {
         if (err) {
           console.log(err);
         } else {
-          createHistoryLog(req.email,"Update Payment", "Update Payment for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
           //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
           user.fullname = a.fullname;
           // var combineid = a.fullname;
@@ -837,18 +882,32 @@ router.post("/Payment/BatchData", verify, async (req, res) => {
           });
         }
       });
+      await createHistoryLog(
+        req.email,
+        "Update Payment",
+        "Update Payment for client " + anyThing.fullname,
+        req.id
+      );
     }
     if (req.body.action == "remove") {
       console.log(req.body);
       var keyID = mongoose.Types.ObjectId(req.body.key);
       console.log("removed" + req.body["key"]);
-      const anything = await Paid.findById(req.body["key"], function (err, user) { 
+      const anything = await Paid.findById(req.body["key"], function (
+        err,
+        user
+      ) {
         console.log("delete pyament" + user);
         // createHistoryLog(req.email,"Delete Expense", "Delete Expense for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
         // createHistoryLog(req.email,"Delete Payment", "Delete Payment for client " + user.fullname, req.id);
       });
-      await createHistoryLog(req.email,"Delete Payment", "Delete Payment for client " + anything.fullname, req.id); 
-      await Paid.findByIdAndDelete(req.body["key"], function (user,err) {
+      await createHistoryLog(
+        req.email,
+        "Delete Payment",
+        "Delete Payment for client " + anything.fullname,
+        req.id
+      );
+      await Paid.findByIdAndDelete(req.body["key"], function (user, err) {
         // createHistoryLog(req.email,"Delete Payment", "Delete Payment for client " + user.fullname, req.id);
         if (err) console.log(err);
         console.log("Successful deletion");
@@ -896,7 +955,12 @@ router.post("/Paid/BatchData", verify, async (req, res) => {
     if (req.body.action == "insert") {
       var userPaid = {};
 
-      createHistoryLog(req.email,"Insert Paid Client", "Insert Paid Client with name " + a.fullname, req.id);
+      createHistoryLog(
+        req.email,
+        "Insert Paid Client",
+        "Insert Paid Client with name " + a.fullname,
+        req.id
+      );
 
       userPaid.fullname = a.fullname;
       userPaid.first = isUndefinedOrNull(a.name) ? "" : a.name;
@@ -935,7 +999,12 @@ router.post("/Paid/BatchData", verify, async (req, res) => {
         if (err) {
           console.log(err);
         } else {
-          createHistoryLog(req.email,"Update Paid Client", "Updated Paid Client with name " + user.fullname, req.id);
+          createHistoryLog(
+            req.email,
+            "Update Paid Client",
+            "Updated Paid Client with name " + user.fullname,
+            req.id
+          );
           //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
           user.fullname = a.fullname;
           // var combineid = a.fullname;
@@ -966,12 +1035,21 @@ router.post("/Paid/BatchData", verify, async (req, res) => {
       console.log(req.body);
       var keyID = mongoose.Types.ObjectId(req.body.key);
       console.log("removed" + req.body["key"]);
-      const anything = await Paid.findById(req.body["key"], function (err, user) { 
+      const anything = await Paid.findById(req.body["key"], function (
+        err,
+        user
+      ) {
         console.log("delete pyament" + user);
         // createHistoryLog(req.email,"Delete Paid Client", "Delete Paid Client with name " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
       });
-      await createHistoryLog(req.email,"Delete Paid Client", "Delete Paid Client with name " + isUndefinedOrNull(anything.fullname) ? "" : anything.fullname, req.id); 
-      
+
+      await createHistoryLog(
+        req.email,
+        "Delete Paid Client",
+        "Delete Paid Client with name " + anything.fullname,
+        req.id
+      );
+
       await Paid.findByIdAndDelete(req.body["key"], function (err, user) {
         if (err) console.log(err);
         // createHistoryLog(req.email,"Delete Paid Client", "Delete Paid Client with name " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
@@ -1136,7 +1214,12 @@ router.post("/BatchData", verify, async (req, res) => {
 
         // wait 3 seconds
         //await new Promise((resolve, reject) => setTimeout(resolve, 500));
-        createHistoryLog(req.email,"Create New Client", "Created a new Client with name " + a.fullname, req.id);
+        createHistoryLog(
+          req.email,
+          "Create New Client",
+          "Created a new Client with name " + a.fullname,
+          req.id
+        );
 
         console.log(savedClient["_id"] + "asdfsadfds");
         respnseAddID = savedClient["_id"];
@@ -1147,11 +1230,20 @@ router.post("/BatchData", verify, async (req, res) => {
     if (req.body.action == "update") {
       console.log(req.body);
 
-      await Client.findById(req.body["key"], function (err, user) {
+      await createHistoryLog(
+        req.email,
+        "Update Client",
+        "Updated Client with name " + a.fullname,
+        req.id
+      );
+
+      var anyThing = await Client.findById(req.body["key"], function (
+        err,
+        user
+      ) {
         if (err) {
           console.log(err);
         } else {
-          createHistoryLog(req.email,"Update Client", "Updated Client with name " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
           //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
           user.fullname = a.fullname;
           user.s0.name = isUndefinedOrNull(a.name) ? "" : a.name;
@@ -1181,6 +1273,7 @@ router.post("/BatchData", verify, async (req, res) => {
           });
         }
       });
+
       //res.send({})
 
       return;
@@ -1195,15 +1288,22 @@ router.post("/BatchData", verify, async (req, res) => {
       var keyID = mongoose.Types.ObjectId(req.body.key);
       console.log("removed" + req.body["key"]);
       // var userFullname = "";
-      const anyThing = await Client.findById(req.body["key"], function (err, user) { 
+      const anyThing = await Client.findById(req.body["key"], function (
+        err,
+        user
+      ) {
         // console.log("delete pyament" + user);
         // userFullname = isUndefinedOrNull(user.s0.fullname) ? "" : user.s0.fullname;
         // const start = createHistoryLog(req.email,"Delete Client", "Delete Client with name " + isUndefinedOrNull(user.s0.fullname) ? "" : user.s0.fullname, req.id);
       });
 
       console.log("delete pyament" + anyThing.fullname);
-      await createHistoryLog(req.email,"Delete Client", "Delete Client with name " + anyThing.fullname, req.id);
-
+      await createHistoryLog(
+        req.email,
+        "Delete Client",
+        "Delete Client with name " + anyThing.fullname,
+        req.id
+      );
 
       await Client.findByIdAndDelete(req.body["key"], function (err, user) {
         // createHistoryLog(req.email,"Delete Client", "Delete Client with name " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
@@ -1477,8 +1577,19 @@ router.post("/paid", verify, async (req, res) => {
 
         paid.save(function (err) {
           if (err) return handleError(err);
-          createHistoryLog(req.email,"Create Payment", "Add new Payment for client " + clientPaymentHistory.fullname + ", Receipt Create by Name of Client " + 
-          req.body.first + " " + req.body.middle + " " + req.body.last, req.id);
+          createHistoryLog(
+            req.email,
+            "Create Payment",
+            "Add new Payment for client " +
+              clientPaymentHistory.fullname +
+              ", Receipt Create by Name of Client " +
+              req.body.first +
+              " " +
+              req.body.middle +
+              " " +
+              req.body.last,
+            req.id
+          );
           console.log("Success!");
         });
 
@@ -1505,8 +1616,19 @@ router.post("/paid", verify, async (req, res) => {
           function (err, docs) {
             //res.json(docs);
             console.log(docs);
-            createHistoryLog(req.email,"Create Payment", "Add new Payment for client " + clientPaymentHistory.fullname + ",Receipt Create by Name of Client" + 
-            req.body.first + " " + req.body.middle + " " + req.body.last, req.id);
+            createHistoryLog(
+              req.email,
+              "Create Payment",
+              "Add new Payment for client " +
+                clientPaymentHistory.fullname +
+                ",Receipt Create by Name of Client" +
+                req.body.first +
+                " " +
+                req.body.middle +
+                " " +
+                req.body.last,
+              req.id
+            );
           }
         );
 
@@ -1901,7 +2023,18 @@ router.post("/data", verify, async (req, res) => {
 
         var link = "/api/posts/r/?valid=" + string1 + "&pass=" + string2;
 
-        createHistoryLog(req.email,"Create Document", "Create Document for client " + clientName + ", " + langCheck + "/ " +modelCheck + " Document", req.id );
+        createHistoryLog(
+          req.email,
+          "Create Document",
+          "Create Document for client " +
+            clientName +
+            ", " +
+            langCheck +
+            "/ " +
+            modelCheck +
+            " Document",
+          req.id
+        );
 
         var query = Paid.find({}, { s0: 0, __v: 0 });
         query.exec(function (err, result) {
@@ -2166,23 +2299,24 @@ async function addClient(a) {
   }
 }
 
-async function createHistoryLog(user,action,details,id)
-{
-  const history = new History();
+async function createHistoryLog(user, action, details, id) {
+  try {
+    const history = new History();
 
-  history.fullname = user;
-  history.details = details;
-  history.action = action;
-  history.idnumber = id;
+    history.fullname = user;
+    history.details = details;
+    history.action = action;
+    history.idnumber = id;
 
-  //var subdoc = paid.payment.push[0];
-  // { _id: '501d86090d371bab2c0341c5', name: 'Liesl' }
-  //subdoc.isNew; // true
+    //var subdoc = paid.payment.push[0];
+    // { _id: '501d86090d371bab2c0341c5', name: 'Liesl' }
+    //subdoc.isNew; // true
 
-  var result = await history.save(function (err) {
-    if (err) return handleError(err);
-    console.log("Success!");
-  });
+    var result = await history.save(function (err) {
+      if (err) return handleError(err);
+      console.log("Success!");
+    });
+  } catch (error) {}
 }
 
 function isUndefinedOrNull(str) {
@@ -2194,7 +2328,7 @@ function isEmptyOrSpaces(str) {
 }
 
 const sleep = (milliseconds) => {
-  return new Promise(resolve => setTimeout(resolve, milliseconds))
-}
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
 
 module.exports = router;

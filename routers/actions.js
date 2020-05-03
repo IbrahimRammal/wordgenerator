@@ -36,6 +36,7 @@ const Paid = PaidModel.Paid;
 const Payment = PaidModel.Payment;
 
 router.get("/create", verify, (req, res) => {
+  req.keep = "true";
   var query = Client.find({}, { s0: 0, __v: 0 });
   query.exec(function (err, result) {
     if (!err) {
@@ -66,6 +67,7 @@ router.get("/create", verify, (req, res) => {
 });
 
 router.get("/dashboard", verify, async (req, res) => {
+  req.keep = "true";
   //get all clinet number paid or regular i think paid
   //get all generated document from the regular client
   try {
@@ -171,6 +173,7 @@ router.get("/dashboard", verify, async (req, res) => {
 });
 
 router.get("/view", verify, async (req, res) => {
+  req.keep = "true";
   res.render("view", {
     // req.session.
     name: req.name,
@@ -180,9 +183,11 @@ router.get("/view", verify, async (req, res) => {
 });
 
 router.post("/history", verify, async (req, res) => {
+  req.keep = "true";
   try {
     console.log("history Table data collecting");
-    var historyData = await History.find({});
+    // var historyData = await History.find({});
+    var historyData = await History.find({}).sort({created_at: 'descending'}).exec();
     console.log(historyData);
     //res.send([{fullname: 'test', _id: "234234324", date: Date.now, details: "blablablabl"}]);
     res.send(historyData);
@@ -192,7 +197,20 @@ router.post("/history", verify, async (req, res) => {
   }
 });
 
+
+
+router.get("/chart", verify, async (req, res) => {
+  req.keep = "true";
+  res.render("blank", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+    //data: data
+  });
+});
+
 router.get("/paid", verify, async (req, res) => {
+  req.keep = "true";
   res.render("paid", {
     // req.session.
     name: req.name,
