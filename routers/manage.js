@@ -132,7 +132,7 @@ router.post("/User/GetData", verify, async (req, res) => {
   // user.role = "SuperAdmin";
   // user.save();
   var result = await User.find(
-    { role: { $nin: ["SuperAdmin", "Developer"] } },
+    { role: { $nin: ["SuperAdmin", "SuperAdmin", "Observer"] } },
     { password: 0 }
   );
 
@@ -182,7 +182,7 @@ router.get("/expense", verify, async (req, res) => {
     res.redirect("/api/manage/403")
 
   }
-  
+
   console.log("expense loddingg");
 
   var query = await Expense.find({});
