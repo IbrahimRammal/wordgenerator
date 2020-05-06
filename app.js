@@ -65,15 +65,15 @@ app.get("/", verify, function (req, res, next) {
   // });
 });
 
-// app.get("*", verify, function (req, res, next) {
-//   // if (req.keep != null && req.keep != "true") {
-//   //   res.redirect("/api/actions/dashboard");
-//   //   res.render("dashbord", {
-//   //     name: req.name,
-//   //     email: req.email,
-//   //   });
-//   // }
-// });
+app.get("*", verify, function (req, res, next) {
+  // if (req.keep != null && req.keep != "true") {
+    res.redirect("/api/actions/404");
+  // console.log("no route exits")
+  //   res.render("404", {
+  //     name: req.name,
+  //     email: req.email,
+  //   });
+});
 
 app.get("*", function (req, res, next) {
   res.render("login");

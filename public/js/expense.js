@@ -85,6 +85,7 @@ $(document).ready(function () {
           headerText: "category",
           textAlign: "Left",
           width: 100,
+          validationRules: { required: true },
           edit: {
             create: function () {
               categoryElem = document.createElement("input");
@@ -126,46 +127,6 @@ $(document).ready(function () {
           },
           //   validationRules: { required: true },
         },
-        // {
-        //   field: "paymentMode",
-        //   headerText: "paymentMode",
-        //   textAlign: "Left",
-        //   visible: false,
-        //   width: 100,
-        //   edit: {
-        //     create: function () {
-        //       paymentModeElem = document.createElement("input");
-        //       return paymentModeElem;
-        //     },
-        //     read: function () {
-        //       return paymentModeObj.text;
-        //     },
-        //     destroy: function () {
-        //       paymentModeObj.destroy();
-        //     },
-        //     write: function () {
-        //       paymentModeObj = new ej.dropdowns.DropDownList({
-        //         dataSource: paymentMode,
-        //         fields: { value: "paymentModeId", text: "paymentModeName" },
-        //         change: function () {
-        //           //stateObj.enabled = true;
-        //           // var tempQuery = new Query().where(
-        //           //   "categoryId",
-        //           //   "equal",
-        //           //   categoryObj.value
-        //           // );
-        //           //stateObj.query = tempQuery;
-        //           //stateObj.text = null;
-        //           //stateObj.dataBind();
-        //         },
-        //         placeholder: "Select a payment mode",
-        //         floatLabelType: "Never",
-        //       });
-        //       paymentModeObj.appendTo(paymentModeElem);
-        //     },
-        //   },
-        //   //   validationRules: { required: true },
-        // },
         {
           field: "paid",
           headerText: "paid",

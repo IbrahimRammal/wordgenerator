@@ -66,6 +66,7 @@ router.get("/create", verify, (req, res) => {
   // });
 });
 
+//IN Dashboard load check if user admin or regular user if regluar user load only his/here work flow 
 router.get("/dashboard", verify, async (req, res) => {
   req.keep = "true";
   //get all clinet number paid or regular i think paid
@@ -182,6 +183,7 @@ router.get("/view", verify, async (req, res) => {
   });
 });
 
+//IN History load check if user admin or regular user if regluar user load only his/here work flow 
 router.post("/history", verify, async (req, res) => {
   req.keep = "true";
   try {
@@ -197,10 +199,25 @@ router.post("/history", verify, async (req, res) => {
   }
 });
 
+router.get("/404", verify, async (req, res) => {
+  req.keep = "true";
+  //charts
+  res.render("404", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+    //data: data
+  });
+});
 
 
 router.get("/chart", verify, async (req, res) => {
+  if(req.role == "User"){
+    res.redirect("/api/manage/403")
+
+  }
   req.keep = "true";
+  //charts
   res.render("blank", {
     // req.session.
     name: req.name,

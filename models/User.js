@@ -23,6 +23,10 @@ const userSchema = mongoose.Schema({
             }
         }
     },
+    role: { //admin manager editor
+        type: String,
+        default: 'User'
+    },
     password: {
         type: String,
         required: true,
