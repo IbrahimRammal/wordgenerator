@@ -41,7 +41,6 @@ router.post("/User/BatchData", verify, async (req, res) => {
 
     var respnseAddID = "";
     if (req.body.action == "insert") {
-
       // console.log(a)
       var userData = {};
 
@@ -53,43 +52,48 @@ router.post("/User/BatchData", verify, async (req, res) => {
       userData.email = a.email;
       userData.role = a.role;
 
-      console.log("password: " + a.password)
+      console.log("password: " + a.password);
 
-        //Hash passwords
+      //Hash passwords
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(a.password, salt);
 
-      console.log(hashedPassword)
+      console.log(hashedPassword);
 
       // userData.created_at = now;
       // userData.updated_at = now;
 
-      const user = new User({name: a.name, email: a.email, password: hashedPassword, role: a.role});
+      const user = new User({
+        name: a.name,
+        email: a.email,
+        password: hashedPassword,
+        role: a.role,
+      });
       const savedPaid = await user.save();
 
       userData._id = savedPaid._id;
       userData.date = now;
-      userData.password = savedPaid.password;
+      // userData.password = savedPaid.password;
       result = userData;
 
       // console.log("New Client Paid: " + json.stringify(paid))
     }
     if (req.body.action == "update") {
-
+      var pass = a.password;
       const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(a.password, salt);
+      const hashedPassword = await bcrypt.hash(pass, salt);
 
       await User.findById(req.body["key"], function (err, userRecored) {
         if (err) {
           console.log(err);
         } else {
-
-
           var now = new Date();
           userRecored.name = a.name;
           userRecored.email = a.email;
           userRecored.role = a.role;
-          userRecored.password = hashedPassword;
+          if (pass != null && !isEmptyOrSpaces(a.password)) {
+            userRecored.password = hashedPassword;
+          }
 
           userRecored.save(function (err) {
             if (err) {
@@ -102,6 +106,7 @@ router.post("/User/BatchData", verify, async (req, res) => {
           });
         }
       });
+      
     }
     if (req.body.action == "remove") {
       console.log(req.body);
@@ -142,9 +147,8 @@ router.post("/User/GetData", verify, async (req, res) => {
 
 router.get("/User", verify, async (req, res) => {
   // console.log(req.body);
-  if(req.role == "User" || req.role == "Admin"){
-    res.redirect("/api/manage/403")
-
+  if (req.role == "User" || req.role == "Admin") {
+    res.redirect("/api/manage/403");
   }
 
   res.render("managment", {
@@ -178,9 +182,8 @@ router.get("/paid", verify, async (req, res) => {
 });
 
 router.get("/expense", verify, async (req, res) => {
-  if(req.role == "User"){
-    res.redirect("/api/manage/403")
-
+  if (req.role == "User") {
+    res.redirect("/api/manage/403");
   }
 
   console.log("expense loddingg");
@@ -259,5 +262,9 @@ router.get("/payment", verify, async (req, res) => {
     //data: data
   });
 });
+
+function isEmptyOrSpaces(str) {
+  return str === null || str.match(/^ *$/) !== null;
+}
 
 module.exports = router;

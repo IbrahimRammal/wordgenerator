@@ -78,7 +78,7 @@ $(document).ready(function () {
         {
           field: "name",
           headerText: "name",
-          validationRules: { required: true },
+          validationRules: { required: true, minLength: 6, maxLength: 70 },
           width: 100,
         },
         {
@@ -92,8 +92,10 @@ $(document).ready(function () {
         {
           field: "email",
           headerText: "email",
+          // format: email,
+          // type: email,
           textAlign: "Left",
-          validationRules: { required: true },
+          validationRules: { required: true, minLength: 6, maxLength: 50, email: true },
           width: 100,
         },
         {
@@ -110,7 +112,7 @@ $(document).ready(function () {
           field: "password",
           headerText: "Password",
           textAlign: "Left",
-          validationRules: { required: true },
+          validationRules: { required: true, minLength: 6, maxLength: 25 },
           width: 100,
           visible: false,
         },
@@ -127,7 +129,7 @@ $(document).ready(function () {
         // },
         {
           field: "role",
-          headerText: "category",
+          headerText: "role",
           textAlign: "Left",
           width: 100,
           validationRules: { required: true },
@@ -185,7 +187,12 @@ $(document).ready(function () {
         }
       },
       actionComplete: function (args) {
-        if (args.requestType === "save") {
+        if (args.requestType === "save" || args.requestType === "beginEdit" || args.requestType === "add") {
+          let dialog = args.dialog;
+          // dialog.height = 350;
+          // change the header of the dialog
+          dialog.header =
+            args.requestType === "beginEdit" ? "Edit Record" : "New Record";
           for (var i = 0; i < this.columns.length; i++) {
             if (this.columns[i].field == "password") {
               this.columns[i].visible = false;
