@@ -139,7 +139,7 @@ router.post("/User/GetData", verify, async (req, res) => {
   var result = await User.find(
     { role: { $nin: ["SuperAdmin", "SuperAdmin", "Observer"] } },
     { password: 0 }
-  );
+  ).sort({date: 'descending'}).exec();
 
   console.log(result);
   res.send(result);
