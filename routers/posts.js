@@ -250,6 +250,340 @@ router.post("/addclient", verify, async (req, res) => {
   }
 });
 
+router.post("/edit", verify, async (req, res) => {
+  // if (false) {
+  try {
+    if (!isEmptyOrSpaces(req.body.client)) {
+      let id = req.body.client;
+      var url = "";
+      var result = [];
+
+      try {
+        var clientDocx = await Client.find(
+          { _id: id },
+          { _id: 0, fullname: 0, s0: 0, __v: 0 }
+        );
+
+        var language = ["Arabic", "English", "Español", "Français"];
+
+        if (clientDocx != null) {
+          // language.forEach((element) => {
+          //console.log(clientDocx[0][element]);
+          for (var i = 0; i < language.length; i++) {
+            var docLanguage = clientDocx[0][language[i]];
+            for (const docModel in docLanguage) {
+              var ObjectId = require("mongoose").Types.ObjectId;
+              if (ObjectId.isValid(docLanguage[docModel])) {
+                console.log(docLanguage[docModel]);
+                if (docModel.includes("Birth")) {
+                  var docSaved = await Birth.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Birth Certificate",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("Divorce")) {
+                  var docSaved = await Divorce.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Divorce Certificate",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("Death")) {
+                  var docSaved = await Death.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Death Certificate",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("Marriage")) {
+                  var docSaved = await Marriage.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Marriage Certificate",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("Work")) {
+                  var docSaved = await WPermit.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Work Permit",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("ID")) {
+                  var docSaved = await IDCard.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "ID Card",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("MoF")) {
+                  var docSaved = await MoF.find({ _id: docLanguage[docModel] });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "MoF Registration",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("Residence")) {
+                  var docSaved = await Residence.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Residence Certificate",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("PrivateDriver")) {
+                  var docSaved = await Private.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Private Driver's license",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("Police")) {
+                  var docSaved = await Police.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Police record",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("NSSF")) {
+                  var docSaved = await NSSF.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "NSSF Service Certificate",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("Individual")) {
+                  var docSaved = await Individual.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Individual Extract",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("Family")) {
+                  var docSaved = await Family.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Family Extract",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("Consent")) {
+                  var docSaved = await Consent.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Consent to travel",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("ResidencyPermit")) {
+                  var docSaved = await RPermit.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Residency Permit",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("Driver")) {
+                  var docSaved = await Driver.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Driver's license certificate",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else if (docModel.includes("Empty")) {
+                  console.log("foundit");
+                  var docSaved = await ETemplate.find({
+                    _id: docLanguage[docModel],
+                  });
+                  result.push({
+                    _id: docLanguage[docModel],
+                    client_id: id,
+                    language: language[i],
+                    docModel: "Empty Template",
+                    created_at: docSaved.created_at,
+                    updated_at: docSaved.updated_at,
+                    createdBy: docSaved.user_created,
+                    updateddBy: docSaved.user_edit,
+                    note: docSaved.note,
+                    download: "DOWNLOAD",
+                    edit: "EDIT",
+                  });
+                } else {
+                }
+              }
+            }
+          }
+          // });
+        } else {
+        }
+        // console.log(html)
+        console.log(result);
+
+        res.send(result);
+      } catch (err) {
+        // console.log(err);
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.post("/template", verify, async (req, res) => {
   try {
     if (
@@ -263,6 +597,8 @@ router.post("/template", verify, async (req, res) => {
 
       var langCheck = req.body.type;
       var modelCheck = req.body.template;
+      var docID = req.body.docID != null ? req.body.docID : "";
+      console.log("DOCUMENT ID :" + docID);
       // langCheck = langCheck.toLowerCase();
       modelCheck = modelCheck.replace(/\s/g, "");
 
@@ -323,10 +659,20 @@ router.post("/template", verify, async (req, res) => {
           /// ////////////////////////////////////
           docSaved[0]["client"]["id"] = id;
 
+          url =
+            "/api/posts/data?lang=" +
+            docSaved[0]["type"] +
+            "&doc=" +
+            docSaved[0]["caption"] +
+            "&id=" +
+            docSaved[0]["client"]["id"] +
+            "&docID=" +
+            docID;
+
           // console.log('docSaved: ' + docSaved[0])
           const file = fs.readFileSync(htmlpath, "utf-8");
           var fixture_template = ejs.compile(file, { client: true });
-          const html = fixture_template({ obj: docSaved[0] });
+          const html = fixture_template({ obj: docSaved[0], url: url });
           // console.log(html)
           res.send({ html: html });
           return;
@@ -389,10 +735,17 @@ router.post("/template", verify, async (req, res) => {
 
         // Document Template form box
         //app.engine('html', require('ejs-locals'));
+        url =
+          "/api/posts/data?lang=" +
+          data["type"] +
+          "&doc=" +
+          data["caption"] +
+          "&id=" +
+          data["client"]["id"];
 
         const file = fs.readFileSync(htmlpath, "utf-8");
         var fixture_template = ejs.compile(file, { client: true });
-        const html = fixture_template({ obj: data });
+        const html = fixture_template({ obj: data, url: url });
 
         // Document Paid Form
         // Need to load paid template with data from stored on mango
@@ -436,7 +789,7 @@ router.get("/r", verify, async (req, res) => {
 });
 
 router.post("/Expense/GetData", verify, async (req, res) => {
-  var query = await Expense.find({});
+  var query = await Expense.find({}).sort({ created_at: "descending" }).exec();
 
   // console.log(query);
   res.send(query);
@@ -1340,7 +1693,6 @@ router.post("/BatchData", verify, async (req, res) => {
   }
 });
 
-
 router.post("/paid", verify, async (req, res) => {
   try {
     if (
@@ -1697,6 +2049,7 @@ router.post("/data", verify, async (req, res) => {
         var modelCheck = req.query.doc;
         var langCheck = req.query.lang;
         var id = req.query.id;
+        var docID = req.query.docID != null ? req.query.docID : "";
         modelCheck = modelCheck.replace(/\s/g, "");
 
         let clientData = await Client.findOne({ _id: id });
@@ -1743,160 +2096,382 @@ router.post("/data", verify, async (req, res) => {
         console.log(data["download"]);
 
         var docid = "";
+        var ObjectId = require("mongoose").Types.ObjectId;
 
         if (modelCheck.includes("Birth")) {
-          const birth = new Birth(data);
-          const savedBirth = await birth.save();
-          docid = savedBirth._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await Birth.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const birth = new Birth(data);
+            const savedBirth = await birth.save();
+            docid = savedBirth._id;
 
-          console.log("saved birth: " + savedBirth._id);
+            console.log("saved birth: " + savedBirth._id);
 
-          clientData[langCheck][modelCheck] = savedBirth._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = savedBirth._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("Divorce")) {
-          const divorce = new Divorce(data);
-          const savedDivorce = await divorce.save();
-          docid = savedDivorce._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await Divorce.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const divorce = new Divorce(data);
+            const savedDivorce = await divorce.save();
+            docid = savedDivorce._id;
 
-          console.log(savedDivorce._id);
+            console.log(savedDivorce._id);
 
-          clientData[langCheck][modelCheck] = savedDivorce._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = savedDivorce._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("Death")) {
-          const death = new Death(data);
-          const savedDeath = await death.save();
-          docid = savedDeath._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await Death.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const death = new Death(data);
+            const savedDeath = await death.save();
+            docid = savedDeath._id;
 
-          console.log(savedDeath._id);
+            console.log(savedDeath._id);
 
-          clientData[langCheck][modelCheck] = savedDeath._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = savedDeath._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("Marriage")) {
-          const marriage = new Marriage(data);
-          const savedMarriage = await marriage.save();
-          docid = savedMarriage._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await Marriage.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const marriage = new Marriage(data);
+            const savedMarriage = await marriage.save();
+            docid = savedMarriage._id;
 
-          console.log(savedMarriage._id);
+            console.log(savedMarriage._id);
 
-          clientData[langCheck][modelCheck] = savedMarriage._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = savedMarriage._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("Work")) {
-          const work = new WPermit(data);
-          const savedwork = await work.save();
-          docid = savedwork._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await WPermit.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const work = new WPermit(data);
+            const savedwork = await work.save();
+            docid = savedwork._id;
 
-          console.log(savedwork._id);
+            console.log(savedwork._id);
 
-          clientData[langCheck][modelCheck] = savedwork._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = savedwork._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("ResidencyPermit")) {
-          const residencypermit = new RPermit(data);
-          const savedresidencypermit = await residencypermit.save();
-          docid = savedresidencypermit._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await RPermit.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const residencypermit = new RPermit(data);
+            const savedresidencypermit = await residencypermit.save();
+            docid = savedresidencypermit._id;
 
-          console.log(savedresidencypermit._id);
+            console.log(savedresidencypermit._id);
 
-          clientData[langCheck][modelCheck] = savedresidencypermit._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = savedresidencypermit._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("Card")) {
-          const card = new IDCard(data);
-          const cardid = await card.save();
-          docid = cardid._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await IDCard.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const card = new IDCard(data);
+            const cardid = await card.save();
+            docid = cardid._id;
 
-          console.log(cardid._id);
+            console.log(cardid._id);
 
-          clientData[langCheck][modelCheck] = cardid._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = cardid._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("MoF")) {
-          const mof = new MoF(data);
-          const mofid = await mof.save();
-          docid = mofid._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await MoF.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const mof = new MoF(data);
+            const mofid = await mof.save();
+            docid = mofid._id;
 
-          console.log(mofid._id);
+            console.log(mofid._id);
 
-          clientData[langCheck][modelCheck] = mofid._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = mofid._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("Residence")) {
-          const residence = new Residence(data);
-          const residenceid = await residence.save();
-          docid = residenceid._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await Residence.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const residence = new Residence(data);
+            const residenceid = await residence.save();
+            docid = residenceid._id;
 
-          console.log(residenceid._id);
+            console.log(residenceid._id);
 
-          clientData[langCheck][modelCheck] = residenceid._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = residenceid._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("PrivateDriver")) {
-          const private = new Private(data);
-          const privateid = await private.save();
-          docid = privateid._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await Private.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const private = new Private(data);
+            const privateid = await private.save();
+            docid = privateid._id;
 
-          console.log(privateid._id);
+            console.log(privateid._id);
 
-          clientData[langCheck][modelCheck] = privateid._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = privateid._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("Police")) {
-          const police = new Police(data);
-          const policeid = await police.save();
-          docid = policeid._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await Police.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const police = new Police(data);
+            const policeid = await police.save();
+            docid = policeid._id;
 
-          console.log(policeid._id);
+            console.log(policeid._id);
 
-          clientData[langCheck][modelCheck] = policeid._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = policeid._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("NSSF")) {
-          const nssf = new NSSF(data);
-          const nssfid = await nssf.save();
-          docid = nssfid._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await NSSF.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const nssf = new NSSF(data);
+            const nssfid = await nssf.save();
+            docid = nssfid._id;
 
-          console.log(nssfid._id);
+            console.log(nssfid._id);
 
-          clientData[langCheck][modelCheck] = nssfid._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = nssfid._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("Individual")) {
-          const individual = new Individual(data);
-          const individualid = await individual.save();
-          docid = individualid._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await Individual.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const individual = new Individual(data);
+            const individualid = await individual.save();
+            docid = individualid._id;
 
-          console.log(individualid._id);
+            console.log(individualid._id);
 
-          clientData[langCheck][modelCheck] = individualid._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = individualid._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("Family")) {
-          const family = new Family(data);
-          const familyid = await family.save();
-          docid = familyid._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await Family.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const family = new Family(data);
+            const familyid = await family.save();
+            docid = familyid._id;
 
-          console.log(familyid._id);
+            console.log(familyid._id);
 
-          clientData[langCheck][modelCheck] = familyid._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = familyid._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("Consent")) {
-          const consent = new Consent(data);
-          const consentid = await consent.save();
-          docid = consentid._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await Consent.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const consent = new Consent(data);
+            const consentid = await consent.save();
+            docid = consentid._id;
 
-          console.log(consentid._id);
+            console.log(consentid._id);
 
-          clientData[langCheck][modelCheck] = consentid._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = consentid._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("Driver")) {
-          const driver = new Driver(data);
-          const driverid = await driver.save();
-          docid = driverid._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await Driver.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const driver = new Driver(data);
+            const driverid = await driver.save();
+            docid = driverid._id;
 
-          console.log(driverid._id);
+            console.log(driverid._id);
 
-          clientData[langCheck][modelCheck] = driverid._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = driverid._id;
+            await clientData.save();
+          }
         } else if (modelCheck.includes("Empty")) {
-          const empty = new ETemplate(data);
-          const emptyid = await empty.save();
-          docid = emptyid._id;
+          if (ObjectId.isValid(docID)) {
+            console.log("Update doc by ID " + docID);
+            const birth = await ETemplate.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            const empty = new ETemplate(data);
+            const emptyid = await empty.save();
+            docid = emptyid._id;
 
-          console.log(emptyid._id);
+            console.log(emptyid._id);
 
-          clientData[langCheck][modelCheck] = emptyid._id;
-          await clientData.save();
+            clientData[langCheck][modelCheck] = emptyid._id;
+            await clientData.save();
+          }
         } else {
         }
 
@@ -2226,6 +2801,8 @@ function isUndefinedOrNull(str) {
 function isEmptyOrSpaces(str) {
   return str === null || str.match(/^ *$/) !== null;
 }
+
+function buildDocxHistory(str) {}
 
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));

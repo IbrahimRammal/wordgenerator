@@ -286,10 +286,24 @@ const residencypermitSchema = mongoose.Schema(
     "style": {
       "type": "String"
     }
-  }
-}
-)
+  },
+  user_created: {type: 'String'},
+  user_edit: {type: 'String'},
+  created_at: { type: Date, default: Date.now },
+  updated_at: { type: Date, default: Date.now },
+  note: {type: 'String'}
+  //   payment : [subPayment]
+});
 
+// Sets the created_at parameter equal to the current time
+residencypermitSchema.pre("save", function (next) {
+  now = new Date();
+  this.updated_at = now;
+  if (!this.created_at) {
+    this.created_at = now;
+  }
+  next();
+});
 const RPermit = mongoose.model('ResidencyPermit', residencypermitSchema)
 
 module.exports = RPermit
