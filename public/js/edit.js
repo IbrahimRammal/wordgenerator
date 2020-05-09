@@ -97,7 +97,7 @@ function getData() {
               field: "language",
               headerText: "Language",
               validationRules: { required: true },
-              width: 90,
+              width: 85,
             },
             {
               field: "_id",
@@ -143,7 +143,7 @@ function getData() {
               field: "created_at",
               headerText: "created_at",
               textAlign: "Left",
-              width: 100,
+              width: 130,
               allowEditing: false,
               type: "datetime",
               format: "dd/MM/yyyy hh:mm a",
@@ -152,7 +152,7 @@ function getData() {
               field: "updated_at",
               headerText: "updated_at",
               textAlign: "Left",
-              width: 100,
+              width: 130,
               allowEditing: false,
               type: "datetime",
               format: "dd/MM/yyyy hh:mm a",
@@ -161,7 +161,7 @@ function getData() {
               field: "download",
               headerText: "",
               textAlign: "Left",
-              width: 100,
+              width: 90,
               type: "number",
               //visible: false,
             },
@@ -177,14 +177,15 @@ function getData() {
               headerText: "Note",
               textAlign: "Left",
               width: 100,
+              visible: false,
             },
           ],
-          actionFailure: (e) => {
-            var span = document.createElement("span");
-            grid.element.parentNode.insertBefore(span, grid.element);
-            span.style.color = "#FF0000";
-            span.innerHTML = "Server exception: 404 Not found";
-          },
+        //   actionFailure: (e) => {
+        //     var span = document.createElement("span");
+        //     grid.element.parentNode.insertBefore(span, grid.element);
+        //     span.style.color = "#FF0000";
+        //     span.innerHTML = "Server exception: 404 Not found";
+        //   },
           cellSelected: (args) => {
             // console.log(args);
             //console.log(args.data.href);

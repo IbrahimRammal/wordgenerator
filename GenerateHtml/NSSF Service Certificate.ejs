@@ -141,6 +141,7 @@
             success: function (result) {
                 //alert(result);
                 //$("#download").html(result);
+                toastr["success"]("Document successfully inserted", "Document saved")
                 $("#download").show();
                 $("#download").attr("href", result['link']);
                 $('#paid').show();
