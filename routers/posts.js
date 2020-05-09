@@ -279,16 +279,17 @@ router.post("/edit", verify, async (req, res) => {
                   var docSaved = await Birth.find({
                     _id: docLanguage[docModel],
                   });
+                  console.log(docSaved)
                   result.push({
                     _id: docLanguage[docModel],
                     client_id: id,
                     language: language[i],
                     docModel: "Birth Certificate",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -301,11 +302,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "Divorce Certificate",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -318,11 +319,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "Death Certificate",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -335,11 +336,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "Marriage Certificate",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -352,11 +353,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "Work Permit",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -369,11 +370,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "ID Card",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -384,11 +385,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "MoF Registration",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -401,11 +402,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "Residence Certificate",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -418,11 +419,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "Private Driver's license",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -435,11 +436,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "Police record",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -452,11 +453,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "NSSF Service Certificate",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -469,11 +470,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "Individual Extract",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -486,11 +487,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "Family Extract",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -503,11 +504,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "Consent to travel",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -520,11 +521,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "Residency Permit",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -537,11 +538,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "Driver's license certificate",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -555,11 +556,11 @@ router.post("/edit", verify, async (req, res) => {
                     client_id: id,
                     language: language[i],
                     docModel: "Empty Template",
-                    created_at: docSaved.created_at,
-                    updated_at: docSaved.updated_at,
-                    createdBy: docSaved.user_created,
-                    updateddBy: docSaved.user_edit,
-                    note: docSaved.note,
+                    created_at: docSaved[0].created_at,
+                    updated_at: docSaved[0].updated_at,
+                    createdBy: docSaved[0].user_created,
+                    updateddBy: docSaved[0].user_edit,
+                    note: docSaved[0].note,
                     download: "DOWNLOAD",
                     edit: "EDIT",
                   });
@@ -2097,9 +2098,11 @@ router.post("/data", verify, async (req, res) => {
 
         var docid = "";
         var ObjectId = require("mongoose").Types.ObjectId;
+        var email = req.email;
 
         if (modelCheck.includes("Birth")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Birth.findOneAndUpdate(
               { _id: docID },
@@ -2111,6 +2114,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const birth = new Birth(data);
             const savedBirth = await birth.save();
             docid = savedBirth._id;
@@ -2122,6 +2126,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Divorce")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Divorce.findOneAndUpdate(
               { _id: docID },
@@ -2133,6 +2138,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const divorce = new Divorce(data);
             const savedDivorce = await divorce.save();
             docid = savedDivorce._id;
@@ -2144,6 +2150,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Death")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Death.findOneAndUpdate(
               { _id: docID },
@@ -2155,6 +2162,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const death = new Death(data);
             const savedDeath = await death.save();
             docid = savedDeath._id;
@@ -2166,6 +2174,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Marriage")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Marriage.findOneAndUpdate(
               { _id: docID },
@@ -2177,6 +2186,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const marriage = new Marriage(data);
             const savedMarriage = await marriage.save();
             docid = savedMarriage._id;
@@ -2188,6 +2198,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Work")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await WPermit.findOneAndUpdate(
               { _id: docID },
@@ -2199,6 +2210,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const work = new WPermit(data);
             const savedwork = await work.save();
             docid = savedwork._id;
@@ -2210,6 +2222,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("ResidencyPermit")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await RPermit.findOneAndUpdate(
               { _id: docID },
@@ -2221,6 +2234,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const residencypermit = new RPermit(data);
             const savedresidencypermit = await residencypermit.save();
             docid = savedresidencypermit._id;
@@ -2232,6 +2246,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Card")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await IDCard.findOneAndUpdate(
               { _id: docID },
@@ -2243,6 +2258,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const card = new IDCard(data);
             const cardid = await card.save();
             docid = cardid._id;
@@ -2254,6 +2270,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("MoF")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await MoF.findOneAndUpdate(
               { _id: docID },
@@ -2265,6 +2282,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const mof = new MoF(data);
             const mofid = await mof.save();
             docid = mofid._id;
@@ -2276,6 +2294,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Residence")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Residence.findOneAndUpdate(
               { _id: docID },
@@ -2287,6 +2306,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const residence = new Residence(data);
             const residenceid = await residence.save();
             docid = residenceid._id;
@@ -2298,6 +2318,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("PrivateDriver")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Private.findOneAndUpdate(
               { _id: docID },
@@ -2309,6 +2330,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const private = new Private(data);
             const privateid = await private.save();
             docid = privateid._id;
@@ -2320,6 +2342,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Police")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Police.findOneAndUpdate(
               { _id: docID },
@@ -2331,6 +2354,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const police = new Police(data);
             const policeid = await police.save();
             docid = policeid._id;
@@ -2342,6 +2366,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("NSSF")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await NSSF.findOneAndUpdate(
               { _id: docID },
@@ -2353,6 +2378,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const nssf = new NSSF(data);
             const nssfid = await nssf.save();
             docid = nssfid._id;
@@ -2364,6 +2390,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Individual")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Individual.findOneAndUpdate(
               { _id: docID },
@@ -2375,6 +2402,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const individual = new Individual(data);
             const individualid = await individual.save();
             docid = individualid._id;
@@ -2386,6 +2414,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Family")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Family.findOneAndUpdate(
               { _id: docID },
@@ -2397,6 +2426,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const family = new Family(data);
             const familyid = await family.save();
             docid = familyid._id;
@@ -2408,6 +2438,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Consent")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Consent.findOneAndUpdate(
               { _id: docID },
@@ -2419,6 +2450,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const consent = new Consent(data);
             const consentid = await consent.save();
             docid = consentid._id;
@@ -2430,6 +2462,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Driver")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Driver.findOneAndUpdate(
               { _id: docID },
@@ -2441,6 +2474,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const driver = new Driver(data);
             const driverid = await driver.save();
             docid = driverid._id;
@@ -2452,6 +2486,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Empty")) {
           if (ObjectId.isValid(docID)) {
+            data['user_edit'] = email;
             console.log("Update doc by ID " + docID);
             const birth = await ETemplate.findOneAndUpdate(
               { _id: docID },
@@ -2463,6 +2498,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
+            data['user_created'] = email;
             const empty = new ETemplate(data);
             const emptyid = await empty.save();
             docid = emptyid._id;
