@@ -14,14 +14,14 @@ function getData() {
 
   var g = document.getElementById("client_list");
   var strClient = g.options[g.selectedIndex].value;
-  $("#paid").hide(paid);
   var selectedtext = "";
+//   $("#paid").hide(paid);
   //window.alert(strClient);
   // Grab the template
   if (g.options[g.selectedIndex].text != "Client Select ...") {
-      selectedtext = g.options[g.selectedIndex].text;
+    selectedtext = g.options[g.selectedIndex].text ;
     $.ajax({
-      url: "/api/posts/edit",
+      url: "/api/posts/editpaid",
       type: "POST",
       dataType: "json",
       cache: true,
@@ -58,9 +58,9 @@ function getData() {
           // offline: true
           json: result, //JSON.parse(result),
           adaptor: new ej.data.RemoteSaveAdaptor(), //remote save adaptor
-          insertUrl: hostUrl + "edit/BatchData",
-          updateUrl: hostUrl + "edit/BatchData",
-          removeUrl: hostUrl + "edit/BatchData",
+          insertUrl: hostUrl + "editpaid/BatchData",
+          updateUrl: hostUrl + "editpaid/BatchData",
+          removeUrl: hostUrl + "editpaid/BatchData",
         });
 
         //alert(result)
@@ -181,6 +181,16 @@ function getData() {
               width: 100,
               visible: false,
             },
+            {
+                field: "href",
+                headerText: "DocLink",
+                width: 90,
+                // format: "C",
+                textAlign: "Right",
+                visible: false,
+                allowEditing: false,
+                // type: "number",
+              }
           ],
         //   actionFailure: (e) => {
         //     var span = document.createElement("span");
@@ -212,7 +222,7 @@ function getData() {
                       //   alert("text status " + textStatus + ", err " + err);
                     },
                   });
-            } else if (args.currentCell.outerText == "EDIT") {
+              } else if (args.currentCell.outerText == "EDIT") {
                 // console.log(args);
 
               $.ajax({
@@ -220,10 +230,10 @@ function getData() {
                 type: "POST",
                 dataType: "json",
                 cache: true,
-                data: { type: args.data.language, template: args.data.docModel, client: args.data.client_id, docID: args.data._id },
+                data: { type: args.data.language, template: args.data.docModel, client: args.data.client_id, clientname: selectedtext, docID: args.data._id },
                 success: function (fixtures) {
                     var html = fixtures["html"];
-                    var paid = fixtures["paid"];
+                    // var paid = fixtures["paid"];
                     $("#panel").html(html);
                     //$('#paid').html(paid);
                     $("#card_label").html(args.data.language + " > " + args.data.docModel);

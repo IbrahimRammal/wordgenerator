@@ -90,6 +90,30 @@ router.get("/edit", verify, (req, res) => {
   });
 });
 
+router.get("/editdocx", verify, (req, res) => {
+  req.keep = "true";
+  var query = Paid.find({}, { s0: 0, __v: 0 });
+  query.exec(function (err, result) {
+    if (!err) {
+      //let rawdata = "";
+      //console.log(rawdata);
+      //rawdata = result
+      let dataReturn = result;
+
+      //console.log(result)
+
+      res.render("editpaid", {
+        // req.session.
+        name: req.name,
+        email: req.email,
+        clientname: result,
+      });
+    } else {
+      console.log(err);
+    }
+  });
+});
+
 //IN Dashboard load check if user admin or regular user if regluar user load only his/here work flow 
 router.get("/dashboard", verify, async (req, res) => {
   req.keep = "true";

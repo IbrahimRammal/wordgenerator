@@ -279,7 +279,7 @@ router.post("/edit", verify, async (req, res) => {
                   var docSaved = await Birth.find({
                     _id: docLanguage[docModel],
                   });
-                  console.log(docSaved)
+                  console.log(docSaved);
                   result.push({
                     _id: docLanguage[docModel],
                     client_id: id,
@@ -596,6 +596,7 @@ router.post("/template", verify, async (req, res) => {
       let htmlpath = "./GenerateHtml/" + req.body.template + ".ejs";
       let id = req.body.client;
 
+      console.log(req.body);
       var langCheck = req.body.type;
       var modelCheck = req.body.template;
       var docID = req.body.docID != null ? req.body.docID : "";
@@ -783,11 +784,136 @@ router.get("/r", verify, async (req, res) => {
       // handle error
       console.log(err);
     } else {
-      // user get the downloaded docx
-      // console.log('hello')
+      // var file = fs.createReadStream(passedVariable);
+      // file.on('end', function() {
+      //   fs.unlink(passedVariable, function() {
+      //     // file deleted
+      //   });
+      // });
+      // file.pipe(res);
     }
   });
 });
+
+router.post("/deleteAfterDownload", verify, async function (req, res) {
+  try {
+    console.log(req.body);
+
+    var language = req.body.language;
+    var client = req.body.clientname;
+    var docID = req.body.docID;
+    var docModel = req.body.docModel;
+    let docxPath = "./DocumentTemplate/" + language + "/" + docModel + ".docx";
+
+    var docSaved = "";
+
+    if (docModel.includes("Birth")) {
+      docSaved = await Birth.find({ _id: docID });
+    } else if (docModel.includes("Divorce")) {
+      docSaved = await Divorce.find({ _id: docID });
+    } else if (docModel.includes("Death")) {
+      docSaved = await Death.find({ _id: docID });
+    } else if (docModel.includes("Marriage")) {
+      docSaved = await Marriage.find({ _id: docID });
+    } else if (docModel.includes("Work")) {
+      docSaved = await WPermit.find({ _id: docID });
+    } else if (docModel.includes("ID")) {
+      docSaved = await IDCard.find({ _id: docID });
+    } else if (docModel.includes("MoF")) {
+      docSaved = await MoF.find({ _id: docID });
+    } else if (docModel.includes("Residence")) {
+      docSaved = await Residence.find({ _id: docID });
+    } else if (docModel.includes("PrivateDriver")) {
+      docSaved = await Private.find({ _id: docID });
+    } else if (docModel.includes("Police")) {
+      docSaved = await Police.find({ _id: docID });
+    } else if (docModel.includes("NSSF")) {
+      docSaved = await NSSF.find({ _id: docID });
+    } else if (docModel.includes("Individual")) {
+      docSaved = await Individual.find({ _id: docID });
+    } else if (docModel.includes("Family")) {
+      docSaved = await Family.find({ _id: docID });
+    } else if (docModel.includes("Consent")) {
+      docSaved = await Consent.find({ _id: docID });
+    } else if (docModel.includes("ResidencyPermit")) {
+      docSaved = await RPermit.find({ _id: docID });
+    } else if (docModel.includes("Driver")) {
+      docSaved = await Driver.find({ _id: docID });
+    } else if (docModel.includes("Empty")) {
+      console.log("foundit");
+      docSaved = await ETemplate.find({ _id: docID });
+    } else {
+    }
+
+    const event = new Date();
+
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: 'numeric', minute: 'numeric', second: 'numeric', 
+      hour12: false,
+      timeZone: "Asia/Beirut"
+    };
+
+    var datetime = "";
+
+    if (language != null && language == "Français") {
+      datetime = event.toLocaleDateString("fr-GB", options);
+    } else if (language != null && language == "Arabic") {
+      datetime = event.toLocaleDateString("ar-EG", options);
+    } else if (language != null && language == "English") {
+      datetime = event.toLocaleDateString("en-US", {
+        year: "numeric",
+        day: "numeric",
+        month: "long",
+        hour12: false,
+        timeZone: "Asia/Beirut",
+        hour: 'numeric', minute: 'numeric', second: 'numeric', 
+      });
+    } else if (language != null && language == "Español") {
+      datetime = event.toLocaleDateString("es-GB", options);
+    } else {
+    }
+
+    // var docArray = docSaved[0]["docArray"];
+    // docArray["date"] = docSaved[0]["docArray"]["date"];
+    // console.log(docSaved[0]["docArray"]["date"]);
+
+    console.log("datet time before genreate docx" + datetime);
+    // .replace(/\s/g, "");
+    var outputPath = GenerateDocx(
+      1,
+      docxPath,
+      docSaved[0]["docArray"],
+      docModel,
+      client,
+      datetime
+    );
+
+    console.log(outputPath[0]);
+
+    var downloadLinkGenerator = downloadLink(datetime, docModel, client);
+
+    var part1 = encodeURIComponent(downloadLinkGenerator[0]);
+    var part2 = encodeURIComponent(downloadLinkGenerator[1]);
+
+    res.send({ href: "/api/posts/r/?valid=" + part1 + "&pass=" + part2 });
+  } catch (err) {
+    console.log(err);
+    res.send("error");
+  }
+});
+
+function deleteFile(file) {
+  fs.unlink(file, function (err) {
+    if (err) {
+      console.error(err.toString());
+    } else {
+      console.warn(file + " deleted");
+    }
+  });
+}
 
 router.post("/Expense/GetData", verify, async (req, res) => {
   var query = await Expense.find({}).sort({ created_at: "descending" }).exec();
@@ -2096,13 +2222,15 @@ router.post("/data", verify, async (req, res) => {
         data["download"] = "/api/posts/r/?valid=" + part1 + "&pass=" + part2;
         console.log(data["download"]);
 
+        data["docArray"] = docArray;
+
         var docid = "";
         var ObjectId = require("mongoose").Types.ObjectId;
         var email = req.email;
 
         if (modelCheck.includes("Birth")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Birth.findOneAndUpdate(
               { _id: docID },
@@ -2110,11 +2238,12 @@ router.post("/data", verify, async (req, res) => {
               { upsert: true },
               function (err, doc) {
                 if (err) console.log(err);
+                // console.log(doc.docArray)
                 console.log("Succesfully saved.");
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const birth = new Birth(data);
             const savedBirth = await birth.save();
             docid = savedBirth._id;
@@ -2126,7 +2255,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Divorce")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Divorce.findOneAndUpdate(
               { _id: docID },
@@ -2138,7 +2267,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const divorce = new Divorce(data);
             const savedDivorce = await divorce.save();
             docid = savedDivorce._id;
@@ -2150,7 +2279,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Death")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Death.findOneAndUpdate(
               { _id: docID },
@@ -2162,7 +2291,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const death = new Death(data);
             const savedDeath = await death.save();
             docid = savedDeath._id;
@@ -2174,7 +2303,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Marriage")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Marriage.findOneAndUpdate(
               { _id: docID },
@@ -2186,7 +2315,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const marriage = new Marriage(data);
             const savedMarriage = await marriage.save();
             docid = savedMarriage._id;
@@ -2198,7 +2327,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Work")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await WPermit.findOneAndUpdate(
               { _id: docID },
@@ -2210,7 +2339,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const work = new WPermit(data);
             const savedwork = await work.save();
             docid = savedwork._id;
@@ -2222,7 +2351,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("ResidencyPermit")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await RPermit.findOneAndUpdate(
               { _id: docID },
@@ -2234,7 +2363,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const residencypermit = new RPermit(data);
             const savedresidencypermit = await residencypermit.save();
             docid = savedresidencypermit._id;
@@ -2246,7 +2375,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Card")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await IDCard.findOneAndUpdate(
               { _id: docID },
@@ -2258,7 +2387,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const card = new IDCard(data);
             const cardid = await card.save();
             docid = cardid._id;
@@ -2270,7 +2399,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("MoF")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await MoF.findOneAndUpdate(
               { _id: docID },
@@ -2282,7 +2411,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const mof = new MoF(data);
             const mofid = await mof.save();
             docid = mofid._id;
@@ -2294,7 +2423,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Residence")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Residence.findOneAndUpdate(
               { _id: docID },
@@ -2306,7 +2435,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const residence = new Residence(data);
             const residenceid = await residence.save();
             docid = residenceid._id;
@@ -2318,7 +2447,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("PrivateDriver")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Private.findOneAndUpdate(
               { _id: docID },
@@ -2330,7 +2459,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const private = new Private(data);
             const privateid = await private.save();
             docid = privateid._id;
@@ -2342,7 +2471,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Police")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Police.findOneAndUpdate(
               { _id: docID },
@@ -2354,7 +2483,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const police = new Police(data);
             const policeid = await police.save();
             docid = policeid._id;
@@ -2366,7 +2495,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("NSSF")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await NSSF.findOneAndUpdate(
               { _id: docID },
@@ -2378,7 +2507,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const nssf = new NSSF(data);
             const nssfid = await nssf.save();
             docid = nssfid._id;
@@ -2390,7 +2519,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Individual")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Individual.findOneAndUpdate(
               { _id: docID },
@@ -2402,7 +2531,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const individual = new Individual(data);
             const individualid = await individual.save();
             docid = individualid._id;
@@ -2414,7 +2543,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Family")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Family.findOneAndUpdate(
               { _id: docID },
@@ -2426,7 +2555,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const family = new Family(data);
             const familyid = await family.save();
             docid = familyid._id;
@@ -2438,7 +2567,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Consent")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Consent.findOneAndUpdate(
               { _id: docID },
@@ -2450,7 +2579,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const consent = new Consent(data);
             const consentid = await consent.save();
             docid = consentid._id;
@@ -2462,7 +2591,7 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Driver")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
             const birth = await Driver.findOneAndUpdate(
               { _id: docID },
@@ -2474,7 +2603,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const driver = new Driver(data);
             const driverid = await driver.save();
             docid = driverid._id;
@@ -2486,7 +2615,9 @@ router.post("/data", verify, async (req, res) => {
           }
         } else if (modelCheck.includes("Empty")) {
           if (ObjectId.isValid(docID)) {
-            data['user_edit'] = email;
+            data["user_edit"] = email;
+            console.log(email);
+            console.log(data["user_edit"]);
             console.log("Update doc by ID " + docID);
             const birth = await ETemplate.findOneAndUpdate(
               { _id: docID },
@@ -2498,7 +2629,7 @@ router.post("/data", verify, async (req, res) => {
               }
             );
           } else {
-            data['user_created'] = email;
+            data["user_created"] = email;
             const empty = new ETemplate(data);
             const emptyid = await empty.save();
             docid = emptyid._id;
@@ -2574,6 +2705,559 @@ router.post("/data", verify, async (req, res) => {
   }
 });
 
+router.post("/editpaid", verify, async (req, res) => {
+  // if (false) {
+  try {
+    console.log(req.body);
+    if (!isEmptyOrSpaces(req.body.client)) {
+      let id = req.body.client;
+      var url = "";
+      var result = [];
+
+      try {
+        var clientDocx = await Paid.find({ _id: id });
+
+        console.log(clientDocx);
+
+        var language = ["Arabic", "English", "Español", "Français"];
+
+        if (clientDocx != null) {
+          // language.forEach((element) => {
+          //console.log(clientDocx[0][element]);
+          // user["payment"].length
+          for (var i = 0; i < clientDocx[0]["payment"].length; i++) {
+            var docLanguage = clientDocx[0]["payment"][i];
+            // for (const docModel in clientDocx.payment[i]) {
+            var ObjectId = require("mongoose").Types.ObjectId;
+            if (ObjectId.isValid(docLanguage["docid"])) {
+              console.log(docLanguage["docid"]);
+              if (docLanguage["docModel"].includes("Birth")) {
+                var docSaved = await Birth.find({
+                  _id: docLanguage["docid"],
+                });
+                console.log(docSaved);
+                // updated_at
+                // user_created
+                // user_edit
+
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Birth Certificate",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("Divorce")) {
+                var docSaved = await Divorce.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Divorce Certificate",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("Death")) {
+                var docSaved = await Death.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Death Certificate",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("Marriage")) {
+                var docSaved = await Marriage.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Marriage Certificate",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("Work")) {
+                var docSaved = await WPermit.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Work Permit",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("ID")) {
+                var docSaved = await IDCard.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "ID Card",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("MoF")) {
+                var docSaved = await MoF.find({ _id: docLanguage["docid"] });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "MoF Registration",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("Residence")) {
+                var docSaved = await Residence.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Residence Certificate",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("PrivateDriver")) {
+                var docSaved = await Private.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Private Driver's license",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("Police")) {
+                var docSaved = await Police.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Police record",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("NSSF")) {
+                var docSaved = await NSSF.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "NSSF Service Certificate",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("Individual")) {
+                var docSaved = await Individual.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Individual Extract",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("Family")) {
+                var docSaved = await Family.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Family Extract",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("Consent")) {
+                var docSaved = await Consent.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Consent to travel",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("ResidencyPermit")) {
+                var docSaved = await RPermit.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Residency Permit",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("Driver")) {
+                var docSaved = await Driver.find({
+                  _id: docLanguage["docid"],
+                });
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Driver's license certificate",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else if (docLanguage["docModel"].includes("Empty")) {
+                console.log("foundit");
+                var docSaved = await ETemplate.find({
+                  _id: docLanguage["docid"],
+                });
+                console.log(docSaved);
+                result.push({
+                  _id: docLanguage["docid"],
+                  client_id: docSaved[0]["client"]["id"],
+                  language: docLanguage["language"],
+                  docModel: "Empty Template",
+                  created_at: docLanguage["created_at"],
+                  updated_at: docLanguage["updated_at"],
+                  createdBy: docLanguage["user_created"],
+                  updateddBy: docLanguage["user_edit"],
+                  note: "",
+                  href: docLanguage["href"],
+                  download: "DOWNLOAD",
+                  edit: "EDIT",
+                });
+              } else {
+              }
+            }
+            // }
+          }
+          // });
+        } else {
+        }
+        // console.log(html)
+        console.log(result);
+
+        res.send(result);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.post("/download", verify, async (req, res) => {
+  try {
+    if (
+      !isEmptyOrSpaces(req.body.lang) &&
+      !isEmptyOrSpaces(req.body.doc) &&
+      !isEmptyOrSpaces(req.body.id)
+    ) {
+      let path = "./json/" + req.body.lang + "/" + req.body.doc + ".json";
+      let docxPath =
+        "./DocumentTemplate/" + req.body.lang + "/" + req.body.doc + ".docx";
+      //console.log(path)
+      if (fs.existsSync(path) && fs.existsSync(docxPath)) {
+        console.log("Begain");
+        let rawdata = fs.readFileSync(path, "utf-8");
+        let data = JSON.parse(rawdata);
+        let docArray = { clients: [], users: [] }; // sar fe mwskleh bel array fams:[]
+        let jsonObj = [];
+
+        //Search all filed had been submit when get to the paid form break from this loop and then make another keys's
+        //For paid client form to enter or check if there is already one there
+
+        Object.keys(req.body).forEach(function (key) {
+          let keys = key.split("_");
+          console.log(keys);
+          if (keys.length == 2) {
+            docArray[keys[0] + keys[1]] = req.body[key];
+            data[keys[0]][keys[1]]["value"] = req.body[key];
+          } else if (keys.length == 3) {
+            docArray[keys[0] + keys[1] + keys[2]] = req.body[key];
+            data[keys[0]][keys[1]][keys[2]]["value"] = req.body[key];
+          } else if (keys.length == 4) {
+          } else {
+          }
+        });
+
+        if (data.hasOwnProperty("s2")) {
+          if (data.s2.hasOwnProperty("clients")) {
+            for (var i = 0; i < data.s2.clients.length; i++) {
+              if (!isEmptyOrSpaces(req.body["s2_clients_num_" + i])) {
+                data.s2.clients[i].num = req.body["s2_clients_num_" + i];
+                data.s2.clients[i].establishment =
+                  req.body["s2_clients_establishment_" + i];
+                data.s2.clients[i].emp = req.body["s2_clients_emp_" + i];
+                data.s2.clients[i].ter = req.body["s2_clients_ter_" + i];
+                data.s2.clients[i].note = req.body["s2_clients_note_" + i];
+                docArray.clients.push({
+                  num: req.body["s2_clients_num_" + i],
+                  establishment: req.body["s2_clients_establishment_" + i],
+                  emp: req.body["s2_clients_emp_" + i],
+                  ter: req.body["s2_clients_ter_" + i],
+                  note: req.body["s2_clients_note_" + i],
+                });
+              }
+            }
+          } else if (data.s2.hasOwnProperty("fams")) {
+            for (var i = 0; i < data.s2.fams.length; i++) {
+              if (!isEmptyOrSpaces(req.body["s2_fams_nsname_" + i])) {
+                data.s2.fams[i].nsname = req.body["s2_fams_nsname_" + i];
+                data.s2.fams[i].faname = req.body["s2_fams_faname_" + i];
+                data.s2.fams[i].moname = req.body["s2_fams_moname_" + i];
+                data.s2.fams[i].pdbirth = req.body["s2_fams_pdbirth_" + i];
+                data.s2.fams[i].sect = req.body["s2_fams_sect_" + i];
+                data.s2.fams[i].stat = req.body["s2_fams_stat_" + i];
+                data.s2.fams[i].s = req.body["s2_fams_s_" + i];
+                data.s2.fams[i].remark = req.body["s2_fams_remark_" + i];
+                docArray.users.push({
+                  nsname: req.body["s2_fams_nsname_" + i],
+                  faname: req.body["s2_fams_faname_" + i],
+                  moname: req.body["s2_fams_moname_" + i],
+                  pdbirth: req.body["s2_fams_pdbirth_" + i],
+                  sect: req.body["s2_fams_sect_" + i],
+                  stat: req.body["s2_fams_stat_" + i],
+                  s: req.body["s2_fams_s_" + i],
+                  remark: req.body["s2_fams_remark_" + i],
+                });
+              }
+            }
+          } else {
+          }
+        }
+
+        // console.log(docArray)
+
+        //Time date
+        const event = new Date();
+
+        const options = { year: "numeric", month: "long", day: "numeric" };
+
+        var datetime = "";
+
+        // check if original or not
+        //docArray['o1'] = "True Copy of the Original";
+        //req.body["original"]
+        console.log("check if checked");
+
+        var originalFlag = true;
+        if (req.body["original"] == null) {
+          originalFlag = false;
+        }
+        console.log();
+
+        docArray["o1"] = "0";
+
+        if (req.query.lang != null && req.query.lang == "Français") {
+          if (originalFlag) docArray["o1"] = "Véritable copie de l'original";
+          datetime = event.toLocaleDateString("fr-GB", options);
+        } else if (req.query.lang != null && req.query.lang == "Arabic") {
+          datetime = event.toLocaleDateString("ar-EG", options);
+        } else if (req.query.lang != null && req.query.lang == "English") {
+          if (originalFlag) docArray["o1"] = "True Copy of the Original";
+          datetime = event.toLocaleDateString("en-US", {
+            year: "numeric",
+            day: "numeric",
+            month: "long",
+          });
+        } else if (req.query.lang != null && req.query.lang == "Español") {
+          if (originalFlag) docArray["o1"] = "Copia verdadera del original";
+          datetime = event.toLocaleDateString("es-GB", options);
+        } else {
+        }
+
+        data["date"] = datetime;
+        docArray["date"] = datetime;
+
+        //track if original or not
+        data["original"] = docArray["o1"];
+
+        //return to defualt state ""
+        if (docArray["o1"] == "0") docArray["o1"] = "";
+
+        //console.log("before save");
+
+        var modelCheck = req.query.doc;
+        var langCheck = req.query.lang;
+        var id = req.query.id;
+        var docID = req.query.docID != null ? req.query.docID : "";
+        modelCheck = modelCheck.replace(/\s/g, "");
+
+        let clientData = await Client.findOne({ _id: id });
+        data["client"]["id"] = id;
+
+        if (data.hasOwnProperty("s0")) {
+          Object.keys(data.s0).forEach(function (key) {
+            let keys = data.s0[key];
+
+            if (!isEmptyOrSpaces(keys)) {
+              keys = keys.split("_");
+              // console.log(keys)
+              // console.log(data1.s0[key])
+              if (keys.length == 2) {
+                if (clientData.s0.hasOwnProperty(key)) {
+                  // console.log('key: ' + key)
+                  // console.log('mongodata: ' + clientData.s0[key])
+                  // console.log(keys[0] + ' ' + keys[1])
+                  clientData.s0[key] = data[keys[0]][keys[1]]["value"];
+                  // console.log(data[keys[0]][keys[1]]['value'])
+                }
+                // data1.s0[key] = req.body[key]
+              } else if (keys.length == 3) {
+                if (clientData.s0.hasOwnProperty(key)) {
+                  clientData.s0[key] = data[keys[0]][keys[1]][keys[2]]["value"];
+                  // console.log(data[keys[0]][keys[1]][keys[2]]['value'])
+                }
+              } else {
+              }
+            }
+          });
+        }
+
+        var downloadLinkGenerator = downloadLink(
+          datetime,
+          req.query.doc,
+          clientData["fullname"]
+        );
+
+        var part1 = encodeURIComponent(downloadLinkGenerator[0]);
+        var part2 = encodeURIComponent(downloadLinkGenerator[1]);
+
+        data["download"] = "/api/posts/r/?valid=" + part1 + "&pass=" + part2;
+        console.log(data["download"]);
+
+        var outputPath = GenerateDocx(
+          data,
+          docxPath,
+          docArray,
+          req.query.doc,
+          clientName
+        );
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 function downloadLink(datetime, modelCheck, clientName) {
   var outputPath =
     "./Output/" + modelCheck + " - " + clientName + " - " + datetime + ".docx";
@@ -2582,7 +3266,14 @@ function downloadLink(datetime, modelCheck, clientName) {
 }
 
 // add mongo id for the user
-function GenerateDocx(data, docxPath, docArray, modelCheck, clientName) {
+function GenerateDocx(
+  data = 1,
+  docxPath,
+  docArray,
+  modelCheck,
+  clientName,
+  datetime = "0"
+) {
   // Load the docx file as a binary
   var content = fs.readFileSync(docxPath, "binary");
 
@@ -2617,16 +3308,17 @@ function GenerateDocx(data, docxPath, docArray, modelCheck, clientName) {
 
   const options = { year: "numeric", month: "long", day: "numeric" };
 
-  var datetime = docArray["date"];
+  var date = datetime == "0" ? docArray["date"] : datetime;
+  console.log("FUll path with time date" + date);
 
   var outputPath =
-    "./Output/" + modelCheck + " - " + clientName + " - " + datetime + ".docx";
+    "./Output/" + modelCheck + " - " + clientName + " - " + date + ".docx";
   // Get the path that been enter in mongo file for the client and save it with these path
   fs.writeFileSync(outputPath, buf);
 
   //[outputPath, modelCheck + ' ' + datetime];
   //return outputPath
-  return [outputPath, modelCheck + " - " + clientName + " - " + datetime];
+  return [outputPath, modelCheck + " - " + clientName + " - " + date];
 }
 
 function addPaidClient(a, b, obj) {
@@ -2684,126 +3376,6 @@ function addPaidClient(a, b, obj) {
       // console.log(savedPaid['_id'] + "asdfsadfds")
       return data;
       //return savedPaid['_id']
-    }
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-async function addClient(a) {
-  try {
-    console.log("addclient");
-    //var targetinfo = req.body
-    if (!isEmptyOrSpaces(a.fullname)) {
-      var data = {
-        fullname: a.fullname,
-        s0: {
-          name: a["s0.name"],
-          surname: a["s0.surname"],
-          father: a["s0.father"],
-          mother: a["s0.mother"],
-          mothersurname: "",
-          nationaltiy: "",
-          sex: a["s0.sex"],
-          familystatus: "",
-          governorate: "",
-          district: "",
-          city: "",
-          quarter: "",
-          street: "",
-          building: "",
-          floor: "",
-          mobile: "",
-          work: "",
-          fax: "",
-          email: "",
-          profession: "",
-          address: "",
-          telephone: "",
-          religion: "",
-          placeofbirthlocal: a["s0.placeofbirthlocal"],
-          placeofbirthdistrict: "",
-          dateofbirth: a["s0.dateofbirth"],
-          placeregistry: "",
-          noregistry: a["s0.noregistry"],
-        },
-        Arabic: {
-          EmptyTemplate: "",
-        },
-        English: {
-          BirthCertificate: "",
-          Consenttotravel: "",
-          DeathCertificate: "",
-          DivorceCertificate: "",
-          Driverslicensecertificate: "",
-          PrivateDriverslicense: "",
-          FamilyExtract: "",
-          IDCard: "",
-          IndividualExtract: "",
-          MarriageCertificate: "",
-          MoFRegistration: "",
-          NSSFServiceCertificate: "",
-          Policerecord: "",
-          ResidenceCertificate: "",
-          ResidencyPermit: "",
-          WorkPermit: "",
-          EmptyTemplate: "",
-        },
-        Español: {
-          BirthCertificate: "",
-          Consenttotravel: "",
-          DeathCertificate: "",
-          DivorceCertificate: "",
-          Driverslicensecertificate: "",
-          PrivateDriverslicense: "",
-          FamilyExtract: "",
-          IDCard: "",
-          IndividualExtract: "",
-          MarriageCertificate: "",
-          MoFRegistration: "",
-          NSSFServiceCertificate: "",
-          Policerecord: "",
-          ResidenceCertificate: "",
-          ResidencyPermit: "",
-          WorkPermit: "",
-          EmptyTemplate: "",
-        },
-        Français: {
-          BirthCertificate: "",
-          Consenttotravel: "",
-          DeathCertificate: "",
-          DivorceCertificate: "",
-          Driverslicensecertificate: "",
-          PrivateDriverslicense: "",
-          FamilyExtract: "",
-          IDCard: "",
-          IndividualExtract: "",
-          MarriageCertificate: "",
-          MoFRegistration: "",
-          NSSFServiceCertificate: "",
-          Policerecord: "",
-          ResidenceCertificate: "",
-          ResidencyPermit: "",
-          WorkPermit: "",
-          EmptyTemplate: "",
-        },
-      };
-
-      // let promise = new Promise((resolve, reject) => {
-      //   setTimeout(() => resolve("done!"), 1000)
-      // });
-
-      const client = new Client(data);
-      const savedClient = await client.save();
-
-      //console.log('save new client :' + savedClient)
-
-      // wait 3 seconds
-      await new Promise((resolve, reject) => setTimeout(resolve, 500));
-
-      console.log(savedClient["_id"] + "asdfsadfds");
-
-      return savedClient["_id"];
     }
   } catch (err) {
     console.log(err);
