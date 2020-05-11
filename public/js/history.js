@@ -47,12 +47,15 @@ $(document).ready(function () {
       // searchSettings: { fields: ['fullname'] , operator: 'contains', key: 'test', ignoreCase: true},
       toolbar: ["Search"], //ExcelExport
       //toolbar: ['Search'],
-      editSettings: {
-        allowEditing: true,
-        allowAdding: true,
-        allowDeleting: true,
-        mode: "Dialog",
-      },
+      gridLines: 'Default',
+      allowTextWrap: true,
+      textWrapSettings: { wrapMode: 'Content' },
+      // editSettings: {
+      //   allowEditing: true,
+      //   allowAdding: true,
+      //   allowDeleting: true,
+      //   mode: "Dialog",
+      // },
       columns: [
         {
           field: "fullname",

@@ -156,13 +156,19 @@
         var request_method = $(this).attr("method"); //get form GET/POST method
         var form_data = $(this).serialize(); //Encode form elements for submission
 
+        var name = $("#first").val();
+        var father = $("#middle").val();
+        var surname = $("#last").val();
+
         var href = $("#download").attr('href');
 
         var g = document.getElementById("paid_list");
         var client = ""
         client = g.options[g.selectedIndex].value;
 
-        form_data += "&href=" + href + "&client=" + client
+        console.log( "&name=" + name + "&father=" + father + "&surname=" + surname);
+
+        form_data += "&href=" + href + "&client=" + client + "&name=" + name + "&father=" + father + "&surname=" + surname;
 
         $.ajax({
             url: post_url,

@@ -132,7 +132,7 @@ $(document).ready(function () {
       childGrid: {
         dataSource: dataChild,
         queryString: "_id",
-        allowPaging: true,
+        // allowPaging: true,
         allowSelection: true,
         //allowGrouping: true,
         //allowFiltering: true,

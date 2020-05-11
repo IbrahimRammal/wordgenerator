@@ -173,6 +173,7 @@ router.get("/dashboard", verify, async (req, res) => {
       let unit = 0;
 
       for (var j = 0; j < query[i]["payment"].length; j++) {
+        try{
         unit = j + 1;
         totalpaidprice += query[i]["payment"][j].paid;
         totalremainprice += query[i]["payment"][j].remain;
@@ -186,6 +187,7 @@ router.get("/dashboard", verify, async (req, res) => {
           nonlegal = nonlegal + 1;
         } else {
         }
+      } catch(err){}
         //console.log("subParent: " + JSON.stringify(subParent));
       }
       //after finish loop parent json
