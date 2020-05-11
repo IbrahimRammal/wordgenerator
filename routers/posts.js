@@ -1269,7 +1269,8 @@ router.post("/Payment/GetData", verify, async (req, res) => {
       console.log("body.id: " + getById);
       query = await Paid.findById(getById, function (err, user) {
         for (var j = 0; j < user["payment"].length; j++) {
-          console.log(user["payment"][j].href);
+          //console.log(user["payment"][j].href);
+          try{
           let subParent = {
             //put parent id temor
             _id: getById,
@@ -1290,6 +1291,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
           result.push(subParent);
 
           //console.log("subParent: " + JSON.stringify(subParent));
+        } catch(err){}
         }
       });
       res.send({ result: result, count: result.length });
@@ -1325,6 +1327,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
       parent.mobile = query[i].mobile;
       parent.address = query[i].address;
       for (var j = 0; j < query[i]["payment"].length; j++) {
+        try{
         let subParent = {
           _id: query[i]["payment"][j]._id,
           fullname: query[i]["payment"][j].fullname,
@@ -1357,6 +1360,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
           result.push(subParent);
           console.log("result: " + JSON.stringify(result));
         }
+      } catch(err){}
 
         //console.log("subParent: " + JSON.stringify(subParent));
       }
@@ -1376,6 +1380,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
       parent.total = totalvalueprice;
 
       if (action == "all") result.push(parent);
+
       //console.log("parent: " + parent);
       //console.log("subParent: " + JSON.stringify(parent));
     }
@@ -2001,6 +2006,8 @@ router.post("/paid", verify, async (req, res) => {
       const encoded = req.body.href;
       console.log("encode url: " + encoded);
 
+      console.log(req.body);
+
       var modelCheck = req.query.doc;
       modelCheck = modelCheck.replace(/\s/g, "");
 
@@ -2049,7 +2056,7 @@ router.post("/paid", verify, async (req, res) => {
         }
       });
 
-      console.log("href: " + decodeURI(clientPaymentHistory.href));
+      //console.log("href: " + decodeURI(clientPaymentHistory.href));
       //need to make unique id combination different from _id to make update more easer
 
       var clientpaid = {
@@ -2126,24 +2133,28 @@ router.post("/paid", verify, async (req, res) => {
 
         var savedPaid = await paid.save(function (err) {
           if (err) return handleError(err);
-          createHistoryLog(
-            req.email,
-            "Create Payment",
-            "Add new Payment for client " +
-              clientPaymentHistory.fullname +
-              ", Receipt Create by Name of Client " +
-              req.body.first +
-              " " +
-              req.body.middle +
-              " " +
-              req.body.last,
-            req.id
-          );
           console.log("Success!");
           console.log("paid finished");
           // console.log(clientData["History"][clientPaymentHistory.language][clientPaymentHistory.docModel])
           // flagPaidSuccess = true;
         });
+
+        console.log("Create new payemnet")
+        console.log(clientpaid)
+
+        await createHistoryLog(
+          req.email,
+          "Create Payment",
+          "New Payment for client " +
+          clientPaymentHistory.fullname +
+            ", Receipt Create by Name " +
+            clientpaid["first"] +
+            " " +
+            clientpaid["middle"] +
+            " " +
+            clientpaid["last"] ,
+          req.id
+        );
 
         if(flagPaidSuccess)
         {
@@ -2179,20 +2190,7 @@ router.post("/paid", verify, async (req, res) => {
           { upsert: true },
           function (err, docs) {
             //res.json(docs);
-            console.log(docs);
-            createHistoryLog(
-              req.email,
-              "Create Payment",
-              "Add new Payment for client " +
-                clientPaymentHistory.fullname +
-                ",Receipt Create by Name of Client" +
-                req.body.first +
-                " " +
-                req.body.middle +
-                " " +
-                req.body.last,
-              req.id
-            );
+            // console.log(docs);
 
             console.log("Success!");
             console.log("paid finished");
@@ -2200,42 +2198,30 @@ router.post("/paid", verify, async (req, res) => {
             flagPaidSuccess = true;
             
           }
+
         );
 
-        if(flagPaidSuccess)
-        {
-          // console.log("dsafjkalksjdfklajsdkfljaskldfjaklsjdfklasdf");
-          // for(var i = 0; i < clientData[0][req.query.lang][modelCheck].length; i++)
-          // {
-          //   console.log(clientData[0][req.query.lang][modelCheck]);
-          //   if(clientData[0][req.query.lang][modelCheck] == docidQuery)
-          //   {
-          //     console.log(clientData[0][req.query.lang][modelCheck]);
-          //     delete clientData[0][req.query.lang][modelCheck];
-          //     console.log(clientData[0][req.query.lang][modelCheck]);
-          //   }
-          // }
-          // clientData[req.query.lang][modelCheck] = savedBirth._id;
-          // clientData["History"][langCheck][modelCheck].push(docid);
-          // console.log(clientData["History"][langCheck][modelCheck]);
-          // var savedClient = await clientData.save();
+        console.log(            req.body.name +
+          " " +
+          req.body.father +
+          " " +
+          req.body.surname);
 
-          // var savedClient = await Client.findByIdAndUpdate(
-          //   { _id: req.query.id },
-          //   { $pull: { "History" : { [req.query.lang] : { [modelCheck] : { "5eb86a1d7b0e3a792166fbe7"} }}} },
-          //   { multi: true }
-          // )  
 
-          // console.log(savedClient["History"][req.query.lang][modelCheck])
-        }
-        
-        // const paid = await Paid.findOneAndUpdate(
-        //   { _id: paidClientSelectedID },
-        //   { $push: query },
-        //   { upsert: true, new: true }
-        // );
 
-        //console.log("New Client Paid: " + paid[req.query.lang][modelCheck]);
+        await createHistoryLog(
+          req.email,
+          "Create Payment",
+          "Add new Payment for client " +
+            clientPaymentHistory.fullname +
+            ",Receipt Create by Name " +
+            req.body.name +
+            " " +
+            req.body.father +
+            " " +
+            req.body.surname,
+          req.id
+        );
       }
 
       res.send("success");
