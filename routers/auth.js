@@ -13,7 +13,7 @@ const {
 router.post("/register", async (req, res) => {
   var superKey = req.body["challenge"];
 
-  if (superKey == "123") {
+  if (superKey == "852456951753") {
   } else {
     return;
   }
@@ -37,6 +37,7 @@ router.post("/register", async (req, res) => {
     name: req.body.name,
     email: req.body.email,
     password: hashedPassword,
+    role: "SuperAdmin"
   });
 
   try {

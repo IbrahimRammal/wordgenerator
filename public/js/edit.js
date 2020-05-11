@@ -14,7 +14,7 @@ function getData() {
 
   var g = document.getElementById("client_list");
   var strClient = g.options[g.selectedIndex].value;
-  $("#paid").hide(paid);
+//   $("#paid").hide(paid);
   var selectedtext = "";
   //window.alert(strClient);
   // Grab the template
@@ -203,8 +203,8 @@ function getData() {
                         var href = fixtures["href"];
                         // console.log(href);
                         window.location = href;
-                        // // var paid = fixtures["paid"];
-                        // $("#panel").html(html);
+                        var paid = fixtures["paid"];
+                        $("#panel").html(paid);
                         // //$('#paid').html(paid);
                         // $("#card_label").html(args.data.language + " > " + args.data.docModel);
                     },
@@ -223,7 +223,7 @@ function getData() {
                 data: { type: args.data.language, template: args.data.docModel, client: args.data.client_id, docID: args.data._id },
                 success: function (fixtures) {
                     var html = fixtures["html"];
-                    var paid = fixtures["paid"];
+                    // var paid = fixtures["paid"];
                     $("#panel").html(html);
                     //$('#paid').html(paid);
                     $("#card_label").html(args.data.language + " > " + args.data.docModel);

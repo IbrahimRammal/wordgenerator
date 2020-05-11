@@ -218,6 +218,68 @@ router.post("/addclient", verify, async (req, res) => {
           WorkPermit: "",
           EmptyTemplate: "",
         },
+        History: {
+          Arabic: {
+            EmptyTemplate: [],
+          },
+          English: {
+            BirthCertificate: [],
+            Consenttotravel: [],
+            DeathCertificate: [],
+            DivorceCertificate: [],
+            Driverslicensecertificate: [],
+            PrivateDriverslicense: [],
+            FamilyExtract: [],
+            IDCard: [],
+            IndividualExtract: [],
+            MarriageCertificate: [],
+            MoFRegistration: [],
+            NSSFServiceCertificate: [],
+            Policerecord: [],
+            ResidenceCertificate: [],
+            ResidencyPermit: [],
+            WorkPermit: [],
+            EmptyTemplate: [],
+          },
+          Español: {
+            BirthCertificate: [],
+            Consenttotravel: [],
+            DeathCertificate: [],
+            DivorceCertificate: [],
+            Driverslicensecertificate: [],
+            PrivateDriverslicense: [],
+            FamilyExtract: [],
+            IDCard: [],
+            IndividualExtract: [],
+            MarriageCertificate: [],
+            MoFRegistration: [],
+            NSSFServiceCertificate: [],
+            Policerecord: [],
+            ResidenceCertificate: [],
+            ResidencyPermit: [],
+            WorkPermit: [],
+            EmptyTemplate: [],
+          },
+          Français: {
+            BirthCertificate: [],
+            Consenttotravel: [],
+            DeathCertificate: [],
+            DivorceCertificate: [],
+            Driverslicensecertificate: [],
+            PrivateDriverslicense: [],
+            FamilyExtract: [],
+            IDCard: [],
+            IndividualExtract: [],
+            MarriageCertificate: [],
+            MoFRegistration: [],
+            NSSFServiceCertificate: [],
+            Policerecord: [],
+            ResidenceCertificate: [],
+            ResidencyPermit: [],
+            WorkPermit: [],
+            EmptyTemplate: [],
+          },
+        },
       };
 
       const client = new Client(data);
@@ -264,306 +326,345 @@ router.post("/edit", verify, async (req, res) => {
           { _id: 0, fullname: 0, s0: 0, __v: 0 }
         );
 
-        var language = ["Arabic", "English", "Español", "Français"];
+        var language = ["English", "Arabic", "Español", "Français"];
 
         if (clientDocx != null) {
           // language.forEach((element) => {
           //console.log(clientDocx[0][element]);
           for (var i = 0; i < language.length; i++) {
-            var docLanguage = clientDocx[0][language[i]];
+            var docLanguage = clientDocx[0]["History"][language[i]];
+            
             for (const docModel in docLanguage) {
               var ObjectId = require("mongoose").Types.ObjectId;
-              if (ObjectId.isValid(docLanguage[docModel])) {
+              // console.log(docLanguage[docModel][0][0]);
+              if (docLanguage[docModel][0] != null && ObjectId.isValid(docLanguage[docModel][0][0])) {
                 console.log(docLanguage[docModel]);
                 if (docModel.includes("Birth")) {
-                  var docSaved = await Birth.find({
-                    _id: docLanguage[docModel],
-                  });
-                  console.log(docSaved);
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Birth Certificate",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await Birth.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    console.log("asdfdsfdf" + docLanguage[docModel]);
+                    console.log(docSaved);
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Birth Certificate",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("Divorce")) {
-                  var docSaved = await Divorce.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Divorce Certificate",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await Divorce.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Divorce Certificate",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("Death")) {
-                  var docSaved = await Death.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Death Certificate",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await Death.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Death Certificate",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("Marriage")) {
-                  var docSaved = await Marriage.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Marriage Certificate",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await Marriage.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Marriage Certificate",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("Work")) {
-                  var docSaved = await WPermit.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Work Permit",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await WPermit.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Work Permit",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("ID")) {
-                  var docSaved = await IDCard.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "ID Card",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await IDCard.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "ID Card",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("MoF")) {
-                  var docSaved = await MoF.find({ _id: docLanguage[docModel] });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "MoF Registration",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await MoF.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "MoF Registration",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("Residence")) {
-                  var docSaved = await Residence.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Residence Certificate",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await Residence.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Residence Certificate",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("PrivateDriver")) {
-                  var docSaved = await Private.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Private Driver's license",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await Private.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Private Driver's license",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("Police")) {
-                  var docSaved = await Police.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Police record",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await Police.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Police record",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("NSSF")) {
-                  var docSaved = await NSSF.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "NSSF Service Certificate",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await NSSF.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "NSSF Service Certificate",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("Individual")) {
-                  var docSaved = await Individual.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Individual Extract",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await Individual.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Individual Extract",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("Family")) {
-                  var docSaved = await Family.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Family Extract",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await Family.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Family Extract",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("Consent")) {
-                  var docSaved = await Consent.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Consent to travel",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await Consent.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Consent to travel",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("ResidencyPermit")) {
-                  var docSaved = await RPermit.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Residency Permit",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await RPermit.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Residency Permit",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("Driver")) {
-                  var docSaved = await Driver.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Driver's license certificate",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await Driver.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Driver's license certificate",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else if (docModel.includes("Empty")) {
-                  console.log("foundit");
-                  var docSaved = await ETemplate.find({
-                    _id: docLanguage[docModel],
-                  });
-                  result.push({
-                    _id: docLanguage[docModel],
-                    client_id: id,
-                    language: language[i],
-                    docModel: "Empty Template",
-                    created_at: docSaved[0].created_at,
-                    updated_at: docSaved[0].updated_at,
-                    createdBy: docSaved[0].user_created,
-                    updateddBy: docSaved[0].user_edit,
-                    note: docSaved[0].note,
-                    download: "DOWNLOAD",
-                    edit: "EDIT",
-                  });
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    console.log("foundit");
+                    var docSaved = await ETemplate.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Empty Template",
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                    });
+                  }
                 } else {
                 }
               }
@@ -577,7 +678,7 @@ router.post("/edit", verify, async (req, res) => {
 
         res.send(result);
       } catch (err) {
-        // console.log(err);
+        console.log(err);
       }
     }
   } catch (err) {
@@ -851,9 +952,11 @@ router.post("/deleteAfterDownload", verify, async function (req, res) {
       year: "numeric",
       month: "long",
       day: "numeric",
-      hour: 'numeric', minute: 'numeric', second: 'numeric', 
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
       hour12: false,
-      timeZone: "Asia/Beirut"
+      timeZone: "Asia/Beirut",
     };
 
     var datetime = "";
@@ -869,7 +972,9 @@ router.post("/deleteAfterDownload", verify, async function (req, res) {
         month: "long",
         hour12: false,
         timeZone: "Asia/Beirut",
-        hour: 'numeric', minute: 'numeric', second: 'numeric', 
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
       });
     } else if (language != null && language == "Español") {
       datetime = event.toLocaleDateString("es-GB", options);
@@ -1681,6 +1786,68 @@ router.post("/BatchData", verify, async (req, res) => {
             WorkPermit: "",
             EmptyTemplate: "",
           },
+          History: {
+            Arabic: {
+              EmptyTemplate: [],
+            },
+            English: {
+              BirthCertificate: [],
+              Consenttotravel: [],
+              DeathCertificate: [],
+              DivorceCertificate: [],
+              Driverslicensecertificate: [],
+              PrivateDriverslicense: [],
+              FamilyExtract: [],
+              IDCard: [],
+              IndividualExtract: [],
+              MarriageCertificate: [],
+              MoFRegistration: [],
+              NSSFServiceCertificate: [],
+              Policerecord: [],
+              ResidenceCertificate: [],
+              ResidencyPermit: [],
+              WorkPermit: [],
+              EmptyTemplate: [],
+            },
+            Español: {
+              BirthCertificate: [],
+              Consenttotravel: [],
+              DeathCertificate: [],
+              DivorceCertificate: [],
+              Driverslicensecertificate: [],
+              PrivateDriverslicense: [],
+              FamilyExtract: [],
+              IDCard: [],
+              IndividualExtract: [],
+              MarriageCertificate: [],
+              MoFRegistration: [],
+              NSSFServiceCertificate: [],
+              Policerecord: [],
+              ResidenceCertificate: [],
+              ResidencyPermit: [],
+              WorkPermit: [],
+              EmptyTemplate: [],
+            },
+            Français: {
+              BirthCertificate: [],
+              Consenttotravel: [],
+              DeathCertificate: [],
+              DivorceCertificate: [],
+              Driverslicensecertificate: [],
+              PrivateDriverslicense: [],
+              FamilyExtract: [],
+              IDCard: [],
+              IndividualExtract: [],
+              MarriageCertificate: [],
+              MoFRegistration: [],
+              NSSFServiceCertificate: [],
+              Policerecord: [],
+              ResidenceCertificate: [],
+              ResidencyPermit: [],
+              WorkPermit: [],
+              EmptyTemplate: [],
+            },
+          },
         };
 
         // let promise = new Promise((resolve, reject) => {
@@ -1837,12 +2004,14 @@ router.post("/paid", verify, async (req, res) => {
       var modelCheck = req.query.doc;
       modelCheck = modelCheck.replace(/\s/g, "");
 
+      var docidQuery = req.query.docid;
+
       //create object form model
       var clientPaymentHistory;
       //var objPayment = {}
 
       //Get Client doc infromation
-      await Client.findById(req.query.id, function (err, user) {
+      var clientData = await Client.findById(req.query.id, function (err, user) {
         if (err) {
           console.log(err);
         } else {
@@ -1953,8 +2122,9 @@ router.post("/paid", verify, async (req, res) => {
         //var subdoc = paid.payment.push[0];
         // { _id: '501d86090d371bab2c0341c5', name: 'Liesl' }
         //subdoc.isNew; // true
+        var flagPaidSuccess = false;
 
-        paid.save(function (err) {
+        var savedPaid = await paid.save(function (err) {
           if (err) return handleError(err);
           createHistoryLog(
             req.email,
@@ -1970,7 +2140,21 @@ router.post("/paid", verify, async (req, res) => {
             req.id
           );
           console.log("Success!");
+          console.log("paid finished");
+          // console.log(clientData["History"][clientPaymentHistory.language][clientPaymentHistory.docModel])
+          // flagPaidSuccess = true;
         });
+
+        if(flagPaidSuccess)
+        {
+          // console.log("paid finished");
+          // console.log(clientData[0]["History"][clientPaymentHistory.language][clientPaymentHistory.docModel])
+          // clientData[0]["History"][clientPaymentHistory.language][clientPaymentHistory.docModel]; //.shift();
+          // await clientData.save();
+
+          //var savedClient = await clientData.save();
+          //console.log(savedClient);
+        }
 
         console.log(paid);
 
@@ -1987,8 +2171,9 @@ router.post("/paid", verify, async (req, res) => {
         // console.log("query: " + query[criteria]);
 
         //{_id: id, "language.modelCheck.docid": {$nin: [clientpaid.docid] }},
+        var flagPaidSuccess = false;
 
-        Paid.updateOne(
+        var savedPaid = await Paid.updateOne(
           { _id: paidClientSelectedID },
           { $push: { payment: clientPaymentHistory } },
           { upsert: true },
@@ -2008,9 +2193,42 @@ router.post("/paid", verify, async (req, res) => {
                 req.body.last,
               req.id
             );
+
+            console.log("Success!");
+            console.log("paid finished");
+
+            flagPaidSuccess = true;
+            
           }
         );
 
+        if(flagPaidSuccess)
+        {
+          // console.log("dsafjkalksjdfklajsdkfljaskldfjaklsjdfklasdf");
+          // for(var i = 0; i < clientData[0][req.query.lang][modelCheck].length; i++)
+          // {
+          //   console.log(clientData[0][req.query.lang][modelCheck]);
+          //   if(clientData[0][req.query.lang][modelCheck] == docidQuery)
+          //   {
+          //     console.log(clientData[0][req.query.lang][modelCheck]);
+          //     delete clientData[0][req.query.lang][modelCheck];
+          //     console.log(clientData[0][req.query.lang][modelCheck]);
+          //   }
+          // }
+          // clientData[req.query.lang][modelCheck] = savedBirth._id;
+          // clientData["History"][langCheck][modelCheck].push(docid);
+          // console.log(clientData["History"][langCheck][modelCheck]);
+          // var savedClient = await clientData.save();
+
+          // var savedClient = await Client.findByIdAndUpdate(
+          //   { _id: req.query.id },
+          //   { $pull: { "History" : { [req.query.lang] : { [modelCheck] : { "5eb86a1d7b0e3a792166fbe7"} }}} },
+          //   { multi: true }
+          // )  
+
+          // console.log(savedClient["History"][req.query.lang][modelCheck])
+        }
+        
         // const paid = await Paid.findOneAndUpdate(
         //   { _id: paidClientSelectedID },
         //   { $push: query },
@@ -2027,6 +2245,17 @@ router.post("/paid", verify, async (req, res) => {
     res.send("error");
   }
 });
+
+function removeA(arr) {
+  var what, a = arguments, L = a.length, ax;
+  while (L > 1 && arr.length) {
+      what = a[--L];
+      while ((ax= arr.indexOf(what)) !== -1) {
+          arr.splice(ax, 1);
+      }
+  }
+  return arr;
+}
 
 router.post("/data", verify, async (req, res) => {
   try {
@@ -2251,6 +2480,8 @@ router.post("/data", verify, async (req, res) => {
             console.log("saved birth: " + savedBirth._id);
 
             clientData[langCheck][modelCheck] = savedBirth._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
+            console.log(clientData["History"][langCheck][modelCheck]);
             await clientData.save();
           }
         } else if (modelCheck.includes("Divorce")) {
@@ -2275,6 +2506,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(savedDivorce._id);
 
             clientData[langCheck][modelCheck] = savedDivorce._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("Death")) {
@@ -2299,6 +2531,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(savedDeath._id);
 
             clientData[langCheck][modelCheck] = savedDeath._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("Marriage")) {
@@ -2323,6 +2556,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(savedMarriage._id);
 
             clientData[langCheck][modelCheck] = savedMarriage._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("Work")) {
@@ -2347,6 +2581,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(savedwork._id);
 
             clientData[langCheck][modelCheck] = savedwork._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("ResidencyPermit")) {
@@ -2371,6 +2606,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(savedresidencypermit._id);
 
             clientData[langCheck][modelCheck] = savedresidencypermit._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("Card")) {
@@ -2395,6 +2631,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(cardid._id);
 
             clientData[langCheck][modelCheck] = cardid._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("MoF")) {
@@ -2419,6 +2656,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(mofid._id);
 
             clientData[langCheck][modelCheck] = mofid._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("Residence")) {
@@ -2443,6 +2681,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(residenceid._id);
 
             clientData[langCheck][modelCheck] = residenceid._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("PrivateDriver")) {
@@ -2463,10 +2702,12 @@ router.post("/data", verify, async (req, res) => {
             const private = new Private(data);
             const privateid = await private.save();
             docid = privateid._id;
-
+            
             console.log(privateid._id);
+            console.log("PrivateDriverslicense");
 
-            clientData[langCheck][modelCheck] = privateid._id;
+            clientData[langCheck]["PrivateDriverslicense"] = privateid._id;
+            clientData["History"][langCheck]["PrivateDriverslicense"].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("Police")) {
@@ -2491,6 +2732,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(policeid._id);
 
             clientData[langCheck][modelCheck] = policeid._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("NSSF")) {
@@ -2515,6 +2757,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(nssfid._id);
 
             clientData[langCheck][modelCheck] = nssfid._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("Individual")) {
@@ -2539,6 +2782,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(individualid._id);
 
             clientData[langCheck][modelCheck] = individualid._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("Family")) {
@@ -2563,6 +2807,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(familyid._id);
 
             clientData[langCheck][modelCheck] = familyid._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("Consent")) {
@@ -2587,6 +2832,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(consentid._id);
 
             clientData[langCheck][modelCheck] = consentid._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("Driver")) {
@@ -2610,7 +2856,8 @@ router.post("/data", verify, async (req, res) => {
 
             console.log(driverid._id);
 
-            clientData[langCheck][modelCheck] = driverid._id;
+            clientData[langCheck]["Driverslicensecertificate"] = driverid._id;
+            clientData["History"][langCheck]["Driverslicensecertificate"].push(docid);
             await clientData.save();
           }
         } else if (modelCheck.includes("Empty")) {
@@ -2637,6 +2884,7 @@ router.post("/data", verify, async (req, res) => {
             console.log(emptyid._id);
 
             clientData[langCheck][modelCheck] = emptyid._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
         } else {
@@ -2686,7 +2934,7 @@ router.post("/data", verify, async (req, res) => {
             const paid = paid_template({
               obj: data,
               clientname: result,
-              docid: docid,
+              docid: docid != "" ? docid : docID,
             });
 
             // console.log(html)
@@ -2745,10 +2993,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Birth Certificate",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2763,10 +3011,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Divorce Certificate",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2781,10 +3029,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Death Certificate",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2799,10 +3047,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Marriage Certificate",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2817,10 +3065,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Work Permit",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2835,10 +3083,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "ID Card",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2851,10 +3099,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "MoF Registration",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2869,10 +3117,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Residence Certificate",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2887,10 +3135,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Private Driver's license",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2905,10 +3153,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Police record",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2923,10 +3171,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "NSSF Service Certificate",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2941,10 +3189,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Individual Extract",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2959,10 +3207,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Family Extract",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2977,10 +3225,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Consent to travel",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -2995,10 +3243,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Residency Permit",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3013,10 +3261,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Driver's license certificate",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3033,10 +3281,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Empty Template",
-                  created_at: docLanguage["created_at"],
-                  updated_at: docLanguage["updated_at"],
-                  createdBy: docLanguage["user_created"],
-                  updateddBy: docLanguage["user_edit"],
+                  created_at: docLanguage[0]["created_at"],
+                  updated_at: docLanguage[0]["updated_at"],
+                  createdBy: docLanguage[0]["user_created"],
+                  updateddBy: docLanguage[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",

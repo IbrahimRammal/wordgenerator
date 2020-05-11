@@ -24,8 +24,8 @@ function InsertClient () {
         // console.log(params)
       },
       success: function (fixtures) {
-        console.log('success')
-        console.log(fixtures['html'])
+        //console.log('success')
+       // console.log(fixtures['html'])
         if (fixtures) {
           // var e = document.getElementById("client_list");
   
@@ -57,7 +57,7 @@ function InsertClient () {
       },
   
       failure: function (data) {
-        console.log(data)
+       // console.log(data)
         alert('error')
         result = 'False'
       }
@@ -84,8 +84,8 @@ function InsertClient () {
         // console.log(params)
       },
       success: function (fixtures) {
-        console.log('success')
-        console.log(fixtures['html'])
+        //console.log('success')
+        //console.log(fixtures['html'])
         if (fixtures) {
           // var e = document.getElementById("client_list");
   
@@ -129,7 +129,7 @@ function InsertClient () {
       },
   
       failure: function (data) {
-        console.log(data)
+        //console.log(data)
         alert('error')
       }
     })
