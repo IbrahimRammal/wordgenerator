@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('header'); -%>
+    <!-- Latest compiled and minified CSS -->
+
+    <link href="../../resources/material.css" rel="stylesheet" />
+
+    <!-- <script src="https://cdn.syncfusion.com/ej2/dist/ej2.min.js" type="text/javascript"></script> -->
+    <script src="../../resources/ej2.min.js" type="text/javascript"></script>
+
+    <style></style>
+  </head>
+
+  <body id="page-top">
+    <%- include('bodycreate'); -%>
+    <!-- End of Topbar -->
+
+    <!-- Begin Page Content -->
+    <!-- Begin Page Content -->
+
+    <h5
+      style="
+        margin: auto;
+        width: 30%;
+        /* border: 3px solid green; */
+        padding: 5px;
+      "
+    >
+      Document Edit <span class="badge badge-primary">Form</span>
+    </h5>
+
+    <div class="container-fluid">
+      <div class="container">
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <select
+                class="mdb-select md-form"
+                searchable="Search here.."
+                id="client_list"
+              >
+                <option value="" disabled selected>Client Select ...</option>
+                <% if(locals.clientname && typeof clientname != 'undefined') {
+                %> <% for (var x = 0; x < clientname.length; x++) { %>
+                <option value="<%= clientname[x]['_id'] %>"
+                  ><%= clientname[x]['fullname'] %></option
+                >
+                <% } %> <%}%>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xl-3 col-md-6 mb-4">
+            <button
+              type="button"
+              id="load"
+              name="load"
+              class="btn btn-outline-primary"
+              onclick="getData()"
+            >
+              Loading
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <div class="control-section">
+                  <div id="contentgrid" class="content-wrapper">
+                    <div id="Grid"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div
+            class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+          >
+            <h6 class="m-0 font-weight-bold text-primary" id="card_label">
+              Document Card
+            </h6>
+            <div class="dropdown no-arrow">
+              <a
+                class="dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                aria-labelledby="dropdownMenuLink"
+                x-placement="bottom-end"
+                style="
+                  position: absolute;
+                  will-change: transform;
+                  top: 0px;
+                  left: 0px;
+                  transform: translate3d(17px, 18px, 0px);
+                "
+              >
+                <div class="dropdown-header">Dropdown Header:</div>
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </div>
+          </div>
+          <!-- Card Body -->
+
+          <div class="card-body">
+            <div id="panel"></div>
+          </div>
+        </div>
+
+
+      </div>
+
+      <br />
+    </div>
+    <!-- End of Main Continer -->
+
+    <!-- End of Main Content -->
+    <%- include('body2'); -%>
+
+    <script src="../../js/editpaid.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+      /* When the user clicks on the button,
+                toggle between hiding and showing the dropdown content */
+      function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+      }
+
+
+
+      function filterFunction() {
+        var input, filter, ul, li, a, i;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        div = document.getElementById("myDropdown");
+        a = div.getElementsByTagName("a");
+        for (i = 0; i < a.length; i++) {
+          txtValue = a[i].textContent || a[i].innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            a[i].style.display = "";
+          } else {
+            a[i].style.display = "none";
+          }
+        }
+      }
+
+      // Material Select Initialization
+      $(document).ready(function () {
+        $(".mdb-select").materialSelect();
+      });
+
+      $(document).ready(function () {
+        $(".dropdown-toggle").dropdown();
+      });
+
+      $(".mdb-select").on("contentChanged", function () {
+        $(this).material_select();
+      });
+
+    </script>
+  </body>
+</html>

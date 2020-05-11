@@ -256,6 +256,68 @@ const clientSchema = mongoose.Schema({
     EmptyTemplate: {
       type: 'String'
     }
+  },
+  History: {
+    Arabic: {
+      EmptyTemplate: {type : "Array"}
+    },
+    English: {
+      BirthCertificate: {type : "Array"},
+      Consenttotravel: {type : "Array"},
+      DeathCertificate: {type : "Array"},
+      DivorceCertificate: {type : "Array"},
+      Driverslicensecertificate: {type : "Array"},
+      PrivateDriverslicense: {type : "Array"},
+      FamilyExtract: {type : "Array"},
+      IDCard: {type : "Array"},
+      IndividualExtract: {type : "Array"},
+      MarriageCertificate: {type : "Array"},
+      MoFRegistration: {type : "Array"},
+      NSSFServiceCertificate: {type : "Array"},
+      Policerecord: {type : "Array"},
+      ResidenceCertificate: {type : "Array"},
+      ResidencyPermit: {type : "Array"},
+      WorkPermit: {type : "Array"},
+      EmptyTemplate: {type : "Array"}
+    },
+    Español: {
+      BirthCertificate: {type : "Array"},
+      Consenttotravel: {type : "Array"},
+      DeathCertificate: {type : "Array"},
+      DivorceCertificate: {type : "Array"},
+      Driverslicensecertificate: {type : "Array"},
+      PrivateDriverslicense: {type : "Array"},
+      FamilyExtract: {type : "Array"},
+      IDCard: {type : "Array"},
+      IndividualExtract: {type : "Array"},
+      MarriageCertificate: {type : "Array"},
+      MoFRegistration: {type : "Array"},
+      NSSFServiceCertificate: {type : "Array"},
+      Policerecord: {type : "Array"},
+      ResidenceCertificate: {type : "Array"},
+      ResidencyPermit: {type : "Array"},
+      WorkPermit: {type : "Array"},
+      EmptyTemplate: {type : "Array"}
+    },
+    Français: {
+      BirthCertificate: {type : "Array"},
+      Consenttotravel: {type : "Array"},
+      DeathCertificate: {type : "Array"},
+      DivorceCertificate: {type : "Array"},
+      Driverslicensecertificate: {type : "Array"},
+      PrivateDriverslicense: {type : "Array"},
+      FamilyExtract: {type : "Array"},
+      IDCard: {type : "Array"},
+      IndividualExtract: {type : "Array"},
+      MarriageCertificate: {type : "Array"},
+      MoFRegistration: {type : "Array"},
+      NSSFServiceCertificate: {type : "Array"},
+      Policerecord: {type : "Array"},
+      ResidenceCertificate: {type : "Array"},
+      ResidencyPermit: {type : "Array"},
+      WorkPermit: {type : "Array"},
+      EmptyTemplate: {type : "Array"}
+    }
   }
 })
 

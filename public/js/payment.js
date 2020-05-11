@@ -268,6 +268,7 @@ $(document).ready(function () {
             // format: "C",
             textAlign: "Right",
             allowEditing: false,
+            visible: false,
             //commands: [{ buttonOption: { content: 'Download', cssClass: 'e-flat', click: onClick } }] //, click: onClick
             // visible: false
             // type: "number",
@@ -350,24 +351,25 @@ $(document).ready(function () {
           //console.log(args.data.href);
           //console.log(args.currentCell.outerText);
           if (args.currentCell.outerText == "download") {
-            var urlDownload = args.data.href;
-            var currentDate = new Intl.DateTimeFormat("fr-CA", {
-              year: "numeric",
-              month: "2-digit",
-              day: "2-digit",
-            }).format(Date.now());
-            window.location =
-              args.data.href +
-              "&pass=" +
-              args.data.fullname +
-              "_" +
-              args.data.category +
-              "_" +
-              args.data.language +
-              "_" +
-              args.data.docModel +
-              "_" +
-              currentDate;
+            $.ajax({
+              url: "/api/posts/deleteAfterDownload",
+              type: "POST",
+              dataType: "json",
+              cache: true,
+              data: { language: args.data.language, docModel: args.data.docModel, clientname: args.data.fullname, docID: args.data.docid },
+              success: function (fixtures) {
+                  var href = fixtures["href"];
+                  // console.log(href);
+                  window.location = href;
+                  // // var paid = fixtures["paid"];
+                  // $("#panel").html(html);
+                  // //$('#paid').html(paid);
+                  // $("#card_label").html(args.data.language + " > " + args.data.docModel);
+              },
+              error: function (jqXHR, textStatus, err) {
+                //   alert("text status " + textStatus + ", err " + err);
+              },
+            });
           }
         },
       },
