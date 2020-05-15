@@ -175,6 +175,7 @@
             type: request_method,
             data: form_data,
             success: function (result) {
+
                 if (result == "success") {
                     toastr["success"]("Payment succefully inserted", "Payment saved")
                     $("#paidsubmit").prop("disabled", true);
@@ -185,7 +186,7 @@
                 else {
                     toastr["error"]("Payment not inserted", "Payment error")
                 }
-                //$("#download").html(result);
+                // toastr["success"]("Document successfully inserted", "Document saved")
                 // $("#download").show();
                 // $("#download").attr("href", result['link']);
                 // $('#paid').html(result['paid']);

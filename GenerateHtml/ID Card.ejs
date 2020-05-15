@@ -178,8 +178,13 @@
             type: request_method,
             data: form_data,
             success: function (result) {
+                if(result == "error")
+                {
+                    toastr["error"]("Document not inserted", "Document Save error")
+                    return;
+                }
                 //alert(result);
-                //$("#download").html(result);
+                toastr["success"]("Document successfully inserted", "Document saved")
                 $("#download").show();
                 $("#download").attr("href", result['link']);
                 $('#paid').show();

@@ -297,7 +297,7 @@ router.post("/addclient", verify, async (req, res) => {
           // rawdata = result
           let dataReturn = result;
 
-          console.log(result);
+          // console.log(result);
 
           res.send({ html: dataReturn });
         } else {
@@ -674,7 +674,7 @@ router.post("/edit", verify, async (req, res) => {
         } else {
         }
         // console.log(html)
-        console.log(result);
+        // console.log(result);
 
         res.send(result);
       } catch (err) {
@@ -1286,6 +1286,8 @@ router.post("/Payment/GetData", verify, async (req, res) => {
             remain: user["payment"][j].remain,
             paid: user["payment"][j].paid,
             Download: "download",
+            createTime: user["payment"][j].createTime,
+            updateTime: user["payment"][j].updateTime
           };
 
           result.push(subParent);
@@ -1339,6 +1341,8 @@ router.post("/Payment/GetData", verify, async (req, res) => {
           total: query[i]["payment"][j].total,
           remains: query[i]["payment"][j].remains,
           paid: query[i]["payment"][j].paid,
+          createTime: query[i]["payment"][j].createTime,
+          updateTime: query[i]["payment"][j].updateTime
         };
 
         unit = j + 1;
@@ -1360,7 +1364,9 @@ router.post("/Payment/GetData", verify, async (req, res) => {
           result.push(subParent);
           console.log("result: " + JSON.stringify(result));
         }
-      } catch(err){}
+      } catch(err){
+        console.log(err)
+      }
 
         //console.log("subParent: " + JSON.stringify(subParent));
       }
@@ -1385,7 +1391,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
       //console.log("subParent: " + JSON.stringify(parent));
     }
 
-    //console.log("result: " + result);
+    console.log("result: " + result);
     //console.log("result: " + JSON.stringify(result));
     res.send(result);
   } catch (err) {
@@ -1682,7 +1688,7 @@ router.post("/GetData", verify, async (req, res) => {
     result.push(temp);
   }
 
-  console.log(result);
+  // console.log(result);
   res.send(result);
 });
 
@@ -2935,6 +2941,7 @@ router.post("/data", verify, async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+    res.send("error");
     // res.status(500).send(err)
   }
 });
@@ -2951,7 +2958,7 @@ router.post("/editpaid", verify, async (req, res) => {
       try {
         var clientDocx = await Paid.find({ _id: id });
 
-        console.log(clientDocx);
+        // console.log(clientDocx);
 
         var language = ["Arabic", "English", "Español", "Français"];
 
@@ -2960,16 +2967,17 @@ router.post("/editpaid", verify, async (req, res) => {
           //console.log(clientDocx[0][element]);
           // user["payment"].length
           for (var i = 0; i < clientDocx[0]["payment"].length; i++) {
+            try{
             var docLanguage = clientDocx[0]["payment"][i];
             // for (const docModel in clientDocx.payment[i]) {
             var ObjectId = require("mongoose").Types.ObjectId;
-            if (ObjectId.isValid(docLanguage["docid"])) {
-              console.log(docLanguage["docid"]);
+            if (docLanguage != null && ObjectId.isValid(docLanguage["docid"])) {
+              // console.log(docLanguage["docid"]);
               if (docLanguage["docModel"].includes("Birth")) {
                 var docSaved = await Birth.find({
                   _id: docLanguage["docid"],
                 });
-                console.log(docSaved);
+                // console.log(docSaved);
                 // updated_at
                 // user_created
                 // user_edit
@@ -2997,10 +3005,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Divorce Certificate",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3015,10 +3023,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Death Certificate",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3033,10 +3041,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Marriage Certificate",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3051,10 +3059,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Work Permit",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3069,10 +3077,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "ID Card",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3085,10 +3093,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "MoF Registration",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3103,10 +3111,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Residence Certificate",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3121,10 +3129,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Private Driver's license",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3139,10 +3147,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Police record",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3157,10 +3165,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "NSSF Service Certificate",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3175,10 +3183,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Individual Extract",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3193,10 +3201,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Family Extract",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3211,10 +3219,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Consent to travel",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3229,10 +3237,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Residency Permit",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3247,10 +3255,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Driver's license certificate",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3267,10 +3275,10 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Empty Template",
-                  created_at: docLanguage[0]["created_at"],
-                  updated_at: docLanguage[0]["updated_at"],
-                  createdBy: docLanguage[0]["user_created"],
-                  updateddBy: docLanguage[0]["user_edit"],
+                  created_at: docSaved[0]["created_at"],
+                  updated_at: docSaved[0]["updated_at"],
+                  createdBy: docSaved[0]["user_created"],
+                  updateddBy: docSaved[0]["user_edit"],
                   note: "",
                   href: docLanguage["href"],
                   download: "DOWNLOAD",
@@ -3279,13 +3287,14 @@ router.post("/editpaid", verify, async (req, res) => {
               } else {
               }
             }
-            // }
+            }
+            catch(err){console.log(err);}
           }
           // });
         } else {
         }
         // console.log(html)
-        console.log(result);
+        // console.log(result);
 
         res.send(result);
       } catch (err) {

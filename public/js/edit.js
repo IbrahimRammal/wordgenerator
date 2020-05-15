@@ -20,6 +20,7 @@ function getData() {
   // Grab the template
   if (g.options[g.selectedIndex].text != "Client Select ...") {
       selectedtext = g.options[g.selectedIndex].text;
+      $('#load').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
     $.ajax({
       url: "/api/posts/edit",
       type: "POST",
@@ -28,7 +29,10 @@ function getData() {
       data: { client: strClient },
       success: function (result) {
         //console.log(result);
-
+        $("#panel").html("");
+        $('#paid').html("");
+        $("#card_label").html("Document Card");
+        $('#load').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;').toggleClass("disabled");
         ej.grids.Grid.Inject(
           ej.grids.PdfExport,
           ej.grids.ExcelExport,
@@ -258,8 +262,8 @@ function getData() {
         //   $("#card_label").html(strType + " > " + strTemplate);
       },
       error: function (jqXHR, textStatus, err) {
-        toastr["error"]("Payment not inserted", "Payment error");
-        alert("text status " + textStatus + ", err " + err);
+        $('#load').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;').toggleClass("disabled");
+        toastr["error"]("Loading Data Faild", "Loading error");
       },
     });
   } else {

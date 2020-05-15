@@ -43,9 +43,12 @@
                     
 
                 </div>
-                <div class="form-group">
-                  <input type="email" name = "email" class="form-control form-control-user" id="exampleInputEmail" value="<%= email %>" placeholder="Email Address">
-                </div>
+                <% if(locals.role && typeof role != 'undefined' && role == "SuperAdmin") { %>
+                  <div class="form-group">
+                    <input type="email" name = "email" class="form-control form-control-user" id="exampleInputEmail" value="<%= email %>" placeholder="Email Address">
+                  </div>
+                <%}%>
+
                 <div class="form-group">
                     <input type="password" name = "password_old" class="form-control form-control-user" id="oldpass" placeholder="Your Password">
                   </div>
@@ -67,7 +70,7 @@
                 <a class="small" href="forgot-password.html">Forgot Password?</a>
               </div>
               <div class="text-center">
-                <a class="small" href="/api/actions/create">Return to Home Page!</a>
+                <a class="small" href="/">Return to Home Page!</a>
               </div>
             </div>
           </div>
