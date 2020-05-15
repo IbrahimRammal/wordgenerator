@@ -89,9 +89,25 @@
               class="btn btn-outline-primary"
               onclick="getData()"
             >
-              Loading
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </button>
           </div>
+          <!--Big blue-->
+          <!--Big blue-->
+          <div id="spinner" style="display: none;" class="preloader-wrapper big crazy">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+          
         </div>
 
         <div class="card shadow mb-4">
@@ -167,45 +183,6 @@
     <script type="text/javascript">
       /* When the user clicks on the button,
                 toggle between hiding and showing the dropdown content */
-      function myFunction() {
-        document.getElementById("myDropdown").classList.toggle("show");
-      }
-
-      // $("#client_list").on('change', function () {
-      //   var lan = $(this).val();
-      //   if (lan != null && lan != "Language Select ...") {
-      //     $.ajax({
-      //       url: '/api/posts/clientselector',
-      //       type: 'POST',
-      //       dataType: "json",
-      //       cache: true,
-      //       data: { type: lan },
-      //       success: function (fixtures) {
-      //         var newOptions = fixtures['html'];
-      //         var select = $('#tem_list');
-      //         var selectedOption = 'Document Select ...';
-
-      //         if (select.prop) {
-      //           var options = select.prop('options');
-      //         }
-      //         else {
-      //           var options = select.attr('options');
-      //         }
-      //         $('option', select).remove();
-
-      //         $.each(newOptions, function (val, text) {
-      //           options[options.length] = new Option(text, val);
-      //         });
-      //         //val.options.length = 0;
-
-      //         //select.val(selectedOption);
-      //       },
-      //       error: function (jqXHR, textStatus, err) {
-      //         alert('text status ' + textStatus + ', err ' + err)
-      //       }
-      //     })
-      //   }
-      // });
 
       $("#lan_list").on("change", function () {
         $("#tem_list").empty();
@@ -257,6 +234,7 @@
       });
 
       function getData() {
+
         var e = document.getElementById("lan_list");
         var f = document.getElementById("tem_list");
         var g = document.getElementById("client_list");
@@ -271,6 +249,13 @@
           strTemplate != "Document Select ..." &&
           g.options[g.selectedIndex].text != "Client Select ..."
         ) {
+
+          $('#load').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+          // $("#spinner").show();
+          $("#spinner").toggleClass( "active");
+          $("#panel").html("");
+          $('#paid').html("");
+          $("#card_label").html("Document Card");
           $.ajax({
             url: "/api/posts/template",
             type: "POST",
@@ -278,6 +263,9 @@
             cache: true,
             data: { type: strType, template: strTemplate, client: strClient },
             success: function (fixtures) {
+              // $("#spinner").hide();
+              $('#load').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;').toggleClass("disabled");
+              $( "#spinner" ).toggleClass( "active");
               var html = fixtures["html"];
               var paid = fixtures["paid"];
               $("#panel").html(html);
@@ -285,65 +273,22 @@
               $("#card_label").html(strType + " > " + strTemplate);
             },
             error: function (jqXHR, textStatus, err) {
-              alert("text status " + textStatus + ", err " + err);
+              $('#load').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;').toggleClass("disabled");
+              $( "#spinner" ).toggleClass( "active");
+              $("#paid").hide(paid);
+              toastr["error"]("Loading Template Error", "Load error")
+              //alert("text status " + textStatus + ", err " + err);
             },
           });
         } else {
+          $("#paid").hide(paid);
           alert("Please pick a language and document, client !");
         }
       }
 
-      // $("#my_form").submit(function (event) {
-      //   event.preventDefault(); //prevent default action
-      //   var post_url = $(this).attr("action"); //get form action url
-      //   var form_data = $(this).serialize(); //Encode form elements for submission
-
-      //   $.post(post_url, form_data, function (response) {
-      //     //$("#server-results").html(response);
-      //     alert('done!!');
-      //   });
-
-      // $("#my_form").on("submit", function (event) {
-      //   event.preventDefault(); //prevent default action
-      //   var post_url = $(this).attr("action"); //get form action url
-      //   var form_data = $(this).serialize(); //Encode form elements for submission
-
-      //   $.post(post_url, formData).complete(function () {
-      //     console.log("Success");
-      //   });
+      // $('#load').click(function() {
+      //   $('#load').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
       // });
-
-      // $("#my_form").submit(function (event) {
-      //   event.preventDefault(); //prevent default action
-      //   var post_url = $(this).attr("action"); //get form action url
-      //   var request_method = $(this).attr("method"); //get form GET/POST method
-      //   var form_data = $(this).serialize(); //Encode form elements for submission
-
-      //   $.ajax({
-      //     url: post_url,
-      //     type: request_method,
-      //     data: form_data,
-      //     success: function (result) {
-      //       $("#server-results").html(response);
-      //     }
-      //   });
-      // });
-
-      function filterFunction() {
-        var input, filter, ul, li, a, i;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        div = document.getElementById("myDropdown");
-        a = div.getElementsByTagName("a");
-        for (i = 0; i < a.length; i++) {
-          txtValue = a[i].textContent || a[i].innerText;
-          if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            a[i].style.display = "";
-          } else {
-            a[i].style.display = "none";
-          }
-        }
-      }
 
       // Material Select Initialization
       $(document).ready(function () {

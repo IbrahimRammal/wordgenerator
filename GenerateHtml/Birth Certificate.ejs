@@ -407,23 +407,23 @@
 <!-- <script src="paidscript.js"></script> -->
 
 <script>
-    toastr.options = {
-        "closeButton": false,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": false,
-        "positionClass": "md-toast-top-center",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": 300,
-        "hideDuration": 1000,
-        "timeOut": 2500,
-        "extendedTimeOut": 1000,
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut"
-    }
+    // toastr.options = {
+    //     "closeButton": false,
+    //     "debug": false,
+    //     "newestOnTop": false,
+    //     "progressBar": false,
+    //     "positionClass": "md-toast-top-center",
+    //     "preventDuplicates": false,
+    //     "onclick": null,
+    //     "showDuration": 300,
+    //     "hideDuration": 1000,
+    //     "timeOut": 2500,
+    //     "extendedTimeOut": 1000,
+    //     "showEasing": "swing",
+    //     "hideEasing": "linear",
+    //     "showMethod": "fadeIn",
+    //     "hideMethod": "fadeOut"
+    // }
 
     $("#my_form").submit(function (event) {
         event.preventDefault(); //prevent default action 
@@ -436,8 +436,12 @@
             type: request_method,
             data: form_data,
             success: function (result) {
-                //alert(result);
-                //$("#download").html(result);
+                if(result == "error")
+                {
+                    toastr["error"]("Document not inserted", "Document Save error")
+                    return;
+                }
+
                 toastr["success"]("Document successfully inserted", "Document saved")
                 $("#download").show();
                 $("#download").attr("href", result['link']);

@@ -108,15 +108,18 @@ router.get("/config", verify, async (req, res) => {
     // req.session.
     name: req.name,
     email: req.email,
+    role: req.role
   });
 });
 
 router.post("/config", verify, async (req, res) => {
   //passwordConf password oldpass
 
+  console.log(req.email)
+  var email = req.role == "SuperAdmin" ? req.body.email : req.email; 
   var myobject = {
     name: req.body.name,
-    email: req.body.email,
+    email: email,
     password: req.body.password,
   };
   console.log(myobject);
@@ -130,8 +133,8 @@ router.post("/config", verify, async (req, res) => {
   console.log(req.email);
 
   //Checking if the email is already in the database
-  if (req.email != req.body.email) {
-    const modifyUser = await User.findOne({ email: req.body.email });
+  if (req.email != email) {
+    const modifyUser = await User.findOne({ email: email });
     if (modifyUser) {
       return res.status(400).send("Email already exists"); //Email or password is wrong
     }
@@ -152,7 +155,7 @@ router.post("/config", verify, async (req, res) => {
       {
         $set: {
           name: req.body.name,
-          email: req.body.email,
+          email: email,
           password: hashedPassword,
         },
       },
@@ -173,12 +176,13 @@ router.post("/config", verify, async (req, res) => {
 
         console.log(result);
 
-        res.render("create", {
-          // req.session.
-          name: req.body.name,
-          email: req.body.email,
-          clientname: result,
-        });
+        res.redirect("/api/actions/dashboard");
+        // res.render("/api/posts/dashboard", {
+        //   // req.session.
+        //   name: req.body.name,
+        //   email: email,
+        //   clientname: result,
+        // });
       } else {
         console.log(err);
       }

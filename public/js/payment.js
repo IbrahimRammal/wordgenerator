@@ -36,14 +36,6 @@ $(document).ready(function () {
       removeUrl: hostUrl + "Payment/BatchData",
     });
 
-    // var dataManagerChild = new ej.data.DataManager({
-    //   json: JSON.parse(JSON.stringify(userData)),
-    //   adaptor: new ej.data.RemoteSaveAdaptor(), //remote save adaptor
-    //   insertUrl: hostUrl + "Payment/BatchData",
-    //   updateUrl: hostUrl + "Payment/BatchData",
-    //   removeUrl: hostUrl + "Payment/BatchData",
-    // });
-
     var dataChild = new ej.data.DataManager({
       url: hostUrl + "Payment/GetData?action=sub&id=",
       adaptor: new ej.data.UrlAdaptor(),
@@ -148,7 +140,7 @@ $(document).ready(function () {
           newRowPosition: "Top",
           showDeleteConfirmDialog: true,
         },
-        toolbar: ["Add", "Edit", "Delete", "Update", "Cancel"],
+        toolbar: ["Edit", "Delete"],
         columns: [
           {
             field: "combineid",
@@ -191,7 +183,7 @@ $(document).ready(function () {
             headerText: "type",
             textAlign: "Left",
             validationRules: { required: true },
-            width: 100,
+            width: 80,
             edit: {
               create: function () {
                 categoryElem = document.createElement("input");
@@ -230,12 +222,26 @@ $(document).ready(function () {
             headerText: "language",
             textAlign: "Left",
             validationRules: { required: true },
-            width: 100,
+            width: 80,
             allowEditing: false,
           },
           {
             field: "docModel",
             headerText: "docModel",
+            width: 120,
+            textAlign: "Left",
+            allowEditing: false,
+          },
+          {
+            field: "createTime",
+            headerText: "CreateTime",
+            width: 85,
+            textAlign: "Left",
+            allowEditing: false,
+          },
+          {
+            field: "updateTime",
+            headerText: "UpdateTime",
             width: 85,
             textAlign: "Left",
             allowEditing: false,
@@ -289,7 +295,6 @@ $(document).ready(function () {
           if (args.requestType === "beginEdit" || args.requestType === "add") {
             for (var i = 0; i < this.columns.length; i++) {
               if (
-                this.columns[i].field == "Download" ||
                 this.columns[i].field == "fullname" ||
                 this.columns[i].field == "docModel" ||
                 this.columns[i].field == "language"
@@ -326,16 +331,13 @@ $(document).ready(function () {
             dialog.header =
               args.requestType === "beginEdit" ? "Edit Record" : "New Record";
             //Change header remains
-            console.log(args);
+            // console.log(args);
             for (var i = 0; i < this.columns.length; i++) {
               if (
-                this.columns[i].field == "Download" ||
                 this.columns[i].field == "fullname" ||
                 this.columns[i].field == "docModel" ||
                 this.columns[i].field == "language"
               ) {
-                this.columns[i].visible = true;
-              } else if (this.columns[i].field == "fullname") {
                 this.columns[i].visible = true;
               }
             }
@@ -377,31 +379,11 @@ $(document).ready(function () {
     });
     grid.appendTo("#Grid");
 
-    // function onClick(args)
-    // {
-    //   var urlDownload = args.data.href;
-    //   var currentDate = new Intl.DateTimeFormat("fr-CA", {
-    //     year: "numeric",
-    //     month: "2-digit",
-    //     day: "2-digit",
-    //   }).format(Date.now());
-    //   window.location =
-    //     args.data.href +
-    //     "&pass=" +
-    //     args.data.fullname +
-    //     "_" +
-    //     args.data.category +
-    //     "_" +
-    //     args.data.language +
-    //     "_" +
-    //     args.data.docModel +
-    //     "_" +
-    //     currentDate;
-    // }
-
     function currencyFormatter(field, data, column) {
       //console.log(column);
       //console.log(field);
+      if(data[field] == null || data[field] == "")
+      return "0 LBP";
       return data[field] + " LBP";
     }
 
