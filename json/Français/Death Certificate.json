@@ -48,7 +48,7 @@
     "s1": {
         "caption": "Prénom et Nom du Décédé",
         "f1": {
-            "caption": "Prénom et nom of the deceased",
+            "caption": "Prénom et nom du décédé",
             "value": ""
         },
         "f8": {
@@ -169,12 +169,12 @@
     "s2": {
         "caption": "Cause du Décès",
         "f1": {
-            "caption": "Prénom et nom",
+            "caption": "",
             "value": ""
         },
         "f2": {
-            "caption": "Section 1 : The disease or condition directly leading to death :",
-            "value": "The disease or condition directly leading to death :"
+            "caption": "Cause du Décès :",
+            "value": ""
         },
         "f3": {
             "caption": "a-",
@@ -225,7 +225,7 @@
             "value": ""
         },
         "f2": {
-            "caption": "Address",
+            "caption": "Adresse",
             "value": ""
         }
     },
@@ -240,7 +240,7 @@
             "value": ""
         },
         "f3": {
-            "caption": "Address",
+            "caption": "Adresse",
             "value": ""
         },
         "f4": {
@@ -263,7 +263,7 @@
             "value": ""
         },
         "f3": {
-            "caption": "Address",
+            "caption": "Adresse",
             "value": ""
         },
         "f4": {
@@ -307,7 +307,7 @@
     "s12": {
         "caption": "Le Maire",
         "f1": {
-            "caption": "The Maire de la localité de",
+            "caption": "Le maire de la localité de",
             "value": ""
         },
         "f2": {

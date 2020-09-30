@@ -162,9 +162,9 @@
         }
     },
     "s3": {
-        "caption": "Permisión religiosa ",
+        "caption": "Permisión religiosa",
         "f1": {
-            "caption": "Autoridad religiosa permitiendo el divorcio ",
+            "caption": "Autoridad religiosa permitiendo el divorcio",
             "value": ""
         },
         "f2": {
@@ -183,7 +183,7 @@
             "value": ""
         },
         "f2": {
-            "caption": "decide confirmar el divorcio",
+            "caption": "El divorcio ha sido celebrado en",
             "value": ""
         }
     },
@@ -270,7 +270,7 @@
             "value": ""
         },
         "f4": {
-            "caption": "nombre y apellido del alcalde",
+            "caption": "Nombre y apellido de la madre",
             "value": ""
         }
     },
@@ -297,7 +297,7 @@
         }
     },
     "s10": {
-        "caption": "Este certificato ha sido presentado al registro de estado civil",
+        "caption": "Este certificado",
         "f1": {
             "caption": "Lugar",
             "value": ""
@@ -310,11 +310,11 @@
     "s13": {
         "caption": "Secretario Judicial del tribunal religioso",
         "f1": {
-            "caption": "Secretario Judicial del tribunal religioso: Nombre y lugar",
+            "caption": "Secretario Judicial del tribunal religioso de",
             "value": ""
         },
         "f2": {
-            "caption": "Secretario Name",
+            "caption": "Nombre",
             "value": ""
         }
     },

@@ -55,7 +55,7 @@
             "value": ""
         },
         "f2": {
-            "caption": "Prénom",
+            "caption": "Nom",
             "value": ""
         },
         "f3": {
@@ -121,11 +121,11 @@
             "value": ""
         },
         "f14": {
-            "caption": "localité de la Officier",
+            "caption": "Localité de l’officier de l’état civil",
             "value": ""
         },
         "f15": {
-            "caption": "Nom de la Officier",
+            "caption": "Nom de l’officier de l’état civil",
             "value": ""
         }
     },

@@ -2360,7 +2360,7 @@ router.post("/data", verify, async (req, res) => {
         docArray["o1"] = "0";
 
         if (req.query.lang != null && req.query.lang == "Français") {
-          if (originalFlag) docArray["o1"] = "Véritable copie de l'original";
+          if (originalFlag) docArray["o1"] = "Copie conforme à l’original";
           datetime = event.toLocaleDateString("fr-GB", options);
         } else if (req.query.lang != null && req.query.lang == "Arabic") {
           datetime = event.toLocaleDateString("ar-EG", options);
@@ -3410,7 +3410,7 @@ router.post("/download", verify, async (req, res) => {
         docArray["o1"] = "0";
 
         if (req.query.lang != null && req.query.lang == "Français") {
-          if (originalFlag) docArray["o1"] = "Véritable copie de l'original";
+          if (originalFlag) docArray["o1"] = "Copie conforme à l’original";
           datetime = event.toLocaleDateString("fr-GB", options);
         } else if (req.query.lang != null && req.query.lang == "Arabic") {
           datetime = event.toLocaleDateString("ar-EG", options);

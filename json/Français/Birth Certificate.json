@@ -81,7 +81,7 @@
                 "value": ""
             },
             "s2": {
-                "caption": "Address",
+                "caption": "Adresse",
                 "value": ""
             },
             "s3": {
@@ -101,13 +101,13 @@
     "s2": {
         "caption": "Le père ",
         "f1": {
-            "caption": "Prénom et Prénom",
+            "caption": "Prénom et Nom",
             "s1": {
                 "caption": "Prénom",
                 "value": ""
             },
             "s2": {
-                "caption": "Prénom",
+                "caption": "Nom",
                 "value": ""
             }
         },
@@ -131,13 +131,13 @@
     "s3": {
         "caption": "La mère ",
         "f1": {
-            "caption": "Prénom et Prénom",
+            "caption": "Prénom et Nom",
             "s1": {
                 "caption": "Prénom",
                 "value": ""
             },
             "s2": {
-                "caption": "Prénom",
+                "caption": "Nom",
                 "value": ""
             }
         },
@@ -165,13 +165,13 @@
     "s4": {
         "caption": "Demandeur de l’acte",
         "f1": {
-            "caption": "Prénom et Prénom",
+            "caption": "Prénom et Nom",
             "s1": {
                 "caption": "Prénom",
                 "value": ""
             },
             "s2": {
-                "caption": "Prénom",
+                "caption": "Nom",
                 "value": ""
             }
         },
@@ -180,7 +180,7 @@
             "value": ""
         },
         "f3": {
-            "caption": "Address",
+            "caption": "Adresse",
             "value": ""
         },
         "f4": {
@@ -221,7 +221,7 @@
             "value": ""
         },
         "f3": {
-            "caption": "Address",
+            "caption": "Adresse",
             "value": ""
         },
         "f4": {
@@ -244,7 +244,7 @@
             "value": ""
         },
         "f3": {
-            "caption": "Address",
+            "caption": "Adresse",
             "value": ""
         },
         "f4": {
@@ -271,7 +271,7 @@
             "value": ""
         },
         "f4": {
-            "caption": "Prénom et nom of The Maire",
+            "caption": "Prénom et nom du maire",
             "value": ""
         },
         "f5": {

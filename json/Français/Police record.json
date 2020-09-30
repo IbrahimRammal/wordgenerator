@@ -51,7 +51,7 @@
             "value": ""
         },
         "f1": {
-            "caption": "Délivré en",
+            "caption": "Délivré à",
             "value": ""
         },
         "f2": {
@@ -125,14 +125,14 @@
         },
         "f11": {
             "caption": "Pas de Condamnation ou Condamnation",
-            "value": "Pas de Condamnation ou Condamnation"
+            "value": ""
         },
         "f12": {
             "caption": "Publié le",
             "value": ""
         },
         "f13": {
-            "caption": "LE CHEF DU BUREAU DU CASIER JUDICIAIRE: rang et nom",
+            "caption": "LE CHEF DU BUREAU DU CASIER JUDICIAIRE",
             "value": ""
         },
         "f14": {
