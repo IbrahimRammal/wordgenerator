@@ -125,14 +125,14 @@
         },
         "f11": {
             "caption": "No Condenas o Condenas",
-            "value": "No Condenas o Condenas"
+            "value": ""
         },
         "f12": {
             "caption": "fecha de entrega",
             "value": ""
         },
         "f13": {
-            "caption": "Jefe de la Oficina Central de Registros Judiciales: rango y nombre",
+            "caption": "Jefe de la Oficina Central de Registros Judiciales: Nombre",
             "value": ""
         },
         "f14": {

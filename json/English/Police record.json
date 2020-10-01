@@ -51,7 +51,7 @@
             "value": ""
         },
         "f1": {
-            "caption": "Deliverd in",
+            "caption": "Delivered in",
             "value": ""
         },
         "f2": {
@@ -125,10 +125,10 @@
         },
         "f11": {
             "caption": "No Convictions or Convictions",
-            "value": "No Convictions or Convictions"
+            "value": ""
         },
         "f12": {
-            "caption": "Deliverd on",
+            "caption": "Delivered on",
             "value": ""
         },
         "f13": {

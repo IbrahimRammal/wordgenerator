@@ -321,7 +321,7 @@
         }
     },
     "s10": {
-        "caption": "This certificate is submitted to the Bureau of Personal Status on",
+        "caption": "This certificate is submitted to the Bureau of Personal Status in:",
         "f1": {
             "caption": "Place",
             "value": ""
@@ -334,11 +334,11 @@
     "s13": {
         "caption": "Civil Status Officer",
         "f1": {
-            "caption": "Locality",
+            "caption": "Officer Locality",
             "value": ""
         },
         "f2": {
-            "caption": "Full Name",
+            "caption": "Officer Name",
             "value": ""
         },
         "f3": {

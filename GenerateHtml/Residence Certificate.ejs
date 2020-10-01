@@ -11,10 +11,7 @@
                 <input type="text" class="form-control" name="s1_f2" id="s1f2" placeholder="<%= obj.s1.f2.caption %>"
                     value="<%= obj.s1.f2.value %>">
             </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f3" id="s1f3" placeholder="<%= obj.s1.f3.caption %>"
-                    value="<%= obj.s1.f3.value %>">
-            </div>
+
             <div class="form-group col">
                 <input type="text" class="form-control" name="s1_f4" id="s1f4" placeholder="<%= obj.s1.f4.caption %>"
                     value="<%= obj.s1.f4.value %>">
@@ -115,8 +112,8 @@
                 </datalist>
                 <% } else if (obj.type == "Français") {%>
                 <datalist id="sex">
-                    <option>mâle</option>
-                    <option>femelle</option>
+                    <option>Masculin</option>
+                    <option>Féminin</option>
                 </datalist>
                 <% } else if (obj.type == "Español") {%>
                 <datalist id="sex">
@@ -245,6 +242,10 @@
     <div class="form-group">
         <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s4.caption %></h8>
         <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f3" id="s1f3" placeholder="<%= obj.s1.f3.caption %>"
+                    value="<%= obj.s1.f3.value %>">
+            </div>
             <div class="form-group col">
                 <input type="text" class="form-control" name="s4_f1" id="s4f1" placeholder="<%= obj.s4.f1.caption %>"
                     value="<%= obj.s4.f1.value %>">

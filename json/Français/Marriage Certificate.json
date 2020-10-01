@@ -82,7 +82,7 @@
             "value": ""
         },
         "f4": {
-            "caption": "Prénom et Nom de la Mère",
+            "caption": "Prénom et nom de la mère",
             "value": ""
         },
         "f5": {
@@ -146,7 +146,7 @@
             "value": ""
         },
         "f4": {
-            "caption": "Prénom et Nom de la Mère",
+            "caption": "Prénom et nom de la mère",
             "value": ""
         },
         "f5": {
@@ -174,9 +174,9 @@
         }
     },
     "s3": {
-        "caption": "Religious Permission",
+        "caption": "Autorité légale",
         "f1": {
-            "caption": "Religious Authority allowing the contract",
+            "caption": "Autorité certifiant le contrat",
             "value": ""
         },
         "f2": {
@@ -219,13 +219,13 @@
         }
     },
     "s6": {
-        "caption": "Certification de L'Autorité Religieuse: Titre",
+        "caption": "Certification de l’autorité religieuse",
         "f1": {
             "caption": "Date",
             "value": ""
         },
         "f2": {
-            "caption": "du juge du tribunal religieux",
+            "caption": "Juge du tribunal religieux de",
             "value": ""
         },
         "f3": {
@@ -248,7 +248,7 @@
             "value": ""
         },
         "f3": {
-            "caption": "Address",
+            "caption": "Adresse",
             "value": ""
         },
         "f4": {
@@ -267,7 +267,7 @@
             "value": ""
         },
         "f3": {
-            "caption": "Address",
+            "caption": "Adresse",
             "value": ""
         },
         "f4": {
@@ -278,7 +278,7 @@
     "s9": {
         "caption": "Le Maire",
         "f5": {
-            "caption": "Maire de la localité de",
+            "caption": "",
             "value": ""
         },
         "f4": {

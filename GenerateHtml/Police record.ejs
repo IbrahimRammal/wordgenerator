@@ -10,20 +10,12 @@
                 <input type="text" class="form-control" id="s1f1" name="s1_f1" placeholder="<%= obj.s1.f1.caption %>"
                     value="<%= obj.s1.f1.value %>">
             </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" id="s1f2" name="s1_f2" placeholder="<%= obj.s1.f2.caption %>"
-                    value="<%= obj.s1.f2.value %>">
-            </div>
         </div>
     </div>
     <div class="form-group">
         <div class="form-row">
             <div class="form-group col">
-                <!-- <select class="form-control" name="s1_f8" id="s1_f8">
-                    <option selected><%= obj.s1.f8.value %></option>
-                    <option>male</option>
-                    <option>female</option>
-                </select> -->
+
 
                 <input class="form-control awesomplete" list="sex" name="s1_f8" id="s1f8"
                     placeholder="<%= obj.s1.f8.caption %>" value="<%= obj.s1.f8.value %>">
@@ -117,11 +109,7 @@
                     value="<%= obj.s1.f10.value %>">
             </div>
             <div class="form-group col">
-                <!-- <select class="form-control" name="s1_f11" id="s1_f11">
-                    <option selected><%= obj.s1.f11.value %></option>
-                    <option>No Convictions</option>
-                    <option>Convictions</option>
-                </select> -->
+
 
                 <input class="form-control awesomplete" list="recorde" name="s1_f11" id="s1_f11"
                     placeholder="<%= obj.s1.f11.caption %>" value="<%= obj.s1.f11.value %>">
@@ -142,11 +130,27 @@
                 </datalist>
                 <% } else {%>
                 <% }%>
-                <!-- <input type="text" class="form-control" name="s1_f11" id="s1f11" placeholder="<%= obj.s1.f11.caption %>"
-                    value="<%= obj.s1.f11.value %>"> -->
+
             </div>
         </div>
     </div>
+
+
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <div class="form-row">
+
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f2" name="s1_f2" placeholder="<%= obj.s1.f2.caption %>"
+                    value="<%= obj.s1.f2.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f22" name="s1_f22" placeholder="<%= obj.s1.f22.caption %>"
+                    value="<%= obj.s1.f22.value %>">
+            </div>
+        </div>
+    </div>
+
     <hr class="sidebar-divider">
     <div class="form-group">
         <div class="form-row">
