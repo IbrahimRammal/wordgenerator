@@ -6,6 +6,14 @@ $(document).ready(function () {
     { categoryName: "Income", categoryId: "2" },
   ];
 
+  var typeObj;
+
+  var type = [
+    { typeName: "PRONTO", typeId: "1" },
+    { typeName: "SWORN LEGAL", typeId: "2" },
+    { typeName: "UNOFFICIAL", typeId: "3" }
+  ];
+
   ej.grids.Grid.Inject(ej.grids.PdfExport,ej.grids.ExcelExport,ej.grids.Sort, ej.grids.Group, ej.grids.Search, ej.grids.Edit, ej.grids.Toolbar,ej.grids.Page, ej.grids.Filter);
 
   // var hostUrl = '/api/posts/clientview';
@@ -42,6 +50,8 @@ $(document).ready(function () {
       allowMultiSorting: true,
       // allowExcelExport: true,
       allowPdfExport: true,
+      allowTextWrap: true,
+      textWrapSettings: { wrapMode: 'Content' },
       // searchSettings: { fields: ['fullname'] , operator: 'contains', key: 'test', ignoreCase: true},
     //   allowTextWrap: true,
     //   textWrapSettings: { wrapMode: "Content" },
@@ -128,6 +138,53 @@ $(document).ready(function () {
           //   validationRules: { required: true },
         },
         {
+          field: "type",
+          headerText: "type",
+          textAlign: "Left",
+          width: 100,
+          validationRules: { required: true },
+          edit: {
+            create: function () {
+              typeElem = document.createElement("inputq");
+              return typeElem;
+            },
+            read: function () {
+              return typeObj.text;
+            },
+            destroy: function () {
+              typeObj.destroy();
+            },
+            write: function (args) {
+              var initialValue = args.rowData.type;
+              console.log(initialValue);
+
+              typeObj = new ej.dropdowns.DropDownList({
+                dataSource: type,
+                fields: { value: "typeId", text: "typeName" },
+                change: function () {
+                  //stateObj.enabled = true;
+                  // var tempQuery = new Query().where(
+                  //   "categoryId",
+                  //   "equal",
+                  //   categoryObj.value
+                  // );
+                  //stateObj.query = tempQuery;
+                  //stateObj.text = null;
+                  //stateObj.dataBind();
+                },
+                DefaultValue: initialValue,
+                placeholder: "Select a type",
+                // itemTemplate: initialValue,
+                // valueTemplate: initialValue,
+
+                floatLabelType: "Never",
+              });
+              typeObj.appendTo(typeElem);
+            },
+          },
+          //   validationRules: { required: true },
+        },
+        {
           field: "paid",
           headerText: "paid",
           textAlign: "Left",
@@ -151,7 +208,7 @@ $(document).ready(function () {
           field: "created_at",
           headerText: "created_at",
           textAlign: "Left",
-          width: 140,
+          width: 120,
           //   visible: false,
           allowEditing: false,
           type: "datetime",
@@ -161,7 +218,7 @@ $(document).ready(function () {
           field: "updated_at",
           headerText: "updated_at",
           textAlign: "Left",
-          width: 140,
+          width: 120,
           //   visible: false,
           allowEditing: false,
           type: "datetime",

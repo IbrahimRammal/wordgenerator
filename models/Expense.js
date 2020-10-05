@@ -51,6 +51,9 @@ const expenseSchema = mongoose.Schema({
   category: {
     type: "String",
   },
+  type: {
+    type: "String",
+  },
   paid: {
     type: "Number",
   },

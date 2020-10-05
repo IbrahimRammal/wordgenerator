@@ -1056,6 +1056,7 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
       receipt.fullname = isUndefinedOrNull(a.fullname) ? "" : a.fullname;
       receipt.phone = isUndefinedOrNull(a.phone) ? "" : a.phone;
       receipt.category = isUndefinedOrNull(a.category) ? "" : a.category;
+      receipt.type = isUndefinedOrNull(a.type) ? "" : a.type;
       receipt.paid = isUndefinedOrNull(a.paid) ? "" : a.paid;
       receipt.total = isUndefinedOrNull(a.total) ? "" : a.total;
       receipt.created_at = now;
@@ -1095,6 +1096,9 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
           receiptRecored.category = isUndefinedOrNull(a.category)
             ? ""
             : a.category;
+          receiptRecored.type = isUndefinedOrNull(a.type)
+            ? ""
+            : a.type;
           receiptRecored.paid = isUndefinedOrNull(a.paid) ? 0 : a.paid;
           receiptRecored.total = isUndefinedOrNull(a.total) ? 0 : a.total;
           receiptRecored.paymentMode = isUndefinedOrNull(a.paymentMode)

@@ -193,10 +193,23 @@ router.get("/expense", verify, async (req, res) => {
   let totalExpense = 0;
   let totalIncome = 0;
 
+  let prontoExpense = 0;
+  let unofficalExpense = 0;
+  let swornExpense = 0;
+  let prontoIncome = 0;
+  let unofficalIncome = 0;
+  let swornIncome = 0;
+
   let expense = {
     expenses: 0,
     income: 0,
     totalAmountSum: 0,
+    prontoExpense: 0,
+    unofficalExpense: 0,
+    swornExpense: 0,
+    prontoIncome: 0,
+    unofficalIncome: 0,
+    swornIncome: 0
   };
 
   for (var j = 0; j < query.length; j++) {
@@ -205,16 +218,38 @@ router.get("/expense", verify, async (req, res) => {
 
     if (
       query[j]["category"] != null &&
-      query[j]["category"].includes("Expenses")
+      query[j]["category"].includes("Expenses") &&
+      query[j]["type"] != null
     ) {
       console.log("expense");
       totalExpense = totalExpense + total;
+      console.log("Type json object " + query[j]["type"]);
+      if(query[j]["type"] == "PRONTO")
+      {
+        console.log("Type json object " + query[j]["type"]);
+        prontoExpense = prontoExpense + total;
+      } else if(query[j]["type"] == "SWORN LEGA"){
+        swornExpense = swornExpense + total;
+      } else if(query[j]["type"] == "UNOFFICIAL"){
+        unofficalExpense = unofficalExpense + total;
+      } else {}
     } else if (
       query[j]["category"] != null &&
       query[j]["category"].includes("Income")
     ) {
       totalIncome = totalIncome + query[j].paid;
       console.log("income");
+      console.log("Type json object" + query[j]["type"]);
+      console.log("Type jsossdsddsdsn object" + query[j]["type"]);
+      if(query[j]["type"] == "PRONTO")
+      {
+        console.log("Type jsossdsddsdsn object" + query[j]["type"]);
+        prontoIncome = prontoIncome + query[j].paid;
+      } else if(query[j]["type"] == "SWORN LEGAL"){
+        swornIncome = swornIncome + query[j].paid;
+      } else if(query[j]["type"] == "UNOFFICIAL"){
+        unofficalIncome = unofficalIncome + query[j].paid;
+      } else {}
     } else {
       console.log("asdfljaslkdf" + query[j]["category"]);
     }
@@ -222,9 +257,14 @@ router.get("/expense", verify, async (req, res) => {
 
   expense.expenses = totalExpense;
   expense.income = totalIncome;
+  expense.prontoExpense = prontoExpense;
+  expense.swornExpense = swornExpense;
+  expense.unofficalExpense = unofficalExpense;
+  expense.prontoIncome = prontoIncome;
+  expense.swornIncome = swornIncome;
+  expense.unofficalIncome = unofficalIncome;
 
-  console.log("Data income expense :  " + expense.income);
-  console.log("Data income expense :  " + expense.expenses);
+  console.log("Expnense json object" + expense.swornIncome);
   //after finish loop parent json
 
   req.keep = "true";
