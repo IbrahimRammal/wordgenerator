@@ -183,7 +183,7 @@ router.get("/dashboard", verify, async (req, res) => {
           pronto = pronto + 1;
         } else if (query[i]["payment"][j].category.includes("Sworn lega")) {
           sworn = sworn + 1;
-        } else if (query[i]["payment"][j].category.includes("non legal")) {
+        } else if (query[i]["payment"][j].category.includes("Unofficial")) {
           nonlegal = nonlegal + 1;
         } else {
         }
