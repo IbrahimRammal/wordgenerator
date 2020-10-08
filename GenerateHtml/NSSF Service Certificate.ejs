@@ -64,31 +64,57 @@
         </div>
     </div>
     <% for (var i = 0; i < obj.s2.clients.length; i++) { %>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_clients_num_<%= i %>" id="s2clentsnum<%= i %>"
-                    placeholder="No. of Establishment">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_clients_establishment_<%= i %>"
-                    id="s2clientsestablishment<%= i %>" placeholder="Name of Establishment">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_clients_emp_<%= i %>" id="s2clientsemp<%= i %>"
-                    placeholder="Date of Employment">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_clients_ter_<%= i %>" id="s2clientster<%= i %>"
-                    placeholder="Date of Termination
-                    ">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s2_clients_note_<%= i %>" id="s2clientsnote<%= i %>"
-                    placeholder="note">
+        <%if (obj.type == "English") { %>
+        <div class="form-group">
+            <div class="form-row">
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s2_clients_num_<%= i %>" id="s2clentsnum<%= i %>"
+                        placeholder="No. of Establishment">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s2_clients_establishment_<%= i %>"
+                        id="s2clientsestablishment<%= i %>" placeholder="Name of Establishment">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s2_clients_emp_<%= i %>" id="s2clientsemp<%= i %>"
+                        placeholder="Date of Employment">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s2_clients_ter_<%= i %>" id="s2clientster<%= i %>"
+                        placeholder="Date of Termination">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s2_clients_note_<%= i %>" id="s2clientsnote<%= i %>"
+                        placeholder="note">
+                </div>
             </div>
         </div>
-    </div>
+        <% } else {%>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_clients_num_<%= i %>" id="s2clentsnum<%= i %>"
+                            placeholder="Numéro de la Société">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_clients_establishment_<%= i %>"
+                            id="s2clientsestablishment<%= i %>" placeholder="Nom de la société">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_clients_emp_<%= i %>" id="s2clientsemp<%= i %>"
+                            placeholder="Date d’emploi">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_clients_ter_<%= i %>" id="s2clientster<%= i %>"
+                            placeholder="Date d’abandon">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_clients_note_<%= i %>" id="s2clientsnote<%= i %>"
+                            placeholder="Observations">
+                    </div>
+                </div>
+            </div>
+        <% } %>
     <% } %>
     <%if (obj.original == "0") { %>
     <div class="form-check">

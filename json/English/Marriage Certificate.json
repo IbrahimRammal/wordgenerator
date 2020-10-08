@@ -321,13 +321,13 @@
         }
     },
     "s10": {
-        "caption": "This certificate is submitted to the Bureau of Personal Status in:",
+        "caption": "This certificate is submitted to the Bureau of Personal Status:",
         "f1": {
-            "caption": "Place",
+            "caption": "In Place",
             "value": ""
         },
         "f2": {
-            "caption": "Date",
+            "caption": "On Date",
             "value": ""
         }
     },
