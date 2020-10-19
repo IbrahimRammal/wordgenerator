@@ -27,6 +27,9 @@ const ETemplate = require("../models/EmptyTemplate");
 const Client = require("../models/Clients");
 
 const PIUSA = require("../models/ProntoInvoiceinUSA");
+const PILBD = require("../models/ProntoInvoiceinLBP");
+const SWORNI = require("../models/SwornTranslationInvoice");
+
 //const dateFormat = require("dateformat");
 var PizZip = require("pizzip");
 var Docxtemplater = require("docxtemplater");
@@ -913,7 +916,7 @@ router.post("/datainvoice", verify, async (req, res) => {
         console.log("Begain");
         let rawdata = fs.readFileSync(path, "utf-8");
         let data = JSON.parse(rawdata);
-        let docArray = { clients: [], users: [], job: [] }; // sar fe mwskleh bel array fams:[]
+        let docArray = { clients: [], users: [], job: [], jobs: [] }; // sar fe mwskleh bel array fams:[]
         let jsonObj = [];
 
         //Search all filed had been submit when get to the paid form break from this loop and then make another keys's
@@ -961,6 +964,41 @@ router.post("/datainvoice", verify, async (req, res) => {
                   unitp: req.body["s3_job_unitp_" + i],
                   wcount: req.body["s3_job_wcount_" + i],
                   t: req.body["s3_job_t_" + i]
+                });
+              }
+            }
+          } else{}
+        }
+
+        if (data.hasOwnProperty("s3")) {
+          if (data.s3.hasOwnProperty("jobs")) {
+            for (var i = 0; i < data.s3.jobs.length; i++) {
+              if (!isEmptyOrSpaces(req.body["s3_jobs_pro_" + i])) {
+                data.s3.jobs[i].pro = req.body["s3_jobs_pro_" + i];
+                data.s3.jobs[i].stype =
+                  req.body["s3_jobs_stype_" + i];
+                  
+                data.s3.jobs[i].jn = req.body["s3_jobs_jn_" + i];
+                data.s3.jobs[i].slan = req.body["s3_jobs_slan_" + i];
+                data.s3.jobs[i].tlan = req.body["s3_jobs_tlan_" + i];
+                data.s3.jobs[i].unit = req.body["s3_jobs_unit_" + i];
+
+                data.s3.jobs[i].unitp = req.body["s3_jobs_unitp_" + i];
+                data.s3.jobs[i].nunit = req.body["s3_jobs_nunit_" + i];
+                data.s3.jobs[i].t = req.body["s3_jobs_t_" + i];
+
+                totalPayment += parseFloat(req.body["s3_jobs_t_" + i]);
+
+                docArray.jobs.push({
+                  jn : req.body["s3_jobs_jn_" + i],
+                  pro: req.body["s3_jobs_pro_" + i],
+                  stype: req.body["s3_jobs_stype_" + i],
+                  slan: req.body["s3_jobs_slan_" + i],
+                  tlan: req.body["s3_jobs_tlan_" + i],
+                  unit: req.body["s3_jobs_unit_" + i],
+                  unitp: req.body["s3_jobs_unitp_" + i],
+                  nunit: req.body["s3_jobs_nunit_" + i],
+                  t: req.body["s3_jobs_t_" + i]
                 });
               }
             }
@@ -1068,6 +1106,9 @@ router.post("/datainvoice", verify, async (req, res) => {
 
         data["docArray"] = docArray;
 
+
+        //console.log(data["docArray"])
+
         var docid = "";
         var ObjectId = require("mongoose").Types.ObjectId;
         var email = req.email;
@@ -1108,13 +1149,9 @@ router.post("/datainvoice", verify, async (req, res) => {
             const savedPiusa = await piusa.save();
             docid = savedPiusa._id;
 
-            console.log("saved birth: " + savedPiusa._id);
-
-            
-
             clientInvoiceHistory.docid = docid;
             
-            console.log(clientInvoiceHistory)
+            //console.log(clientInvoiceHistory)
 
             var savedPaid = await Paid.updateOne(
               { _id: id },
@@ -1122,10 +1159,64 @@ router.post("/datainvoice", verify, async (req, res) => {
               { upsert: true, new: true  }
             );
           }
-        } else if (modelCheck.includes("Divorce")) {
-       
-        } else if (modelCheck.includes("Death")) {
-         
+        } else if (modelCheck.includes("ProntoInvoiceinLBP")) {
+          if (ObjectId.isValid(docID)) {
+            data["user_edit"] = email;
+            console.log("Update doc by ID " + docID);
+            const pilbd = await PILBD.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                // console.log(doc.docArray)
+              }
+            );
+          } else {
+            data["user_created"] = email;
+            //console.log(data)
+            const pilbd = new PILBD(data);
+            const savedPilbd = await pilbd.save();
+            docid = savedPilbd._id;
+            clientInvoiceHistory.docid = docid;
+            
+            //console.log(clientInvoiceHistory)
+
+            var savedPaid = await Paid.updateOne(
+              { _id: id },
+              { $push: { invoice: clientInvoiceHistory } },
+              { upsert: true, new: true  }
+            );
+          } 
+        } else if (modelCheck.includes("SwornTranslationInvoice")) {
+          if (ObjectId.isValid(docID)) {
+            data["user_edit"] = email;
+            console.log("Update doc by ID " + docID);
+            const sworni = await SWORNI.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                // console.log(doc.docArray)
+              }
+            );
+          } else {
+            data["user_created"] = email;
+            //console.log(data)
+            const sworni = new SWORNI(data);
+            const savedSworni = await sworni.save();
+            docid = savedSworni._id;
+            clientInvoiceHistory.docid = docid;
+            
+            //console.log(clientInvoiceHistory)
+
+            var savedPaid = await Paid.updateOne(
+              { _id: id },
+              { $push: { invoice: clientInvoiceHistory } },
+              { upsert: true, new: true  }
+            );
+          }
         } else {
         }
 
@@ -1190,77 +1281,77 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
 
     var query;
 
-    if (req.body.action == "update") {
-      console.log(req.body.value._id);
+    // if (req.body.action == "update") {
+    //   console.log(req.body.value._id);
 
-      var dummyData = await Paid.updateOne(
-        {
-          _id: req.body.value._id,
-          "invoice._id": req.body.value.invoiceid,
-        },
-        {
-          $set: {
-            "invoice.$.category": req.body.value.category,
-            "invoice.$.total": req.body.value.total,
-            "invoice.$.paid": req.body.value.paid,
-          },
-        },
-        function (error, updatedData) {
-          if (error) {
-            // return res.status(400).send(error);
-          }
+    //   var dummyData = await Paid.updateOne(
+    //     {
+    //       _id: req.body.value._id,
+    //       "invoice._id": req.body.value.invoiceid,
+    //     },
+    //     {
+    //       $set: {
+    //         "invoice.$.category": req.body.value.category,
+    //         "invoice.$.total": req.body.value.total,
+    //         "invoice.$.paid": req.body.value.paid,
+    //       },
+    //     },
+    //     function (error, updatedData) {
+    //       if (error) {
+    //         // return res.status(400).send(error);
+    //       }
 
-          console.log(updatedData);
-          //return res.status(200).send(updatedData);
-        }
-      );
+    //       console.log(updatedData);
+    //       //return res.status(200).send(updatedData);
+    //     }
+    //   );
 
-      await createHistoryLog(
-        req.email,
-        "Update Invoice",
-        "Update Invoice for client " + dummyData.fullname,
-        req.id
-      );
+    //   await createHistoryLog(
+    //     req.email,
+    //     "Update Invoice",
+    //     "Update Invoice for client " + dummyData.fullname,
+    //     req.id
+    //   );
 
-      console.log("Finsh Invoice update");
-      res.send({});
-      return;
-    }
-    if (req.body.action == "remove") {
-      //console.log(req.body);
-      //var keyID = mongoose.Types.ObjectId(req.body.key);
-      console.log("removed" + req.body["key"]);
-      // Equivalent to `parent.children.pull(_id)`
-      var key = req.body["key"];
-      var keys = [];
-      keys = key.split("_");
+    //   console.log("Finsh Invoice update");
+    //   res.send({});
+    //   return;
+    // }
+    // if (req.body.action == "remove") {
+    //   //console.log(req.body);
+    //   //var keyID = mongoose.Types.ObjectId(req.body.key);
+    //   console.log("removed" + req.body["key"]);
+    //   // Equivalent to `parent.children.pull(_id)`
+    //   var key = req.body["key"];
+    //   var keys = [];
+    //   keys = key.split("_");
 
-      const anything = await Paid.findById(keys[0], function (err, user) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log();
-          // createHistoryLog(req.email,"Delete Payment", "Delete Payment for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
-          user.invoice.id(keys[1]).remove();
-          // Equivalent to `parent.child = null`
-          //user.child.remove();
-          user.save(function (err) {
-            if (err) return handleError(err);
+    //   const anything = await Paid.findById(keys[0], function (err, user) {
+    //     if (err) {
+    //       console.log(err);
+    //     } else {
+    //       console.log();
+    //       // createHistoryLog(req.email,"Delete Payment", "Delete Payment for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
+    //       user.invoice.id(keys[1]).remove();
+    //       // Equivalent to `parent.child = null`
+    //       //user.child.remove();
+    //       user.save(function (err) {
+    //         if (err) return handleError(err);
 
-            console.log("the subdocs were removed");
-          });
-        }
-      });
+    //         console.log("the subdocs were removed");
+    //       });
+    //     }
+    //   });
 
-      await createHistoryLog(
-        req.email,
-        "Delete Invoice",
-        "Delete Invoice from client " + anything.fullname,
-        req.id
-      );
-      res.send({});
-      return;
-    }
+    //   await createHistoryLog(
+    //     req.email,
+    //     "Delete Invoice",
+    //     "Delete Invoice from client " + anything.fullname,
+    //     req.id
+    //   );
+    //   res.send({});
+    //   return;
+    // }
     if (!isUndefinedOrNull(req.body.where) && req.body.where.length > 1) {
       // console.log(req.body.where);
       // res.send({});

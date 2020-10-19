@@ -79,76 +79,76 @@
         }
     },
     "s3": {
-        "job": [
+        "jobs": [
             {
-                "jobnumber": "",
-                "servicetype": "",
-                "project": "",
-                "sourcelanguage": "",
-                "targetlanguage": "",
+                "jn": "",
+                "stype": "",
+                "proj": "",
+                "slan": "",
+                "tlan": "",
                 "unit": "",
-                "unitprice": "",
-                "nbofunits": "",
-                "total": ""
+                "unitp": "",
+                "nunit": "",
+                "t": ""
             },
             {
-                "jobnumber": "",
-                "servicetype": "",
-                "project": "",
-                "sourcelanguage": "",
-                "targetlanguage": "",
+                "jn": "",
+                "stype": "",
+                "proj": "",
+                "slan": "",
+                "tlan": "",
                 "unit": "",
-                "unitprice": "",
-                "nbofunits": "",
-                "total": ""
+                "unitp": "",
+                "nunit": "",
+                "t": ""
             },
             {
-                "jobnumber": "",
-                "servicetype": "",
-                "project": "",
-                "sourcelanguage": "",
-                "targetlanguage": "",
+                "jn": "",
+                "stype": "",
+                "proj": "",
+                "slan": "",
+                "tlan": "",
                 "unit": "",
-                "unitprice": "",
-                "nbofunits": "",
-                "total": ""
+                "unitp": "",
+                "nunit": "",
+                "t": ""
             },
             {
-                "jobnumber": "",
-                "servicetype": "",
-                "project": "",
-                "sourcelanguage": "",
-                "targetlanguage": "",
+                "jn": "",
+                "stype": "",
+                "proj": "",
+                "slan": "",
+                "tlan": "",
                 "unit": "",
-                "unitprice": "",
-                "nbofunits": "",
-                "total": ""
+                "unitp": "",
+                "nunit": "",
+                "t": ""
             },
             {
-                "jobnumber": "",
-                "servicetype": "",
-                "project": "",
-                "sourcelanguage": "",
-                "targetlanguage": "",
+                "jn": "",
+                "stype": "",
+                "proj": "",
+                "slan": "",
+                "tlan": "",
                 "unit": "",
-                "unitprice": "",
-                "nbofunits": "",
-                "total": ""
+                "unitp": "",
+                "nunit": "",
+                "t": ""
             },
             {
-                "jobnumber": "",
-                "servicetype": "",
-                "project": "",
-                "sourcelanguage": "",
-                "targetlanguage": "",
+                "jn": "",
+                "stype": "",
+                "proj": "",
+                "slan": "",
+                "tlan": "",
                 "unit": "",
-                "unitprice": "",
-                "nbofunits": "",
-                "total": ""
-            },
+                "unitp": "",
+                "nunit": "",
+                "t": ""
+            }
         ]
     },
-    "date": "", "original": "0",   "download": "",
+    "total": "", "date": "", "original": "0",   "download": "",
   "category": "",
     "caption": "Sworn Translation Invoice",
     "leftheader": {

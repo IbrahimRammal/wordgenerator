@@ -1,19 +1,15 @@
 <form method="POST" action="<%= url %>"
     id="my_form">
     <div class="form-group">
-        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s1.caption %></h8>
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s2.caption %></h8>
         <div class="form-row">
             <div class="form-group col">
-                <input type="text" class="form-control" id="s1f1" name="s1_f1" placeholder="<%= obj.s1.f1.caption %>"
-                    value="<%= obj.s1.f1.value %>">
+                <input type="text" class="form-control" id="s2f1" name="s2_f1" placeholder="<%= obj.s2.f1.caption %>"
+                    value="<%= obj.s2.f1.value %>">
             </div>
             <div class="form-group col">
-                <input type="text" class="form-control" id="s1f2" name="s1_f2" placeholder="<%= obj.s1.f2.caption %>"
-                    value="<%= obj.s1.f2.value %>">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f3" id="s1f3" placeholder="<%= obj.s1.f3.caption %>"
-                    value="<%= obj.s1.f3.value %>">
+                <input type="text" class="form-control" id="s2f2" name="s2_f2" placeholder="<%= obj.s2.f2.caption %>"
+                    value="<%= obj.s2.f2.value %>">
             </div>
         </div>
     </div>
@@ -21,71 +17,57 @@
     <div class="form-group">
         <div class="form-row">
             <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f4" id="s1f4" placeholder="<%= obj.s1.f4.caption %>"
-                    value="<%= obj.s1.f4.value %>">
+                <input type="text" class="form-control" name="s2_f3" id="s2f3" placeholder="<%= obj.s2.f3.caption %>"
+                    value="<%= obj.s2.f3.value %>">
             </div>
             <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f5" id="s1f5" placeholder="<%= obj.s1.f5.caption %>"
-                    value="<%= obj.s1.f5.value %>">
+                <input type="text" class="form-control" name="s2_f4" id="s2f4" placeholder="<%= obj.s2.f4.caption %>"
+                    value="<%= obj.s2.f4.value %>">
             </div>
             <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f6" id="s1f6" placeholder="<%= obj.s1.f6.caption %>"
-                    value="<%= obj.s1.f6.value %>">
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="form-row">
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f7" id="s1f7" placeholder="<%= obj.s1.f7.caption %>"
-                    value="<%= obj.s1.f7.value %>">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f8" id="s1f8" placeholder="<%= obj.s1.f8.caption %>"
-                    value="<%= obj.s1.f8.value %>">
+                <input type="text" class="form-control" name="s2_f5" id="s2f5" placeholder="<%= obj.s2.f5.caption %>"
+                    value="<%= obj.s2.f5.value %>">
             </div>
         </div>
     </div>
     <hr class="sidebar-divider">
-    <div class="form-group">
-        <div class="form-row">
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f9" id="s1f9" placeholder="<%= obj.s1.f9.caption %>"
-                    value="<%= obj.s1.f9.value %>">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f10" id="s1f10" placeholder="<%= obj.s1.f10.caption %>"
-                    value="<%= obj.s1.f10.value %>">
-            </div>
-            <div class="form-group col">
-                <input type="text" class="form-control" name="s1_f11" id="s1f11" placeholder="<%= obj.s1.f11.caption %>"
-                    value="<%= obj.s1.f11.value %>">
-            </div>
-        </div>
-    </div>
-    <% for (var i = 0; i < obj.s2.clients.length; i++) { %>
+
+    <% for (var i = 0; i < obj.s3.job.length; i++) { %>
+
         <%if (obj.type == "English") { %>
         <div class="form-group">
             <div class="form-row">
                 <div class="form-group col">
-                    <input type="text" class="form-control" name="s2_clients_num_<%= i %>" id="s2clentsnum<%= i %>"
-                        placeholder="No. of Establishment">
+                    <input type="text" class="form-control" name="s3_job_pro_<%= i %>" id="s3jobpro<%= i %>"
+                        placeholder="Project">
                 </div>
                 <div class="form-group col">
-                    <input type="text" class="form-control" name="s2_clients_establishment_<%= i %>"
-                        id="s2clientsestablishment<%= i %>" placeholder="Name of Establishment">
+                    <input type="text" class="form-control" name="s3_job_stype_<%= i %>"
+                        id="s2jobstype<%= i %>" placeholder="Service type">
                 </div>
                 <div class="form-group col">
-                    <input type="text" class="form-control" name="s2_clients_emp_<%= i %>" id="s2clientsemp<%= i %>"
-                        placeholder="Date of Employment">
+                    <input type="text" class="form-control" name="s3_job_slan_<%= i %>" id="s2jobslan<%= i %>"
+                        placeholder="Source Language">
                 </div>
                 <div class="form-group col">
-                    <input type="text" class="form-control" name="s2_clients_ter_<%= i %>" id="s2clientster<%= i %>"
-                        placeholder="Date of Termination">
+                    <input type="text" class="form-control" name="s3_job_tlan_<%= i %>" id="s2jobtlan<%= i %>"
+                        placeholder="Target language">
                 </div>
                 <div class="form-group col">
-                    <input type="text" class="form-control" name="s2_clients_note_<%= i %>" id="s2clientsnote<%= i %>"
-                        placeholder="note">
+                    <input type="text" class="form-control" name="s3_job_unit_<%= i %>" id="s2jobunit<%= i %>"
+                        placeholder="Unit">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s3_job_unitp_<%= i %>" id="s2jobunitp<%= i %>"
+                        placeholder="Unit price">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s3_job_wcount_<%= i %>" id="s2jobwcount<%= i %>"
+                        placeholder="Word count">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s3_job_t_<%= i %>" id="s3jobt<%= i %>"
+                        placeholder="total">
                 </div>
             </div>
         </div>
@@ -93,24 +75,36 @@
             <div class="form-group">
                 <div class="form-row">
                     <div class="form-group col">
-                        <input type="text" class="form-control" name="s2_clients_num_<%= i %>" id="s2clentsnum<%= i %>"
-                            placeholder="Numéro de la Société">
+                        <input type="text" class="form-control" name="s3_job_pro_<%= i %>" id="s3jobpro<%= i %>"
+                            placeholder="pro">
                     </div>
                     <div class="form-group col">
-                        <input type="text" class="form-control" name="s2_clients_establishment_<%= i %>"
-                            id="s2clientsestablishment<%= i %>" placeholder="Nom de la société">
+                        <input type="text" class="form-control" name="s3_job_stype_<%= i %>"
+                            id="s2jobstype<%= i %>" placeholder="Service type">
                     </div>
                     <div class="form-group col">
-                        <input type="text" class="form-control" name="s2_clients_emp_<%= i %>" id="s2clientsemp<%= i %>"
-                            placeholder="Date d’emploi">
+                        <input type="text" class="form-control" name="s3_job_slan_<%= i %>" id="s2jobslan<%= i %>"
+                            placeholder="Source Language">
                     </div>
                     <div class="form-group col">
-                        <input type="text" class="form-control" name="s2_clients_ter_<%= i %>" id="s2clientster<%= i %>"
-                            placeholder="Date d’abandon">
+                        <input type="text" class="form-control" name="s3_job_tlan_<%= i %>" id="s2jobtlan<%= i %>"
+                            placeholder="Target language">
                     </div>
                     <div class="form-group col">
-                        <input type="text" class="form-control" name="s2_clients_note_<%= i %>" id="s2clientsnote<%= i %>"
-                            placeholder="Observations">
+                        <input type="text" class="form-control" name="s3_job_unit_<%= i %>" id="s2jobunit<%= i %>"
+                            placeholder="Unit">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s3_job_unitp_<%= i %>" id="s2jobunitp<%= i %>"
+                            placeholder="Unit price">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s3_job_wcount_<%= i %>" id="s2jobwcount<%= i %>"
+                            placeholder="Word count">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s3_job_t_<%= i %>" id="s3jobt<%= i %>"
+                            placeholder="total">
                     </div>
                 </div>
             </div>
