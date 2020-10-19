@@ -25,6 +25,8 @@ const RPermit = require("../models/ResidencyPermit");
 const WPermit = require("../models/WorkPermit");
 const ETemplate = require("../models/EmptyTemplate");
 const Client = require("../models/Clients");
+
+const PIUSA = require("../models/ProntoInvoiceinUSA");
 //const dateFormat = require("dateformat");
 var PizZip = require("pizzip");
 var Docxtemplater = require("docxtemplater");
@@ -49,6 +51,8 @@ const {
   registerValidation,
   loginValidation,
 } = require("../validate/validation");
+const { Console } = require("console");
+const { PaymentProntoInvoiceinUSA } = require("../models/Paid");
 
 router.post("/selector", verify, async (req, res) => {
   try {
@@ -112,6 +116,9 @@ router.post("/clientpaidselect", verify, async (req, res) => {
         middle: docSaved[0].father,
         phone: docSaved[0].mobile,
         address: docSaved[0].address,
+        registration: docSaved[0].registration,
+        vat: docSaved[0].vat,
+        mof: docSaved[0].mof
       });
     }
   } catch (err) {
@@ -683,6 +690,840 @@ router.post("/edit", verify, async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+  }
+});
+
+router.post("/invoiceSelect", verify, async (req, res) => {
+  try {
+    if (
+      !isEmptyOrSpaces(req.body.type)
+    ) {
+      let path = "./json/" + "English" + "/" + req.body.type + ".json";
+      let htmlpath = "./GenerateHtml/" + req.body.type + ".ejs";
+      let id = req.body.id;
+
+      console.log(req.body);
+      var invoiceTemplate = req.body.type;
+
+      // langCheck = langCheck.toLowerCase();
+
+      var docSaved = "";
+      var schemaData = "";
+
+      try {
+        //Find user paid not client ???????????????????????????????????????????
+        // docSaved = await Client.find(
+        //   { _id: id },
+        //   { _id: 0, fullname: 0, s0: 0, __v: 0 }
+        // );
+
+        // console.log('docSaved: ' + docSaved[0])
+
+        var dataid = "";
+        // console.log(dataid);
+        if (!isEmptyOrSpaces(dataid)) {
+        //   if (modelCheck.includes("Birth")) {
+        //     docSaved = await Birth.find({ _id: dataid });
+        //   } else if (modelCheck.includes("Divorce")) {
+        //     docSaved = await Divorce.find({ _id: dataid });
+        //   } else if (modelCheck.includes("Death")) {
+        //     docSaved = await Death.find({ _id: dataid });
+        //   } else if (modelCheck.includes("Marriage")) {
+        //     docSaved = await Marriage.find({ _id: dataid });
+        //   } else if (modelCheck.includes("Work")) {
+        //     docSaved = await WPermit.find({ _id: dataid });
+        //   } else if (modelCheck.includes("ID")) {
+        //     docSaved = await IDCard.find({ _id: dataid });
+        //   } else if (modelCheck.includes("MoF")) {
+        //     docSaved = await MoF.find({ _id: dataid });
+        //   } else if (modelCheck.includes("Residence")) {
+        //     docSaved = await Residence.find({ _id: dataid });
+        //   } else if (modelCheck.includes("PrivateDriver")) {
+        //     docSaved = await Private.find({ _id: dataid });
+        //   } else if (modelCheck.includes("Police")) {
+        //     docSaved = await Police.find({ _id: dataid });
+        //   } else if (modelCheck.includes("NSSF")) {
+        //     docSaved = await NSSF.find({ _id: dataid });
+        //   } else if (modelCheck.includes("Individual")) {
+        //     docSaved = await Individual.find({ _id: dataid });
+        //   } else if (modelCheck.includes("Family")) {
+        //     docSaved = await Family.find({ _id: dataid });
+        //   } else if (modelCheck.includes("Consent")) {
+        //     docSaved = await Consent.find({ _id: dataid });
+        //   } else if (modelCheck.includes("ResidencyPermit")) {
+        //     docSaved = await RPermit.find({ _id: dataid });
+        //   } else if (modelCheck.includes("Driver")) {
+        //     docSaved = await Driver.find({ _id: dataid });
+        //   } else if (modelCheck.includes("Empty")) {
+        //     console.log("foundit");
+        //     docSaved = await ETemplate.find({ _id: dataid });
+        //   } else {
+        //   }
+
+          /// ////////////////////////////////////
+          //docSaved[0]["client"]["id"] = id;
+
+          // url =
+          //   "/api/posts/data?lang=" +
+          //   docSaved[0]["type"] +
+          //   "&doc=" +
+          //   docSaved[0]["caption"] +
+          //   "&id=" +
+          //   docSaved[0]["client"]["id"] +
+          //   "&docID=" +
+          //   docID;
+          url = "";
+          console.log('Before read ejs ')
+
+          const file = fs.readFileSync(htmlpath, "utf-8");
+          var fixture_template = ejs.compile(file, { client: true });
+          //const html = fixture_template({ obj: docSaved[0], url: url });
+          const html = fixture_template({ obj: [], url: url });
+
+          // console.log(html)
+          res.send({ html: html });
+          return;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      // console.log(htmlpath)
+      if (fs.existsSync(path) && fs.existsSync(htmlpath)) {
+
+        //console.log(path);
+        // if recode doesnot exits in data base file exists
+        let rawdata = fs.readFileSync(path, "utf-8");
+        let data = JSON.parse(rawdata);
+
+        
+
+        //console.log(id);
+        //Types.ObjectId()
+        var key = mongoose.Types.ObjectId(id);
+
+        var data1 = "";
+
+        // const anyThing = await Expense.findById(req.body["key"], function (
+        //   err,
+        //   user
+        // ) {
+        //   console.log("delete pyament" + user);
+        //   // createHistoryLog(req.email,"Delete Expense", "Delete Expense for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
+        // });
+        
+        try {
+          data1 = await Paid.find(
+            { _id: key }
+          );
+          data1 = data1[0];
+          //console.log(data1)
+        } catch (err) {
+          console.log(err);
+        }
+
+        //console.log(data1["fullname"])
+
+        //console.log(data1);
+
+        //data["client"]["id"] = id;
+
+        //console.log(data.s0)
+
+        if (data.hasOwnProperty("s0")) {
+          Object.keys(data.s0).forEach(function (key) {
+            let keys = data.s0[key];
+
+            if (!isEmptyOrSpaces(keys)) {
+              keys = keys.split("_");
+              // console.log(keys)
+              // console.log(data1.s0[key])
+              if (keys.length == 2) {
+                console.log(key)
+                //if (data1.hasOwnProperty(key)) {
+                  console.log("key: " + key);
+                  console.log("mongodata: " + data1[key]);
+                  console.log(keys[0] + " " + keys[1]);
+                  data[keys[0]][keys[1]]["value"] = data1[key];
+                  console.log(data[keys[0]][keys[1]]["value"]);
+                //}
+                // else{
+                //   console.log("nothing")
+                // }
+                // data1.s0[key] = req.body[key]
+              } else if (keys.length == 3) {
+                if (data1.hasOwnProperty(key)) {
+                  data[keys[0]][keys[1]][keys[2]]["value"] = data1[key];
+                  console.log(data[keys[0]][keys[1]][keys[2]]["value"]);
+                }
+              } else {
+              }
+            }
+          });
+        }
+
+        //console.log(data)
+
+        /// /////////???????????????????????????????????????????????????????
+
+        // Document Template form box
+        //app.engine('html', require('ejs-locals'));
+        url =
+          "/api/posts/datainvoice?lang=" +
+          data["type"] +
+          "&doc=" +
+          data["caption"] +
+          "&id=" +
+          id;
+
+        const file = fs.readFileSync(htmlpath, "utf-8");
+        var fixture_template = ejs.compile(file, { client: true });
+        const html = fixture_template({ obj: data, url: url });
+
+        res.send({ html: html });
+        return;
+      }
+    }
+    res.send({ html: "No Template added yet!" });
+  } catch (err) {
+    console.log(err);
+    res.send({ html: "No Template added yet!" });
+    // res.status(500).send({ error: 'Something failed!' })
+  }
+});
+
+router.post("/datainvoice", verify, async (req, res) => {
+  try {
+    // req.query.lang req.query.lang doc
+    // get request parms
+    // make the path string
+    // check file if exits
+    // If else for every schema to save
+    // add path to parmaters on GenerateBCDocx function
+    console.log(req.query.doc);
+    if (
+      !isEmptyOrSpaces(req.query.doc) &&
+      !isEmptyOrSpaces(req.query.id)
+    ) {
+      let path = "./json/" + "English" + "/" + req.query.doc + ".json";
+      let docxPath =
+        "./DocumentTemplate/" + "English" + "/" + req.query.doc + ".docx";
+      //console.log(path)
+      if (fs.existsSync(path) && fs.existsSync(docxPath)) {
+        console.log("Begain");
+        let rawdata = fs.readFileSync(path, "utf-8");
+        let data = JSON.parse(rawdata);
+        let docArray = { clients: [], users: [], job: [] }; // sar fe mwskleh bel array fams:[]
+        let jsonObj = [];
+
+        //Search all filed had been submit when get to the paid form break from this loop and then make another keys's
+        //For paid client form to enter or check if there is already one there
+
+        Object.keys(req.body).forEach(function (key) {
+          let keys = key.split("_");
+          //console.log(keys);
+          if (keys.length == 2) {
+            docArray[keys[0] + keys[1]] = req.body[key];
+            data[keys[0]][keys[1]]["value"] = req.body[key];
+          } else if (keys.length == 3) {
+            docArray[keys[0] + keys[1] + keys[2]] = req.body[key];
+            data[keys[0]][keys[1]][keys[2]]["value"] = req.body[key];
+          } else if (keys.length == 4) {
+          } else {
+          }
+        });
+
+        var totalPayment = 0;
+
+        if (data.hasOwnProperty("s3")) {
+          if (data.s3.hasOwnProperty("job")) {
+            for (var i = 0; i < data.s3.job.length; i++) {
+              if (!isEmptyOrSpaces(req.body["s3_job_pro_" + i])) {
+                data.s3.job[i].pro = req.body["s3_job_pro_" + i];
+                data.s3.job[i].stype =
+                  req.body["s3_job_stype_" + i];
+                data.s3.job[i].slan = req.body["s3_job_slan_" + i];
+                data.s3.job[i].tlan = req.body["s3_job_tlan_" + i];
+                data.s3.job[i].unit = req.body["s3_job_unit_" + i];
+
+                data.s3.job[i].unitp = req.body["s3_job_unitp_" + i];
+                data.s3.job[i].wcount = req.body["s3_job_wcount_" + i];
+                data.s3.job[i].t = req.body["s3_job_t_" + i];
+
+                totalPayment += parseFloat(req.body["s3_job_t_" + i]);
+
+                docArray.job.push({
+                  pro: req.body["s3_job_pro_" + i],
+                  stype: req.body["s3_job_stype_" + i],
+                  slan: req.body["s3_job_slan_" + i],
+                  tlan: req.body["s3_job_tlan_" + i],
+                  unit: req.body["s3_job_unit_" + i],
+                  unitp: req.body["s3_job_unitp_" + i],
+                  wcount: req.body["s3_job_wcount_" + i],
+                  t: req.body["s3_job_t_" + i]
+                });
+              }
+            }
+          } else{}
+        }
+
+        // console.log(docArray)
+
+        //Time date
+        const event = new Date();
+
+        const options = { year: "numeric", month: "long", day: "numeric" };
+
+        var datetime = "";
+
+        // check if original or not
+        //docArray['o1'] = "True Copy of the Original";
+        //req.body["original"]
+        console.log("check if checked");
+
+        var originalFlag = true;
+        if (req.body["original"] == null) {
+          originalFlag = false;
+        }
+        //console.log();
+
+        docArray["o1"] = "0";
+        docArray["total"] = totalPayment;
+
+        datetime = event.toLocaleDateString("en-US", {
+          year: "numeric",
+          day: "numeric",
+          month: "long",
+        });
+
+        data["total"] = totalPayment;
+
+
+        data["date"] = datetime;
+        docArray["date"] = datetime;
+
+        //track if original or not
+        data["original"] = docArray["o1"];
+
+        //return to defualt state ""
+        if (docArray["o1"] == "0") docArray["o1"] = "";
+
+        // console.log(docArray['o1'])
+        //console.log(data["o1"]);
+
+        // data['date'] = dateFormat(new Date(), "mmm d yyyy");
+        // docArray['date'] = dateFormat(new Date(), "mmm d yyyy");
+
+        console.log("before save");
+
+        var modelCheck = req.query.doc;
+        var langCheck = "English";
+        var id = req.query.id;
+        var docID = req.query.docID != null ? req.query.docID : "";
+        modelCheck = modelCheck.replace(/\s/g, "");
+
+        let clientData = await Paid.findOne({ _id: id });
+        data["client"]["id"] = id;
+
+        //Get common data from paid
+        // if (data.hasOwnProperty("s0")) {
+        //   Object.keys(data.s0).forEach(function (key) {
+        //     let keys = data.s0[key];
+
+        //     if (!isEmptyOrSpaces(keys)) {
+        //       keys = keys.split("_");
+        //       // console.log(keys)
+        //       // console.log(data1.s0[key])
+        //       if (keys.length == 2) {
+        //         // if (clientData.s0.hasOwnProperty(key)) {
+        //           // console.log('key: ' + key)
+        //           // console.log('mongodata: ' + clientData.s0[key])
+        //           // console.log(keys[0] + ' ' + keys[1])
+        //           clientData[key] = data[keys[0]][keys[1]]["value"];
+        //           // console.log(data[keys[0]][keys[1]]['value'])
+        //         // }
+        //         // data1.s0[key] = req.body[key]
+        //       } else if (keys.length == 3) {
+        //         // if (clientData.hasOwnProperty(key)) {
+        //           clientData[key] = data[keys[0]][keys[1]][keys[2]]["value"];
+        //           // console.log(data[keys[0]][keys[1]][keys[2]]['value'])
+        //         // }
+        //       } else {
+        //       }
+        //     }
+        //   });
+        // }
+
+        var downloadLinkGenerator = downloadLink(
+          datetime,
+          req.query.doc,
+          clientData["fullname"]
+        );
+
+        var part1 = encodeURIComponent(downloadLinkGenerator[0]);
+        var part2 = encodeURIComponent(downloadLinkGenerator[1]);
+
+        data["download"] = "/api/posts/r/?valid=" + part1 + "&pass=" + part2;
+        //console.log(data["download"]);
+
+        data["docArray"] = docArray;
+
+        var docid = "";
+        var ObjectId = require("mongoose").Types.ObjectId;
+        var email = req.email;
+
+        var clientInvoiceHistory = {
+          fullname: clientData.fullname,
+          clientID: id,
+          docid: "",
+          paid: "",
+          total: totalPayment,
+          category: modelCheck,
+          createUser: "",
+          updateUser: "",
+          createTime: datetime,
+          updateTime: datetime,
+          remain: "",
+        };
+
+        // console.log(modelCheck + "modelCheck")
+        if (modelCheck.includes("ProntoInvoiceinUSD")) {
+          if (ObjectId.isValid(docID)) {
+            data["user_edit"] = email;
+            console.log("Update doc by ID " + docID);
+            const piusa = await PIUSA.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                // console.log(doc.docArray)
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            data["user_created"] = email;
+            //console.log(data)
+            const piusa = new PIUSA(data);
+            const savedPiusa = await piusa.save();
+            docid = savedPiusa._id;
+
+            console.log("saved birth: " + savedPiusa._id);
+
+            
+
+            clientInvoiceHistory.docid = docid;
+            
+            console.log(clientInvoiceHistory)
+
+            var savedPaid = await Paid.updateOne(
+              { _id: id },
+              { $push: { invoice: clientInvoiceHistory } },
+              { upsert: true, new: true  }
+            );
+          }
+        } else if (modelCheck.includes("Divorce")) {
+       
+        } else if (modelCheck.includes("Death")) {
+         
+        } else {
+        }
+
+        var clientName = clientData.fullname;
+
+        console.log("finish");
+
+        //Put condition if verified or not "/unverified"
+        var outputPath = GenerateDocx(
+          data,
+          docxPath,
+          docArray,
+          req.query.doc,
+          clientName
+        );
+
+        //query = outputPath[0]
+        var string1 = encodeURIComponent(outputPath[0]);
+        var string2 = encodeURIComponent(outputPath[1]);
+
+        //download button on the form as a button
+        //res.redirect('/api/posts/r/?valid=' + string1 + '&pass=' + string2)
+        console.log("/api/posts/r/?valid=" + string1 + "&pass=" + string2);
+
+        var link = "/api/posts/r/?valid=" + string1 + "&pass=" + string2;
+
+        createHistoryLog(
+          req.email,
+          "Invoice Created",
+          "Invoice Created for client " +
+            clientName +
+            ", " +
+            modelCheck +
+            " Document",
+          req.id
+        );
+
+        res.send({ link: link});
+      }
+    } else {
+      //
+    }
+  } catch (err) {
+    console.log(err);
+    res.send("error");
+    // res.status(500).send(err)
+  }
+});
+
+router.post("/Invoice/GetData", verify, async (req, res) => {
+  var result = [];
+  var subresult = [];
+
+  console.log("start action");
+  console.log(req.query);
+  console.log(req.body);
+  var flag = 0;
+
+  try {
+    var action = req.query.action;
+    var id = req.query.id;
+
+    var query;
+
+    if (req.body.action == "update") {
+      console.log(req.body.value._id);
+
+      var dummyData = await Paid.updateOne(
+        {
+          _id: req.body.value._id,
+          "invoice._id": req.body.value.invoiceid,
+        },
+        {
+          $set: {
+            "invoice.$.category": req.body.value.category,
+            "invoice.$.total": req.body.value.total,
+            "invoice.$.paid": req.body.value.paid,
+          },
+        },
+        function (error, updatedData) {
+          if (error) {
+            // return res.status(400).send(error);
+          }
+
+          console.log(updatedData);
+          //return res.status(200).send(updatedData);
+        }
+      );
+
+      await createHistoryLog(
+        req.email,
+        "Update Invoice",
+        "Update Invoice for client " + dummyData.fullname,
+        req.id
+      );
+
+      console.log("Finsh Invoice update");
+      res.send({});
+      return;
+    }
+    if (req.body.action == "remove") {
+      //console.log(req.body);
+      //var keyID = mongoose.Types.ObjectId(req.body.key);
+      console.log("removed" + req.body["key"]);
+      // Equivalent to `parent.children.pull(_id)`
+      var key = req.body["key"];
+      var keys = [];
+      keys = key.split("_");
+
+      const anything = await Paid.findById(keys[0], function (err, user) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log();
+          // createHistoryLog(req.email,"Delete Payment", "Delete Payment for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
+          user.invoice.id(keys[1]).remove();
+          // Equivalent to `parent.child = null`
+          //user.child.remove();
+          user.save(function (err) {
+            if (err) return handleError(err);
+
+            console.log("the subdocs were removed");
+          });
+        }
+      });
+
+      await createHistoryLog(
+        req.email,
+        "Delete Invoice",
+        "Delete Invoice from client " + anything.fullname,
+        req.id
+      );
+      res.send({});
+      return;
+    }
+    if (!isUndefinedOrNull(req.body.where) && req.body.where.length > 1) {
+      // console.log(req.body.where);
+      // res.send({});
+      // return;
+    }
+
+    if (isEmptyOrSpaces(id) && action == "all") {
+      query = await Paid.find(
+        {},
+        { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
+      );
+    } else if (action == "sub") {
+      var getById;
+      //var getById = id;
+      if (isUndefinedOrNull(id) || isEmptyOrSpaces(id)) {
+        getById = req.body.where[0].value;
+      } else {
+        var getById = id;
+      }
+      console.log("body.id: " + getById);
+      query = await Paid.findById(getById, function (err, user) {
+        for (var j = 0; j < user["invoice"].length; j++) {
+          //console.log(user["invoice"][j].href);
+          try{
+          let subParent = {
+            //put parent id temor
+            _id: getById,
+            combineid: getById + "_" + user["invoice"][j]._id,
+            invoiceid: user["invoice"][j]._id,
+            fullname: user["invoice"][j].fullname,
+            docid: user["invoice"][j].docid,
+            href: user["invoice"][j].href,
+            category: user["invoice"][j].category,
+            total: user["invoice"][j].total,
+            remain: user["invoice"][j].remain,
+            paid: user["invoice"][j].paid,
+            Download: "download",
+            createTime: user["invoice"][j].createTime,
+            updateTime: user["invoice"][j].updateTime
+          };
+
+          result.push(subParent);
+
+          //console.log("subParent: " + JSON.stringify(subParent));
+        } catch(err){}
+        }
+      });
+      res.send({ result: result, count: result.length });
+      // res.send(result);
+      return;
+      console.log(query);
+    } else {
+      res.send({});
+      return;
+    }
+
+    //Get all payment
+    for (var i = 0; i < query.length; i++) {
+      let totalpaidprice = 0;
+      let totalremainprice = 0;
+      let totalvalueprice = 0;
+      let unit = 0;
+
+      let parent = {
+        _id: "",
+        fullname: "",
+        mobile: "",
+        address: "",
+        unit: "",
+        paid: "",
+        remain: "",
+        total: "",
+        subtasks: [],
+      };
+
+      parent._id = query[i]._id;
+      parent.fullname = query[i].fullname;
+      parent.mobile = query[i].mobile;
+      parent.address = query[i].address;
+      for (var j = 0; j < query[i]["invoice"].length; j++) {
+        try{
+        let subParent = {
+          _id: query[i]["invoice"][j]._id,
+          fullname: query[i]["invoice"][j].fullname,
+          docid: query[i]["invoice"][j].docid,
+          href: query[i]["invoice"][j].href,
+          category: query[i]["invoice"][j].category,
+          total: query[i]["invoice"][j].total,
+          remains: query[i]["invoice"][j].remains,
+          paid: query[i]["invoice"][j].paid,
+          createTime: query[i]["invoice"][j].createTime,
+          updateTime: query[i]["invoice"][j].updateTime
+        };
+
+        unit = j + 1;
+        totalpaidprice += query[i]["invoice"][j].paid;
+        totalremainprice += query[i]["invoice"][j].remain;
+        totalvalueprice += query[i]["invoice"][j].total;
+        // totalvalueprice += Number(query[i]["payment"][j].total)
+        //   ? 0
+        //   : parseInt(query[i]["payment"][j].total, 10);
+        // totalremainprice += Number(query[i]["payment"][j].paid)
+        //   ? 0
+        //   : parseInt(query[i]["payment"][j].paid, 10);
+        // totalvalueprice += Number(query[i]["payment"][j].remain)
+        //   ? 0
+        //   : parseInt(query[i]["payment"][j].remain, 10);
+
+        if (action == "sub") {
+          console.log("sudfasdjfkl jaslkdjf klasjdf lkjaskldj fklsdj ");
+          result.push(subParent);
+          console.log("result: " + JSON.stringify(result));
+        }
+      } catch(err){
+        console.log(err)
+      }
+
+        //console.log("subParent: " + JSON.stringify(subParent));
+      }
+      //after finish loop parent json
+
+      console.log(
+        "totalpaidprice: " +
+          totalpaidprice +
+          "totalremainprice: " +
+          totalremainprice +
+          "totalvalueprice: " +
+          totalvalueprice
+      );
+      parent.unit = unit;
+      parent.paid = totalpaidprice;
+      parent.remain = totalremainprice;
+      parent.total = totalvalueprice;
+
+      if (action == "all") result.push(parent);
+
+      //console.log("parent: " + parent);
+      //console.log("subParent: " + JSON.stringify(parent));
+    }
+
+    console.log("result: " + result);
+    //console.log("result: " + JSON.stringify(result));
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.send({});
+  }
+});
+
+
+router.post("/Invoice/BatchData", verify, async (req, res) => {
+  try {
+    // console.log(req.body.value);
+    var a = req.body.value;
+
+    var result = "";
+
+    var respnseAddID = "";
+    if (req.body.action == "insert") {
+      createHistoryLog(
+        req.email,
+        "Insert New invoice",
+        "Insert New invoice for client " + a.fullname,
+        req.id
+      );
+      var userPaid = {};
+      userPaid.fullname = a.fullname;
+      userPaid.first = isUndefinedOrNull(a.name) ? "" : a.name;
+      userPaid.last = isUndefinedOrNull(a.surname) ? "" : a.surname;
+      userPaid.middle = isUndefinedOrNull(a.father) ? "" : a.father;
+      userPaid.phone = isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+      userPaid.address = isUndefinedOrNull(a.address) ? "" : a.address;
+      var data = addPaidClient(
+        a.fullname,
+        userPaid.fullname + userPaid.phone,
+        userPaid
+      );
+      //data[req.query.lang][modelCheck].push(clientpaid)
+      const paid = new Paid(data);
+      const savedPaid = await paid.save();
+      result = {
+        _id: savedPaid._id,
+        fullname: savedPaid.fullname,
+        name: savedPaid.name,
+        surname: savedPaid.surname,
+        father: savedPaid.father,
+        mobile: savedPaid.mobile,
+        address: savedPaid.address,
+        combineid: savedPaid.combineid,
+      };
+      //console.log("New Client Paid: " + json.stringify(paid))
+    }
+    if (req.body.action == "update") {
+      await createHistoryLog(
+        req.email,
+        "Update Payment",
+        "Update Payment for client " + a.fullname,
+        req.id
+      );
+      console.log(req.body);
+      var anyThing = await Paid.findById(req.body["key"], function (err, user) {
+        if (err) {
+          console.log(err);
+        } else {
+          //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
+          user.fullname = a.fullname;
+          // var combineid = a.fullname;
+          // combineid += isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+          user.combineid =
+            a.fullname + isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+          user.name = isUndefinedOrNull(a.name) ? "" : a.name;
+          user.surname = isUndefinedOrNull(a.surname) ? "" : a.surname;
+          user.father = isUndefinedOrNull(a.father) ? "" : a.father;
+          user.mobile = isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+          user.address = isUndefinedOrNull(a.address) ? "" : a.address;
+          // console.log("New Client Paid: " + json.stringify(user))
+          user.save(function (err) {
+            if (err) {
+              //handleError(err)
+              console.log(err);
+            } else {
+              // res.send({})
+              // return
+            }
+          });
+        }
+      });
+      await createHistoryLog(
+        req.email,
+        "Update Payment",
+        "Update Payment for client " + anyThing.fullname,
+        req.id
+      );
+    }
+    if (req.body.action == "remove") {
+      console.log(req.body);
+      var keyID = mongoose.Types.ObjectId(req.body.key);
+      console.log("removed" + req.body["key"]);
+      const anything = await Paid.findById(req.body["key"], function (
+        err,
+        user
+      ) {
+        console.log("delete pyament" + user);
+        // createHistoryLog(req.email,"Delete Expense", "Delete Expense for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
+        // createHistoryLog(req.email,"Delete Payment", "Delete Payment for client " + user.fullname, req.id);
+      });
+      await createHistoryLog(
+        req.email,
+        "Delete Payment",
+        "Delete Payment for client " + anything.fullname,
+        req.id
+      );
+      await Paid.findByIdAndDelete(req.body["key"], function (user, err) {
+        // createHistoryLog(req.email,"Delete Payment", "Delete Payment for client " + user.fullname, req.id);
+        if (err) console.log(err);
+        console.log("Successful deletion");
+      });
+    }
+
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.send("error");
   }
 });
 
@@ -2062,6 +2903,9 @@ router.post("/paid", verify, async (req, res) => {
             updateTime: datetime,
             numberOfUpdate: 0,
             remain: req.body.remain,
+            registration : req.body.registration,
+            vat: req.body.vat,
+            mof: req.body.mof
           };
         }
       });
@@ -2094,6 +2938,10 @@ router.post("/paid", verify, async (req, res) => {
       clientpaid["remain"] = req.body.remain;
       clientpaid["docid"] = req.query.docid;
       clientpaid["href"] = req.body.href;
+      clientpaid["registration"] = req.body.registration;
+      clientpaid["vat"] = req.body.vat;
+      clientpaid["mof"] = req.body.mof;
+      
 
       // console.log("clientpaid" + clientpaid['first'])
 
@@ -2107,7 +2955,7 @@ router.post("/paid", verify, async (req, res) => {
       // })
 
       var fullname =
-        clientpaid["first"] + clientpaid["middle"] + clientpaid["last"];
+        clientpaid["first"] + " " + clientpaid["middle"] + " "  + clientpaid["last"];
 
       if (
         !isEmptyOrSpaces(paidClientSelectedID) &&
@@ -2135,6 +2983,10 @@ router.post("/paid", verify, async (req, res) => {
         paid.name = clientpaid.first;
         paid.surname = clientpaid.last;
         paid.father = clientpaid.middle;
+        paid.registration = clientpaid.registration;
+        paid.vat = clientpaid.vat;
+        paid.mof = clientpaid.mof;
+        
 
         //var subdoc = paid.payment.push[0];
         // { _id: '501d86090d371bab2c0341c5', name: 'Liesl' }

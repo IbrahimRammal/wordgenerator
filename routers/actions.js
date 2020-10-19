@@ -66,6 +66,37 @@ router.get("/create", verify, (req, res) => {
   // });
 });
 
+router.get("/invoicecreate", verify, (req, res) => {
+  req.keep = "true";
+  //var query = Client.find({}, { s0: 0, __v: 0 });
+  // query.exec(function (err, result) {
+  //   if (!err) {
+  //     //let rawdata = "";
+  //     //console.log(rawdata);
+  //     //rawdata = result
+      //let dataReturn = result;
+
+      //console.log(result)
+
+      res.render("invoicecreate", {
+        // req.session.
+        name: req.name,
+        email: req.email,
+        //clientname: result,
+      });
+    // } else {
+    //   console.log(err);
+    // }
+  //});
+
+  // res.render('create',{
+  //     // req.session.
+  //     name: req.name,
+  //     email: req.email,
+  //     data:  data
+  // });
+});
+
 router.get("/edit", verify, (req, res) => {
   req.keep = "true";
   var query = Client.find({}, { s0: 0, __v: 0 });

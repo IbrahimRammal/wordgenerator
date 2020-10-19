@@ -23,7 +23,63 @@ const subPayment = mongoose.Schema({
   updateUser: "string",
   createTime: "string",
   updateTime: "string",
-  numberOfUpdate: "Number"
+  numberOfUpdate: "Number",
+  registration: "string",
+  vat: "string"
+}, { timestamps: { createdAt: 'created_at' } });
+
+const SubProntoInvoiceinUSA = mongoose.Schema({ 
+  docid: "string",
+  clientID: "string",
+  fullname: "string",
+  total: "Number",
+  paid: "Number",
+  remain: "Number",
+  createUser: "string",
+  updateUser: "string",
+  createTime: "string",
+  updateTime: "string"
+}, { timestamps: { createdAt: 'created_at' } });
+
+const SubProntoInvoiceinLBP = mongoose.Schema({ 
+  docid: "string",
+  clientID: "string",
+  fullname: "string",
+  total: "Number",
+  paid: "Number",
+  remain: "Number",
+  createUser: "string",
+  updateUser: "string",
+  createTime: "string",
+  updateTime: "string"
+}, { timestamps: { createdAt: 'created_at' } });
+
+const SubSwornTranslationInvoice = mongoose.Schema({ 
+  docid: "string",
+  clientID: "string",
+  fullname: "string",
+  total: "Number",
+  paid: "Number",
+  remain: "Number",
+  createUser: "string",
+  updateUser: "string",
+  createTime: "string",
+  updateTime: "string"
+}, { timestamps: { createdAt: 'created_at' } });
+
+const subInvoice = mongoose.Schema({ 
+  docid: "string",
+  clientID: "string",
+  fullname: "string",
+  category: "string",
+  paid: "string",
+  remain: "string",
+  href: "string",
+  total: "Number",
+  createUser: "string",
+  updateUser: "string",
+  createTime: "string",
+  updateTime: "string"
 }, { timestamps: { createdAt: 'created_at' } });
 
 const paidSchema = mongoose.Schema({
@@ -117,13 +173,34 @@ const paidSchema = mongoose.Schema({
   noregistry: {
     type: "String",
   },
-  payment : [subPayment]
+  registration: {
+    type: "String",
+  },
+  vat: {
+    type: "String",
+  },
+  mof: {
+    type: "String",
+  },
+  payment : [subPayment],
+  invoice: [subInvoice],
+  ProntoInvoiceinUSA : [SubProntoInvoiceinUSA],
+  ProntoInvoiceinLBP : [SubProntoInvoiceinLBP],
+  SwornTranslationInvoice : [SubSwornTranslationInvoice]
 });
 
 const Paid = mongoose.model("Paid", paidSchema);
 const Payment = mongoose.model("Payment", subPayment);
+const Invoice = mongoose.model("Invoice", subInvoice);
+const PaymentProntoInvoiceinUSA  = mongoose.model("PaymentProntoInvoiceinUSA", SubProntoInvoiceinUSA);
+const PaymentProntoInvoiceinLBP  = mongoose.model("PaymentProntoInvoiceinLBP", SubProntoInvoiceinLBP);
+const PaymentSwornTranslationInvoice  = mongoose.model("PaymentSwornTranslationInvoice", SubSwornTranslationInvoice);
 
 module.exports = {
   Paid: Paid,
-  Payment: Payment
+  Payment: Payment,
+  Invoice: Invoice,
+  PaymentProntoInvoiceinUSA: PaymentProntoInvoiceinUSA,
+  PaymentProntoInvoiceinLBP: PaymentProntoInvoiceinLBP,
+  PaymentSwornTranslationInvoice: PaymentSwornTranslationInvoice
 };

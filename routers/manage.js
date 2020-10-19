@@ -303,6 +303,18 @@ router.get("/payment", verify, async (req, res) => {
   });
 });
 
+router.get("/invoice", verify, async (req, res) => {
+  // console.log(req.body);
+  req.keep = "true";
+
+  res.render("invoice", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+    //data: data
+  });
+});
+
 function isEmptyOrSpaces(str) {
   return str === null || str.match(/^ *$/) !== null;
 }
