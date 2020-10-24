@@ -1317,41 +1317,41 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
     //   res.send({});
     //   return;
     // }
-    // if (req.body.action == "remove") {
-    //   //console.log(req.body);
-    //   //var keyID = mongoose.Types.ObjectId(req.body.key);
-    //   console.log("removed" + req.body["key"]);
-    //   // Equivalent to `parent.children.pull(_id)`
-    //   var key = req.body["key"];
-    //   var keys = [];
-    //   keys = key.split("_");
+    if (req.body.action == "remove") {
+      //console.log(req.body);
+      //var keyID = mongoose.Types.ObjectId(req.body.key);
+      console.log("removed" + req.body["key"]);
+      // Equivalent to `parent.children.pull(_id)`
+      var key = req.body["key"];
+      var keys = [];
+      keys = key.split("_");
 
-    //   const anything = await Paid.findById(keys[0], function (err, user) {
-    //     if (err) {
-    //       console.log(err);
-    //     } else {
-    //       console.log();
-    //       // createHistoryLog(req.email,"Delete Payment", "Delete Payment for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
-    //       user.invoice.id(keys[1]).remove();
-    //       // Equivalent to `parent.child = null`
-    //       //user.child.remove();
-    //       user.save(function (err) {
-    //         if (err) return handleError(err);
+      const anything = await Paid.findById(keys[0], function (err, user) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log();
+          // createHistoryLog(req.email,"Delete Payment", "Delete Payment for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
+          user.invoice.id(keys[1]).remove();
+          // Equivalent to `parent.child = null`
+          //user.child.remove();
+          user.save(function (err) {
+            if (err) return handleError(err);
 
-    //         console.log("the subdocs were removed");
-    //       });
-    //     }
-    //   });
+            console.log("the subdocs were removed");
+          });
+        }
+      });
 
-    //   await createHistoryLog(
-    //     req.email,
-    //     "Delete Invoice",
-    //     "Delete Invoice from client " + anything.fullname,
-    //     req.id
-    //   );
-    //   res.send({});
-    //   return;
-    // }
+      await createHistoryLog(
+        req.email,
+        "Delete Invoice",
+        "Delete Invoice from client " + anything.fullname,
+        req.id
+      );
+      res.send({});
+      return;
+    }
     if (!isUndefinedOrNull(req.body.where) && req.body.where.length > 1) {
       // console.log(req.body.where);
       // res.send({});
@@ -1399,6 +1399,7 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
         } catch(err){}
         }
       });
+      //console.log(result);
       res.send({ result: result, count: result.length });
       // res.send(result);
       return;
