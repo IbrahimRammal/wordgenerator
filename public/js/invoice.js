@@ -262,7 +262,7 @@ $(document).ready(function () {
               // format: "C",
               textAlign: "Right",
               type: "number",
-              valueAccessor: currencyFormatter,
+              //valueAccessor: currencyFormatter,
               //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
             },
             {
@@ -272,7 +272,7 @@ $(document).ready(function () {
               // format: "C",
               textAlign: "Right",
               type: "number",
-              valueAccessor: currencyFormatter,
+              //valueAccessor: currencyFormatter,
               //validationRules: { required: true, minLength: [customFn, 'Need to be less than total value']}
             },
             {
@@ -282,6 +282,14 @@ $(document).ready(function () {
               width: 90,
               type: "number",
               //visible: false,
+            },
+            {
+              field: "currency",
+              headerText: "currency",
+              width: 90,
+              // format: "C",
+              textAlign: "Right",
+              visible: false,
             },
             {
               field: "href",
@@ -412,8 +420,8 @@ $(document).ready(function () {
      };
   
       function currencyFormatter(field, data, column) {
-        //console.log(column);
-        //console.log(field);
+        //console.log(column); //currency
+        // console.log(data["currency"]);
         if(data[field] == null || data[field] == "")
         return "0 LBP";
         return data[field] + " LBP";

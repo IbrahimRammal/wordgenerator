@@ -1126,6 +1126,7 @@ router.post("/datainvoice", verify, async (req, res) => {
           createTime: datetime,
           updateTime: datetime,
           remain: "",
+          currency: ""
         };
 
         // console.log(modelCheck + "modelCheck")
@@ -1151,6 +1152,7 @@ router.post("/datainvoice", verify, async (req, res) => {
             docid = savedPiusa._id;
 
             clientInvoiceHistory.docid = docid;
+            clientInvoiceHistory.currency = "USD";
             
             //console.log(clientInvoiceHistory)
 
@@ -1183,6 +1185,7 @@ router.post("/datainvoice", verify, async (req, res) => {
             const savedPilbd = await pilbd.save();
             docid = savedPilbd._id;
             clientInvoiceHistory.docid = docid;
+            clientInvoiceHistory.currency = "LBP";
             
             //console.log(clientInvoiceHistory)
 
@@ -1212,6 +1215,7 @@ router.post("/datainvoice", verify, async (req, res) => {
             const savedSworni = await sworni.save();
             docid = savedSworni._id;
             clientInvoiceHistory.docid = docid;
+            clientInvoiceHistory.currency = "LBP";
             
             //console.log(clientInvoiceHistory)
 
