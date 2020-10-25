@@ -56,6 +56,7 @@ const {
 } = require("../validate/validation");
 const { Console } = require("console");
 const { PaymentProntoInvoiceinUSA } = require("../models/Paid");
+const PILBP = require("../models/ProntoInvoiceinLBP");
 
 router.post("/selector", verify, async (req, res) => {
   try {
@@ -1125,6 +1126,7 @@ router.post("/datainvoice", verify, async (req, res) => {
           createTime: datetime,
           updateTime: datetime,
           remain: "",
+          currency: ""
         };
 
         // console.log(modelCheck + "modelCheck")
@@ -1150,6 +1152,7 @@ router.post("/datainvoice", verify, async (req, res) => {
             docid = savedPiusa._id;
 
             clientInvoiceHistory.docid = docid;
+            clientInvoiceHistory.currency = "USD";
             
             //console.log(clientInvoiceHistory)
 
@@ -1162,6 +1165,8 @@ router.post("/datainvoice", verify, async (req, res) => {
         } else if (modelCheck.includes("ProntoInvoiceinLBP")) {
           if (ObjectId.isValid(docID)) {
             data["user_edit"] = email;
+
+            console.log(data["docArray"])
             console.log("Update doc by ID " + docID);
             const pilbd = await PILBD.findOneAndUpdate(
               { _id: docID },
@@ -1174,11 +1179,13 @@ router.post("/datainvoice", verify, async (req, res) => {
             );
           } else {
             data["user_created"] = email;
+            console.log(data["docArray"])
             //console.log(data)
             const pilbd = new PILBD(data);
             const savedPilbd = await pilbd.save();
             docid = savedPilbd._id;
             clientInvoiceHistory.docid = docid;
+            clientInvoiceHistory.currency = "LBP";
             
             //console.log(clientInvoiceHistory)
 
@@ -1208,6 +1215,7 @@ router.post("/datainvoice", verify, async (req, res) => {
             const savedSworni = await sworni.save();
             docid = savedSworni._id;
             clientInvoiceHistory.docid = docid;
+            clientInvoiceHistory.currency = "LBP";
             
             //console.log(clientInvoiceHistory)
 
@@ -1388,7 +1396,7 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
             total: user["invoice"][j].total,
             remain: user["invoice"][j].remain,
             paid: user["invoice"][j].paid,
-            Download: "download",
+            Download: "DOWNLOAD",
             createTime: user["invoice"][j].createTime,
             updateTime: user["invoice"][j].updateTime
           };
@@ -1443,6 +1451,7 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
           total: query[i]["invoice"][j].total,
           remains: query[i]["invoice"][j].remains,
           paid: query[i]["invoice"][j].paid,
+          Download: "DOWNLOAD",
           createTime: query[i]["invoice"][j].createTime,
           updateTime: query[i]["invoice"][j].updateTime
         };
@@ -1837,7 +1846,7 @@ router.post("/deleteAfterDownload", verify, async function (req, res) {
     var client = req.body.clientname;
     var docID = req.body.docID;
     var docModel = req.body.docModel;
-    let docxPath = "./DocumentTemplate/" + language + "/" + docModel + ".docx";
+    var docxPath = "./DocumentTemplate/" + language + "/" + docModel + ".docx";
 
     var docSaved = "";
 
@@ -1876,7 +1885,19 @@ router.post("/deleteAfterDownload", verify, async function (req, res) {
     } else if (docModel.includes("Empty")) {
       console.log("foundit");
       docSaved = await ETemplate.find({ _id: docID });
-    } else {
+    } else if (docModel.includes("SwornTranslationInvoice")) {
+      console.log("foundit");
+      docxPath = "./DocumentTemplate/" + language + "/" + "Sworn Translation Invoice.docx";
+      docSaved = await SWORNI.find({ _id: docID });
+    }else if (docModel.includes("ProntoInvoiceinLBP")) {
+      console.log("foundit");
+      docxPath = "./DocumentTemplate/" + language + "/" + "Pronto Invoice in LBP.docx";
+      docSaved = await PILBP.find({ _id: docID });
+    }else if (docModel.includes("ProntoInvoiceinUSA")) {
+      console.log("foundit");
+      docxPath = "./DocumentTemplate/" + language + "/" + "Pronto Invoice in USD.docx";
+      docSaved = await PIUSA.find({ _id: docID });
+    }else {
     }
 
     const event = new Date();
@@ -1919,6 +1940,8 @@ router.post("/deleteAfterDownload", verify, async function (req, res) {
     // console.log(docSaved[0]["docArray"]["date"]);
 
     console.log("datet time before genreate docx" + datetime);
+
+    //console.log(docSaved);
     // .replace(/\s/g, "");
     var outputPath = GenerateDocx(
       1,

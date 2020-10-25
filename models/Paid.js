@@ -28,45 +28,6 @@ const subPayment = mongoose.Schema({
   vat: "string"
 }, { timestamps: { createdAt: 'created_at' } });
 
-const SubProntoInvoiceinUSA = mongoose.Schema({ 
-  docid: "string",
-  clientID: "string",
-  fullname: "string",
-  total: "Number",
-  paid: "Number",
-  remain: "Number",
-  createUser: "string",
-  updateUser: "string",
-  createTime: "string",
-  updateTime: "string"
-}, { timestamps: { createdAt: 'created_at' } });
-
-const SubProntoInvoiceinLBP = mongoose.Schema({ 
-  docid: "string",
-  clientID: "string",
-  fullname: "string",
-  total: "Number",
-  paid: "Number",
-  remain: "Number",
-  createUser: "string",
-  updateUser: "string",
-  createTime: "string",
-  updateTime: "string"
-}, { timestamps: { createdAt: 'created_at' } });
-
-const SubSwornTranslationInvoice = mongoose.Schema({ 
-  docid: "string",
-  clientID: "string",
-  fullname: "string",
-  total: "Number",
-  paid: "Number",
-  remain: "Number",
-  createUser: "string",
-  updateUser: "string",
-  createTime: "string",
-  updateTime: "string"
-}, { timestamps: { createdAt: 'created_at' } });
-
 const subInvoice = mongoose.Schema({ 
   docid: "string",
   clientID: "string",
@@ -76,6 +37,7 @@ const subInvoice = mongoose.Schema({
   remain: "string",
   href: "string",
   total: "Number",
+  currency: "string",
   createUser: "string",
   updateUser: "string",
   createTime: "string",
@@ -183,24 +145,65 @@ const paidSchema = mongoose.Schema({
     type: "String",
   },
   payment : [subPayment],
-  invoice: [subInvoice],
-  ProntoInvoiceinUSA : [SubProntoInvoiceinUSA],
-  ProntoInvoiceinLBP : [SubProntoInvoiceinLBP],
-  SwornTranslationInvoice : [SubSwornTranslationInvoice]
+  invoice: [subInvoice]
+  // ProntoInvoiceinUSA : [SubProntoInvoiceinUSA],
+  // ProntoInvoiceinLBP : [SubProntoInvoiceinLBP],
+  // SwornTranslationInvoice : [SubSwornTranslationInvoice]
 });
 
 const Paid = mongoose.model("Paid", paidSchema);
 const Payment = mongoose.model("Payment", subPayment);
 const Invoice = mongoose.model("Invoice", subInvoice);
-const PaymentProntoInvoiceinUSA  = mongoose.model("PaymentProntoInvoiceinUSA", SubProntoInvoiceinUSA);
-const PaymentProntoInvoiceinLBP  = mongoose.model("PaymentProntoInvoiceinLBP", SubProntoInvoiceinLBP);
-const PaymentSwornTranslationInvoice  = mongoose.model("PaymentSwornTranslationInvoice", SubSwornTranslationInvoice);
+// const PaymentProntoInvoiceinUSA  = mongoose.model("PaymentProntoInvoiceinUSA", SubProntoInvoiceinUSA);
+// const PaymentProntoInvoiceinLBP  = mongoose.model("PaymentProntoInvoiceinLBP", SubProntoInvoiceinLBP);
+// const PaymentSwornTranslationInvoice  = mongoose.model("PaymentSwornTranslationInvoice", SubSwornTranslationInvoice);
 
 module.exports = {
   Paid: Paid,
   Payment: Payment,
-  Invoice: Invoice,
-  PaymentProntoInvoiceinUSA: PaymentProntoInvoiceinUSA,
-  PaymentProntoInvoiceinLBP: PaymentProntoInvoiceinLBP,
-  PaymentSwornTranslationInvoice: PaymentSwornTranslationInvoice
+  Invoice: Invoice
+  // PaymentProntoInvoiceinUSA: PaymentProntoInvoiceinUSA,
+  // PaymentProntoInvoiceinLBP: PaymentProntoInvoiceinLBP,
+  // PaymentSwornTranslationInvoice: PaymentSwornTranslationInvoice
 };
+
+
+
+// const SubProntoInvoiceinUSA = mongoose.Schema({ 
+//   docid: "string",
+//   clientID: "string",
+//   fullname: "string",
+//   total: "Number",
+//   paid: "Number",
+//   remain: "Number",
+//   createUser: "string",
+//   updateUser: "string",
+//   createTime: "string",
+//   updateTime: "string"
+// }, { timestamps: { createdAt: 'created_at' } });
+
+// const SubProntoInvoiceinLBP = mongoose.Schema({ 
+//   docid: "string",
+//   clientID: "string",
+//   fullname: "string",
+//   total: "Number",
+//   paid: "Number",
+//   remain: "Number",
+//   createUser: "string",
+//   updateUser: "string",
+//   createTime: "string",
+//   updateTime: "string"
+// }, { timestamps: { createdAt: 'created_at' } });
+
+// const SubSwornTranslationInvoice = mongoose.Schema({ 
+//   docid: "string",
+//   clientID: "string",
+//   fullname: "string",
+//   total: "Number",
+//   paid: "Number",
+//   remain: "Number",
+//   createUser: "string",
+//   updateUser: "string",
+//   createTime: "string",
+//   updateTime: "string"
+// }, { timestamps: { createdAt: 'created_at' } });
