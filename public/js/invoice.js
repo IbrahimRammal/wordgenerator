@@ -125,24 +125,28 @@ $(document).ready(function () {
         childGrid: {
           dataSource: dataChild,
           queryString: "_id",
-          // allowPaging: true,
-          allowSelection: true,
-          //allowGrouping: true,
-          //allowFiltering: true,
-          //allowSorting: true,
-          //allowMultiSorting: true,
+          allowPaging: true,
+          // allowSearching : true,
+          allowGrouping: true,
+          allowFiltering: true,
+          allowSorting: true,
+          allowMultiSorting: true,
+          allowSelection : true,
+          // allowExcelExport: true,
+          allowPdfExport: true,
+
           toolbar: ["Search"], //ExcelExport
           selectionSettings: { mode: "Both" },
           pageSettings: { pageCount: 5 },
           editSettings: {
-            allowEditing: true,
+            // allowEditing: true,
             allowDeleting: true,
             // allowAdding: true,
             mode: "Dialog",
             newRowPosition: "Top",
             showDeleteConfirmDialog: true,
           },
-          toolbar: [{ text: '	&#43; Add', tooltipText: 'Add', id: 'Click' },"Edit", "Delete"],
+          toolbar: [{ text: '	&#43; Add', tooltipText: 'Add', id: 'Click' },{ text: '	- Edit', tooltipText: 'Edit', id: 'Edit' }, "Delete"],
           toolbarClick: clickHandler,
           columns: [
             {
@@ -273,16 +277,11 @@ $(document).ready(function () {
             },
             {
               field: "Download",
-              headerText: "Download",
-              width: 90,
-              defaultValue: "Download",
-              // format: "C",
+              headerText: "",
               textAlign: "Right",
-              allowEditing: false,
-              visible: false,
-              //commands: [{ buttonOption: { content: 'Download', cssClass: 'e-flat', click: onClick } }] //, click: onClick
-              // visible: false
-              // type: "number",
+              width: 90,
+              type: "number",
+              //visible: false,
             },
             {
               field: "href",
@@ -292,9 +291,33 @@ $(document).ready(function () {
               textAlign: "Right",
               visible: false,
               allowEditing: false,
-              // type: "number",
             },
           ],
+          cellSelected: (args) => {
+            //console.log(args.data.href);
+            console.log(args.currentCell.outerText);
+            if (args.currentCell.outerText == "DOWNLOAD") {
+              $.ajax({
+                url: "/api/posts/deleteAfterDownload",
+                type: "POST",
+                dataType: "json",
+                cache: true,
+                data: { language: "English", docModel: args.data.category, clientname: args.data.fullname, docID: args.data.docid },
+                success: function (fixtures) {
+                    var href = fixtures["href"];
+                    // console.log(href);
+                    window.location = href;
+                    // // var paid = fixtures["paid"];
+                    // $("#panel").html(html);
+                    // //$('#paid').html(paid);
+                    // $("#card_label").html(args.data.language + " > " + args.data.docModel);
+                },
+                error: function (jqXHR, textStatus, err) {
+                  //   alert("text status " + textStatus + ", err " + err);
+                },
+              });
+            }
+          },
           rowSelected: rowSelected,
           actionBegin: function (args) {
             if (args.requestType === "beginEdit" || args.requestType === "add") {
@@ -353,32 +376,7 @@ $(document).ready(function () {
             grid.element.parentNode.insertBefore(span, grid.element);
             span.style.color = "#FF0000";
             span.innerHTML = "Server exception: 404 Not found";
-          },
-          cellSelected: (args) => {
-            //console.log(args.data.href);
-            //console.log(args.currentCell.outerText);
-            if (args.currentCell.outerText == "download") {
-              $.ajax({
-                url: "/api/posts/deleteAfterDownload",
-                type: "POST",
-                dataType: "json",
-                cache: true,
-                data: { language: args.data.language, docModel: args.data.docModel, clientname: args.data.fullname, docID: args.data.docid },
-                success: function (fixtures) {
-                    var href = fixtures["href"];
-                    // console.log(href);
-                    window.location = href;
-                    // // var paid = fixtures["paid"];
-                    // $("#panel").html(html);
-                    // //$('#paid').html(paid);
-                    // $("#card_label").html(args.data.language + " > " + args.data.docModel);
-                },
-                error: function (jqXHR, textStatus, err) {
-                  //   alert("text status " + textStatus + ", err " + err);
-                },
-              });
-            }
-          },
+          }
         },
         // detailDataBound: onExpand,
       });

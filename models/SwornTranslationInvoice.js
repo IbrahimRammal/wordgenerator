@@ -268,15 +268,14 @@ const swornSchema = mongoose.Schema({
       },
       "style": {
         "type": "String"
-      },
+      }},
+      docArray: {type: 'Object'},
       user_created: {type: 'String'},
       user_edit: {type: 'String'},
       created_at: { type: Date, default: Date.now },
       updated_at: { type: Date, default: Date.now },
-      note: {type: 'String'},
-      docArray: {type: 'Object'}
-      //   payment : [subPayment]
-}});
+      note: {type: 'String'}
+});
     
     // Sets the created_at parameter equal to the current time
 swornSchema.pre("save", function (next) {
