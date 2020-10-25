@@ -87,7 +87,7 @@ $(document).ready(function () {
             headerText: "Count",
             textAlign: "Left",
             validationRules: { required: true },
-            width: 100,
+            width: 80,
           },
                   // totalpaidpriceUSD: "",
         // totalremainpriceUSD: "",
@@ -136,14 +136,14 @@ $(document).ready(function () {
             headerText: "RemainsLBP",
             valueAccessor: totalRemains,
             textAlign: "Right",
-            width: 100,
+            width: 120,
           },
           {
             field: "RemainsUSD",
             headerText: "RemainsUSD",
             valueAccessor: totalRemains,
             textAlign: "Right",
-            width: 100,
+            width: 120,
           },
           // {
           //   field: "remain",
@@ -178,7 +178,7 @@ $(document).ready(function () {
             newRowPosition: "Top",
             showDeleteConfirmDialog: true,
           },
-          toolbar: [{ text: '	&#43; Add', tooltipText: 'Add', id: 'Click' },{ text: '	- Edit', tooltipText: 'Edit', id: 'Edit' }, "Delete"],
+          toolbar: [{ text: '	&#43; Add', tooltipText: 'Add', id: 'Click' }, "Delete"],
           toolbarClick: clickHandler,
           columns: [
             {
@@ -207,6 +207,7 @@ $(document).ready(function () {
               validationRules: { required: true },
               width: 100,
               allowEditing: false,
+              visible: false,
             },
             {
               field: "docid",
@@ -316,6 +317,13 @@ $(document).ready(function () {
               //visible: false,
             },
             {
+              field: "Edit",
+              headerText: "",
+              textAlign: "Left",
+              width: 60,
+              //   visible: false,
+            },
+            {
               field: "currency",
               headerText: "currency",
               width: 90,
@@ -335,7 +343,7 @@ $(document).ready(function () {
           ],
           cellSelected: (args) => {
             //console.log(args.data.href);
-            console.log(args.currentCell.outerText);
+            // console.log(args.currentCell.outerText);
             if (args.currentCell.outerText == "DOWNLOAD") {
               $.ajax({
                 url: "/api/posts/deleteAfterDownload",
@@ -356,7 +364,34 @@ $(document).ready(function () {
                   //   alert("text status " + textStatus + ", err " + err);
                 },
               });
-            }
+            }  else if (args.currentCell.outerText == "EDIT") {
+              //console.log(args);
+              // var _id = this.parentDetails.parentRowData._id;
+              // //var fullname = this.parentDetails.parentRowData.fullname;
+              // console.log(_id);
+              //paymentid
+  
+  
+              //const url='/api/actions/invoicecreate?' + "_id=" + _id + "&fullname=" + fullname;
+
+            $.ajax({
+              url: "/api/posts/invoicetemplate",
+              type: "POST",
+              dataType: "json",
+              cache: true,
+              data: { language: "English", docModel: args.data.category, docID: args.data.docid, id: args.data.paymentid },
+              success: function (fixtures) {
+                  var html = fixtures["html"];
+                  // var paid = fixtures["paid"];
+                  $("#panel").html(html);
+                  //$('#paid').html(paid);
+                  $("#card_label").html(args.data.language + " > " + args.data.docModel);
+              },
+              error: function (jqXHR, textStatus, err) {
+                //   alert("text status " + textStatus + ", err " + err);
+              },
+            });
+          }
           },
           rowSelected: rowSelected,
           actionBegin: function (args) {
@@ -429,25 +464,38 @@ $(document).ready(function () {
             var _id = this.parentDetails.parentRowData._id;
             var fullname = this.parentDetails.parentRowData.fullname;
 
+
+
             const url='/api/actions/invoicecreate?' + "_id=" + _id + "&fullname=" + fullname;
             window.location = url;
+        } else if (args.item.id === 'Edit') {
+
+          //var count = this.rowSelected;   
+          
+          var selectedrowindex = grid.getSelectedRowIndexes(); // get the selected row indexes.
+          //alert(selectedrowindex); // to alert the selected row indexes.
+          var selectedrecords = grid.getSelectedRecords();  
+          // console.log(selectedrecords);
 
             // $.ajax({
-            //   url: "/api/actions/invoicecreate",
+            //   url: "/api/posts/invoicetemplate",
+            //   type: "POST",
             //   dataType: "json",
-            //   type: "get", //send it through get method
-            //   data: { 
-            //     _id: _id, 
+            //   cache: true,
+            //   data: { type: args.data.language, template: args.data.docModel, client: args.data.client_id, clientname: selectedtext, docID: args.data._id },
+            //   success: function (fixtures) {
+            //       var html = fixtures["html"];
+            //       // var paid = fixtures["paid"];
+            //       $("#panel").html(html);
+            //       //$('#paid').html(paid);
+            //       $("#card_label").html(args.data.language + " > " + args.data.docModel);
             //   },
-            //   success: function(response) {
-            //     //Do Something
+            //   error: function (jqXHR, textStatus, err) {
+            //     //   alert("text status " + textStatus + ", err " + err);
             //   },
-            //   error: function(xhr) {
-            //     //Do Something to handle error
-            //   }
             // });
-
-            //alert("Cutom toolbar click...");
+        } else {
+          
         }
      };
   

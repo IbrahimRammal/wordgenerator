@@ -904,7 +904,7 @@ router.post("/datainvoice", verify, async (req, res) => {
     // check file if exits
     // If else for every schema to save
     // add path to parmaters on GenerateBCDocx function
-    console.log(req.query.doc);
+    console.log(req.query);
     if (
       !isEmptyOrSpaces(req.query.doc) &&
       !isEmptyOrSpaces(req.query.id)
@@ -1064,35 +1064,6 @@ router.post("/datainvoice", verify, async (req, res) => {
         let clientData = await Paid.findOne({ _id: id });
         data["client"]["id"] = id;
 
-        //Get common data from paid
-        // if (data.hasOwnProperty("s0")) {
-        //   Object.keys(data.s0).forEach(function (key) {
-        //     let keys = data.s0[key];
-
-        //     if (!isEmptyOrSpaces(keys)) {
-        //       keys = keys.split("_");
-        //       // console.log(keys)
-        //       // console.log(data1.s0[key])
-        //       if (keys.length == 2) {
-        //         // if (clientData.s0.hasOwnProperty(key)) {
-        //           // console.log('key: ' + key)
-        //           // console.log('mongodata: ' + clientData.s0[key])
-        //           // console.log(keys[0] + ' ' + keys[1])
-        //           clientData[key] = data[keys[0]][keys[1]]["value"];
-        //           // console.log(data[keys[0]][keys[1]]['value'])
-        //         // }
-        //         // data1.s0[key] = req.body[key]
-        //       } else if (keys.length == 3) {
-        //         // if (clientData.hasOwnProperty(key)) {
-        //           clientData[key] = data[keys[0]][keys[1]][keys[2]]["value"];
-        //           // console.log(data[keys[0]][keys[1]][keys[2]]['value'])
-        //         // }
-        //       } else {
-        //       }
-        //     }
-        //   });
-        // }
-
         var downloadLinkGenerator = downloadLink(
           datetime,
           req.query.doc,
@@ -1110,7 +1081,7 @@ router.post("/datainvoice", verify, async (req, res) => {
 
         //console.log(data["docArray"])
 
-        var docid = "";
+        // var docid = "";
         var ObjectId = require("mongoose").Types.ObjectId;
         var email = req.email;
 
@@ -1388,7 +1359,7 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
             //put parent id temor
             _id: getById,
             combineid: getById + "_" + user["invoice"][j]._id,
-            invoiceid: user["invoice"][j]._id,
+            paymentid: getById,
             fullname: user["invoice"][j].fullname,
             docid: user["invoice"][j].docid,
             href: user["invoice"][j].href,
@@ -1398,6 +1369,7 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
             paid: user["invoice"][j].paid,
             currency: user["invoice"][j].currency,
             Download: "DOWNLOAD",
+            Edit: "EDIT",
             createTime: user["invoice"][j].createTime,
             updateTime: user["invoice"][j].updateTime
           };
@@ -1457,6 +1429,7 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
         try{
         let subParent = {
           _id: query[i]["invoice"][j]._id,
+          paymentid: query[i]._id,
           fullname: query[i]["invoice"][j].fullname,
           docid: query[i]["invoice"][j].docid,
           href: query[i]["invoice"][j].href,
@@ -1466,6 +1439,7 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
           paid: query[i]["invoice"][j].paid,
           currency: query[i]["invoice"][j].currency,
           Download: "DOWNLOAD",
+          Edit: "EDIT",
           createTime: query[i]["invoice"][j].createTime,
           updateTime: query[i]["invoice"][j].updateTime
         };
@@ -1546,7 +1520,6 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
     res.send({});
   }
 });
-
 
 router.post("/Invoice/BatchData", verify, async (req, res) => {
   try {
@@ -1662,6 +1635,119 @@ router.post("/Invoice/BatchData", verify, async (req, res) => {
     console.log(err);
     res.send("error");
   }
+});
+
+
+router.post("/invoicetemplate", verify, async (req, res) => {
+  try {
+    console.log(req.body);
+    if (
+      !isEmptyOrSpaces(req.body.docModel) &&
+      !isEmptyOrSpaces(req.body.docID)
+    ) {
+      var template = "";
+      var field = req.body.docModel;
+      if(field.includes("ProntoInvoiceinLBP"))
+      {
+        template = "Pronto Invoice in LBP";
+      }
+      else if(field.includes("ProntoInvoiceinUSD")){
+        template = "Pronto Invoice in USD";
+      }
+      else if(field.includes("SwornTranslationInvoice")){
+        template = "Sworn Translation Invoice";
+      }
+      else{
+        res.send({ html: "" });
+        return;
+      }
+      let path = "./json/" + "English" + "/" + template + ".json";
+      let htmlpath = "./GenerateHtml/" + template + ".ejs";
+      let id = req.body.id;
+
+      console.log(req.body);
+      var langCheck = "English";
+      var modelCheck = req.body.docModel;
+      var docID = req.body.docID != null ? req.body.docID : "";
+      console.log("DOCUMENT ID :" + docID);
+      // langCheck = langCheck.toLowerCase();
+      modelCheck = modelCheck.replace(/\s/g, "");
+
+      console.log(modelCheck);
+
+      var docSaved = "";
+      var schemaData = "";
+
+      try {
+
+        // docSaved = await Client.find(
+        //   { _id: id },
+        //   { _id: 0, fullname: 0, s0: 0, __v: 0 }
+        // );
+
+        // console.log('docSaved: ' + docSaved[0])
+
+        if (!isEmptyOrSpaces(docID)) {
+          if (modelCheck.includes("ProntoInvoiceinUSD")) {
+            if (true) {
+              docSaved = await PIUSA.find({ _id: docID });
+            }
+          }
+              else if (modelCheck.includes("ProntoInvoiceinLBP")) {
+              if (true) {
+                docSaved = await PILBP.find({ _id: docID });
+              }
+            } else if (modelCheck.includes("SwornTranslationInvoice")) {
+            if (true) {
+              docSaved = await SWORNI.find({ _id: docID });
+            }
+          }
+             else {
+          }
+
+          /// ////////////////////////////////////
+
+          console.log(docSaved[0]);
+          var url = "";
+
+          url =
+          "/api/posts/datainvoice?lang=" +
+          docSaved[0]["type"] +
+          "&doc=" +
+          docSaved[0]["caption"] +
+          "&docID=" + docID +  "&id=" +
+          id;
+
+          console.log("URL: " + url);
+
+          // url =
+          //   "/api/posts/data?lang=" +
+          //   docSaved[0]["type"] +
+          //   "&doc=" +
+          //   docSaved[0]["caption"] +
+          //   "&id=" +
+          //   docSaved[0]["client"]["id"] +
+          //   "&docID=" +
+          //   docID;
+
+          // console.log('docSaved: ' + docSaved[0])
+          const file = fs.readFileSync(htmlpath, "utf-8");
+          var fixture_template = ejs.compile(file, { client: true });
+          const html = fixture_template({ obj: docSaved[0], url: url });
+          // console.log(html)
+          res.send({ html: html });
+          return;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+    res.send({ html: "No Template added yet!" });
+
+  } 
+} catch (err) {
+  console.log(err);
+}
 });
 
 router.post("/template", verify, async (req, res) => {
