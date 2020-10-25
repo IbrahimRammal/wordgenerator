@@ -1396,6 +1396,7 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
             total: user["invoice"][j].total,
             remain: user["invoice"][j].remain,
             paid: user["invoice"][j].paid,
+            currency: user["invoice"][j].currency,
             Download: "DOWNLOAD",
             createTime: user["invoice"][j].createTime,
             updateTime: user["invoice"][j].updateTime
@@ -1419,10 +1420,16 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
 
     //Get all payment
     for (var i = 0; i < query.length; i++) {
-      let totalpaidprice = 0;
-      let totalremainprice = 0;
-      let totalvalueprice = 0;
+      let totalpaidpriceUSD = 0;
+      let totalremainpriceUSD = 0;
+      let totalvaluepriceUSD = 0;
       let unit = 0;
+      let totalpaidpriceLBP = 0;
+      let totalremainpriceLBP = 0;
+      let totalvaluepriceLBP = 0;
+
+      let totalLBP = 0;
+      let totalUSD = 0;
 
       let parent = {
         _id: "",
@@ -1430,10 +1437,16 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
         mobile: "",
         address: "",
         unit: "",
-        paid: "",
-        remain: "",
-        total: "",
+        // paid: "",
+        // remain: "",
+        // total: "",
         subtasks: [],
+        totalpaidpriceUSD: "",
+        totalremainpriceUSD: "",
+        totalvaluepriceUSD: "",
+        totalpaidpriceLBP: "",
+        totalremainpriceLBP: "",
+        totalvaluepriceLBP: ""
       };
 
       parent._id = query[i]._id;
@@ -1451,15 +1464,29 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
           total: query[i]["invoice"][j].total,
           remains: query[i]["invoice"][j].remains,
           paid: query[i]["invoice"][j].paid,
+          currency: query[i]["invoice"][j].currency,
           Download: "DOWNLOAD",
           createTime: query[i]["invoice"][j].createTime,
           updateTime: query[i]["invoice"][j].updateTime
         };
 
+        // totalpaidpriceUSD: "",
+        // totalremainpriceUSD: "",
+        // totalvaluepriceUSD: "",
+        // totalpaidpriceLBP: "",
+        // totalremainpriceLBP: "",
+        // totalvaluepriceLBP: ""
         unit = j + 1;
-        totalpaidprice += query[i]["invoice"][j].paid;
-        totalremainprice += query[i]["invoice"][j].remain;
-        totalvalueprice += query[i]["invoice"][j].total;
+        if(query[i]["invoice"][j].currency == "USD"){
+          totalpaidpriceUSD += query[i]["invoice"][j].paid;
+          totalremainpriceUSD += query[i]["invoice"][j].remain;
+          totalvaluepriceUSD += query[i]["invoice"][j].total;
+        }
+        else{
+          totalpaidpriceLBP += query[i]["invoice"][j].paid;
+          totalremainpriceLBP += query[i]["invoice"][j].remain;
+          totalvaluepriceLBP += query[i]["invoice"][j].total;
+        }
         // totalvalueprice += Number(query[i]["payment"][j].total)
         //   ? 0
         //   : parseInt(query[i]["payment"][j].total, 10);
@@ -1483,18 +1510,27 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
       }
       //after finish loop parent json
 
-      console.log(
-        "totalpaidprice: " +
-          totalpaidprice +
-          "totalremainprice: " +
-          totalremainprice +
-          "totalvalueprice: " +
-          totalvalueprice
-      );
+      // console.log(
+      //   "totalpaidprice: " +
+      //     totalpaidprice +
+      //     "totalremainprice: " +
+      //     totalremainprice +
+      //     "totalvalueprice: " +
+      //     totalvalueprice
+      // );
       parent.unit = unit;
-      parent.paid = totalpaidprice;
-      parent.remain = totalremainprice;
-      parent.total = totalvalueprice;
+
+      parent.totalPaidUSD = totalpaidpriceUSD;
+      parent.totalRemainUSD = totalremainpriceUSD;
+      parent.totalUSD = totalvaluepriceUSD;
+
+      parent.totalPaidLBP = totalpaidpriceLBP;
+      parent.totalRemainLBP = totalremainpriceLBP;
+      parent.totalLBP = totalvaluepriceLBP;
+
+      // parent.paid = totalpaidprice;
+      // parent.remain = totalremainprice;
+      // parent.total = totalvalueprice;
 
       if (action == "all") result.push(parent);
 
