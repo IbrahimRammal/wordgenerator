@@ -35,42 +35,42 @@
     <% for (var i = 0; i < obj.s3.job.length; i++) { %>
 
         <%if (obj.type == "English") { %>
-        <div class="form-group">
-            <div class="form-row">
-                <div class="form-group col">
-                    <input type="text" class="form-control" name="s3_job_pro_<%= i %>" id="s3jobpro<%= i %>"
-                        placeholder="Project">
-                </div>
-                <div class="form-group col">
-                    <input type="text" class="form-control" name="s3_job_stype_<%= i %>"
-                        id="s2jobstype<%= i %>" placeholder="Service type">
-                </div>
-                <div class="form-group col">
-                    <input type="text" class="form-control" name="s3_job_slan_<%= i %>" id="s2jobslan<%= i %>"
-                        placeholder="Source Language">
-                </div>
-                <div class="form-group col">
-                    <input type="text" class="form-control" name="s3_job_tlan_<%= i %>" id="s2jobtlan<%= i %>"
-                        placeholder="Target language">
-                </div>
-                <div class="form-group col">
-                    <input type="text" class="form-control" name="s3_job_unit_<%= i %>" id="s2jobunit<%= i %>"
-                        placeholder="Unit">
-                </div>
-                <div class="form-group col">
-                    <input type="text" class="form-control" name="s3_job_unitp_<%= i %>" id="s2jobunitp<%= i %>"
-                        placeholder="Unit price">
-                </div>
-                <div class="form-group col">
-                    <input type="text" class="form-control" name="s3_job_wcount_<%= i %>" id="s2jobwcount<%= i %>"
-                        placeholder="Word count">
-                </div>
-                <div class="form-group col">
-                    <input type="text" class="form-control" name="s3_job_t_<%= i %>" id="s3jobt<%= i %>"
-                        placeholder="total">
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s3_job_pro_<%= i %>" id="s3jobpro<%= i %>"
+                            placeholder="Project" value="<%= obj.s3.job[i].pro %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s3_job_stype_<%= i %>"
+                            id="s2jobstype<%= i %>" placeholder="Service type" value="<%= obj.s3.job[i].stype %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s3_job_slan_<%= i %>" id="s2jobslan<%= i %>"
+                            placeholder="Source Language" value="<%= obj.s3.job[i].slan %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s3_job_tlan_<%= i %>" id="s2jobtlan<%= i %>"
+                            placeholder="Target language" value="<%= obj.s3.job[i].tlan %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s3_job_unit_<%= i %>" id="s2jobunit<%= i %>"
+                            placeholder="Unit" value="<%= obj.s3.job[i].unit %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s3_job_unitp_<%= i %>" id="s2jobunitp<%= i %>"
+                            placeholder="Unit price" value="<%= obj.s3.job[i].unitp %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s3_job_wcount_<%= i %>" id="s2jobwcount<%= i %>"
+                            placeholder="Word count" value="<%= obj.s3.job[i].wcount %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s3_job_t_<%= i %>" id="s3jobt<%= i %>"
+                            placeholder="total" value="<%= obj.s3.job[i].t %>">
+                    </div>
                 </div>
             </div>
-        </div>
         <% } else {%>
             <div class="form-group">
                 <div class="form-row">

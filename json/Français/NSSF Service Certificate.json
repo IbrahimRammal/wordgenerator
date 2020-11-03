@@ -94,16 +94,16 @@
     "s2": {
         "clients": [
             {
-                "num": "1",
-                "establishment": "2",
-                "emp": "3",
-                "ter": "4",
-                "note": "5"
+                "num": "",
+                "establishment": "",
+                "emp": "",
+                "ter": "",
+                "note": ""
             },
             {
-                "num": "6",
-                "establishment": "7",
-                "emp": "8",
+                "num": "",
+                "establishment": "",
+                "emp": "",
                 "ter": "",
                 "note": ""
             },

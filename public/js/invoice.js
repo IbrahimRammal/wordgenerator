@@ -223,7 +223,7 @@ $(document).ready(function () {
               headerText: "type",
               textAlign: "Left",
               validationRules: { required: true },
-              width: 80,
+              width: 90,
               edit: {
                 create: function () {
                   categoryElem = document.createElement("input");
@@ -385,7 +385,7 @@ $(document).ready(function () {
                   // var paid = fixtures["paid"];
                   $("#panel").html(html);
                   //$('#paid').html(paid);
-                  $("#card_label").html(args.data.language + " > " + args.data.docModel);
+                  // $("#card_label").html(args.data.language + " > " + args.data.docModel);
               },
               error: function (jqXHR, textStatus, err) {
                 //   alert("text status " + textStatus + ", err " + err);

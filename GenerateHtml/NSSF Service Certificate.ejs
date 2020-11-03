@@ -69,23 +69,23 @@
             <div class="form-row">
                 <div class="form-group col">
                     <input type="text" class="form-control" name="s2_clients_num_<%= i %>" id="s2clentsnum<%= i %>"
-                        placeholder="No. of Establishment">
+                        placeholder="No. of Establishment" value="<%= obj.s2.clients[i].num  %>">
                 </div>
                 <div class="form-group col">
                     <input type="text" class="form-control" name="s2_clients_establishment_<%= i %>"
-                        id="s2clientsestablishment<%= i %>" placeholder="Name of Establishment">
+                        id="s2clientsestablishment<%= i %>" placeholder="Name of Establishment" value="<%= obj.s2.clients[i].establishment  %>">
                 </div>
                 <div class="form-group col">
                     <input type="text" class="form-control" name="s2_clients_emp_<%= i %>" id="s2clientsemp<%= i %>"
-                        placeholder="Date of Employment">
+                        placeholder="Date of Employment" value="<%= obj.s2.clients[i].emp  %>">
                 </div>
                 <div class="form-group col">
                     <input type="text" class="form-control" name="s2_clients_ter_<%= i %>" id="s2clientster<%= i %>"
-                        placeholder="Date of Termination">
+                        placeholder="Date of Termination" value="<%= obj.s2.clients[i].ter  %>">
                 </div>
                 <div class="form-group col">
                     <input type="text" class="form-control" name="s2_clients_note_<%= i %>" id="s2clientsnote<%= i %>"
-                        placeholder="note">
+                        placeholder="note" value="<%= obj.s2.clients[i].note  %>">
                 </div>
             </div>
         </div>
@@ -94,23 +94,23 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_clients_num_<%= i %>" id="s2clentsnum<%= i %>"
-                            placeholder="Numéro de la Société">
+                            placeholder="Numéro de la Société" value="<%= obj.s2.clients[i].num  %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_clients_establishment_<%= i %>"
-                            id="s2clientsestablishment<%= i %>" placeholder="Nom de la société">
+                            id="s2clientsestablishment<%= i %>" placeholder="Nom de la société" value="<%= obj.s2.clients[i].establishment  %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_clients_emp_<%= i %>" id="s2clientsemp<%= i %>"
-                            placeholder="Date d’emploi">
+                            placeholder="Date d’emploi" value="<%= obj.s2.clients[i].emp  %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_clients_ter_<%= i %>" id="s2clientster<%= i %>"
-                            placeholder="Date d’abandon">
+                            placeholder="Date d’abandon" value="<%= obj.s2.clients[i].ter  %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_clients_note_<%= i %>" id="s2clientsnote<%= i %>"
-                            placeholder="Observations">
+                            placeholder="Observations" value="<%= obj.s2.clients[i].note  %>">
                     </div>
                 </div>
             </div>
@@ -172,7 +172,7 @@
                 }
                 //alert(result);
                 toastr["success"]("Document successfully inserted", "Document saved")
-                toastr["success"]("Document successfully inserted", "Document saved")
+                // toastr["success"]("Document successfully inserted", "Document saved")
                 $("#download").show();
                 $("#download").attr("href", result['link']);
                 $('#paid').show();
