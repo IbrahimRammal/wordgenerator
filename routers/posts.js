@@ -1115,6 +1115,34 @@ router.post("/datainvoice", verify, async (req, res) => {
                 console.log("Succesfully saved.");
               }
             );
+
+            var dummyData = await Paid.updateOne(
+              { _id: id,
+                "invoice.docid": docID,
+              },
+              {
+                $set: {
+                  // "invoice.$.category": req.body.value.category,
+                  "invoice.$.total": totalPayment,
+                  "invoice.$.updateTime": datetime
+                },
+              },
+              function (error, updatedData) {
+                if (error) {
+                  // return res.status(400).send(error);
+                }
+      
+                console.log(updatedData);
+                //return res.status(200).send(updatedData);
+              }
+            );
+
+            // var savedPaid = await Paid.updateOne(
+            //   { _id: id },
+            //   { $push: { invoice: clientInvoiceHistory } },
+            //   { upsert: true, new: true  }
+            // );
+
           } else {
             data["user_created"] = email;
             //console.log(data)
@@ -1148,6 +1176,27 @@ router.post("/datainvoice", verify, async (req, res) => {
                 // console.log(doc.docArray)
               }
             );
+
+            var dummyData = await Paid.updateOne(
+              { _id: id,
+                "invoice.docid": docID,
+              },
+              {
+                $set: {
+                  // "invoice.$.category": req.body.value.category,
+                  "invoice.$.total": totalPayment,
+                  "invoice.$.updateTime": datetime
+                },
+              },
+              function (error, updatedData) {
+                if (error) {
+                  // return res.status(400).send(error);
+                }
+      
+                console.log(updatedData);
+                //return res.status(200).send(updatedData);
+              }
+            );
           } else {
             data["user_created"] = email;
             console.log(data["docArray"])
@@ -1177,6 +1226,27 @@ router.post("/datainvoice", verify, async (req, res) => {
               function (err, doc) {
                 if (err) console.log(err);
                 // console.log(doc.docArray)
+              }
+            );
+
+            var dummyData = await Paid.updateOne(
+              { _id: id,
+                "invoice.docid": docID,
+              },
+              {
+                $set: {
+                  // "invoice.$.category": req.body.value.category,
+                  "invoice.$.total": totalPayment,
+                  "invoice.$.updateTime": datetime
+                },
+              },
+              function (error, updatedData) {
+                if (error) {
+                  // return res.status(400).send(error);
+                }
+      
+                console.log(updatedData);
+                //return res.status(200).send(updatedData);
               }
             );
           } else {
@@ -1707,7 +1777,7 @@ router.post("/invoicetemplate", verify, async (req, res) => {
 
           /// ////////////////////////////////////
 
-          console.log(docSaved[0]);
+          // console.log(docSaved[0].s3.job);
           var url = "";
 
           url =
@@ -1782,44 +1852,46 @@ router.post("/template", verify, async (req, res) => {
 
         // console.log('docSaved: ' + docSaved[0])
 
-        var dataid = docSaved[0][langCheck][modelCheck];
+        var dataid = ""
+
+        dataid = docID != "" ? docID : docSaved[0][langCheck][modelCheck];
         console.log(dataid);
-        if (!isEmptyOrSpaces(dataid)) {
+        if (dataid !="" && dataid != null) {
           if (modelCheck.includes("Birth")) {
-            docSaved = await Birth.find({ _id: dataid });
+            docSaved = await Birth.find({ _id: docID });
           } else if (modelCheck.includes("Divorce")) {
-            docSaved = await Divorce.find({ _id: dataid });
+            docSaved = await Divorce.find({ _id: docID });
           } else if (modelCheck.includes("Death")) {
-            docSaved = await Death.find({ _id: dataid });
+            docSaved = await Death.find({ _id: docID });
           } else if (modelCheck.includes("Marriage")) {
-            docSaved = await Marriage.find({ _id: dataid });
+            docSaved = await Marriage.find({ _id: docID });
           } else if (modelCheck.includes("Work")) {
-            docSaved = await WPermit.find({ _id: dataid });
+            docSaved = await WPermit.find({ _id: docID });
           } else if (modelCheck.includes("ID")) {
-            docSaved = await IDCard.find({ _id: dataid });
+            docSaved = await IDCard.find({ _id: docID });
           } else if (modelCheck.includes("MoF")) {
-            docSaved = await MoF.find({ _id: dataid });
+            docSaved = await MoF.find({ _id: docID });
           } else if (modelCheck.includes("Residence")) {
-            docSaved = await Residence.find({ _id: dataid });
+            docSaved = await Residence.find({ _id: docID });
           } else if (modelCheck.includes("PrivateDriver")) {
-            docSaved = await Private.find({ _id: dataid });
+            docSaved = await Private.find({ _id: docID });
           } else if (modelCheck.includes("Police")) {
-            docSaved = await Police.find({ _id: dataid });
+            docSaved = await Police.find({ _id: docID });
           } else if (modelCheck.includes("NSSF")) {
-            docSaved = await NSSF.find({ _id: dataid });
+            docSaved = await NSSF.find({ _id: docID });
           } else if (modelCheck.includes("Individual")) {
-            docSaved = await Individual.find({ _id: dataid });
+            docSaved = await Individual.find({ _id: docID });
           } else if (modelCheck.includes("Family")) {
-            docSaved = await Family.find({ _id: dataid });
+            docSaved = await Family.find({ _id: docID });
           } else if (modelCheck.includes("Consent")) {
-            docSaved = await Consent.find({ _id: dataid });
+            docSaved = await Consent.find({ _id: docID });
           } else if (modelCheck.includes("ResidencyPermit")) {
-            docSaved = await RPermit.find({ _id: dataid });
+            docSaved = await RPermit.find({ _id: docID });
           } else if (modelCheck.includes("Driver")) {
-            docSaved = await Driver.find({ _id: dataid });
+            docSaved = await Driver.find({ _id: docID });
           } else if (modelCheck.includes("Empty")) {
             console.log("foundit");
-            docSaved = await ETemplate.find({ _id: dataid });
+            docSaved = await ETemplate.find({ _id: docID });
           } else {
           }
 
@@ -3286,7 +3358,7 @@ router.post("/paid", verify, async (req, res) => {
         var savedPaid = await Paid.updateOne(
           { _id: paidClientSelectedID },
           { $push: { payment: clientPaymentHistory } },
-          { upsert: true },
+          { upsert: true, new: true },
           function (err, docs) {
             //res.json(docs);
             // console.log(docs);
@@ -3549,7 +3621,7 @@ router.post("/data", verify, async (req, res) => {
             const birth = await Birth.findOneAndUpdate(
               { _id: docID },
               data,
-              { upsert: true },
+              { upsert: true, new: true },
               function (err, doc) {
                 if (err) console.log(err);
                 // console.log(doc.docArray)
