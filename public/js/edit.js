@@ -179,11 +179,10 @@ function getData() {
               //   visible: false,
             },
             {
-              field: "note",
-              headerText: "Note",
+              field: "delete",
+              headerText: "",
               textAlign: "Left",
-              width: 100,
-              visible: false,
+              width: 70,
             },
           ],
         //   actionFailure: (e) => {
@@ -236,7 +235,27 @@ function getData() {
                   //   alert("text status " + textStatus + ", err " + err);
                 },
               });
-            }
+            } else if (args.currentCell.outerText == "DELETE") {
+              // console.log(args);
+
+            $.ajax({
+              url: "/api/posts/delete",
+              type: "POST",
+              dataType: "json",
+              cache: true,
+              data: { type: args.data.language, template: args.data.docModel, client: args.data.client_id, docID: args.data._id },
+              success: function (fixtures) {
+                  // var html = fixtures["html"];
+                  // // var paid = fixtures["paid"];
+                  // $("#panel").html(html);
+                  // //$('#paid').html(paid);
+                  // $("#card_label").html(args.data.language + " > " + args.data.docModel);
+              },
+              error: function (jqXHR, textStatus, err) {
+                //   alert("text status " + textStatus + ", err " + err);
+              },
+            });
+          }
           },
         //   recordClick: "click", 
           pageSettings: { pageCount: 5 },
