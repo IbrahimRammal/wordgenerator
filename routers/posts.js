@@ -355,7 +355,7 @@ router.post("/edit", verify, async (req, res) => {
                     var docSaved = await Birth.find({
                       _id: docLanguage[docModel][j],
                     });
-                    console.log("asdfdsfdf" + docLanguage[docModel]);
+                    // console.log("asdfdsfdf" + docLanguage[docModel]);
                     console.log(docSaved);
                     result.push({
                       _id: docLanguage[docModel][j],
@@ -369,6 +369,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("Divorce")) {
@@ -388,6 +389,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("Death")) {
@@ -407,6 +409,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("Marriage")) {
@@ -426,6 +429,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("Work")) {
@@ -445,6 +449,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("ID")) {
@@ -464,6 +469,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("MoF")) {
@@ -483,6 +489,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("Residence")) {
@@ -502,6 +509,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("PrivateDriver")) {
@@ -521,6 +529,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("Police")) {
@@ -540,6 +549,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("NSSF")) {
@@ -559,6 +569,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("Individual")) {
@@ -578,6 +589,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("Family")) {
@@ -597,6 +609,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("Consent")) {
@@ -616,6 +629,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("ResidencyPermit")) {
@@ -635,6 +649,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("Driver")) {
@@ -654,6 +669,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else if (docModel.includes("Empty")) {
@@ -674,6 +690,7 @@ router.post("/edit", verify, async (req, res) => {
                       note: docSaved[0].note,
                       download: "DOWNLOAD",
                       edit: "EDIT",
+                      delete: "DELETE",
                     });
                   }
                 } else {
@@ -694,6 +711,86 @@ router.post("/edit", verify, async (req, res) => {
     }
   } catch (err) {
     console.log(err);
+  }
+});
+
+router.post("/delete", verify, async (req, res) => {
+  try {
+    if (
+      !isEmptyOrSpaces(req.body.type) &&
+      !isEmptyOrSpaces(req.body.template) &&
+      !isEmptyOrSpaces(req.body.client)
+    ) {
+
+      let id = req.body.client;
+
+      console.log(req.body);
+      var langCheck = req.body.type;
+      var modelCheck = req.body.template;
+      var docID = req.body.docID != null ? req.body.docID : "";
+      console.log("DOCUMENT ID :" + docID);
+      // langCheck = langCheck.toLowerCase();
+      modelCheck = modelCheck.replace(/\s/g, "");
+
+      console.log(modelCheck);
+
+      var docSaved = "";
+      var schemaData = "";
+
+
+        // console.log('docSaved: ' + docSaved[0])
+
+        var dataid = ""
+
+        //dataid = docID != "" ? docID : docSaved[0][langCheck][modelCheck];
+        dataid = docID;
+
+        console.log(dataid);
+        try {
+          let clientData = await Client.findOne({ _id: id });
+          //clientData["History"][langCheck][modelCheck].pull(docid);
+          console.log(clientData["History"][langCheck][modelCheck]);
+
+        //   const removeById = (arr, id) => {
+        //     const requiredIndex = arr.findIndex(el => {
+        //        return el === String(id);        
+        //     });
+        //     if(requiredIndex === -1){
+        //        return false;
+        //     };
+        //     return !!arr.splice(requiredIndex, 1);
+        //  };
+        for( var i = 0; i < clientData["History"][langCheck][modelCheck].length; i++){ 
+          console.log(clientData["History"][langCheck][modelCheck][i][0]);
+          // console.log(dataid[0]);
+    
+          if ( clientData["History"][langCheck][modelCheck][i][0] == dataid[0]) { 
+      
+            clientData["History"][langCheck][modelCheck].splice(i, 1); 
+          }
+      
+        }
+        console.log(clientData["History"][langCheck][modelCheck]);
+
+          //removeById(clientData["History"][langCheck][modelCheck], docID);
+          await clientData.save();
+          // console.log(data1)
+        } catch (err) {
+          console.log(err);
+        }
+
+
+
+          // console.log(html)
+        res.send({ html: "success" });
+        return;
+  }  else {}
+}
+    // res.send({ html: "No Template added yet!" });
+   catch (err) {
+    console.log(err);
+    res.send({ html: "Error in delete!" });
+    // res.status(500).send({ error: 'Something failed!' })
   }
 });
 
