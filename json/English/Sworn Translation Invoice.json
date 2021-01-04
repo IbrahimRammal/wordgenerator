@@ -47,6 +47,10 @@
     },
     "s2": {
         "caption": "Client",
+        "f0": {
+            "caption": "Date",
+            "value": ""
+        },
         "f1": {
             "caption": "Name and Surname",
             "value": ""
