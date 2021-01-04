@@ -164,6 +164,14 @@ const prontoLbpSchema = mongoose.Schema({
       "caption": {
         "type": "String"
       },
+      "f0": {
+        "caption": {
+          "type": "String"
+        },
+        "value": {
+          "type": "String"
+        }
+      },
       "f1": {
         "caption": {
           "type": "String"
