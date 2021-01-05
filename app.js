@@ -31,19 +31,19 @@ var options = {
 app.use(
   express.static(
     path.join("/home/ubt/gitWordGenerator/wordgenerator", "public"),{
-      etag: true, // Just being explicit about the default.
-      lastModified: true,  // Just being explicit about the default.
-      setHeaders: (res, path) => {
-        const hashRegExp = new RegExp('\\.[0-9a-f]{8}\\.');
+      // etag: true, // Just being explicit about the default.
+      // lastModified: true,  // Just being explicit about the default.
+      // setHeaders: (res, path) => {
+      //   const hashRegExp = new RegExp('\\.[0-9a-f]{8}\\.');
     
-        if (path.endsWith('.html')) {
-          // All of the project's HTML files end in .html
-          res.setHeader('Cache-Control', 'no-cache');
-        } else if (hashRegExp.test(path)) {
-          // If the RegExp matched, then we have a versioned URL.
-          res.setHeader('Cache-Control', 'max-age=31536000');
-        }
-      },
+      //   if (path.endsWith('.html')) {
+      //     // All of the project's HTML files end in .html
+      //     res.setHeader('Cache-Control', 'no-cache');
+      //   } else if (hashRegExp.test(path)) {
+      //     // If the RegExp matched, then we have a versioned URL.
+      //     res.setHeader('Cache-Control', 'max-age=31536000');
+      //   }
+      // },
     }
   )
 );

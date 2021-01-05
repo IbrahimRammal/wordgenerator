@@ -38,9 +38,9 @@ $( document ).ready(function() {
             allowSorting: true,
             allowMultiSorting: true,
             // allowExcelExport: true,
-            allowPdfExport: true,
+            // allowPdfExport: true,
             // searchSettings: { fields: ['fullname'] , operator: 'contains', key: 'test', ignoreCase: true},
-            toolbar: ['Add', 'Edit', 'Delete', 'Search','','','','','','','PdfExport'], //ExcelExport
+            toolbar: ['Add', 'Edit', 'Delete', 'Search','','','','','','',''], //ExcelExport PdfExport
             //toolbar: ['Search'],
             editSettings: { allowEditing: true, allowAdding: true, allowDeleting: true, mode: 'Dialog' }, //, allowDeleting: true
             columns: [
