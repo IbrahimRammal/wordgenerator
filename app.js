@@ -18,9 +18,14 @@ const verify = require("./middleware/verifyToken");
 
 const app = express();
 
+var agent = new https.Agent({
+  keepAlive: true
+ });
+
 var options = {
   key: fs.readFileSync('/home/ubt/gitWordGenerator/wordgenerator/keys/private.key'),
-  cert: fs.readFileSync('/home/ubt/gitWordGenerator/wordgenerator/keys/certificate.crt')
+  cert: fs.readFileSync('/home/ubt/gitWordGenerator/wordgenerator/keys/certificate.crt'),
+  agent: agent
 };
 
 app.use(
@@ -28,6 +33,8 @@ app.use(
     path.join("/home/ubt/gitWordGenerator/wordgenerator", "public")
   )
 );
+
+
 
 // Create an HTTP service.
 http.createServer(app).listen(port);
