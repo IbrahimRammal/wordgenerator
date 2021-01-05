@@ -65,8 +65,8 @@ $(document).ready(function () {
         "",
         "",
         "",
-        "PdfExport",
-      ], //ExcelExport
+        "",
+      ], //ExcelExport PdfExport
       //toolbar: ['Search'],
       editSettings: {
         allowEditing: true,
