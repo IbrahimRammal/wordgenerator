@@ -18,16 +18,37 @@ const verify = require("./middleware/verifyToken");
 
 const app = express();
 
+var agent = new https.Agent({
+  keepAlive: true
+ });
+
 var options = {
   key: fs.readFileSync('/home/ubt/gitWordGenerator/wordgenerator/keys/private.key'),
-  cert: fs.readFileSync('/home/ubt/gitWordGenerator/wordgenerator/keys/certificate.crt')
+  cert: fs.readFileSync('/home/ubt/gitWordGenerator/wordgenerator/keys/certificate.crt'),
+  agent: agent
 };
 
 app.use(
   express.static(
-    path.join("/home/ubt/gitWordGenerator/wordgenerator", "public")
+    path.join("/home/ubt/gitWordGenerator/wordgenerator", "public"),{
+      etag: true, // Just being explicit about the default.
+      lastModified: true,  // Just being explicit about the default.
+      setHeaders: (res, path) => {
+        const hashRegExp = new RegExp('\\.[0-9a-f]{8}\\.');
+    
+        if (path.endsWith('.html')) {
+          // All of the project's HTML files end in .html
+          res.setHeader('Cache-Control', 'no-cache');
+        } else if (hashRegExp.test(path)) {
+          // If the RegExp matched, then we have a versioned URL.
+          res.setHeader('Cache-Control', 'max-age=31536000');
+        }
+      },
+    }
   )
 );
+
+
 
 // Create an HTTP service.
 http.createServer(app).listen(port);
@@ -48,6 +69,22 @@ app.use(
     extended: true,
   })
 );
+
+// app.use(express.static('public', {
+//   etag: true, // Just being explicit about the default.
+//   lastModified: true,  // Just being explicit about the default.
+//   setHeaders: (res, path) => {
+//     const hashRegExp = new RegExp('\\.[0-9a-f]{8}\\.');
+
+//     if (path.endsWith('.html')) {
+//       // All of the project's HTML files end in .html
+//       res.setHeader('Cache-Control', 'no-cache');
+//     } else if (hashRegExp.test(path)) {
+//       // If the RegExp matched, then we have a versioned URL.
+//       res.setHeader('Cache-Control', 'max-age=31536000');
+//     }
+//   },
+// }));
 
 ////////////////////////
 //   app.use(function (req, res, next) {
