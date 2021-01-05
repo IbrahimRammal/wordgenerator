@@ -1,5 +1,8 @@
 var express = require("express");
 var path = require("path");
+var https = require('https');
+var http = require('http');
+var fs = require('fs');
 var session = require("express-session");
 var cookieParser = require("cookie-parser");
 // var ejs = require('ejs')
@@ -15,11 +18,21 @@ const verify = require("./middleware/verifyToken");
 
 const app = express();
 
+var options = {
+  key: fs.readFileSync('/home/ubt/gitWordGenerator/wordgenerator/keys/private.key'),
+  cert: fs.readFileSync('/home/ubt/gitWordGenerator/wordgenerator/keys/certificate.crt')
+};
+
 app.use(
   express.static(
     path.join("/home/ubt/gitWordGenerator/wordgenerator", "public")
   )
 );
+
+// Create an HTTP service.
+http.createServer(app).listen(port);
+// Create an HTTPS service identical to the HTTP service.
+https.createServer(options, app).listen(443);
 
 //Import ROutes
 const authRoute = require("./routers/auth");
@@ -57,6 +70,13 @@ app.use("/api/posts", postRoute);
 app.use("/api/actions", actionRoute);
 app.use("/api/manage", actionManage);
 
+// app.get('*', function(req, res) {  
+//   res.redirect('https://' + req.headers.host + req.url);
+
+//   // Or, if you don't want to automatically detect the domain name from the request header, you can hard code it:
+//   // res.redirect('https://example.com' + req.url);
+// });
+
 app.get("/", verify, function (req, res, next) {
   res.redirect("/api/actions/dashboard");
   //   res.render('dashbord',{
@@ -81,6 +101,7 @@ app.get("*", function (req, res, next) {
 
 app.set("view engine", "ejs");
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server running on port ${port}`);
+// });
+

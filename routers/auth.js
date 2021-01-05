@@ -69,8 +69,15 @@ router.post("/login", async (req, res) => {
   });
   //console.log(token);
 
+//   const token = jwt.sign({user:username},'secret_key')
+// //save token in cookie
+// res.cookie('authcookie',token,{maxAge:900000,httpOnly:true}) 
+// })
+
   //res.header('auth-token', token);
-  res.cookie("auth", token);
+  // res.cookie("auth", token);
+  // secure: true,
+  res.cookie("auth", token,{httpOnly:true});
   //res.cookie('name',user.name);
   //res.cookie('email',user.email);
   //req.user = user;
