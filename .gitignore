@@ -107,4 +107,5 @@ dist
 #output document
 Output/
 
-
+#db
+db/

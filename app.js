@@ -7,6 +7,23 @@ var session = require("express-session");
 var cookieParser = require("cookie-parser");
 // var ejs = require('ejs')
 var bodyParser = require("body-parser");
+
+/*jshint esversion: 8 */
+var yargs = require('yargs');
+var size = 0;
+var copyName = "";
+var location = "";
+var isRenameChecking = false;
+var accessDetails = null;
+const archiver = require('archiver');
+const multer = require('multer');
+var cors = require('cors');
+const pattern = /(\.\.\/)/g;
+
+// const contentRootPath = yargs.argv.d;
+
+// *****************************************************************
+
 // var fs = require('fs');
 // var https = require('https');
 const port = process.env.PORT;
@@ -48,7 +65,9 @@ app.use(
   )
 );
 
-
+// ********************
+app.use(cors());
+// *******************
 
 // Create an HTTP service.
 http.createServer(app).listen(port);
@@ -60,6 +79,7 @@ const authRoute = require("./routers/auth");
 const postRoute = require("./routers/posts");
 const actionRoute = require("./routers/actions");
 const actionManage = require("./routers/manage");
+const actionAdmin = require("./routers/admin");
 
 //connect to mongoose
 require("./db/db");
@@ -106,6 +126,8 @@ app.use("/api/user", authRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/actions", actionRoute);
 app.use("/api/manage", actionManage);
+app.use("/api/admin", actionAdmin);
+
 
 // app.get('*', function(req, res) {  
 //   res.redirect('https://' + req.headers.host + req.url);

@@ -1,0 +1,8 @@
+{
+    "role": "Administator",
+    "rules":[
+        {"path":"/backup/", "isFile": false,"role": "Administator", "download": "allow","write": "deny","upload": "deny", "copy": "deny", "cut": "deny"},
+        {"path":"/backup/*", "isFile": false,"role": "Administator", "download": "allow","write": "deny","upload": "deny", "copy": "deny", "cut": "deny"},
+        {"path":"/backup/*.*", "isFile": true,"role": "Administator", "download": "allow","write": "deny","upload": "deny", "copy": "deny", "cut": "deny"}
+    ]
+}
