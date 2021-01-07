@@ -3376,7 +3376,7 @@ router.post("/paid", verify, async (req, res) => {
         //data[req.query.lang][modelCheck].push(clientpaid);
 
         //const paid = new Paid(data);
-        const paid = new Paid();
+        let paid = new Paid();
 
         console.log(clientPaymentHistory);
 
@@ -3452,7 +3452,13 @@ router.post("/paid", verify, async (req, res) => {
         //{_id: id, "language.modelCheck.docid": {$nin: [clientpaid.docid] }},
         var flagPaidSuccess = false;
 
-        var savedPaid = await Paid.updateOne(
+      //   PersonModel.update(
+      //     { _id: person._id }, 
+      //     { $push: { friends: friend } },
+      //     done
+      // );
+
+          Paid.updateOne(
           { _id: paidClientSelectedID },
           { $push: { payment: clientPaymentHistory } },
           { upsert: true, new: true },
