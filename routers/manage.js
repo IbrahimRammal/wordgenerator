@@ -31,6 +31,12 @@ router.post("/User/BatchData", verify, async (req, res) => {
   // console.log(req.body);
 
   try {
+
+    if (req.role == "User" || req.role == "Admin") {
+      res.redirect("/api/manage/403");
+      return;
+    }
+    
     // console.log(req.body.value);
     var a = req.body.value;
     console.log(a);
@@ -130,6 +136,10 @@ router.post("/User/BatchData", verify, async (req, res) => {
 
 router.post("/User/GetData", verify, async (req, res) => {
   // console.log(req.body);
+  if (req.role == "User" || req.role == "Admin") {
+    res.redirect("/api/manage/403");
+    return;
+  }
   console.log(req.body);
 
   //   var result = [{}];
@@ -149,6 +159,7 @@ router.get("/User", verify, async (req, res) => {
   // console.log(req.body);
   if (req.role == "User" || req.role == "Admin") {
     res.redirect("/api/manage/403");
+    return;
   }
 
   res.render("managment", {

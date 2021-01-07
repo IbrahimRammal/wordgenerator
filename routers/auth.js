@@ -13,7 +13,8 @@ const {
 router.post("/register", async (req, res) => {
   var superKey = req.body["challenge"];
 
-  if (superKey == "852456951753") {
+  if (superKey == "852456951753852456951753") {
+    return;
   } else {
     return;
   }
