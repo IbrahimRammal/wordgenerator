@@ -108,4 +108,4 @@ dist
 Output/
 
 #db
-#db/
+.db/
