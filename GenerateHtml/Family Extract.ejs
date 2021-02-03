@@ -71,6 +71,15 @@
                 </a>
             </div>
 
+            <!--data.s2.fams[i].nsname = req.body["s2_fams_nsname_" + i];
+                data.s2.fams[i].faname = req.body["s2_fams_faname_" + i];
+                data.s2.fams[i].moname = req.body["s2_fams_moname_" + i];
+                data.s2.fams[i].pdbirth = req.body["s2_fams_pdbirth_" + i];
+                data.s2.fams[i].sect = req.body["s2_fams_sect_" + i];
+                data.s2.fams[i].stat = req.body["s2_fams_stat_" + i];
+                data.s2.fams[i].s = req.body["s2_fams_s_" + i];
+                data.s2.fams[i].remark = req.body["s2_fams_remark_" + i]; -->
+
             <!-- Card body -->
             <div id="collapseOne<%= i %>" class="collapse <%- i == 0 ? 'show' : '' %>"" role="tabpanel" aria-labelledby="headingOne<%= i %>"
                 data-parent="#accordionEx">
@@ -82,19 +91,19 @@
                         <div class="form-row">
                             <div class="form-group col">
                                 <input type="text" class="form-control" name="s2_fams_nsname_<%= i %>"
-                                    id="s2famsnsname<%= i %>" placeholder="Name and Surname">
+                                    id="s2famsnsname<%= i %>" placeholder="Name and Surname" value="<%= obj.s2.fams[i].nsname %>">
                             </div>
                             <div class="form-group col">
                                 <input type="text" class="form-control" name="s2_fams_faname_<%= i %>"
-                                    id="s2famsfaname<%= i %>" placeholder="Father Name">
+                                    id="s2famsfaname<%= i %>" placeholder="Father Name" value="<%= obj.s2.fams[i].faname %>">
                             </div>
                             <div class="form-group col">
                                 <input type="text" class="form-control" name="s2_fams_moname_<%= i %>"
-                                    id="s2famsmoname<%= i %>" placeholder="Mother Name">
+                                    id="s2famsmoname<%= i %>" placeholder="Mother Name" value="<%= obj.s2.fams[i].moname %>">
                             </div>
                             <div class="form-group col">
                                 <input type="text" class="form-control" name="s2_fams_pdbirth_<%= i %>"
-                                    id="s2famspdbirth<%= i %>" placeholder="Place and Birth Date">
+                                    id="s2famspdbirth<%= i %>" placeholder="Place and Birth Date" value="<%= obj.s2.fams[i].pdbirth %>">
                             </div>
                         </div>
                     </div>
@@ -102,19 +111,19 @@
                         <div class="form-row">
                             <div class="form-group col">
                                 <input type="text" class="form-control" name="s2_fams_sect_<%= i %>"
-                                    id="s2famssect<%= i %>" placeholder="sect">
+                                    id="s2famssect<%= i %>" placeholder="sect" value="<%= obj.s2.fams[i].sect %>">
                             </div>
                             <div class="form-group col">
                                 <input type="text" class="form-control" name="s2_fams_stat_<%= i %>"
-                                    id="s2famsstat<%= i %>" placeholder="Family Status">
+                                    id="s2famsstat<%= i %>" placeholder="Family Status" value="<%= obj.s2.fams[i].stat %>">
                             </div>
                             <div class="form-group col">
                                 <input type="text" class="form-control" name="s2_fams_s_<%= i %>" id="s2famss<%= i %>"
-                                    placeholder="Sex">
+                                    placeholder="Sex" value="<%= obj.s2.fams[i].s %>">
                             </div>
                             <div class="form-group col">
                                 <input type="text" class="form-control" name="s2_fams_remark_<%= i %>"
-                                    id="s2famsremark<%= i %>" placeholder="remark">
+                                    id="s2famsremark<%= i %>" placeholder="remark" value="<%= obj.s2.fams[i].remark %>">
                             </div>
                         </div>
                     </div>
@@ -150,19 +159,19 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_nsname_<%= i %>" id="s2famsnsname<%= i %>"
-                            placeholder="Nom et surnom">
+                            placeholder="Nom et surnom" value="<%= obj.s2.fams[i].nsname %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_faname_<%= i %>" id="s2famsfaname<%= i %>"
-                            placeholder="Nom du père">
+                            placeholder="Nom du père" value="<%= obj.s2.fams[i].faname %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_moname_<%= i %>" id="s2famsmoname<%= i %>"
-                            placeholder="Nom de la mère">
+                            placeholder="Nom de la mère" value="<%= obj.s2.fams[i].moname %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_pdbirth_<%= i %>"
-                            id="s2famspdbirth<%= i %>" placeholder="Lieu et date de naissance">
+                            id="s2famspdbirth<%= i %>" placeholder="Lieu et date de naissance" value="<%= obj.s2.fams[i].pdbirth %>">
                     </div>
                 </div>
             </div>
@@ -170,19 +179,19 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_sect_<%= i %>" id="s2famssect<%= i %>"
-                            placeholder="Religion">
+                            placeholder="Religion" value="<%= obj.s2.fams[i].sect %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_stat_<%= i %>" id="s2famsstat<%= i %>"
-                            placeholder="État Civil">
+                            placeholder="État Civil" value="<%= obj.s2.fams[i].stat %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_s_<%= i %>" id="s2famss<%= i %>"
-                            placeholder="Sexe">
+                            placeholder="Sexe" value="<%= obj.s2.fams[i].s %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_remark_<%= i %>" id="s2famsremark<%= i %>"
-                            placeholder="Remarques">
+                            placeholder="Remarques" value="<%= obj.s2.fams[i].remark %>">
                     </div>
                 </div>
             </div>
@@ -217,19 +226,19 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_nsname_<%= i %>" id="s2famsnsname<%= i %>"
-                            placeholder="Nombre y apellido">
+                            placeholder="Nombre y apellido" value="<%= obj.s2.fams[i].nsname %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_faname_<%= i %>" id="s2famsfaname<%= i %>"
-                            placeholder="Nombre del padre">
+                            placeholder="Nombre del padre" value="<%= obj.s2.fams[i].faname %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_moname_<%= i %>" id="s2famsmoname<%= i %>"
-                            placeholder="Nombre y apellido de la madre">
+                            placeholder="Nombre y apellido de la madre" value="<%= obj.s2.fams[i].moname %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_pdbirth_<%= i %>"
-                            id="s2famspdbirth<%= i %>" placeholder="Lugar y fecha de nacimiento">
+                            id="s2famspdbirth<%= i %>" placeholder="Lugar y fecha de nacimiento" value="<%= obj.s2.fams[i].pdbirth %>">
                     </div>
                 </div>
             </div>
@@ -237,19 +246,19 @@
                 <div class="form-row">
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_sect_<%= i %>" id="s2famssect<%= i %>"
-                            placeholder="Religión">
+                            placeholder="Religión" value="<%= obj.s2.fams[i].sect %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_stat_<%= i %>" id="s2famsstat<%= i %>"
-                            placeholder="Estado civil">
+                            placeholder="Estado civil" value="<%= obj.s2.fams[i].stat %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_s_<%= i %>" id="s2famss<%= i %>"
-                            placeholder="Sexo">
+                            placeholder="Sexo" value="<%= obj.s2.fams[i].s %>">
                     </div>
                     <div class="form-group col">
                         <input type="text" class="form-control" name="s2_fams_remark_<%= i %>" id="s2famsremark<%= i %>"
-                            placeholder="Observación">
+                            placeholder="Observación" value="<%= obj.s2.fams[i].remark %>">
                     </div>
                 </div>
             </div>
