@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // const todos =  [
 //     {
 //       id: 1,
@@ -16,7 +15,7 @@ var todos = [{OrderID:10001,"CustomerID":"ALFKI","EmployeeID":1,"Freight":2.3,"S
 
 module.exports = todos
 
-=======
+
 // const todos =  [
 //     {
 //       id: 1,
@@ -33,4 +32,4 @@ var todos = [{OrderID:10001,"CustomerID":"ALFKI","EmployeeID":1,"Freight":2.3,"S
 //const todos = mongoose.model('EmptyTemplate', emptySchema)
 
 module.exports = todos
->>>>>>> fb02903de6bf351c92731987b4747a88961b5f43
+
