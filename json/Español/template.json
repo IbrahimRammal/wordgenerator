@@ -1,10 +1,10 @@
 {
-    "1" : "Birth Certificate",
-    "2" : "Family Extract",
-    "3" : "Divorce Certificate",
-    "4" : "Individual Extract",
-    "5" : "Police record",
-    "6" : "Residence Certificate",
-    "7" : "Empty Template",
-    "8" : "Marriage Certificate"
+    "Birth Certificate" : "Acta de Nacimiento",
+    "Family Extract" : "Extracto del estado civil familiar",
+    "Divorce Certificate" : "Acta de Divorcio",
+    "Individual Extract" : "Extracto del estado civil individual",
+    "Police record" : "Ficha Policial",
+    "Residence Certificate" : "Certificado de Residencia",
+    "Empty Template" : "Plantilla vacía",
+    "Marriage Certificate" : "Acta de matrimonio"
 }

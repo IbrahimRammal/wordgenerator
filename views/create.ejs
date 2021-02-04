@@ -239,8 +239,9 @@
         var f = document.getElementById("tem_list");
         var g = document.getElementById("client_list");
         var strClient = g.options[g.selectedIndex].value;
-        var strTemplate = f.options[f.selectedIndex].text;
+        var strTemplate = f.options[f.selectedIndex].value;
         var strType = e.options[e.selectedIndex].text;
+        //console.log(f.options[f.selectedIndex].value);
         $("#paid").hide(paid);
         //window.alert(strClient);
         // Grab the template

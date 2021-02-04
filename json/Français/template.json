@@ -1,14 +1,14 @@
 {
-    "1" : "Birth Certificate",
-    "2" : "Consent to travel",
-    "3" : "Death Certificate",
-    "4" : "Driver's license certificate",
-    "5" : "Family Extract",
-    "6" : "ID Card",
-    "7" : "Individual Extract",
-    "8" : "Marriage Certificate",
-    "9" : "NSSF Service Certificate",
-    "10" : "Police record",
-    "11" : "Residence Certificate",
-    "12" : "Empty Template"
+    "Birth Certificate" : "Acte de Naissance",
+    "Consent to travel" : "Autorisation de voyage pour enfant",
+    "Death Certificate" : "ACTE DE DÉCÈS",
+    "Driver's license certificate" : "Certificat de permis de conduire",
+    "Family Extract" : "Fiche familiale d’état civil",
+    "ID Card" : "Carte d’Identité",
+    "Individual Extract" : "Fiche individuelle d’état civil",
+    "Marriage Certificate" : "ACTE DE MARIAGE",
+    "NSSF Service Certificate" : "Attestation de service",
+    "Police record" : "Casier Judiciaire ",
+    "Residence Certificate" : "Certificat de résidence",
+    "Empty Template" : "Modèle vide"
 }
