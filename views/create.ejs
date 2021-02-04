@@ -241,7 +241,7 @@
         var strClient = g.options[g.selectedIndex].value;
         var strTemplate = f.options[f.selectedIndex].value;
         var strType = e.options[e.selectedIndex].text;
-        //console.log(f.options[f.selectedIndex].value);
+        var strPreview = f.options[f.selectedIndex].text;
         $("#paid").hide(paid);
         //window.alert(strClient);
         // Grab the template
@@ -271,7 +271,7 @@
               var paid = fixtures["paid"];
               $("#panel").html(html);
               //$('#paid').html(paid);
-              $("#card_label").html(strType + " > " + strTemplate);
+              $("#card_label").html(strType + " > " + strPreview);
             },
             error: function (jqXHR, textStatus, err) {
               $('#load').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;').toggleClass("disabled");
