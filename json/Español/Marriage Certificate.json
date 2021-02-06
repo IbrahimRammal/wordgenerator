@@ -332,7 +332,11 @@
         }
     },
     "s13": {
-        "caption": "Por cuenta del oficial del estado civil",
+        "caption": "Puesto del oficial",
+        "f0": {
+            "caption": "puesto del oficial",
+            "value": ""
+        },
         "f1": {
             "caption": "Localidad",
             "value": ""

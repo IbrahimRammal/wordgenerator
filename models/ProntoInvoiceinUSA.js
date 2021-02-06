@@ -135,6 +135,14 @@ const prontoUsaSchema = mongoose.Schema({
         "value": {
           "type": "String"
         }
+      },
+      "f5": {
+        "caption": {
+          "type": "String"
+        },
+        "value": {
+          "type": "String"
+        }
       }
     },
     "s3": {

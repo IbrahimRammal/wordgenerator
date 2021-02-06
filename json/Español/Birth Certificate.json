@@ -317,7 +317,11 @@
         }
     },
     "s13": {
-        "caption": "Oficial de estado civil",
+        "caption": "puesto del oficial",
+        "f0": {
+            "caption": "puesto del oficial",
+            "value": ""
+        },
         "f1": {
             "caption": "nombre del oficial",
             "value": ""

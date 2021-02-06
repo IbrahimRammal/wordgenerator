@@ -195,6 +195,14 @@ const swornSchema = mongoose.Schema({
         "value": {
           "type": "String"
         }
+      },
+      "f4": {
+        "caption": {
+          "type": "String"
+        },
+        "value": {
+          "type": "String"
+        }
       }
     },
     "s3": {

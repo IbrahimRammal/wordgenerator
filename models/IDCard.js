@@ -288,6 +288,14 @@ const idcardSchema = mongoose.Schema({
       value: {
         type: 'String'
       }
+    },
+    f16: {
+      caption: {
+        type: 'String'
+      },
+      value: {
+        type: 'String'
+      }
     }
   },
   date: {

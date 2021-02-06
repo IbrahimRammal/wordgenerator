@@ -136,6 +136,10 @@
         "f16": {
             "caption": "Localidad del oficial de estado civil",
             "value": ""
+        },
+        "f17": {
+            "caption": "puesto del oficial",
+            "value": ""
         }
     },
     "date": "", "original": "0",   "download": "",

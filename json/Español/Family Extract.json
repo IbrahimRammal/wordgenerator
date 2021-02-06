@@ -76,6 +76,10 @@
         "f6": {
             "caption": "Oficial de la localidad",
             "value": ""
+        },
+        "f7": {
+            "caption": "puesto del oficial",
+            "value": ""
         }
     },
     "s2": {

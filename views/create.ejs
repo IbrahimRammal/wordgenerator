@@ -243,6 +243,7 @@
         var strType = e.options[e.selectedIndex].text;
         var strPreview = f.options[f.selectedIndex].text;
         $("#paid").hide(paid);
+        // console.log("strTemplate" + strTemplate);
         //window.alert(strClient);
         // Grab the template
         if (
@@ -250,7 +251,13 @@
           strTemplate != "Document Select ..." &&
           g.options[g.selectedIndex].text != "Client Select ..."
         ) {
-
+          if(strTemplate == "Driver")
+          {
+            strTemplate = "Driver's license certificate";
+          }
+          else if(strTemplate == "Private Driver"){
+            strTemplate = "Private Driver's license";
+          } else {}
           $('#load').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
           // $("#spinner").show();
           $("#spinner").toggleClass( "active");

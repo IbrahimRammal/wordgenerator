@@ -2053,7 +2053,7 @@ router.post("/template", verify, async (req, res) => {
         console.log(err);
       }
 
-      // console.log(htmlpath)
+      console.log(htmlpath)
       if (fs.existsSync(path) && fs.existsSync(htmlpath)) {
         // if recode doesnot exits in data base file exists
         let rawdata = fs.readFileSync(path, "utf-8");

@@ -211,6 +211,14 @@ const prontoLbpSchema = mongoose.Schema({
         "value": {
           "type": "String"
         }
+      },
+      "f6": {
+        "caption": {
+          "type": "String"
+        },
+        "value": {
+          "type": "String"
+        }
       }
     },
     "s3": {

@@ -76,6 +76,10 @@
         "f6": {
             "caption": "Officer Locality",
             "value": ""
+        },
+        "f7": {
+            "caption": "Official’s position",
+            "value": ""
         }
     },
     "s2": {

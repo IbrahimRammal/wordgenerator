@@ -29,7 +29,7 @@
     "s1": {
         "caption": "Header",
         "f0": {
-            "caption": "Number",
+            "caption": "Invoice Number",
             "value": ""
         },
         "f1": {
@@ -48,7 +48,7 @@
     "s2": {
         "caption": "Client",
         "f0": {
-            "caption": "Date",
+            "caption": "Invoice Number",
             "value": ""
         },
         "f1": {
@@ -61,6 +61,10 @@
         },
         "f3": {
             "caption": "Address",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Date",
             "value": ""
         }
     },

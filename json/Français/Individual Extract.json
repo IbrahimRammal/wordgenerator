@@ -136,6 +136,10 @@
         "f16": {
             "caption": "Localité de l’officier de l’état civil",
             "value": ""
+        },
+        "f17": {
+            "caption": "poste du fonctionnaire",
+            "value": ""
         }
     },
     "date": "",

@@ -307,7 +307,16 @@ const individualSchema = mongoose.Schema({
         value: {
           type: 'String'
         }
-  }},
+    }, 
+    f17: {
+      caption: {
+        type: 'String'
+      },
+      value: {
+        type: 'String'
+      }
+     }
+  },
   date: {
     type: 'String'
   },
