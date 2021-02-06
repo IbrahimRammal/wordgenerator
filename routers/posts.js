@@ -2571,6 +2571,47 @@ router.post("/Payment/GetData", verify, async (req, res) => {
               // add default row json ... or send message to client to fuck off
             }
             let docView = JSON.parse(rawdata);
+            let docModelKey = user["payment"][j].docModel;
+            let docModelViewText = "";
+
+            if (docModelKey.includes("Birth")) {
+                  docModelViewText =  docView["Birth Certificate"];
+            } else if (docModelKey.includes("Divorce")) {
+                  docModelViewText =  docView["Divorce Certificate"];
+            } else if (docModelKey.includes("Death")) {
+                  docModelViewText =  docView["Death Certificate"];
+            } else if (docModelKey.includes("Marriage")) {
+                  docModelViewText =  docView["Marriage Certificate"];
+            } else if (docModelKey.includes("Work")) {       
+                  docModelViewText =  docView["Work Permit"];
+            } else if (docModelKey.includes("ID")) {
+                  docModelViewText =  docView["ID Card"];
+            } else if (docModelKey.includes("MoF")) {
+                  docModelViewText =  docView["MoF Registration"];
+            } else if (docModelKey.includes("Residence")) {
+                  docModelViewText =  docView["Residence Certificate"];
+            } else if (docModelKey.includes("PrivateDriver")) {
+                  docModelViewText =  docView["Private Driver's license"];
+            } else if (docModelKey.includes("Police")) {
+                  docModelViewText =  docView["Police record"];
+            } else if (docModelKey.includes("NSSF")) {
+                  docModelViewText =  docView["NSSF Service Certificate"];
+            } else if (docModelKey.includes("Individual")) {
+                  docModelViewText =  docView["Individual Extract"];
+            } else if (docModelKey.includes("Family")) {
+                  docModelViewText =  docView["Family Extract"];
+            } else if (docModelKey.includes("Consent")) {
+                  docModelViewText =  docView["Consent to travel"];
+            } else if (docModelKey.includes("ResidencyPermit")) {
+                  docModelViewText =  docView["Residency Permit"];
+            } else if (docModelKey.includes("Driver")) {
+                  docModelViewText =  docView["Driver's license certificate"];
+            } else if (docModelKey.includes("Empty")) {
+                  docModelViewText =  docView["Empty Template"];
+            } else {}
+
+            console.log(docModelKey);
+            console.log(docView[docModelKey]);
 
           let subParent = {
             //put parent id temor
@@ -2583,7 +2624,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
             category: user["payment"][j].category,
             language: user["payment"][j].language,
             docModel: user["payment"][j].docModel,
-            docModelView: docView["Empty Template"],
+            docModelView: docModelViewText,
             total: user["payment"][j].total,
             remain: user["payment"][j].remain,
             paid: user["payment"][j].paid,
