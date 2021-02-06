@@ -331,6 +331,10 @@ router.post("/edit", verify, async (req, res) => {
       var url = "";
       var result = [];
 
+      // var objEsp = JSON.parse(fs.readFileSync('./json/Español/template.json', 'utf8'));
+      // var objFrance = JSON.parse(fs.readFileSync('./json/Français/template.json', 'utf8'));
+      // var objArabic = JSON.parse(fs.readFileSync('./json/Arabic/template.json', 'utf8'));
+
       try {
         var clientDocx = await Client.find(
           { _id: id },
@@ -344,6 +348,21 @@ router.post("/edit", verify, async (req, res) => {
           //console.log(clientDocx[0][element]);
           for (var i = 0; i < language.length; i++) {
             var docLanguage = clientDocx[0]["History"][language[i]];
+
+
+            let rawdata;
+            if (language[i] == "English") {
+              rawdata = fs.readFileSync("./json/English/template.json", "utf-8");
+            } else if (language[i] == "Français") {
+              rawdata = fs.readFileSync("./json/Français/template.json", "utf-8");
+            } else if (language[i] == "Español") {
+              rawdata = fs.readFileSync("./json/Español/template.json", "utf-8");
+            } else if (language[i] == "Arabic") {
+              rawdata = fs.readFileSync("./json/Arabic/template.json", "utf-8");
+            } else {
+              // add default row json ... or send message to client to fuck off
+            }
+            let docView = JSON.parse(rawdata);
             
             for (const docModel in docLanguage) {
               var ObjectId = require("mongoose").Types.ObjectId;
@@ -362,6 +381,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Birth Certificate",
+                      docModelView: docView["Birth Certificate"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -382,6 +402,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Divorce Certificate",
+                      docModelView: docView["Divorce Certificate"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -402,6 +423,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Death Certificate",
+                      docModelView: docView["Death Certificate"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -422,6 +444,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Marriage Certificate",
+                      docModelView: docView["Marriage Certificate"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -442,6 +465,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Work Permit",
+                      docModelView: docView["Work Permit"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -462,6 +486,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "ID Card",
+                      docModelView: docView["ID Card"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -482,6 +507,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "MoF Registration",
+                      docModelView: docView["MoF Registration"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -502,6 +528,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Residence Certificate",
+                      docModelView: docView["Residence Certificate"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -522,6 +549,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Private Driver's license",
+                      docModelView: docView["Private Driver's license"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -542,6 +570,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Police record",
+                      docModelView: docView["Police record"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -562,6 +591,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "NSSF Service Certificate",
+                      docModelView: docView["NSSF Service Certificate"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -582,6 +612,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Individual Extract",
+                      docModelView: docView["Individual Extract"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -602,6 +633,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Family Extract",
+                      docModelView: docView["Family Extract"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -622,6 +654,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Consent to travel",
+                      docModelView: docView["Consent to travel"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -642,6 +675,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Residency Permit",
+                      docModelView: docView["Residency Permit"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -662,6 +696,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Driver's license certificate",
+                      docModelView: docView["Driver's license certificate"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -683,6 +718,7 @@ router.post("/edit", verify, async (req, res) => {
                       client_id: id,
                       language: language[i],
                       docModel: "Empty Template",
+                      docModelView: docView["Empty Template"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -2522,6 +2558,20 @@ router.post("/Payment/GetData", verify, async (req, res) => {
         for (var j = 0; j < user["payment"].length; j++) {
           //console.log(user["payment"][j].href);
           try{
+            let rawdata;
+            if (user["payment"][j].language == "English") {
+              rawdata = fs.readFileSync("./json/English/template.json", "utf-8");
+            } else if (user["payment"][j].language == "Français") {
+              rawdata = fs.readFileSync("./json/Français/template.json", "utf-8");
+            } else if (user["payment"][j].language == "Español") {
+              rawdata = fs.readFileSync("./json/Español/template.json", "utf-8");
+            } else if (user["payment"][j].language == "Arabic") {
+              rawdata = fs.readFileSync("./json/Arabic/template.json", "utf-8");
+            } else {
+              // add default row json ... or send message to client to fuck off
+            }
+            let docView = JSON.parse(rawdata);
+
           let subParent = {
             //put parent id temor
             _id: getById,
@@ -2533,6 +2583,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
             category: user["payment"][j].category,
             language: user["payment"][j].language,
             docModel: user["payment"][j].docModel,
+            docModelView: docView["Empty Template"],
             total: user["payment"][j].total,
             remain: user["payment"][j].remain,
             paid: user["payment"][j].paid,
@@ -4237,6 +4288,21 @@ router.post("/editpaid", verify, async (req, res) => {
           for (var i = 0; i < clientDocx[0]["payment"].length; i++) {
             try{
             var docLanguage = clientDocx[0]["payment"][i];
+
+            let rawdata;
+            if (docLanguage["language"] == "English") {
+              rawdata = fs.readFileSync("./json/English/template.json", "utf-8");
+            } else if (docLanguage["language"] == "Français") {
+              rawdata = fs.readFileSync("./json/Français/template.json", "utf-8");
+            } else if (docLanguage["language"] == "Español") {
+              rawdata = fs.readFileSync("./json/Español/template.json", "utf-8");
+            } else if (docLanguage["language"] == "Arabic") {
+              rawdata = fs.readFileSync("./json/Arabic/template.json", "utf-8");
+            } else {
+              // add default row json ... or send message to client to fuck off
+            }
+            let docView = JSON.parse(rawdata);
+
             // for (const docModel in clientDocx.payment[i]) {
             var ObjectId = require("mongoose").Types.ObjectId;
             if (docLanguage != null && ObjectId.isValid(docLanguage["docid"])) {
@@ -4255,6 +4321,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Birth Certificate",
+                  docModelView: docView["Birth Certificate"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4273,6 +4340,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Divorce Certificate",
+                  docModelView: docView["Divorce Certificate"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4291,6 +4359,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Death Certificate",
+                  docModelView: docView["Death Certificate"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4309,6 +4378,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Marriage Certificate",
+                  docModelView: docView["Marriage Certificate"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4327,6 +4397,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Work Permit",
+                  docModelView: docView["Work Permit"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4345,6 +4416,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "ID Card",
+                  docModelView: docView["ID Card"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4361,6 +4433,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "MoF Registration",
+                  docModelView: docView["MoF Registration"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4379,6 +4452,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Residence Certificate",
+                  docModelView: docView["Residence Certificate"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4397,6 +4471,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Private Driver's license",
+                  docModelView: docView["Private Driver's license"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4415,6 +4490,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Police record",
+                  docModelView: docView["Police record"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4433,6 +4509,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "NSSF Service Certificate",
+                  docModelView: docView["NSSF Service Certificate"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4451,6 +4528,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Individual Extract",
+                  docModelView: docView["Individual Extract"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4469,6 +4547,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Family Extract",
+                  docModelView: docView["Family Extract"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4487,6 +4566,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Consent to travel",
+                  docModelView: docView["Consent to travel"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4505,6 +4585,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Residency Permit",
+                  docModelView: docView["Residency Permit"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4523,6 +4604,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Driver's license certificate",
+                  docModelView: docView["Driver's license certificate"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
@@ -4543,6 +4625,7 @@ router.post("/editpaid", verify, async (req, res) => {
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Empty Template",
+                  docModelView: docView["Empty Template"],
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],

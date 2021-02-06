@@ -226,11 +226,20 @@ $(document).ready(function () {
             allowEditing: false,
           },
           {
+            field: "docModelView",
+            headerText: "docModel",
+            textAlign: "Left",
+            width: 120,
+            validationRules: { required: true },
+            //   validationRules: { required: true },
+          },
+          {
             field: "docModel",
             headerText: "docModel",
             width: 120,
             textAlign: "Left",
             allowEditing: false,
+            visible: false
           },
           {
             field: "createTime",
