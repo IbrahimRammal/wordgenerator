@@ -76,6 +76,10 @@
         "f6": {
             "caption": "Localité de l'officier",
             "value": ""
+        },
+        "f7": {
+            "caption": "poste du fonctionnaire",
+            "value": ""
         }
     },
     "s2": {

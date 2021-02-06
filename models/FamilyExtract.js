@@ -187,6 +187,14 @@ const familySchema = mongoose.Schema({
       value: {
         type: 'String'
       }
+    },
+    f7: {
+      caption: {
+        type: 'String'
+      },
+      value: {
+        type: 'String'
+      }
     }
   },
   s2: {

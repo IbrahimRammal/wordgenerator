@@ -127,6 +127,10 @@
         "f15": {
             "caption": "Nom de l’officier de l’état civil",
             "value": ""
+        },
+        "f16": {
+            "caption": "poste du fonctionnaire",
+            "value": ""
         }
     },
     "date": "",

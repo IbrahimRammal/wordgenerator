@@ -332,7 +332,11 @@
         }
     },
     "s13": {
-        "caption": "l'Officier de L'état Civil de ",
+        "caption": "Poste du fonctionnaire",
+        "f0": {
+            "caption": "poste du fonctionnaire",
+            "value": ""
+        },
         "f1": {
             "caption": "localité",
             "value": ""

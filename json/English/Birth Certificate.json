@@ -77,7 +77,7 @@
     "f5": {
       "caption": "Statement of the obstetrician",
       "s1": {
-        "caption": "I,        ,state that I have attended the aforementioned delivery.",
+        "caption": "Name",
         "value": ""
       },
       "s2": {
@@ -317,7 +317,11 @@
     }
   },
   "s13": {
-    "caption": "Civil Status Officer",
+    "caption": "Official’s position",
+    "f0": {
+      "caption": "Official’s position",
+      "value": ""
+    },
     "f1": {
       "caption": "Officer Name",
       "value": ""
