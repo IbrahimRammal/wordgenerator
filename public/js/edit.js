@@ -121,12 +121,21 @@ function getData() {
                 width: 120,
                 visible: false,
               },
+              {
+                field: "docModelView",
+                headerText: "docModel",
+                textAlign: "Left",
+                width: 120,
+                validationRules: { required: true },
+                //   validationRules: { required: true },
+              },
             {
               field: "docModel",
               headerText: "docModel",
               textAlign: "Left",
               width: 120,
               validationRules: { required: true },
+              visible: false,
               //   validationRules: { required: true },
             },
             {
