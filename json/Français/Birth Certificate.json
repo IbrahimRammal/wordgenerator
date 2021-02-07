@@ -77,7 +77,7 @@
         "f5": {
             "caption": "Déclaration du médecin accoucheur",
             "s1": {
-                "caption": "Je,        , déclare que j’ai assisté à l’accouchement susmentionné.",
+                "caption": "Nom",
                 "value": ""
             },
             "s2": {
