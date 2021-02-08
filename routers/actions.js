@@ -195,9 +195,31 @@ router.get("/dashboard", verify, async (req, res) => {
       documentNumber: documentNumber,
     };
 
+    var expenseLog = await Expense.find({});
+
+    for (var j = 0; j < expenseLog.length; j++) {
+      // var remains = expenseLog[j].total - expenseLog[j].paid;
+      // console.log(expenseLog[j])
+
+
+  
+      if (
+        expenseLog[j]["category"] != null &&
+        expenseLog[j]["category"].includes("Income")
+      ) {
+        paidSum += expenseLog[j].paid;
+        totalAmountSum += expenseLog[j].total;
+        //totalIncome = totalIncome + expenseLog[j].paid;
+        console.log("income");
+
+      } else {
+        console.log("asdfljaslkdf" + expenseLog[j]["category"]);
+      }
+    }
+
     //Get all payment
     for (var i = 0; i < query.length; i++) {
-      console.log(i);
+      // console.log(i);
       let totalpaidprice = 0;
       let totalremainprice = 0;
       let totalvalueprice = 0;
@@ -271,7 +293,7 @@ router.post("/history", verify, async (req, res) => {
     console.log("history Table data collecting");
     // var historyData = await History.find({});
     var historyData = await History.find({}).sort({created_at: 'descending'}).exec();
-    console.log(historyData);
+    // console.log(historyData);
     //res.send([{fullname: 'test', _id: "234234324", date: Date.now, details: "blablablabl"}]);
     res.send(historyData);
   } catch (err) {
