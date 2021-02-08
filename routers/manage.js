@@ -8,6 +8,9 @@ const fs = require("fs");
 var ejs = require("ejs");
 var path = require("path");
 const Expense = require("../models/Expense");
+const PaidModel = require("../models/Paid");
+const Paid = PaidModel.Paid;
+const Payment = PaidModel.Payment;
 
 const {
   registerValidation,
@@ -199,7 +202,10 @@ router.get("/expense", verify, async (req, res) => {
 
   console.log("expense loddingg");
 
-  var query = await Expense.find({});
+  var paidLog = await Paid.find(
+    {},
+    { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
+  );
 
   let totalExpense = 0;
   let totalIncome = 0;
@@ -222,6 +228,39 @@ router.get("/expense", verify, async (req, res) => {
     unofficalIncome: 0,
     swornIncome: 0
   };
+
+  //Get all payment
+  for (var i = 0; i < paidLog.length; i++) {
+
+    for (var j = 0; j < paidLog[i]["payment"].length; j++) {
+      try{
+      //get income from paid
+      //can get remain from total - paid or remain itselef
+      // totalpaidprice += paidLog[i]["payment"][j].paid;
+      // totalremainprice += paidLog[i]["payment"][j].remain;
+      // totalvalueprice += paidLog[i]["payment"][j].total;
+      totalIncome += paidLog[i]["payment"][j].paid;
+
+
+      if (paidLog[i]["payment"][j].category.includes("Pronto")) {
+        prontoIncome = prontoIncome + paidLog[i]["payment"][j].paid;
+      } else if (paidLog[i]["payment"][j].category.includes("Sworn lega")) {
+        swornIncome = swornIncome + paidLog[i]["payment"][j].paid;
+      } else if (paidLog[i]["payment"][j].category.includes("Unofficial")) {
+        unofficalIncome = unofficalIncome + paidLog[i]["payment"][j].paid;
+      } else {
+      }
+    } catch(err){}
+      //console.log("subParent: " + JSON.stringify(subParent));
+    }
+    //after finish loop parent json
+
+    // paidSum += totalpaidprice;
+    // remainSum += totalremainprice;
+    // totalAmountSum += totalvalueprice;
+  }
+
+  var query = await Expense.find({});
 
   for (var j = 0; j < query.length; j++) {
     var total = query[j].total - query[j].paid;
