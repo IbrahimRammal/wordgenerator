@@ -184,67 +184,71 @@ router.get("/dashboard", verify, async (req, res) => {
 
 
     if (documentNumberFormHistoryLog != null) {
-      for (var i = 0; i < language.length; i++) {
-        var docLanguage = documentNumberFormHistoryLog[0]["History"][language[i]];
-        //console.log(docLanguage);
-        // for(var j = 0; j < docLanguage.length; j++)
-        // {
-          if(docLanguage["BirthCertificate"]!=null){
-            documentNumber += docLanguage["BirthCertificate"].length;
-          }
-          if(docLanguage["Consenttotravel"]!=null){
-            documentNumber += docLanguage["Consenttotravel"].length;
-          }
-          if(docLanguage["DeathCertificate"]!=null){
-            documentNumber += docLanguage["DeathCertificate"].length;
-          }
-          if(docLanguage["DivorceCertificate"]!=null){
-            documentNumber += docLanguage["DivorceCertificate"].length;
-          }
-          if(docLanguage["Driverslicensecertificate"]!=null){
-            documentNumber += docLanguage["Driverslicensecertificate"].length;
-          }
-          if(docLanguage["PrivateDriverslicense"]!=null){
-            documentNumber += docLanguage["PrivateDriverslicense"].length;
-          }
-          if(docLanguage["FamilyExtract"]!=null){
-            documentNumber += docLanguage["FamilyExtract"].length;
-          } 
-          if(docLanguage["IDCard"]!=null){
-            documentNumber += docLanguage["IDCard"].length;
-          }
-          if(docLanguage["IndividualExtract"]!=null){
-            documentNumber += docLanguage["IndividualExtract"].length;
-          } 
-          if(docLanguage["MarriageCertificate"]!=null){
-            documentNumber += docLanguage["MarriageCertificate"].length;
-          }
-          if(docLanguage["MoFRegistration"]!=null){
-            documentNumber += docLanguage["MoFRegistration"].length;
-          }
-          if(docLanguage["NSSFServiceCertificate"]!=null){
-            documentNumber += docLanguage["NSSFServiceCertificate"].length;
-          }
-          if(docLanguage["Policerecord"]!=null){
-            documentNumber += docLanguage["Policerecord"].length;
-          }
-          if(docLanguage["ResidenceCertificate"]!=null){
-            documentNumber += docLanguage["ResidenceCertificate"].length;
-          }
-          if(docLanguage["ResidencyPermit"]!=null){
-            documentNumber += docLanguage["ResidencyPermit"].length;
-          }
-          if(docLanguage["WorkPermit"]!=null){
-            documentNumber += docLanguage["WorkPermit"].length;
-          }
-          if(docLanguage["EmptyTemplate"]!=null){
-            documentNumber += docLanguage["EmptyTemplate"].length;
-          }
-          // console.log("findone");
-          //++documentNumber;
-        //}
+      for (var x = 0; x < documentNumberFormHistoryLog.length; x++)
+      {
+        for (var i = 0; i < language.length; i++) {
+          console.log(documentNumberFormHistoryLog.length);
+          var docLanguage = documentNumberFormHistoryLog[x]["History"][language[i]];
+          //console.log(docLanguage);
+          // for(var j = 0; j < docLanguage.length; j++)
+          // {
+            if(docLanguage["BirthCertificate"]!=null){
+              documentNumber += docLanguage["BirthCertificate"].length;
+            }
+            if(docLanguage["Consenttotravel"]!=null){
+              documentNumber += docLanguage["Consenttotravel"].length;
+            }
+            if(docLanguage["DeathCertificate"]!=null){
+              documentNumber += docLanguage["DeathCertificate"].length;
+            }
+            if(docLanguage["DivorceCertificate"]!=null){
+              documentNumber += docLanguage["DivorceCertificate"].length;
+            }
+            if(docLanguage["Driverslicensecertificate"]!=null){
+              documentNumber += docLanguage["Driverslicensecertificate"].length;
+            }
+            if(docLanguage["PrivateDriverslicense"]!=null){
+              documentNumber += docLanguage["PrivateDriverslicense"].length;
+            }
+            if(docLanguage["FamilyExtract"]!=null){
+              documentNumber += docLanguage["FamilyExtract"].length;
+            } 
+            if(docLanguage["IDCard"]!=null){
+              documentNumber += docLanguage["IDCard"].length;
+            }
+            if(docLanguage["IndividualExtract"]!=null){
+              documentNumber += docLanguage["IndividualExtract"].length;
+            } 
+            if(docLanguage["MarriageCertificate"]!=null){
+              documentNumber += docLanguage["MarriageCertificate"].length;
+            }
+            if(docLanguage["MoFRegistration"]!=null){
+              documentNumber += docLanguage["MoFRegistration"].length;
+            }
+            if(docLanguage["NSSFServiceCertificate"]!=null){
+              documentNumber += docLanguage["NSSFServiceCertificate"].length;
+            }
+            if(docLanguage["Policerecord"]!=null){
+              documentNumber += docLanguage["Policerecord"].length;
+            }
+            if(docLanguage["ResidenceCertificate"]!=null){
+              documentNumber += docLanguage["ResidenceCertificate"].length;
+            }
+            if(docLanguage["ResidencyPermit"]!=null){
+              documentNumber += docLanguage["ResidencyPermit"].length;
+            }
+            if(docLanguage["WorkPermit"]!=null){
+              documentNumber += docLanguage["WorkPermit"].length;
+            }
+            if(docLanguage["EmptyTemplate"]!=null){
+              documentNumber += docLanguage["EmptyTemplate"].length;
+            }
+            // console.log("findone");
+            //++documentNumber;
+        }
 
       }
+
     }
 
     //clientData["History"][langCheck][modelCheck]
