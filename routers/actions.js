@@ -152,23 +152,104 @@ router.get("/dashboard", verify, async (req, res) => {
   //get all generated document from the regular client
   try {
     var clientNumber = await Client.count({});
-    var documentNumber = await Birth.count({});
-    documentNumber += await Death.count({});
-    documentNumber += await Divorce.count({});
-    documentNumber += await Family.count({});
-    documentNumber += await MoF.count({});
-    documentNumber += await Private.count({});
-    documentNumber += await Driver.count({});
-    documentNumber += await Consent.count({});
-    documentNumber += await Marriage.count({});
-    documentNumber += await IDCard.count({});
-    documentNumber += await ETemplate.count({});
-    documentNumber += await WPermit.count({});
-    documentNumber += await RPermit.count({});
-    documentNumber += await Residence.count({});
-    documentNumber += await Police.count({});
-    documentNumber += await NSSF.count({});
-    documentNumber += await Individual.count({});
+
+    // var documentNumber = await Birth.count({});
+    // documentNumber += await Death.count({});
+    // documentNumber += await Divorce.count({});
+    // documentNumber += await Family.count({});
+    // documentNumber += await MoF.count({});
+    // documentNumber += await Private.count({});
+    // documentNumber += await Driver.count({});
+    // documentNumber += await Consent.count({});
+    // documentNumber += await Marriage.count({});
+    // documentNumber += await IDCard.count({});
+    // documentNumber += await ETemplate.count({});
+    // documentNumber += await WPermit.count({});
+    // documentNumber += await RPermit.count({});
+    // documentNumber += await Residence.count({});
+    // documentNumber += await Police.count({});
+    // documentNumber += await NSSF.count({});
+    // documentNumber += await Individual.count({});
+
+    var documentNumber = 0;
+
+    var documentNumberFormHistoryLog = await Client.find(
+      {},
+      { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
+    );
+
+
+
+    var language = ["English", "Arabic", "Español", "Français"];
+
+
+    if (documentNumberFormHistoryLog != null) {
+      for (var i = 0; i < language.length; i++) {
+        var docLanguage = documentNumberFormHistoryLog[0]["History"][language[i]];
+        //console.log(docLanguage);
+        // for(var j = 0; j < docLanguage.length; j++)
+        // {
+          if(docLanguage["BirthCertificate"]!=null){
+            documentNumber += docLanguage["BirthCertificate"].length;
+          }
+          if(docLanguage["Consenttotravel"]!=null){
+            documentNumber += docLanguage["Consenttotravel"].length;
+          }
+          if(docLanguage["DeathCertificate"]!=null){
+            documentNumber += docLanguage["DeathCertificate"].length;
+          }
+          if(docLanguage["DivorceCertificate"]!=null){
+            documentNumber += docLanguage["DivorceCertificate"].length;
+          }
+          if(docLanguage["Driverslicensecertificate"]!=null){
+            documentNumber += docLanguage["Driverslicensecertificate"].length;
+          }
+          if(docLanguage["PrivateDriverslicense"]!=null){
+            documentNumber += docLanguage["PrivateDriverslicense"].length;
+          }
+          if(docLanguage["FamilyExtract"]!=null){
+            documentNumber += docLanguage["FamilyExtract"].length;
+          } 
+          if(docLanguage["IDCard"]!=null){
+            documentNumber += docLanguage["IDCard"].length;
+          }
+          if(docLanguage["IndividualExtract"]!=null){
+            documentNumber += docLanguage["IndividualExtract"].length;
+          } 
+          if(docLanguage["MarriageCertificate"]!=null){
+            documentNumber += docLanguage["MarriageCertificate"].length;
+          }
+          if(docLanguage["MoFRegistration"]!=null){
+            documentNumber += docLanguage["MoFRegistration"].length;
+          }
+          if(docLanguage["NSSFServiceCertificate"]!=null){
+            documentNumber += docLanguage["NSSFServiceCertificate"].length;
+          }
+          if(docLanguage["Policerecord"]!=null){
+            documentNumber += docLanguage["Policerecord"].length;
+          }
+          if(docLanguage["ResidenceCertificate"]!=null){
+            documentNumber += docLanguage["ResidenceCertificate"].length;
+          }
+          if(docLanguage["ResidencyPermit"]!=null){
+            documentNumber += docLanguage["ResidencyPermit"].length;
+          }
+          if(docLanguage["WorkPermit"]!=null){
+            documentNumber += docLanguage["WorkPermit"].length;
+          }
+          if(docLanguage["EmptyTemplate"]!=null){
+            documentNumber += docLanguage["EmptyTemplate"].length;
+          }
+          // console.log("findone");
+          //++documentNumber;
+        //}
+
+      }
+    }
+
+    //clientData["History"][langCheck][modelCheck]
+
+
 
     var query = await Paid.find(
       {},
