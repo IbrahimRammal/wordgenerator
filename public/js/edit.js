@@ -78,6 +78,8 @@ function getData() {
           allowSorting: true,
           allowMultiSorting: true,
           allowSelection : true,
+          // allowTextWrap: true,
+          textWrapSettings: { wrapMode: 'Content' },
           // allowExcelExport: true,
           allowPdfExport: true,
           // searchSettings: { fields: ['fullname'] , operator: 'contains', key: 'test', ignoreCase: true},
@@ -194,6 +196,8 @@ function getData() {
               width: 70,
             },
           ],
+          // queryCellInfo: tooltip,
+          // height: 315,
         //   actionFailure: (e) => {
         //     var span = document.createElement("span");
         //     grid.element.parentNode.insertBefore(span, grid.element);
@@ -280,6 +284,12 @@ function getData() {
 
         grid.appendTo("#Grid");
 
+        // function tooltip(args) { // event triggers on every cell render.
+        //   var tooltip = new ej.popups.Tooltip({
+        //       content: args.data[args.column.field].toString() // add Essential JS2 tooltip for every cell.
+        //   },args.cell);
+        // }
+
         // }
 
         // var html = fixtures["html"];
@@ -298,6 +308,8 @@ function getData() {
     toastr["error"]("Please Pick Client before ...", "No Client Picked");
   }
 }
+
+
 
 function click(args) { 
     //console.log(args);

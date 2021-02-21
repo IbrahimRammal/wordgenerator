@@ -187,7 +187,7 @@ router.get("/dashboard", verify, async (req, res) => {
       for (var x = 0; x < documentNumberFormHistoryLog.length; x++)
       {
         for (var i = 0; i < language.length; i++) {
-          console.log(documentNumberFormHistoryLog.length);
+          // console.log(documentNumberFormHistoryLog.length);
           var docLanguage = documentNumberFormHistoryLog[x]["History"][language[i]];
           //console.log(docLanguage);
           // for(var j = 0; j < docLanguage.length; j++)
@@ -346,7 +346,7 @@ router.get("/dashboard", verify, async (req, res) => {
     data.sworn = sworn;
     data.nonlegal = nonlegal;
 
-    console.log(data);
+    //console.log(data);
 
     res.render("dashboard", {
       // req.session.

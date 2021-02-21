@@ -143,7 +143,7 @@ router.post("/User/GetData", verify, async (req, res) => {
     res.redirect("/api/manage/403");
     return;
   }
-  console.log(req.body);
+  //console.log(req.body);
 
   //   var result = [{}];
   //   var user = await User.findById("5ea4a4585bf48e2786fdb232");
@@ -154,7 +154,7 @@ router.post("/User/GetData", verify, async (req, res) => {
     { password: 0 }
   ).sort({date: 'descending'}).exec();
 
-  console.log(result);
+  //console.log(result);
   res.send(result);
 });
 

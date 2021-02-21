@@ -20,6 +20,10 @@
         "f0": {
             "caption": "TextArea",
             "value": ""
+        },
+        "f1": {
+            "caption": "Titre",
+            "value": ""
         }
     },
     "date": "", "original": "0",   "download": "",

@@ -713,12 +713,21 @@ router.post("/edit", verify, async (req, res) => {
                     var docSaved = await ETemplate.find({
                       _id: docLanguage[docModel][j],
                     });
+                    var documentTitle = "";
+                    if(docSaved[0]["s1"]["f1"]["value"] != null)
+                    {
+                      documentTitle = docSaved[0]["s1"]["f1"]["value"];
+                    }
+                    else
+                    {
+                      documentTitle = docView["Empty Template"];
+                    }
                     result.push({
                       _id: docLanguage[docModel][j],
                       client_id: id,
                       language: language[i],
                       docModel: "Empty Template",
-                      docModelView: docView["Empty Template"],
+                      docModelView: documentTitle,
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -2607,7 +2616,19 @@ router.post("/Payment/GetData", verify, async (req, res) => {
             } else if (docModelKey.includes("Driver")) {
                   docModelViewText =  docView["Driver's license certificate"];
             } else if (docModelKey.includes("Empty")) {
-                  docModelViewText =  docView["Empty Template"];
+                  // console.log("dfdddddddddddddddddddddddddddddddddddddd")
+                  // var docSaved = await ETemplate.find({
+                  //   _id: user["payment"][j].docid,
+                  // });
+
+                  // if(docSaved[0]["s1"]["f1"]["value"] != null)
+                  // {
+                  //   docModelViewText = docSaved[0]["s1"]["f1"]["value"];
+                  // }
+                  // else
+                  // {
+                  docModelViewText = docView["Empty Template"];
+                  // }
             } else {}
 
             console.log(docModelKey);
@@ -3791,6 +3812,7 @@ router.post("/data", verify, async (req, res) => {
           });
         }
 
+        // console.log(clientData);
         var downloadLinkGenerator = downloadLink(
           datetime,
           req.query.doc,
@@ -4660,13 +4682,24 @@ router.post("/editpaid", verify, async (req, res) => {
                 var docSaved = await ETemplate.find({
                   _id: docLanguage["docid"],
                 });
+
+                var documentTitle = "";
+                if(docSaved[0]["s1"]["f1"]["value"] != null)
+                {
+                  documentTitle = docSaved[0]["s1"]["f1"]["value"];
+                }
+                else
+                {
+                  documentTitle = docView["Empty Template"];
+                }
+
                 console.log(docSaved);
                 result.push({
                   _id: docLanguage["docid"],
                   client_id: docSaved[0]["client"]["id"],
                   language: docLanguage["language"],
                   docModel: "Empty Template",
-                  docModelView: docView["Empty Template"],
+                  docModelView: documentTitle,
                   created_at: docSaved[0]["created_at"],
                   updated_at: docSaved[0]["updated_at"],
                   createdBy: docSaved[0]["user_created"],
