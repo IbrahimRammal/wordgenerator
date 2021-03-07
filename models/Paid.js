@@ -19,6 +19,7 @@ const subPayment = mongoose.Schema({
   category: "string",
   language: "string",
   docModel: "string",
+  emptyModel: "string",
   createUser: "string",
   updateUser: "string",
   createTime: "string",

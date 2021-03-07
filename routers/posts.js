@@ -1096,7 +1096,12 @@ router.post("/datainvoice", verify, async (req, res) => {
                 data.s3.job[i].wcount = req.body["s3_job_wcount_" + i];
                 data.s3.job[i].t = req.body["s3_job_t_" + i];
 
-                totalPayment += parseFloat(req.body["s3_job_t_" + i]);
+                if(req.body["s3_job_t_" + i] != null && req.body["s3_job_t_" + i] != "" && !isNaN(parseFloat(req.body["s3_job_t_" + i])))
+                {
+                  totalPayment += parseFloat(req.body["s3_job_t_" + i]);
+                }
+
+                //totalPayment += parseFloat(req.body["s3_job_t_" + i]);
 
                 docArray.job.push({
                   pro: req.body["s3_job_pro_" + i],
@@ -1130,7 +1135,10 @@ router.post("/datainvoice", verify, async (req, res) => {
                 data.s3.jobs[i].nunit = req.body["s3_jobs_nunit_" + i];
                 data.s3.jobs[i].t = req.body["s3_jobs_t_" + i];
 
-                totalPayment += parseFloat(req.body["s3_jobs_t_" + i]);
+                if(req.body["s3_jobs_t_" + i] != null && req.body["s3_jobs_t_" + i] != "" && !isNaN(parseFloat(req.body["s3_jobs_t_" + i])))
+                {
+                  totalPayment += parseFloat(req.body["s3_jobs_t_" + i]);
+                }
 
                 docArray.jobs.push({
                   jn : req.body["s3_jobs_jn_" + i],
@@ -1421,7 +1429,8 @@ router.post("/datainvoice", verify, async (req, res) => {
           docxPath,
           docArray,
           req.query.doc,
-          clientName
+          clientName,
+          datetime
         );
 
         //query = outputPath[0]
@@ -2285,12 +2294,13 @@ router.post("/deleteAfterDownload", verify, async function (req, res) {
       docSaved[0]["docArray"],
       docModel,
       client,
-      datetime
+      datetime,
+      language
     );
 
     console.log(outputPath[0]);
 
-    var downloadLinkGenerator = downloadLink(datetime, docModel, client);
+    var downloadLinkGenerator = downloadLink(datetime, docModel, client,language);
 
     var part1 = encodeURIComponent(downloadLinkGenerator[0]);
     var part2 = encodeURIComponent(downloadLinkGenerator[1]);
@@ -2577,62 +2587,85 @@ router.post("/Payment/GetData", verify, async (req, res) => {
             } else if (user["payment"][j].language == "Arabic") {
               rawdata = fs.readFileSync("./json/Arabic/template.json", "utf-8");
             } else {
+              // console.log("lyugggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
+              // console.log(user["payment"][j].language);
+              // console.log(user["payment"][j]);
+              rawdata = "";
               // add default row json ... or send message to client to fuck off
             }
-            let docView = JSON.parse(rawdata);
+            let docView = "";
+            if(rawdata != ""){
+              docView = JSON.parse(rawdata);
+            }
             let docModelKey = user["payment"][j].docModel;
             let docModelViewText = "";
 
-            if (docModelKey.includes("Birth")) {
-                  docModelViewText =  docView["Birth Certificate"];
-            } else if (docModelKey.includes("Divorce")) {
-                  docModelViewText =  docView["Divorce Certificate"];
-            } else if (docModelKey.includes("Death")) {
-                  docModelViewText =  docView["Death Certificate"];
-            } else if (docModelKey.includes("Marriage")) {
-                  docModelViewText =  docView["Marriage Certificate"];
-            } else if (docModelKey.includes("Work")) {       
-                  docModelViewText =  docView["Work Permit"];
-            } else if (docModelKey.includes("ID")) {
-                  docModelViewText =  docView["ID Card"];
-            } else if (docModelKey.includes("MoF")) {
-                  docModelViewText =  docView["MoF Registration"];
-            } else if (docModelKey.includes("Residence")) {
-                  docModelViewText =  docView["Residence Certificate"];
-            } else if (docModelKey.includes("PrivateDriver")) {
-                  docModelViewText =  docView["Private Driver's license"];
-            } else if (docModelKey.includes("Police")) {
-                  docModelViewText =  docView["Police record"];
-            } else if (docModelKey.includes("NSSF")) {
-                  docModelViewText =  docView["NSSF Service Certificate"];
-            } else if (docModelKey.includes("Individual")) {
-                  docModelViewText =  docView["Individual Extract"];
-            } else if (docModelKey.includes("Family")) {
-                  docModelViewText =  docView["Family Extract"];
-            } else if (docModelKey.includes("Consent")) {
-                  docModelViewText =  docView["Consent to travel"];
-            } else if (docModelKey.includes("ResidencyPermit")) {
-                  docModelViewText =  docView["Residency Permit"];
-            } else if (docModelKey.includes("Driver")) {
-                  docModelViewText =  docView["Driver's license certificate"];
-            } else if (docModelKey.includes("Empty")) {
-                  // console.log("dfdddddddddddddddddddddddddddddddddddddd")
-                  // var docSaved = await ETemplate.find({
-                  //   _id: user["payment"][j].docid,
-                  // });
+            console.log(user["payment"][j]);
+            if(docView != ""){
+              if (docModelKey.includes("Birth")) {
+                    docModelViewText =  docView["Birth Certificate"];
+              } else if (docModelKey.includes("Divorce")) {
+                    docModelViewText =  docView["Divorce Certificate"];
+              } else if (docModelKey.includes("Death")) {
+                    docModelViewText =  docView["Death Certificate"];
+              } else if (docModelKey.includes("Marriage")) {
+                    docModelViewText =  docView["Marriage Certificate"];
+              } else if (docModelKey.includes("Work")) {       
+                    docModelViewText =  docView["Work Permit"];
+              } else if (docModelKey.includes("ID")) {
+                    docModelViewText =  docView["ID Card"];
+              } else if (docModelKey.includes("MoF")) {
+                    docModelViewText =  docView["MoF Registration"];
+              } else if (docModelKey.includes("Residence")) {
+                    docModelViewText =  docView["Residence Certificate"];
+              } else if (docModelKey.includes("PrivateDriver")) {
+                    docModelViewText =  docView["Private Driver's license"];
+              } else if (docModelKey.includes("Police")) {
+                    docModelViewText =  docView["Police record"];
+              } else if (docModelKey.includes("NSSF")) {
+                    docModelViewText =  docView["NSSF Service Certificate"];
+              } else if (docModelKey.includes("Individual")) {
+                    docModelViewText =  docView["Individual Extract"];
+              } else if (docModelKey.includes("Family")) {
+                    docModelViewText =  docView["Family Extract"];
+              } else if (docModelKey.includes("Consent")) {
+                    docModelViewText =  docView["Consent to travel"];
+              } else if (docModelKey.includes("ResidencyPermit")) {
+                    docModelViewText =  docView["Residency Permit"];
+              } else if (docModelKey.includes("Driver")) {
+                    docModelViewText =  docView["Driver's license certificate"];
+              } else if (docModelKey.includes("Empty")) {
+                    // console.log("dfdddddddddddddddddddddddddddddddddddddd")
+                    // var docSaved = await ETemplate.find({
+                    //   _id: user["payment"][j].docid,
+                    // });
 
-                  // if(docSaved[0]["s1"]["f1"]["value"] != null)
-                  // {
-                  //   docModelViewText = docSaved[0]["s1"]["f1"]["value"];
-                  // }
-                  // else
-                  // {
-                  docModelViewText = docView["Empty Template"];
-                  // }
-            } else {}
+                    // if(docSaved[0]["s1"]["f1"]["value"] != null)
+                    // {
+                    //   docModelViewText = docSaved[0]["s1"]["f1"]["value"];
+                    // }
+                    // else
+                    // {
+                      if (user["payment"][j].emptyModel != null && user["payment"][j].emptyModel != "")
+                      {
+                        docModelViewText = user["payment"][j].emptyModel;
+                      }
+                      else{
+                        docModelViewText = docView["Empty Template"];
+                      }
 
-            console.log(docModelKey);
-            console.log(docView[docModelKey]);
+                    // }
+              } else {
+                docModelViewText = docModelKey;
+              }
+            }
+            else{
+              console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhs");
+              docModelViewText = docModelKey;
+            }
+
+            //console.log(docModelKey);
+            //console.log(docView[docModelKey]);
 
           let subParent = {
             //put parent id temor
@@ -2755,7 +2788,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
       //console.log("subParent: " + JSON.stringify(parent));
     }
 
-    console.log("result: " + result);
+    //console.log("result: " + result);
     //console.log("result: " + JSON.stringify(result));
     res.send(result);
   } catch (err) {
@@ -3362,6 +3395,262 @@ router.post("/BatchData", verify, async (req, res) => {
   }
 });
 
+
+router.post("/paymentcreate", verify, async (req, res) => {
+  try {
+    console.log(req.body);
+    if (
+      true
+      // !isEmptyOrSpaces(req.body.first) &&
+      // !isEmptyOrSpaces(req.body.middle) &&
+      // !isEmptyOrSpaces(req.body.last) 
+      // !isEmptyOrSpaces(req.query.docid)
+    ) {
+
+      console.log(req.body);
+
+      //create object form model
+      var clientPaymentHistory;
+
+      const event = new Date();
+
+      var datetime = event.toLocaleDateString("en-US", {
+        year: "numeric",
+        day: "numeric",
+        month: "long",
+      });
+
+      var fullnamePaid = req.body.first + " " + req.body.middle + " " + req.body.last;
+      
+      clientPaymentHistory = {
+        fullname: fullnamePaid,
+        surname: req.body.last,
+        father: req.body.middle,
+        mobile: req.body.mobile,
+        address: req.body.address,
+        clientID: 0,
+        docid: 0,
+        href: 0,
+        language: req.body.language,
+        docModel: req.body.documenttype,
+        docid: 0,
+        paid: req.body.paid,
+        total: req.body.total,
+        category: req.body.category,
+        createUser: "",
+        updateUser: "",
+        createTime: datetime,
+        updateTime: datetime,
+        numberOfUpdate: 0,
+        remain: req.body.remain,
+        registration : req.body.registration,
+        vat: req.body.vat,
+        mof: req.body.mof
+      };
+
+
+      //console.log("href: " + decodeURI(clientPaymentHistory.href));
+      //need to make unique id combination different from _id to make update more easer
+
+      var clientpaid = {
+        clientID: 0,
+        first: "",
+        middle: "",
+        last: "",
+        address: "",
+        mobile: "",
+        category: "",
+        paid: "",
+        remain: "",
+        docid: 0,
+        href: 0,
+      };
+
+      // this only in use if the paid client is new
+      clientpaid["first"] = req.body.first;
+      clientpaid["middle"] = req.body.middle;
+      clientpaid["last"] = req.body.last;
+      clientpaid["address"] = req.body.address;
+      clientpaid["mobile"] = req.body.mobile;
+      clientpaid["category"] = req.body.category;
+      clientpaid["paid"] = req.body.paid;
+      clientpaid["remain"] = req.body.remain;
+      clientpaid["docid"] = 0;
+      clientpaid["href"] = req.body.href;
+      clientpaid["registration"] = req.body.registration;
+      clientpaid["vat"] = req.body.vat;
+      clientpaid["mof"] = req.body.mof;
+      clientpaid["language"] = req.body.language;
+      clientpaid["docModel"] = req.body.documenttype;
+      
+
+      // console.log("clientpaid" + clientpaid['first'])
+
+      var paidClientSelectedID = req.body["client"];
+
+      //console.log("paidClientSelectedID" + paidClientSelectedID)
+
+      //maybe need try catch
+      // Object.keys(req.body).forEach(function(key) {
+      //  clientpaid[key] = req.body[key]
+      // })
+
+      var fullname =
+        clientpaid["first"] + " " + clientpaid["middle"] + " "  + clientpaid["last"];
+
+      if (
+        !isEmptyOrSpaces(paidClientSelectedID) &&
+        paidClientSelectedID == "op1"
+      ) {
+
+        //console.log("clientPaymentHistory: " + clientPaymentHistory);
+
+        clientPaymentHistory.fullname = fullname;
+        clientPaymentHistory.remain = req.body.remain;
+        clientPaymentHistory.registration = req.body.registration;
+        clientPaymentHistory.surname = req.body.last;
+        clientPaymentHistory.father = req.body.middle;
+        clientPaymentHistory.address = req.body.address;
+        clientPaymentHistory.mobile = req.body.mobile;
+
+        //const paid = new Paid(data);
+        let paid = new Paid();
+
+        console.log(fullname);
+
+        paid.payment.push(clientPaymentHistory);
+
+        paid.mobile = clientpaid["mobile"];
+        paid.address = clientpaid["address"];
+        paid.combineid = fullname + clientpaid["mobile"];
+        paid.fullname = fullname;
+        paid.name = clientpaid["first"];
+        paid.surname = clientpaid["last"];
+        paid.father = clientpaid["middle"];
+        paid.registration = clientpaid["registration"];
+        paid.vat = clientpaid["vat"];
+        paid.mof = clientpaid["mof"];
+        
+
+        //var subdoc = paid.payment.push[0];
+        // { _id: '501d86090d371bab2c0341c5', name: 'Liesl' }
+        //subdoc.isNew; // true
+        var flagPaidSuccess = false;
+
+        var savedPaid = await paid.save(function (err) {
+          if (err) return handleError(err);
+          console.log("Success!");
+          console.log("paid finished");
+          // console.log(clientData["History"][clientPaymentHistory.language][clientPaymentHistory.docModel])
+          // flagPaidSuccess = true;
+        });
+
+        console.log("Create new payemnet")
+        console.log(clientpaid)
+
+        await createHistoryLog(
+          req.email,
+          "Create Payment",
+          "New Payment for client " +
+          fullnamePaid  + 
+            ", Receipt Create by Name " +
+            clientpaid["first"] +
+            " " +
+            clientpaid["middle"] +
+            " " +
+            clientpaid["last"] ,
+          req.id
+        );
+
+        if(flagPaidSuccess)
+        {
+          // console.log("paid finished");
+          // console.log(clientData[0]["History"][clientPaymentHistory.language][clientPaymentHistory.docModel])
+          // clientData[0]["History"][clientPaymentHistory.language][clientPaymentHistory.docModel]; //.shift();
+          // await clientData.save();
+
+          //var savedClient = await clientData.save();
+          //console.log(savedClient);
+        }
+
+        console.log(paid);
+
+        //const savedPaid = await paid.save();
+        //console.log("New Client Paid: " + data[req.query.lang][modelCheck]);
+      } else {
+        //var query = req.query.lang + '.' + modelCheck
+
+        // var language = req.query.lang;
+        // var query = {};
+        // var criteria = language + "." + modelCheck;
+        // query[criteria] = clientpaid;
+
+        // console.log("query: " + query[criteria]);
+
+        //{_id: id, "language.modelCheck.docid": {$nin: [clientpaid.docid] }},
+        var flagPaidSuccess = false;
+
+      //   PersonModel.update(
+      //     { _id: person._id }, 
+      //     { $push: { friends: friend } },
+      //     done
+      // );
+          clientPaymentHistory.fullname = req.body.name + " " + req.body.father + " " + req.body.surname;
+          clientPaymentHistory.remain = req.body.remain;
+          clientPaymentHistory.registration = req.body.registration;
+          clientPaymentHistory.surname = req.body.surname;
+          clientPaymentHistory.father = req.body.father;
+          clientPaymentHistory.address = req.body.address;
+          clientPaymentHistory.mobile = req.body.mobile;
+
+          Paid.updateOne(
+          { _id: paidClientSelectedID },
+          { $push: { payment: clientPaymentHistory } },
+          { upsert: true, new: true },
+          function (err, docs) {
+            //res.json(docs);
+            // console.log(docs);
+
+            console.log("Success!");
+            console.log("paid finished");
+
+            flagPaidSuccess = true;
+            
+          }
+
+        );
+
+        console.log(            req.body.name +
+          " " +
+          req.body.father +
+          " " +
+          req.body.surname);
+
+
+
+        await createHistoryLog(
+          req.email,
+          "Create Payment",
+          "Add new Payment for client " +
+          fullnamePaid +
+            ",Receipt Create by Name " +
+            req.body.name +
+            " " +
+            req.body.father +
+            " " +
+            req.body.surname,
+          req.id
+        );
+      }
+
+      res.send("success");
+    }
+  } catch (err) {
+    console.log(err);
+    res.send("error");
+  }
+});
+
 router.post("/paid", verify, async (req, res) => {
   try {
     if (
@@ -3374,9 +3663,21 @@ router.post("/paid", verify, async (req, res) => {
 
       //const encoded = encodeURIComponent(req.body.href);
       const encoded = req.body.href;
-      console.log("encode url: " + encoded);
+      //console.log("encode url: " + encoded);
 
-      console.log(req.body);
+      console.log(req.query.doc);
+      var docModelKey  = req.query.doc;
+
+      var emptyModel = "";
+      var docSaved = "";
+
+      if (docModelKey.includes("Empty")) {
+        docSaved = await ETemplate.find({ _id: req.query.docid });
+        console.log(docSaved[0]["s1"]["f1"]["value"]);
+        emptyModel = docSaved[0]["s1"]["f1"]["value"];
+      }
+
+      //console.log("req.body: " + req.body);
 
       var modelCheck = req.query.doc;
       modelCheck = modelCheck.replace(/\s/g, "");
@@ -3424,7 +3725,8 @@ router.post("/paid", verify, async (req, res) => {
             remain: req.body.remain,
             registration : req.body.registration,
             vat: req.body.vat,
-            mof: req.body.mof
+            mof: req.body.mof,
+            emptyModel: emptyModel
           };
         }
       });
@@ -3816,7 +4118,8 @@ router.post("/data", verify, async (req, res) => {
         var downloadLinkGenerator = downloadLink(
           datetime,
           req.query.doc,
-          clientData["fullname"]
+          clientData["fullname"],
+          req.query.lang
         );
 
         var part1 = encodeURIComponent(downloadLinkGenerator[0]);
@@ -4274,7 +4577,9 @@ router.post("/data", verify, async (req, res) => {
           docxPath,
           docArray,
           req.query.doc,
-          clientName
+          clientName,
+          datetime,
+          req.query.lang
         );
 
         //query = outputPath[0]
@@ -4286,6 +4591,8 @@ router.post("/data", verify, async (req, res) => {
         console.log("/api/posts/r/?valid=" + string1 + "&pass=" + string2);
 
         var link = "/api/posts/r/?valid=" + string1 + "&pass=" + string2;
+
+        console.log("Link: " + link);
 
         createHistoryLog(
           req.email,
@@ -4903,7 +5210,8 @@ router.post("/download", verify, async (req, res) => {
         var downloadLinkGenerator = downloadLink(
           datetime,
           req.query.doc,
-          clientData["fullname"]
+          clientData["fullname"],
+          langCheck
         );
 
         var part1 = encodeURIComponent(downloadLinkGenerator[0]);
@@ -4917,7 +5225,8 @@ router.post("/download", verify, async (req, res) => {
           docxPath,
           docArray,
           req.query.doc,
-          clientName
+          clientName,
+          langCheck
         );
       }
     }
@@ -4926,11 +5235,91 @@ router.post("/download", verify, async (req, res) => {
   }
 });
 
-function downloadLink(datetime, modelCheck, clientName) {
-  var outputPath =
-    "./Output/" + modelCheck + " - " + clientName + " - " + datetime + ".docx";
+function downloadLink(datetime, modelCheck, clientName, language = "English") {
+  let rawdata;
+  if (language == "English") {
+    rawdata = fs.readFileSync("./json/English/template.json", "utf-8");
+  } else if (language == "Français") {
+    rawdata = fs.readFileSync("./json/Français/template.json", "utf-8");
+  } else if (language == "Español") {
+    rawdata = fs.readFileSync("./json/Español/template.json", "utf-8");
+  } else if (language == "Arabic") {
+    rawdata = fs.readFileSync("./json/Arabic/template.json", "utf-8");
+  } else {
+    // console.log("lyugggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
+    // console.log(user["payment"][j].language);
+    // console.log(user["payment"][j]);
+    rawdata = "";
+    // add default row json ... or send message to client to fuck off
+  }
 
-  return [outputPath, modelCheck + " - " + clientName + " - " + datetime];
+  let docView = "";
+  if(rawdata != ""){
+    docView = JSON.parse(rawdata);
+  }
+
+  let docModelViewText = "";
+
+  if(docView != ""){
+    if (modelCheck.includes("Birth")) {
+          docModelViewText =  docView["Birth Certificate"];
+    } else if (modelCheck.includes("Divorce")) {
+          docModelViewText =  docView["Divorce Certificate"];
+    } else if (modelCheck.includes("Death")) {
+          docModelViewText =  docView["Death Certificate"];
+    } else if (modelCheck.includes("Marriage")) {
+          docModelViewText =  docView["Marriage Certificate"];
+    } else if (modelCheck.includes("Work")) {       
+          docModelViewText =  docView["Work Permit"];
+    } else if (modelCheck.includes("ID")) {
+          docModelViewText =  docView["ID Card"];
+    } else if (modelCheck.includes("MoF")) {
+          docModelViewText =  docView["MoF Registration"];
+    } else if (modelCheck.includes("Residence")) {
+          docModelViewText =  docView["Residence Certificate"];
+    } else if (modelCheck.includes("PrivateDriver")) {
+          docModelViewText =  docView["Private Driver's license"];
+    } else if (modelCheck.includes("Police")) {
+          docModelViewText =  docView["Police record"];
+    } else if (modelCheck.includes("NSSF")) {
+          docModelViewText =  docView["NSSF Service Certificate"];
+    } else if (modelCheck.includes("Individual")) {
+          docModelViewText =  docView["Individual Extract"];
+    } else if (modelCheck.includes("Family")) {
+          docModelViewText =  docView["Family Extract"];
+    } else if (modelCheck.includes("Consent")) {
+          docModelViewText =  docView["Consent to travel"];
+    } else if (modelCheck.includes("ResidencyPermit")) {
+          docModelViewText =  docView["Residency Permit"];
+    } else if (modelCheck.includes("Driver")) {
+          docModelViewText =  docView["Driver's license certificate"];
+    } else if (modelCheck.includes("Empty")) {
+          // console.log("dfdddddddddddddddddddddddddddddddddddddd")
+          // var docSaved = await ETemplate.find({
+          //   _id: user["payment"][j].docid,
+          // });
+
+          // if(docSaved[0]["s1"]["f1"]["value"] != null)
+          // {
+          //   docModelViewText = docSaved[0]["s1"]["f1"]["value"];
+          // }
+          // else
+          // {
+          docModelViewText = docView["Empty Template"];
+          // }
+    } else {
+      docModelViewText = modelCheck;
+    }
+  }
+  else{
+    //console.log("hhhhhhhhhhhhhhhhhhhhhhhhhhhs");
+    docModelViewText = modelCheck;
+  }
+
+  var outputPath =
+    "./Output/" + docModelViewText + " - " + clientName + " - " + datetime + ".docx";
+
+  return [outputPath, docModelViewText + " - " + clientName + " - " + datetime];
 }
 
 // add mongo id for the user
@@ -4940,7 +5329,8 @@ function GenerateDocx(
   docArray,
   modelCheck,
   clientName,
-  datetime = "0"
+  datetime = "0",
+  language = "English"
 ) {
   // Load the docx file as a binary
   var content = fs.readFileSync(docxPath, "binary");
@@ -4979,14 +5369,21 @@ function GenerateDocx(
   var date = datetime == "0" ? docArray["date"] : datetime;
   console.log("FUll path with time date" + date);
 
-  var outputPath =
-    "./Output/" + modelCheck + " - " + clientName + " - " + date + ".docx";
+  var downloadLinkGenerator = downloadLink(datetime, modelCheck, clientName, language)
+
+  
+  
+  var outputPath = downloadLinkGenerator[0];
+
+  // var outputPath =
+  //   "./Output/" + modelCheck + " - " + clientName + " - " + date + ".docx";
   // Get the path that been enter in mongo file for the client and save it with these path
   fs.writeFileSync(outputPath, buf);
 
   //[outputPath, modelCheck + ' ' + datetime];
   //return outputPath
-  return [outputPath, modelCheck + " - " + clientName + " - " + date];
+  return [downloadLinkGenerator[0], downloadLinkGenerator[1]];
+  //return [outputPath, modelCheck + " - " + clientName + " - " + date];
 }
 
 function addPaidClient(a, b, obj) {

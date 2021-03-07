@@ -32,6 +32,8 @@ var mongoose = require("mongoose");
 const PaidModel = require("../models/Paid");
 const Expense = require("../models/Expense");
 
+
+
 const Paid = PaidModel.Paid;
 const Payment = PaidModel.Payment;
 
@@ -57,6 +59,41 @@ router.get("/create", verify, (req, res) => {
       console.log(err);
     }
   });
+
+  // res.render('create',{
+  //     // req.session.
+  //     name: req.name,
+  //     email: req.email,
+  //     data:  data
+  // });
+});
+
+router.get("/createpayment", verify, (req, res) => {
+  req.keep = "true";
+
+
+  var data = {type:"notype", caption:"nocaption", id:"noid", docid:"nodocid", clientid:"0"};
+
+  var query = Paid.find({}, { s0: 0, __v: 0 });
+  query.exec(function (err, result) {
+    if (!err) {
+
+      res.render("createpayment", {
+        // req.session.
+        name: req.name,
+        email: req.email,
+        clientname: result,
+        obj: data,
+        docid: 0,
+      });
+
+      // console.log(html)
+      // res.send({ paid: paid });
+    } else {
+      console.log(err);
+    }
+  });
+
 
   // res.render('create',{
   //     // req.session.
