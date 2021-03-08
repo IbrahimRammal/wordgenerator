@@ -36,14 +36,41 @@
     </div>
     <hr class="sidebar-divider">
 
+        <!-- Collapse methode  -->
+    <!--Accordion wrapper-->
+    <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+        <!-- Accordion card -->
+        <div class="card">
+
     <% for (var i = 0; i < obj.s3.job.length; i++) { %>
 
         <%if (obj.type == "English") { %>
+
+            <%if (i % 5 == 0) { %>
+                <!-- Card header -->
+                <div class="card-header" role="tab" id="headingOne<%= i %>">
+                    <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne<%= i %>" 
+                        aria-expanded= "<%- i == 0 ? 'ture' : 'false' %>"
+                        aria-controls="collapseOne<%= i %>">
+                        <h5 class="mb-0">
+                            Collapsible Group Item #<%= i %> <i class="fas fa-angle-down rotate-icon"></i>
+                        </h5>
+                    </a>
+                </div>
+    
+                <!-- Card body -->
+                <div id="collapseOne<%= i %>" class="collapse <%- i == 0 ? 'show' : '' %>"" role="tabpanel" aria-labelledby="headingOne<%= i %>"
+                    data-parent="#accordionEx">
+                    <div class="card-body">
+    
+                        <% } %>
+
         <div class="form-group">
             <div class="form-row">
                 <div class="form-group col">
                     <input type="text" class="form-control" name="s3_job_pro_<%= i %>" id="s3jobpro<%= i %>"
-                        placeholder="Project" value="<%= obj.s3.job[i].pro %>">
+                        placeholder="Project" value="<%= obj.s3.job[i].pro %>" >
                 </div>
                 <div class="form-group col">
                     <input type="text" class="form-control" name="s3_job_stype_<%= i %>"
@@ -75,45 +102,13 @@
                 </div>
             </div>
         </div>
-        <% } else {%>
-            <div class="form-group">
-                <div class="form-row">
-                    <div class="form-group col">
-                        <input type="text" class="form-control" name="s3_job_pro_<%= i %>" id="s3jobpro<%= i %>"
-                            placeholder="pro">
-                    </div>
-                    <div class="form-group col">
-                        <input type="text" class="form-control" name="s3_job_stype_<%= i %>"
-                            id="s2jobstype<%= i %>" placeholder="Service type">
-                    </div>
-                    <div class="form-group col">
-                        <input type="text" class="form-control" name="s3_job_slan_<%= i %>" id="s2jobslan<%= i %>"
-                            placeholder="Source Language">
-                    </div>
-                    <div class="form-group col">
-                        <input type="text" class="form-control" name="s3_job_tlan_<%= i %>" id="s2jobtlan<%= i %>"
-                            placeholder="Target language">
-                    </div>
-                    <div class="form-group col">
-                        <input type="text" class="form-control" name="s3_job_unit_<%= i %>" id="s2jobunit<%= i %>"
-                            placeholder="Unit">
-                    </div>
-                    <div class="form-group col">
-                        <input type="text" class="form-control" name="s3_job_unitp_<%= i %>" id="s2jobunitp<%= i %>"
-                            placeholder="Unit price">
-                    </div>
-                    <div class="form-group col">
-                        <input type="text" class="form-control" name="s3_job_wcount_<%= i %>" id="s2jobwcount<%= i %>"
-                            placeholder="Word count">
-                    </div>
-                    <div class="form-group col">
-                        <input type="text" class="form-control" name="s3_job_t_<%= i %>" id="s3jobt<%= i %>"
-                            placeholder="total">
-                    </div>
-                </div>
-            </div>
-        <% } %>
-    <% } %>
+        <% if ( (i+1) % 5 == 0) {%>
+        </div>
+    </div>
+
+    <% }%>
+<% } %>
+<% } %>
     <br>
     <br>
     <div class="btn-group" role="group" aria-label="Basic example">
