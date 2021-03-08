@@ -2339,35 +2339,37 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
 
     var result = "";
 
+    var receipt = {};
+
+    var now = new Date();
+    //this.updated_at = now;
+    var now = new Date();
+
+    console.log("insert pyament" + a);
+
+    receipt.fullname = isUndefinedOrNull(a.fullname) ? "" : a.fullname;
+    receipt.phone = isUndefinedOrNull(a.phone) ? "" : a.phone;
+    receipt.category = isUndefinedOrNull(a.category) ? "" : a.category;
+    receipt.type = isUndefinedOrNull(a.type) ? "" : a.type;
+    receipt.paid = isUndefinedOrNull(a.paid) ? "" : a.paid;
+    receipt.total = isUndefinedOrNull(a.total) ? "" : a.total;
+    receipt.created_at = now;
+    receipt.updated_at = now;
+    receipt.note = isUndefinedOrNull(a.note) ? "" : a.note;
+    receipt.address = isUndefinedOrNull(a.address) ? "" : a.address;
+    receipt.paymentMode = isUndefinedOrNull(a.paymentMode)
+      ? ""
+      : a.paymentMode;
+
     var respnseAddID = "";
     if (req.body.action == "insert") {
       createHistoryLog(
         req.email,
         "Insert Expense",
-        "Insert Expense for client " + a.fullname,
+        "Insert Expense for client " + receipt.fullname,
         req.id
       );
-      var receipt = {};
 
-      var now = new Date();
-      //this.updated_at = now;
-      var now = new Date();
-
-      console.log("insert pyament" + a);
-
-      receipt.fullname = isUndefinedOrNull(a.fullname) ? "" : a.fullname;
-      receipt.phone = isUndefinedOrNull(a.phone) ? "" : a.phone;
-      receipt.category = isUndefinedOrNull(a.category) ? "" : a.category;
-      receipt.type = isUndefinedOrNull(a.type) ? "" : a.type;
-      receipt.paid = isUndefinedOrNull(a.paid) ? "" : a.paid;
-      receipt.total = isUndefinedOrNull(a.total) ? "" : a.total;
-      receipt.created_at = now;
-      receipt.updated_at = now;
-      receipt.note = isUndefinedOrNull(a.note) ? "" : a.note;
-      receipt.address = isUndefinedOrNull(a.address) ? "" : a.address;
-      receipt.paymentMode = isUndefinedOrNull(a.paymentMode)
-        ? ""
-        : a.paymentMode;
 
       const expense = new Expense(receipt);
       const savedPaid = await expense.save();
