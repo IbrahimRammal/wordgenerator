@@ -47,7 +47,7 @@
 
         <%if (obj.type == "English") { %>
 
-            <%if (i % 5 == 0) { %>
+            <%if (i % 10 == 0) { %>
                 <!-- Card header -->
                 <div class="card-header" role="tab" id="headingOne<%= i %>">
                     <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne<%= i %>" 
@@ -102,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <% if ( (i+1) % 5 == 0) {%>
+        <% if ( (i+1) % 10 == 0) {%>
         </div>
     </div>
 
