@@ -350,6 +350,27 @@ router.get("/dashboard", verify, async (req, res) => {
       for (var j = 0; j < query[i]["payment"].length; j++) {
         try{
         unit = j + 1;
+
+        if(query[i]["payment"][j].currency != null && !isEmptyOrSpaces(query[i]["payment"][j].currency) && query[i]["payment"][j].currency == "Dollar"){
+          console.log("Skippppppppppppppp");
+          continue;
+          // paidx = parseFloat(query["payment"][i].paid);
+          // totaly = parseFloat(query["payment"][i].total);
+          
+          // currency = query["payment"][i].currency;
+         
+
+          // if(!isNaN(paidx) && !isNaN(totaly)){
+          //   if(currency == "Dollar"){
+          //     paidx = paidx.toFixed(2)
+          //     totaly = totaly.toFixed(2)
+          //     } else if(currency == "Lira"){
+          //       paidx = Math.trunc(paidx);
+          //       totaly = Math.trunc(totaly);
+          //     } else {}
+          // }
+        }
+
         totalpaidprice += query[i]["payment"][j].paid;
         totalremainprice += query[i]["payment"][j].remain;
         totalvalueprice += query[i]["payment"][j].total;
@@ -460,5 +481,10 @@ router.get("/paid", verify, async (req, res) => {
     //data: data
   });
 });
+
+
+function isEmptyOrSpaces(str) {
+  return str === null || str.match(/^ *$/) !== null;
+}
 
 module.exports = router;

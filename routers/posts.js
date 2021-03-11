@@ -2668,6 +2668,29 @@ router.post("/Payment/GetData", verify, async (req, res) => {
 
             //console.log(docModelKey);
             //console.log(docView[docModelKey]);
+            var paidx = parseFloat(user["payment"][j].paid);
+            var totaly = parseFloat(user["payment"][j].total);
+
+            var currency = "Lira";
+
+            //console.log(user["payment"][j].currency);
+
+            if(user["payment"][j].currency != null && !isEmptyOrSpaces(user["payment"][j].currency)){
+
+              
+              currency = user["payment"][j].currency;
+             
+
+              if(!isNaN(paidx) && !isNaN(totaly)){
+                if(currency == "Dollar"){
+                  paidx = paidx.toFixed(2)
+                  totaly = totaly.toFixed(2)
+                  } else if(currency == "Lira"){
+                    paidx = Math.trunc(paidx);
+                    totaly = Math.trunc(totaly);
+                  } else {}
+              }
+            }
 
           let subParent = {
             //put parent id temor
@@ -2681,13 +2704,16 @@ router.post("/Payment/GetData", verify, async (req, res) => {
             language: user["payment"][j].language,
             docModel: user["payment"][j].docModel,
             docModelView: docModelViewText,
-            total: user["payment"][j].total,
+            total: totaly,
             remain: user["payment"][j].remain,
-            paid: user["payment"][j].paid,
+            paid: paidx,
             Download: "download",
             createTime: user["payment"][j].createTime,
-            updateTime: user["payment"][j].updateTime
+            updateTime: user["payment"][j].updateTime,
+            currency: currency
           };
+
+          //console.log(subParent);
 
           result.push(subParent);
 
@@ -2709,7 +2735,13 @@ router.post("/Payment/GetData", verify, async (req, res) => {
       let totalpaidprice = 0;
       let totalremainprice = 0;
       let totalvalueprice = 0;
+
+      let totalpaidpriceUsd = 0;
+      let totalremainpriceUsd = 0;
+      let totalvaluepriceUsd = 0;
+
       let unit = 0;
+      let currency = "Lira";
 
       let parent = {
         _id: "",
@@ -2720,6 +2752,9 @@ router.post("/Payment/GetData", verify, async (req, res) => {
         paid: "",
         remain: "",
         total: "",
+        paidUsd: "",
+        remainUsd: "",
+        totalUsd: "",
         subtasks: [],
       };
 
@@ -2729,6 +2764,13 @@ router.post("/Payment/GetData", verify, async (req, res) => {
       parent.address = query[i].address;
       for (var j = 0; j < query[i]["payment"].length; j++) {
         try{
+
+        if(query[i]["payment"][j].currency != null && !isEmptyOrSpaces(query[i]["payment"][j].currency) && query[i]["payment"][j].currency == "Dollar"){
+          currency = query[i]["payment"][j].currency;
+        }
+
+
+
         let subParent = {
           _id: query[i]["payment"][j]._id,
           fullname: query[i]["payment"][j].fullname,
@@ -2745,9 +2787,15 @@ router.post("/Payment/GetData", verify, async (req, res) => {
         };
 
         unit = j + 1;
-        totalpaidprice += query[i]["payment"][j].paid;
-        totalremainprice += query[i]["payment"][j].remain;
-        totalvalueprice += query[i]["payment"][j].total;
+        if( currency == "Dollar"){
+          totalpaidpriceUsd += query[i]["payment"][j].paid;
+          totalremainpriceUsd += query[i]["payment"][j].remain;
+          totalvaluepriceUsd += query[i]["payment"][j].total;
+        } else {
+          totalpaidprice += query[i]["payment"][j].paid;
+          totalremainprice += query[i]["payment"][j].remain;
+          totalvalueprice += query[i]["payment"][j].total;
+        }
         // totalvalueprice += Number(query[i]["payment"][j].total)
         //   ? 0
         //   : parseInt(query[i]["payment"][j].total, 10);
@@ -2760,7 +2808,7 @@ router.post("/Payment/GetData", verify, async (req, res) => {
 
         if (action == "sub") {
           console.log("sudfasdjfkl jaslkdjf klasjdf lkjaskldj fklsdj ");
-          result.push(subParent);
+          // result.push(subParent);
           console.log("result: " + JSON.stringify(result));
         }
       } catch(err){
@@ -2783,6 +2831,10 @@ router.post("/Payment/GetData", verify, async (req, res) => {
       parent.paid = totalpaidprice;
       parent.remain = totalremainprice;
       parent.total = totalvalueprice;
+
+      parent.paidUsd = totalpaidpriceUsd;
+      parent.remainUsd = totalremainpriceUsd;
+      parent.totalUsd = totalvaluepriceUsd;
 
       if (action == "all") result.push(parent);
 
@@ -3423,6 +3475,29 @@ router.post("/paymentcreate", verify, async (req, res) => {
       });
 
       var fullnamePaid = req.body.first + " " + req.body.middle + " " + req.body.last;
+
+      var currency = "Lira";
+
+      //console.log(user["payment"][j].currency);
+      var paidx = parseFloat(req.body.paid);
+      var totaly = parseFloat(req.body.total);
+
+      if(req.body.currency != null && !isEmptyOrSpaces(req.body.currency)){
+
+        
+        currency = req.body.currency;
+       
+
+        if(!isNaN(paidx) && !isNaN(totaly)){
+          if(currency == "Dollar"){
+            paidx = paidx.toFixed(2);
+            totaly = totaly.toFixed(2);
+            } else if(currency == "Lira"){
+              paidx = Math.trunc(paidx);
+              totaly = Math.trunc(totaly);
+            } else {}
+        }
+      }
       
       clientPaymentHistory = {
         fullname: fullnamePaid,
@@ -3436,8 +3511,8 @@ router.post("/paymentcreate", verify, async (req, res) => {
         language: req.body.language,
         docModel: req.body.documenttype,
         docid: 0,
-        paid: req.body.paid,
-        total: req.body.total,
+        paid: paidx,
+        total: totaly,
         category: req.body.category,
         createUser: "",
         updateUser: "",
@@ -3447,7 +3522,8 @@ router.post("/paymentcreate", verify, async (req, res) => {
         remain: req.body.remain,
         registration : req.body.registration,
         vat: req.body.vat,
-        mof: req.body.mof
+        mof: req.body.mof,
+        currency: currency
       };
 
 
@@ -3475,7 +3551,7 @@ router.post("/paymentcreate", verify, async (req, res) => {
       clientpaid["address"] = req.body.address;
       clientpaid["mobile"] = req.body.mobile;
       clientpaid["category"] = req.body.category;
-      clientpaid["paid"] = req.body.paid;
+      clientpaid["paid"] = paidx;
       clientpaid["remain"] = req.body.remain;
       clientpaid["docid"] = 0;
       clientpaid["href"] = req.body.href;
@@ -3484,6 +3560,9 @@ router.post("/paymentcreate", verify, async (req, res) => {
       clientpaid["mof"] = req.body.mof;
       clientpaid["language"] = req.body.language;
       clientpaid["docModel"] = req.body.documenttype;
+      clientpaid["currency"] = currency;
+
+      
       
 
       // console.log("clientpaid" + clientpaid['first'])
@@ -3514,6 +3593,7 @@ router.post("/paymentcreate", verify, async (req, res) => {
         clientPaymentHistory.father = req.body.middle;
         clientPaymentHistory.address = req.body.address;
         clientPaymentHistory.mobile = req.body.mobile;
+        clientPaymentHistory.currency = currency;
 
         //const paid = new Paid(data);
         let paid = new Paid();
@@ -3532,6 +3612,7 @@ router.post("/paymentcreate", verify, async (req, res) => {
         paid.registration = clientpaid["registration"];
         paid.vat = clientpaid["vat"];
         paid.mof = clientpaid["mof"];
+        //paid.currency = clientpaid["currency"];
         
 
         //var subdoc = paid.payment.push[0];

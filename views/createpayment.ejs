@@ -128,7 +128,7 @@
     <div class="form-group">
         <div class="form-row">
             <!-- <div class="form-group col"> -->
-                <select class="mdb-select md-form" searchable="Search Type.." name="category" id="category" value="<%= %>"
+                <select class="mdb-select md-form col-2" searchable="Search Type.." name="category" id="category" value="<%= %>"
                     required>
                     <option value="" disabled selected>Type Select ...</option>
                     <option value="Pronto">Pronto</option>
@@ -138,14 +138,21 @@
             <!-- <div class="form-group col">
                 <input type="text" class="form-control" name="type" id="type" placeholder="Type" value="<%= %>">
             </div> -->
+            <select class="mdb-select md-form col-2" style="margin-left: 35px;" searchable="Currency Type.." name="currency" id="currency" value="<%= %>"
+                required>
+                <option value="" disabled selected>Currency Select ...</option>
+                <option value="Dollar">Dollar</option>
+                <option value="Lira">Lira</option>
+            </select>
+
             <div class="md-form col" style="padding-left: 35px;">
-                <input type="number" class="form-control" name="paid" id="paid" placeholder="Paid" value="<%= %>">
+                <input type="float" class="form-control" name="paid" id="paid" placeholder="Paid" value="<%= %>">
             </div>
             <!-- <div class="md-form col">
                 <input type="number" style="display: none;" class="form-control" name="remain" id="remain" placeholder="Remain" value="<%= %>">
             </div> -->
             <div class="md-form col">
-                <input type="number" class="form-control" name="total" id="total" placeholder="Total" value="<%= %>">
+                <input type="float" class="form-control" name="total" id="total" placeholder="Total" value="<%= %>">
             </div>
         </div>
     </div>
@@ -297,6 +304,7 @@
           $(document).ready(function () {
               $('#paid_list').materialSelect();
               $('#category').materialSelect();
+              $('#currency').materialSelect();
           });
 
 
