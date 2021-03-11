@@ -65,9 +65,43 @@
     <br />
 
     <div class="container-fluid">
+
       <div class="form-group">
         <div class="row d-flex justify-content-center" wfd-id="82">
-          <div class="w-25 p-3 col-xl-5 col-md-6 mb-4" wfd-id="112">
+
+          <div class="col" wfd-id="112">
+            <div
+              class="card border-left-info shadow h-100 py-2"
+              wfd-id="113"
+            >
+              <div class="card-body" wfd-id="114">
+                <div class="row no-gutters align-items-center" wfd-id="115">
+                  <div class="col mr-2" wfd-id="117">
+                    <div
+                      class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                      wfd-id="119"
+                    >
+                    Total Expenses
+                    </div>
+                    <div
+                      class="h5 mb-0 font-weight-bold text-gray-800"
+                      wfd-id="118"
+                    >
+                      <%if (locals.expense && typeof expense != 'undefined') { %> <%=
+                        expense['allTimeExpense'] %> L.L 
+                      <% } %>
+                    </div>
+                  </div>
+                  <div class="col-auto" wfd-id="116">
+                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col" wfd-id="112">
             <div
               class="card border-left-primary shadow h-100 py-2"
               wfd-id="113"
@@ -99,7 +133,7 @@
           </div>
 
           <!-- Earnings (Monthly) Card Example -->
-          <div class="w-25 p-3 col-xl-5 col-md-6 mb-4" wfd-id="104">
+          <div class="col" wfd-id="104">
             <div
               class="card border-left-success shadow h-100 py-2"
               wfd-id="105"
@@ -128,66 +162,33 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      
-      <div class="form-group">
-        <div class="row" wfd-id="82">
 
-          
           <!-- Earnings (Monthly) Card Example -->
-          <div class="col-xl-3 col-md-6 mb-4" wfd-id="91">
-            <div class="card border-left-info shadow h-100 py-2" wfd-id="92">
-              <div class="card-body" wfd-id="93">
-                <div class="row no-gutters align-items-center" wfd-id="94">
-                  <div class="col mr-2" wfd-id="96">
-                    <div
-                      class="text-xs font-weight-bold text-primary text-uppercase mb-1"
-                      wfd-id="119"
-                    >
-                    unoffical remain Expenses
-                    </div>
-                    <div
-                      class="h5 mb-0 font-weight-bold text-gray-800"
-                      wfd-id="118"
-                    >
-                      <%if (locals.expense && typeof expense != 'undefined') { %> <%=
-                        expense['unofficalExpense'] %> L.L 
-                      <% } %>
-                    </div>
-                  </div>
-
-                  <div class="col-auto" wfd-id="116">
-                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-
-          <!-- Pending Requests Card Example -->
-          <div class="col-xl-3 col-md-6 mb-4" wfd-id="83">
+          <div class="col" wfd-id="104">
             <div
               class="card border-left-warning shadow h-100 py-2"
-              wfd-id="84"
+              wfd-id="105"
             >
-              <div class="card-body" wfd-id="85">
-                <div class="row no-gutters align-items-center" wfd-id="86">
-                  <div class="col mr-2" wfd-id="88">
+              <div class="card-body" wfd-id="106">
+                <div class="row no-gutters align-items-center" wfd-id="107">
+                  <div class="col mr-2" wfd-id="109">
                     <div
                       class="text-xs font-weight-bold text-success text-uppercase mb-1"
                       wfd-id="111"
                     >
-                    unoffical Income
+                    PROFIT
                     </div>
                     <div
                       class="h5 mb-0 font-weight-bold text-gray-800"
                       wfd-id="110"
                     >
-                      <%if (locals.expense && typeof expense != 'undefined') { %> <%=
-                        expense['unofficalIncome'] %> L.L <% } %>
+                      <%if (locals.expense && typeof expense != 'undefined') { %> 
+                        <% if( (expense['income'] - expense['expenses']) > 0){ %>
+                          <%=  expense['income'] - expense['expenses']  %> 
+                          L.L <% } else{ %>  
+                          <%=  expense['expenses'] - expense['income']  %> 
+                          L.L <% } %>
+                          <% } %>
                     </div>
                   </div>
                   <div class="col-auto" wfd-id="108">
@@ -198,8 +199,16 @@
             </div>
           </div>
 
+        </div>
+      </div>
+
+      
+      <div class="form-group">
+        <div class="row" wfd-id="82">
+
+
           <!-- Earnings (Monthly) Card Example -->
-          <div class="col-xl-3 col-md-6 mb-4" wfd-id="91">
+          <div class="col mb-4"" wfd-id="91">
             <div class="card border-left-info shadow h-100 py-2" wfd-id="92">
               <div class="card-body" wfd-id="93">
                 <div class="row no-gutters align-items-center" wfd-id="94">
@@ -229,7 +238,7 @@
           </div>
 
           <!-- Pending Requests Card Example -->
-          <div class="col-xl-3 col-md-6 mb-4" wfd-id="83">
+          <div class="col mb-4"" wfd-id="83">
             <div
               class="card border-left-warning shadow h-100 py-2"
               wfd-id="84"
@@ -241,7 +250,38 @@
                     class="text-xs font-weight-bold text-success text-uppercase mb-1"
                     wfd-id="111"
                   >
-                  Pronto Income
+                  Pronto Income DOLLAR
+                  </div>
+                  <div
+                    class="h5 mb-0 font-weight-bold text-gray-800"
+                    wfd-id="110"
+                  >
+                    <%if (locals.expense && typeof expense != 'undefined') { %> <%=
+                      expense['prontoIncomeDollar'] %> $ <% } %>
+                  </div>
+                  </div>
+                  <div class="col-auto" wfd-id="108">
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pending Requests Card Example -->
+          <div class="col mb-4"" wfd-id="83">
+            <div
+              class="card border-left-success shadow h-100 py-2"
+              wfd-id="84"
+            >
+              <div class="card-body" wfd-id="85">
+                <div class="row no-gutters align-items-center" wfd-id="86">
+                  <div class="col mr-2" wfd-id="88">
+                    <div
+                    class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                    wfd-id="111"
+                  >
+                  Pronto Income LIRA
                   </div>
                   <div
                     class="h5 mb-0 font-weight-bold text-gray-800"
@@ -258,43 +298,75 @@
               </div>
             </div>
           </div>
+
         </div>
 
         <div class="row" wfd-id="82">
-          <!-- Earnings (Monthly) Card Example -->
-          <div class="col-xl-3 col-md-6 mb-4" wfd-id="112">
-            <div
-              class="card border-left-primary shadow h-100 py-2"
-              wfd-id="113"
-            >
-              <div class="card-body" wfd-id="114">
-                <div class="row no-gutters align-items-center" wfd-id="115">
-                  <div class="col mr-2" wfd-id="117">
-                    <div
-                      class="text-xs font-weight-bold text-primary text-uppercase mb-1"
-                      wfd-id="119"
-                    >
-                    Sworn remain Expenses
+
+            <!-- Pending Requests Card Example -->
+            <div class="col mb-4"" wfd-id="83">
+              <div
+                class="card border-left-info shadow h-100 py-2"
+                wfd-id="84"
+              >
+                <div class="card-body" wfd-id="85">
+                  <div class="row no-gutters align-items-center" wfd-id="86">
+                    <div class="col mr-2" wfd-id="88">
+                      <div
+                        class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                        wfd-id="111"
+                      >
+                      unoffical Income DOLLAR
+                      </div>
+                      <div
+                        class="h5 mb-0 font-weight-bold text-gray-800"
+                        wfd-id="110"
+                      >
+                        <%if (locals.expense && typeof expense != 'undefined') { %> <%=
+                          expense['unofficalIncomeDollar'] %> $ <% } %>
+                      </div>
                     </div>
-                    <div
-                      class="h5 mb-0 font-weight-bold text-gray-800"
-                      wfd-id="118"
-                    >
-                      <%if (locals.expense && typeof expense != 'undefined') { %> <%=
-                        expense['swornExpense'] %> L.L 
-                      <% } %>
+                    <div class="col-auto" wfd-id="108">
+                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                     </div>
-                  </div>
-                  <div class="col-auto" wfd-id="116">
-                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col mb-4"" wfd-id="83">
+              <div
+                class="card border-left-warning shadow h-100 py-2"
+                wfd-id="84"
+              >
+                <div class="card-body" wfd-id="85">
+                  <div class="row no-gutters align-items-center" wfd-id="86">
+                    <div class="col mr-2" wfd-id="88">
+                      <div
+                        class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                        wfd-id="111"
+                      >
+                      unoffical Income LIRA
+                      </div>
+                      <div
+                        class="h5 mb-0 font-weight-bold text-gray-800"
+                        wfd-id="110"
+                      >
+                        <%if (locals.expense && typeof expense != 'undefined') { %> <%=
+                          expense['unofficalIncome'] %> L.L <% } %>
+                      </div>
+                    </div>
+                    <div class="col-auto" wfd-id="108">
+                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           <!-- Earnings (Monthly) Card Example -->
-          <div class="col-xl-3 col-md-6 mb-4" wfd-id="104">
+          <div class="col mb-4" wfd-id="104">
             <div
               class="card border-left-success shadow h-100 py-2"
               wfd-id="105"
