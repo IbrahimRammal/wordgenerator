@@ -207,6 +207,7 @@ router.get("/expense", verify, async (req, res) => {
     { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
   );
 
+  let allTimeExpense = 0;
   let totalExpense = 0;
   let totalIncome = 0;
 
@@ -216,8 +217,11 @@ router.get("/expense", verify, async (req, res) => {
   let prontoIncome = 0;
   let unofficalIncome = 0;
   let swornIncome = 0;
+  let prontoIncomeDollar = 0;
+  let unofficalIncomeDollar = 0;
 
   let expense = {
+    allTimeExpense: 0,
     expenses: 0,
     income: 0,
     totalAmountSum: 0,
@@ -225,7 +229,9 @@ router.get("/expense", verify, async (req, res) => {
     unofficalExpense: 0,
     swornExpense: 0,
     prontoIncome: 0,
+    prontoIncomeDollar: 0,
     unofficalIncome: 0,
+    unofficalIncomeDollar: 0,
     swornIncome: 0
   };
 
@@ -239,23 +245,34 @@ router.get("/expense", verify, async (req, res) => {
       // totalpaidprice += paidLog[i]["payment"][j].paid;
       // totalremainprice += paidLog[i]["payment"][j].remain;
       // totalvalueprice += paidLog[i]["payment"][j].total;
+      var currency = "Lira";
 
       if(paidLog[i]["payment"][j].currency != null && !isEmptyOrSpaces(paidLog[i]["payment"][j].currency) && paidLog[i]["payment"][j].currency == "Dollar"){
-        console.log("Skippppppppppppppp");
-        continue;
+        //console.log("Skippppppppppppppp");
+        currency = "Dollar";
+        
+        //continue;
       }
+      if(currency == "Lira"){
+        totalIncome += paidLog[i]["payment"][j].paid;
 
-      totalIncome += paidLog[i]["payment"][j].paid;
-
-
-      if (paidLog[i]["payment"][j].category.includes("Pronto")) {
-        prontoIncome = prontoIncome + paidLog[i]["payment"][j].paid;
-      } else if (paidLog[i]["payment"][j].category.includes("Sworn lega")) {
-        swornIncome = swornIncome + paidLog[i]["payment"][j].paid;
-      } else if (paidLog[i]["payment"][j].category.includes("Unofficial")) {
-        unofficalIncome = unofficalIncome + paidLog[i]["payment"][j].paid;
+        if (paidLog[i]["payment"][j].category.includes("Pronto")) {
+          prontoIncome = prontoIncome + paidLog[i]["payment"][j].paid;
+        } else if (paidLog[i]["payment"][j].category.includes("Sworn lega")) {
+          swornIncome = swornIncome + paidLog[i]["payment"][j].paid;
+        } else if (paidLog[i]["payment"][j].category.includes("Unofficial")) {
+          unofficalIncome = unofficalIncome + paidLog[i]["payment"][j].paid;
+        } else {
+        }
       } else {
+        if (paidLog[i]["payment"][j].category.includes("Pronto")) {
+          prontoIncomeDollar += paidLog[i]["payment"][j].paid;
+        } else if (paidLog[i]["payment"][j].category.includes("Unofficial")) {
+          unofficalIncomeDollar += paidLog[i]["payment"][j].paid;
+        } else {
+        }
       }
+
     } catch(err){}
       //console.log("subParent: " + JSON.stringify(subParent));
     }
@@ -279,6 +296,7 @@ router.get("/expense", verify, async (req, res) => {
     ) {
 
 
+      allTimeExpense += query[j].total;
 
       console.log("expense");
       totalExpense = totalExpense + total;
@@ -322,6 +340,9 @@ router.get("/expense", verify, async (req, res) => {
   expense.prontoIncome = prontoIncome;
   expense.swornIncome = swornIncome;
   expense.unofficalIncome = unofficalIncome;
+  expense.prontoIncomeDollar = prontoIncomeDollar;
+  expense.unofficalIncomeDollar = unofficalIncomeDollar;
+  expense.allTimeExpense = allTimeExpense;
 
   console.log("Expnense json object" + expense.swornIncome);
   //after finish loop parent json
