@@ -15,6 +15,7 @@ const subPayment = mongoose.Schema({
   remain: "Number",
   total: "Number",
   href: "string",
+  currency: "string",
   mobile: "string",
   category: "string",
   language: "string",

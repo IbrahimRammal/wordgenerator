@@ -239,6 +239,12 @@ router.get("/expense", verify, async (req, res) => {
       // totalpaidprice += paidLog[i]["payment"][j].paid;
       // totalremainprice += paidLog[i]["payment"][j].remain;
       // totalvalueprice += paidLog[i]["payment"][j].total;
+
+      if(paidLog[i]["payment"][j].currency != null && !isEmptyOrSpaces(paidLog[i]["payment"][j].currency) && paidLog[i]["payment"][j].currency == "Dollar"){
+        console.log("Skippppppppppppppp");
+        continue;
+      }
+
       totalIncome += paidLog[i]["payment"][j].paid;
 
 
@@ -271,6 +277,9 @@ router.get("/expense", verify, async (req, res) => {
       query[j]["category"].includes("Expenses") &&
       query[j]["type"] != null
     ) {
+
+
+
       console.log("expense");
       totalExpense = totalExpense + total;
       console.log("Type json object " + query[j]["type"]);

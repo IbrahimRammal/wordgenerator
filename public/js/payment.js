@@ -4,7 +4,7 @@ $(document).ready(function () {
   var category = [
     { categoryName: "Pronto", categoryId: "1" },
     { categoryName: "Sworn legal", categoryId: "2" },
-    { categoryName: "non legal", categoryId: "3" },
+    { categoryName: "Unofficial", categoryId: "3" },
   ];
 
   //ej.grids.Grid.Inject(ej.grids.DetailRow);
@@ -86,31 +86,49 @@ $(document).ready(function () {
           headerText: "Count",
           textAlign: "Left",
           validationRules: { required: true },
-          width: 100,
+          width: 70,
         },
         {
           field: "total",
           headerText: "Total Price",
-          width: 85,
+          width: 150,
           // format: "C0",
           type: "number",
           textAlign: "Left",
-          valueAccessor: currencyFormatter,
+          valueAccessor: UsdLbpTotalFormatter,
         },
         {
           field: "paid",
           headerText: "Paid Price",
-          width: 90,
+          width: 150,
           // format: "C",
           textAlign: "Left",
           type: "number",
-          valueAccessor: currencyFormatter,
+          valueAccessor: UsdLbpPaidFormatter,
         },
         {
           headerText: "Remains",
           valueAccessor: totalRemains,
           textAlign: "Right",
           width: 150,
+        },
+        {
+          field: "totalUsd",
+          headerText: "Total Price",
+          width: 85,
+          visible: false,
+          // format: "C0",
+          type: "number",
+          textAlign: "Left",
+        },
+        {
+          field: "paidUsd",
+          headerText: "Paid Price",
+          width: 90,
+          // format: "C",
+          textAlign: "Left",
+          type: "number",
+          visible: false,
         },
         // {
         //   field: "remain",
@@ -276,6 +294,17 @@ $(document).ready(function () {
             //validationRules: { required: true, minLength: [customFn, 'Need to be less than total value']}
           },
           {
+            field: "currency",
+            headerText: "currency",
+            defaultValue: "Lira",
+            width: 90,
+            // format: "C",
+            textAlign: "Right",
+            allowEditing: false,
+            visible: false
+            //validationRules: { required: true, minLength: [customFn, 'Need to be less than total value']}
+          },
+          {
             field: "Download",
             headerText: "Download",
             width: 90,
@@ -388,17 +417,48 @@ $(document).ready(function () {
     });
     grid.appendTo("#Grid");
 
+    function UsdLbpTotalFormatter(field, data, column) {
+      var usd = data.totalUsd;
+      var lbp = data.total;
+        
+      return  lbp + " LBP / " + usd.toFixed(2) + " USD";
+    }
+
+    function UsdLbpPaidFormatter(field, data, column) {
+      var usd = data.paidUsd;
+      var lbp = data.paid;
+        
+      return  lbp + " LBP / " + usd.toFixed(2) + " USD";
+    }
+
+
     function currencyFormatter(field, data, column) {
       //console.log(column);
       //console.log(field);
+      //console.log(data);
+      var currency = "LBP";
+      if(data.currency != null && !isEmptyOrSpaces(data.currency))
+      {
+        //console.log(field.currency);
+        if(data.currency == "Dollar")
+          currency = "USD";
+      }
       if(data[field] == null || data[field] == "")
-      return "0 LBP";
-      return data[field] + " LBP";
+        return "0 " + currency;
+        
+      return data[field] + " " + currency;
     }
 
     function totalRemains(field, data, column) {
-      return data.total - data.paid + " LBP";
+      //console.log(data.totalUsd - data.paidUsd);
+      var usd = data.totalUsd - data.paidUsd;
+      var lbp = data.total - data.paid;
+      return  lbp + " LBP / " + usd.toFixed(2) + " USD";
     }
+
+    function isEmptyOrSpaces(str){
+      return str === null || str.match(/^ *$/) !== null;
+  }
 
     // var customFn = function(args) {
     //   console.log(args);
