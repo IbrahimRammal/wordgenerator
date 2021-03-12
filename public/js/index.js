@@ -32,6 +32,7 @@ $( document ).ready(function() {
         var grid = new ej.grids.Grid({
             dataSource: data,
             allowPaging: true,
+            allowTextWrap: true,
             // allowSearching : true,
             allowGrouping: true,
             allowFiltering: true,
