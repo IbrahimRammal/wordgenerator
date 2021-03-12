@@ -304,8 +304,14 @@ router.get("/dashboard", verify, async (req, res) => {
     var sworn = 0;
     var pronto = 0;
     var nonlegal = 0;
+    var profitDollar = 0;
+    var profitLira = 0;
+    var expensesRemainLira = 0;
 
     let data = {
+      expensesRemainLira: 0,
+      profitDollar: 0,
+      profitLira: 0,
       paidSum: 0,
       remainSum: 0,
       totalAmountSum: 0,
@@ -334,7 +340,14 @@ router.get("/dashboard", verify, async (req, res) => {
         //totalIncome = totalIncome + expenseLog[j].paid;
         console.log("income");
 
-      } else {
+      } 
+      else if (
+        expenseLog[j]["category"] != null &&
+        expenseLog[j]["category"].includes("Expenses")
+      ) {
+        expensesRemainLira += expenseLog[j].total - expenseLog[j].paid;
+      }
+      else {
         console.log("asdfljaslkdf" + expenseLog[j]["category"]);
       }
     }
@@ -345,6 +358,7 @@ router.get("/dashboard", verify, async (req, res) => {
       let totalpaidprice = 0;
       let totalremainprice = 0;
       let totalvalueprice = 0;
+      let subprofitDollar = 0;
       let unit = 0;
 
       for (var j = 0; j < query[i]["payment"].length; j++) {
@@ -352,47 +366,36 @@ router.get("/dashboard", verify, async (req, res) => {
         unit = j + 1;
 
         if(query[i]["payment"][j].currency != null && !isEmptyOrSpaces(query[i]["payment"][j].currency) && query[i]["payment"][j].currency == "Dollar"){
-          console.log("Skippppppppppppppp");
-          continue;
-          // paidx = parseFloat(query["payment"][i].paid);
-          // totaly = parseFloat(query["payment"][i].total);
-          
-          // currency = query["payment"][i].currency;
-         
-
-          // if(!isNaN(paidx) && !isNaN(totaly)){
-          //   if(currency == "Dollar"){
-          //     paidx = paidx.toFixed(2)
-          //     totaly = totaly.toFixed(2)
-          //     } else if(currency == "Lira"){
-          //       paidx = Math.trunc(paidx);
-          //       totaly = Math.trunc(totaly);
-          //     } else {}
-          // }
+          subprofitDollar += query[i]["payment"][j].paid;
         }
+        else{
+          totalpaidprice += query[i]["payment"][j].paid;
+          totalremainprice += query[i]["payment"][j].remain;
+          totalvalueprice += query[i]["payment"][j].total;
 
-        totalpaidprice += query[i]["payment"][j].paid;
-        totalremainprice += query[i]["payment"][j].remain;
-        totalvalueprice += query[i]["payment"][j].total;
-
-        if (query[i]["payment"][j].category.includes("Pronto")) {
-          pronto = pronto + 1;
-        } else if (query[i]["payment"][j].category.includes("Sworn lega")) {
-          sworn = sworn + 1;
-        } else if (query[i]["payment"][j].category.includes("Unofficial")) {
-          nonlegal = nonlegal + 1;
-        } else {
-        }
+          if (query[i]["payment"][j].category.includes("Pronto")) {
+            pronto = pronto + 1;
+          } else if (query[i]["payment"][j].category.includes("Sworn lega")) {
+            sworn = sworn + 1;
+          } else if (query[i]["payment"][j].category.includes("Unofficial")) {
+            nonlegal = nonlegal + 1;
+          } else {
+          }
+       }
       } catch(err){}
         //console.log("subParent: " + JSON.stringify(subParent));
       }
       //after finish loop parent json
 
+      profitDollar += subprofitDollar;
       totalUnit += unit;
       paidSum += totalpaidprice;
       remainSum += totalremainprice;
       totalAmountSum += totalvalueprice;
     }
+
+    //calculate profit lira .. subtract amount paid by remain expense
+    profitLira = paidSum - expensesRemainLira;
 
     data.totalUnit = totalUnit;
     data.clientNumber = clientNumber;
@@ -403,6 +406,9 @@ router.get("/dashboard", verify, async (req, res) => {
     data.pronto = pronto;
     data.sworn = sworn;
     data.nonlegal = nonlegal;
+    data.expensesRemainLira = expensesRemainLira;
+    data.profitDollar = profitDollar;
+    data.profitLira = profitLira;
 
     //console.log(data);
 

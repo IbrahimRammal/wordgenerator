@@ -88,14 +88,14 @@
                         class="text-xs font-weight-bold text-primary text-uppercase mb-1"
                         wfd-id="119"
                       >
-                        Income Earnings
+                        Profit LBP
                       </div>
                       <div
                         class="h5 mb-0 font-weight-bold text-gray-800"
                         wfd-id="118"
                       >
                       <%if (locals.data && typeof data != 'undefined') { %>
-                        <%= data['paidSum'] %> L.L
+                        <%= data['profitLira'] %> L.L
                         <% } %>
                       </div>
                     </div>
@@ -120,14 +120,14 @@
                         class="text-xs font-weight-bold text-success text-uppercase mb-1"
                         wfd-id="111"
                       >
-                        Income Remains
+                        Profit DOLLAR
                       </div>
                       <div
                         class="h5 mb-0 font-weight-bold text-gray-800"
                         wfd-id="110"
                       >
                       <%if (locals.data && typeof data != 'undefined') { %>
-                        <%= data['remainSum'] %> L.L
+                        <%= data['profitDollar'] %> $
                         <% } %>
                       </div>
                     </div>

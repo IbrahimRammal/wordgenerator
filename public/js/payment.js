@@ -46,6 +46,7 @@ $(document).ready(function () {
       dataSource: data,
       allowPaging: true,
       allowGrouping: true,
+      allowTextWrap: true,
       //allowFiltering: true,
       allowSorting: true,
       allowMultiSorting: true,
@@ -142,8 +143,9 @@ $(document).ready(function () {
       childGrid: {
         dataSource: dataChild,
         queryString: "_id",
-        // allowPaging: true,
+        allowPaging: true,
         allowSelection: true,
+        allowTextWrap: true,
         //allowGrouping: true,
         //allowFiltering: true,
         //allowSorting: true,

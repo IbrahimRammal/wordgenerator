@@ -158,6 +158,7 @@ $(document).ready(function () {
           dataSource: dataChild,
           queryString: "_id",
           allowPaging: true,
+          allowTextWrap: true,
           // allowSearching : true,
           allowGrouping: true,
           allowFiltering: true,
