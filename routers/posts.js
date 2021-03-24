@@ -1062,6 +1062,8 @@ router.post("/datainvoice", verify, async (req, res) => {
         let docArray = { clients: [], users: [], job: [], jobs: [] }; // sar fe mwskleh bel array fams:[]
         let jsonObj = [];
 
+        console.log(req.body);
+
         //Search all filed had been submit when get to the paid form break from this loop and then make another keys's
         //For paid client form to enter or check if there is already one there
 
@@ -1084,7 +1086,9 @@ router.post("/datainvoice", verify, async (req, res) => {
         if (data.hasOwnProperty("s3")) {
           if (data.s3.hasOwnProperty("job")) {
             for (var i = 0; i < data.s3.job.length; i++) {
-              if (!isEmptyOrSpaces(req.body["s3_job_pro_" + i])) {
+              console.log(data.s3.job.length);
+              console.log(i);
+              if (req.body["s3_job_pro_" + i] != null && !isEmptyOrSpaces(req.body["s3_job_pro_" + i])) {
                 data.s3.job[i].pro = req.body["s3_job_pro_" + i];
                 data.s3.job[i].stype =
                   req.body["s3_job_stype_" + i];
@@ -1121,7 +1125,7 @@ router.post("/datainvoice", verify, async (req, res) => {
         if (data.hasOwnProperty("s3")) {
           if (data.s3.hasOwnProperty("jobs")) {
             for (var i = 0; i < data.s3.jobs.length; i++) {
-              if (!isEmptyOrSpaces(req.body["s3_jobs_pro_" + i])) {
+              if (req.body["s3_jobs_pro_" + i] != null && !isEmptyOrSpaces(req.body["s3_jobs_pro_" + i])) {
                 data.s3.jobs[i].pro = req.body["s3_jobs_pro_" + i];
                 data.s3.jobs[i].stype =
                   req.body["s3_jobs_stype_" + i];
