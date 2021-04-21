@@ -2053,7 +2053,7 @@ router.post("/template", verify, async (req, res) => {
           /// ////////////////////////////////////
           docSaved[0]["client"]["id"] = id;
 
-          console.log("docSaved[0]" + docSaved[0]);
+          //console.log("docSaved[0]" + docSaved[0]);
 
           url =
             "/api/posts/data?lang=" +
