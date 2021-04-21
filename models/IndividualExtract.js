@@ -228,7 +228,7 @@ const individualSchema = mongoose.Schema({
         }
       }
     },
-    s77: {
+    f77: {
       caption: {
         type: 'String'
       },
