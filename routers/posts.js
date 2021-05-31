@@ -2038,6 +2038,25 @@ router.post("/template", verify, async (req, res) => {
             docSaved = await Individual.find({ _id: docID });
           } else if (modelCheck.includes("Family")) {
             docSaved = await Family.find({ _id: docID });
+            console.log("Family extract length: dfd " + docSaved[0]["s2"]["fams"].length);
+            if(docSaved[0]["s2"]["fams"].length != null && docSaved[0]["s2"]["fams"].length < 30)
+            {
+              console.log("Family extract length: " + docSaved[0]["s2"]["fams"].length);
+              var familyMember =  {
+                  "nsname": "",
+                  "faname": "",
+                  "moname": "",
+                  "pdbirth": "",
+                  "sect": "",
+                  "stat": "",
+                  "s": "",
+                  "remark": ""
+              };
+              for(var iteration = 0; iteration < 15; iteration++)
+              {
+                docSaved[0]["s2"]["fams"].push(familyMember);
+              }
+            }
           } else if (modelCheck.includes("Consent")) {
             docSaved = await Consent.find({ _id: docID });
           } else if (modelCheck.includes("ResidencyPermit")) {
@@ -2352,6 +2371,8 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
     var now = new Date();
 
     console.log("insert pyament" + a);
+
+    
 
     receipt.fullname = isUndefinedOrNull(a.fullname) ? "" : a.fullname;
     receipt.phone = isUndefinedOrNull(a.phone) ? "" : a.phone;

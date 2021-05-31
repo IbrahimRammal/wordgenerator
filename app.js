@@ -109,12 +109,12 @@ app.use(
 // }));
 
 ////////////////////////
-  app.use(function (req, res, next) {
-    res.set('Cache-control', 'public, max-age=300');
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+//   app.use(function (req, res, next) {
+//     res.set('Cache-control', 'public, max-age=300');
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
 //////////////////////////
 
 //Middleware
