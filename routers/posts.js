@@ -2370,23 +2370,29 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
     //this.updated_at = now;
     var now = new Date();
 
-    console.log("insert pyament" + a);
-
+    //console.log("insert pyament" + a);
+    console.log("action: " + req.body.action);
+    console.log("req.body.value: " + req.body);
+    for (const [key, value] of Object.entries(req.body)) {
+      console.log(`${key}: ${value}`);
+    }
     
-
-    receipt.fullname = isUndefinedOrNull(a.fullname) ? "" : a.fullname;
-    receipt.phone = isUndefinedOrNull(a.phone) ? "" : a.phone;
-    receipt.category = isUndefinedOrNull(a.category) ? "" : a.category;
-    receipt.type = isUndefinedOrNull(a.type) ? "" : a.type;
-    receipt.paid = isUndefinedOrNull(a.paid) ? "" : a.paid;
-    receipt.total = isUndefinedOrNull(a.total) ? "" : a.total;
-    receipt.created_at = now;
-    receipt.updated_at = now;
-    receipt.note = isUndefinedOrNull(a.note) ? "" : a.note;
-    receipt.address = isUndefinedOrNull(a.address) ? "" : a.address;
-    receipt.paymentMode = isUndefinedOrNull(a.paymentMode)
-      ? ""
-      : a.paymentMode;
+    if(req.body.action != "remove")
+    {
+      receipt.fullname = isUndefinedOrNull(a.fullname) ? "" : a.fullname;
+      receipt.phone = isUndefinedOrNull(a.phone) ? "" : a.phone;
+      receipt.category = isUndefinedOrNull(a.category) ? "" : a.category;
+      receipt.type = isUndefinedOrNull(a.type) ? "" : a.type;
+      receipt.paid = isUndefinedOrNull(a.paid) ? "" : a.paid;
+      receipt.total = isUndefinedOrNull(a.total) ? "" : a.total;
+      receipt.created_at = now;
+      receipt.updated_at = now;
+      receipt.note = isUndefinedOrNull(a.note) ? "" : a.note;
+      receipt.address = isUndefinedOrNull(a.address) ? "" : a.address;
+      receipt.paymentMode = isUndefinedOrNull(a.paymentMode)
+        ? ""
+        : a.paymentMode;
+    }
 
     var respnseAddID = "";
     if (req.body.action == "insert") {
@@ -2418,49 +2424,65 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
         if (err) {
           console.log(err);
         } else {
-          var now = new Date();
-          //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
-          receiptRecored.fullname = isUndefinedOrNull(a.fullname)
-            ? ""
-            : a.fullname;
-          receiptRecored.phone = isUndefinedOrNull(a.phone) ? 0 : a.phone;
-          receiptRecored.category = isUndefinedOrNull(a.category)
-            ? ""
-            : a.category;
-          receiptRecored.type = isUndefinedOrNull(a.type)
-            ? ""
-            : a.type;
-          receiptRecored.paid = isUndefinedOrNull(a.paid) ? 0 : a.paid;
-          receiptRecored.total = isUndefinedOrNull(a.total) ? 0 : a.total;
-          receiptRecored.paymentMode = isUndefinedOrNull(a.paymentMode)
-            ? ""
-            : a.paymentMode;
-          receiptRecored.created_at = isUndefinedOrNull(a.created_at)
-            ? ""
-            : a.created_at;
-          receiptRecored.updated_at = now;
-          receiptRecored.note = isUndefinedOrNull(a.note) ? "" : a.note;
-          receiptRecored.address = isUndefinedOrNull(a.address)
-            ? ""
-            : a.address;
+          try{
+            if(!isUndefinedOrNull(receiptRecored))
+            {
+              var now = new Date();
+              console.log("receiptRecored: " + receiptRecored);
+              console.log("a: " + a.fullname);
+              console.log("receipt: " + receipt.fullname);
+              //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
+              receiptRecored.fullname = isUndefinedOrNull(a.fullname)
+                ? ""
+                : a.fullname;
+              receiptRecored.phone = isUndefinedOrNull(a.phone) ? 0 : a.phone;
+              receiptRecored.category = isUndefinedOrNull(a.category)
+                ? ""
+                : a.category;
+              receiptRecored.type = isUndefinedOrNull(a.type)
+                ? ""
+                : a.type;
+              receiptRecored.paid = isUndefinedOrNull(a.paid) ? 0 : a.paid;
+              receiptRecored.total = isUndefinedOrNull(a.total) ? 0 : a.total;
+              receiptRecored.paymentMode = isUndefinedOrNull(a.paymentMode)
+                ? ""
+                : a.paymentMode;
+              receiptRecored.created_at = isUndefinedOrNull(a.created_at)
+                ? ""
+                : a.created_at;
+              receiptRecored.updated_at = now;
+              receiptRecored.note = isUndefinedOrNull(a.note) ? "" : a.note;
+              receiptRecored.address = isUndefinedOrNull(a.address)
+                ? ""
+                : a.address;
 
-          console.log(receiptRecored);
+              console.log("receiptRecored: " + receiptRecored);
 
-          //result = receiptRecored;
+              //result = receiptRecored;
 
-          // console.log("New Client Paid: " + json.stringify(receiptRecored))
+              // console.log("New Client Paid: " + json.stringify(receiptRecored))
 
-          receiptRecored.save(function (err) {
-            if (err) {
-              //handleError(err)
-              console.log(err);
+              receiptRecored.save(function (err) {
+                if (err) {
+                  //handleError(err)
+                  console.log(err);
+                } else {
+                  // res.send({})
+                  // return
+                }
+              });
             } else {
-              // res.send({})
-              // return
+              console.log("Update without reload the datatable error!");
             }
-          });
+          }
+          catch (error)
+          {
+            console.log(err);
+            res.send("error");
+          }
         }
       });
+
     }
     if (req.body.action == "remove") {
       console.log(req.body);
@@ -2491,7 +2513,7 @@ router.post("/Expense/BatchData", verify, async (req, res) => {
 
     res.send(result);
   } catch (err) {
-    console.log(err);
+    console.log("Error: " + err);
     res.send("error");
   }
 });
@@ -2933,27 +2955,34 @@ router.post("/Payment/BatchData", verify, async (req, res) => {
         if (err) {
           console.log(err);
         } else {
-          //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
-          user.fullname = a.fullname;
-          // var combineid = a.fullname;
-          // combineid += isUndefinedOrNull(a.mobile) ? "" : a.mobile;
-          user.combineid =
-            a.fullname + isUndefinedOrNull(a.mobile) ? "" : a.mobile;
-          user.name = isUndefinedOrNull(a.name) ? "" : a.name;
-          user.surname = isUndefinedOrNull(a.surname) ? "" : a.surname;
-          user.father = isUndefinedOrNull(a.father) ? "" : a.father;
-          user.mobile = isUndefinedOrNull(a.mobile) ? "" : a.mobile;
-          user.address = isUndefinedOrNull(a.address) ? "" : a.address;
-          // console.log("New Client Paid: " + json.stringify(user))
-          user.save(function (err) {
-            if (err) {
-              //handleError(err)
-              console.log(err);
-            } else {
-              // res.send({})
-              // return
-            }
-          });
+          try {
+            //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
+            user.fullname = a.fullname;
+            // var combineid = a.fullname;
+            // combineid += isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+            user.combineid =
+              a.fullname + isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+            user.name = isUndefinedOrNull(a.name) ? "" : a.name;
+            user.surname = isUndefinedOrNull(a.surname) ? "" : a.surname;
+            user.father = isUndefinedOrNull(a.father) ? "" : a.father;
+            user.mobile = isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+            user.address = isUndefinedOrNull(a.address) ? "" : a.address;
+            // console.log("New Client Paid: " + json.stringify(user))
+            user.save(function (err) {
+              if (err) {
+                //handleError(err)
+                console.log(err);
+              } else {
+                // res.send({})
+                // return
+              }
+            });
+          }
+          catch (error)
+          {
+            console.log(err);
+            res.send("error");
+          }
         }
       });
       await createHistoryLog(
@@ -3073,35 +3102,42 @@ router.post("/Paid/BatchData", verify, async (req, res) => {
         if (err) {
           console.log(err);
         } else {
-          createHistoryLog(
-            req.email,
-            "Update Paid Client",
-            "Updated Paid Client with name " + user.fullname,
-            req.id
-          );
-          //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
-          user.fullname = a.fullname;
-          // var combineid = a.fullname;
-          // combineid += isUndefinedOrNull(a.mobile) ? "" : a.mobile;
-          user.combineid =
-            a.fullname + isUndefinedOrNull(a.mobile) ? "" : a.mobile;
-          user.name = isUndefinedOrNull(a.name) ? "" : a.name;
-          user.surname = isUndefinedOrNull(a.surname) ? "" : a.surname;
-          user.father = isUndefinedOrNull(a.father) ? "" : a.father;
-          user.mobile = isUndefinedOrNull(a.mobile) ? "" : a.mobile;
-          user.address = isUndefinedOrNull(a.address) ? "" : a.address;
+          try {
+            createHistoryLog(
+              req.email,
+              "Update Paid Client",
+              "Updated Paid Client with name " + user.fullname,
+              req.id
+            );
+            //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
+            user.fullname = a.fullname;
+            // var combineid = a.fullname;
+            // combineid += isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+            user.combineid =
+              a.fullname + isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+            user.name = isUndefinedOrNull(a.name) ? "" : a.name;
+            user.surname = isUndefinedOrNull(a.surname) ? "" : a.surname;
+            user.father = isUndefinedOrNull(a.father) ? "" : a.father;
+            user.mobile = isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+            user.address = isUndefinedOrNull(a.address) ? "" : a.address;
 
-          // console.log("New Client Paid: " + json.stringify(user))
+            // console.log("New Client Paid: " + json.stringify(user))
 
-          user.save(function (err) {
-            if (err) {
-              //handleError(err)
-              console.log(err);
-            } else {
-              // res.send({})
-              // return
-            }
-          });
+            user.save(function (err) {
+              if (err) {
+                //handleError(err)
+                console.log(err);
+              } else {
+                // res.send({})
+                // return
+              }
+            });
+          }
+          catch (error)
+          {
+            console.log(err);
+            res.send("error");
+          }
         }
       });
     }
@@ -3380,33 +3416,40 @@ router.post("/BatchData", verify, async (req, res) => {
         if (err) {
           console.log(err);
         } else {
-          //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
-          user.fullname = a.fullname;
-          user.s0.name = isUndefinedOrNull(a.name) ? "" : a.name;
-          user.s0.surname = isUndefinedOrNull(a.surname) ? "" : a.surname;
-          user.s0.father = isUndefinedOrNull(a.father) ? "" : a.father;
-          user.s0.mother = isUndefinedOrNull(a.mother) ? "" : a.mother;
-          user.s0.sex = isUndefinedOrNull(a.sex) ? "" : a.sex;
-          user.s0.placeofbirthlocal = isUndefinedOrNull(a.placeofbirthlocal)
-            ? ""
-            : a.placeofbirthlocal;
-          user.s0.dateofbirth = isUndefinedOrNull(a.dateofbirth)
-            ? ""
-            : a.dateofbirth;
-          user.s0.noregistry = isUndefinedOrNull(a.noregistry)
-            ? ""
-            : a.noregistry;
+          try {
+            //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
+            user.fullname = a.fullname;
+            user.s0.name = isUndefinedOrNull(a.name) ? "" : a.name;
+            user.s0.surname = isUndefinedOrNull(a.surname) ? "" : a.surname;
+            user.s0.father = isUndefinedOrNull(a.father) ? "" : a.father;
+            user.s0.mother = isUndefinedOrNull(a.mother) ? "" : a.mother;
+            user.s0.sex = isUndefinedOrNull(a.sex) ? "" : a.sex;
+            user.s0.placeofbirthlocal = isUndefinedOrNull(a.placeofbirthlocal)
+              ? ""
+              : a.placeofbirthlocal;
+            user.s0.dateofbirth = isUndefinedOrNull(a.dateofbirth)
+              ? ""
+              : a.dateofbirth;
+            user.s0.noregistry = isUndefinedOrNull(a.noregistry)
+              ? ""
+              : a.noregistry;
 
-          user.save(function (err) {
-            if (err) {
-              //handleError(err)
-              console.log(err);
-            } else {
-              res.send({});
+            user.save(function (err) {
+              if (err) {
+                //handleError(err)
+                console.log(err);
+              } else {
+                res.send({});
 
-              return;
-            }
-          });
+                return;
+              }
+            });
+          }
+          catch (error)
+          {
+            console.log(err);
+            res.send("error");
+          }
         }
       });
 
@@ -5579,6 +5622,13 @@ async function createHistoryLog(user, action, details, id) {
 
 function isUndefinedOrNull(str) {
   return str == null;
+}
+
+function isNullOrDoesNotHaveCertainKeyWordOrEmptyOrSpaces(str,key){
+  if(isEmptyOrSpaces(str))
+  {
+    return "";
+  }
 }
 
 function isEmptyOrSpaces(str) {

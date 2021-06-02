@@ -74,6 +74,7 @@ $(document).ready(function () {
         allowAdding: true,
         allowDeleting: true,
         mode: "Dialog",
+        showDeleteConfirmDialog: true 
       }, //, allowDeleting: true
       columns: [
         {
