@@ -30,10 +30,11 @@ var mongoose = require("mongoose");
 
 //model client paider
 const PaidModel = require("../models/Paid");
+const SupplierModel = require("../models/Supplier");
 const Expense = require("../models/Expense");
 
 
-
+const Suppliers = SupplierModel.Supplier;
 const Paid = PaidModel.Paid;
 const Payment = PaidModel.Payment;
 
@@ -66,6 +67,61 @@ router.get("/create", verify, (req, res) => {
   //     email: req.email,
   //     data:  data
   // });
+});
+
+router.get("/createreceiptvoucher", verify, (req, res) => {
+  req.keep = "true";
+  var query = Paid.find(
+    {},
+    { payment: 0, invoice: 0, English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
+  );
+
+  query.exec(function (err, result) {
+    if (!err) {
+      //let rawdata = "";
+      //console.log(rawdata);
+      //rawdata = result
+      let dataReturn = result;
+
+      //console.log(result)
+
+      res.render("receiptvoucher", {
+        // req.session.
+        name: req.name,
+        email: req.email,
+        clientname: result,
+      });
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+router.get("/createpaymentvoucher", verify, (req, res) => {
+  req.keep = "true";
+  var query = Suppliers.find(
+    {},
+    { payment: 0, invoice: 0, English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
+  );
+  query.exec(function (err, result) {
+    if (!err) {
+      //let rawdata = "";
+      //console.log(rawdata);
+      //rawdata = result
+      let dataReturn = result;
+
+      //console.log(result)
+
+      res.render("paymentvoucher", {
+        // req.session.
+        name: req.name,
+        email: req.email,
+        clientname: result,
+      });
+    } else {
+      console.log(err);
+    }
+  });
 });
 
 router.get("/createpayment", verify, (req, res) => {
@@ -132,6 +188,54 @@ router.get("/invoicecreate", verify, (req, res) => {
   //     email: req.email,
   //     data:  data
   // });
+});
+
+router.get("/receiptvoucheredit", verify, (req, res) => {
+  req.keep = "true";
+  var query = Client.find({}, { s0: 0, __v: 0 });
+  query.exec(function (err, result) {
+    if (!err) {
+      //let rawdata = "";
+      //console.log(rawdata);
+      //rawdata = result
+      let dataReturn = result;
+
+      //console.log(result)
+
+      res.render("editreceipt", {
+        // req.session.
+        name: req.name,
+        email: req.email,
+        clientname: result,
+      });
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+router.get("/paymentvoucheredit", verify, (req, res) => {
+  req.keep = "true";
+  var query = Client.find({}, { s0: 0, __v: 0 });
+  query.exec(function (err, result) {
+    if (!err) {
+      //let rawdata = "";
+      //console.log(rawdata);
+      //rawdata = result
+      let dataReturn = result;
+
+      //console.log(result)
+
+      res.render("editpayment", {
+        // req.session.
+        name: req.name,
+        email: req.email,
+        clientname: result,
+      });
+    } else {
+      console.log(err);
+    }
+  });
 });
 
 router.get("/edit", verify, (req, res) => {
@@ -481,6 +585,26 @@ router.get("/chart", verify, async (req, res) => {
 router.get("/paid", verify, async (req, res) => {
   req.keep = "true";
   res.render("paid", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+    //data: data
+  });
+});
+
+router.get("/receiptvouchertable", verify, async (req, res) => {
+  req.keep = "true";
+  res.render("receiptvouchertable", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+    //data: data
+  });
+});
+
+router.get("/paymentvouchertable", verify, async (req, res) => {
+  req.keep = "true";
+  res.render("paymentvouchertable", {
     // req.session.
     name: req.name,
     email: req.email,

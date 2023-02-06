@@ -1,0 +1,193 @@
+{
+    "type": "English",
+    "client": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "createuser": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "modifieduser": {
+        "id": "1",
+        "email": "admin@admin.com",
+        "name": "admin"
+    },
+    "s0": {
+        "fullname": "s2_f0",
+        "name": "",
+        "surname": "",
+        "father": "",
+        "address": "s2_f1",
+        "mobile": "",
+        "registration": "",
+        "vat": "",
+        "mof": ""
+    },
+    "s1": {
+        "caption": "Header",
+        "f0": {
+            "caption": "Fiscal Number",
+            "value": "2951253"
+        },
+        "f1": {
+            "caption": "Company Location",
+            "value": "Najah Center, Karakol El Druze intersection, Mar Elias Street"
+        },
+        "f2": {
+            "caption": "Telepone",
+            "value": "03/160419"
+        },
+        "f3": {
+            "caption": "Code Number",
+            "value": "053/19"
+        },
+        "f4": {
+            "caption": "Date",
+            "value": ""
+        }
+    },
+    "s2": {
+        "caption": "Client",
+        "f0": {
+            "caption": "Received from",
+            "value": ""
+        },
+        "f1": {
+            "caption": "Address",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Account Number",
+            "value": ""
+        },
+        "f3": {
+            "caption": "The Amount of",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Currency",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Say Only",
+            "value": ""
+        },
+        "f6": {
+            "caption": "Currency",
+            "value": ""
+        }
+    },
+    "s3": {
+        "f0": {
+            "caption": "cash",
+            "value": ""
+        },
+        "f1": {
+            "caption": "Amount",
+            "value": ""
+        },
+        "f2": {
+            "caption": "Currency",
+            "value": ""
+        },
+        "f3": {
+            "caption": "check",
+            "value": ""
+        },
+        "f4": {
+            "caption": "Amount",
+            "value": ""
+        },
+        "f5": {
+            "caption": "Currency",
+            "value": ""
+        },
+        "f6": {
+            "caption": "Invoice No.",
+            "value": ""
+        },
+        "f7": {
+            "caption": "Select Payment Method",
+            "value": ""
+        }
+    },
+    "s4": {
+        "check": [
+            {
+                "checkno": "",
+                "valuedate": "",
+                "bankname": ""
+            },
+            {
+                "checkno": "",
+                "valuedate": "",
+                "bankname": ""
+            },
+            {
+                "checkno": "",
+                "valuedate": "",
+                "bankname": ""
+            },
+            {
+                "checkno": "",
+                "valuedate": "",
+                "bankname": ""
+            },
+            {
+                "checkno": "",
+                "valuedate": "",
+                "bankname": ""
+            },
+            {
+                "checkno": "",
+                "valuedate": "",
+                "bankname": ""
+            },
+            {
+                "checkno": "",
+                "valuedate": "",
+                "bankname": ""
+            },
+            {
+                "checkno": "",
+                "valuedate": "",
+                "bankname": ""
+            },
+            {
+                "checkno": "",
+                "valuedate": "",
+                "bankname": ""
+            }
+        ]
+    },
+    "total": "", "date": "", "original": "0",   "download": "", "invoiceNumber": "", "Currency": "", "docArray": "", "accountNumber": "",
+  "category": "",
+    "caption": "Unofficial Receipt Voucher",  "rate": "",
+    "leftheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "centerheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "rightheader": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    },
+    "centerfooter": {
+        "title": "R B P S T",
+        "defulat": "",
+        "value": "",
+        "style": ""
+    }
+}

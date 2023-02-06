@@ -415,6 +415,30 @@ const consentSchema = mongoose.Schema({
       value: {
         type: 'String'
       }
+    },
+    f10: {
+      caption: {
+        type: 'String'
+      },
+      value: {
+        type: 'String'
+      }
+    },
+    f11: {
+      caption: {
+        type: 'String'
+      },
+      value: {
+        type: 'String'
+      }
+    },
+    f12: {
+      caption: {
+        type: 'String'
+      },
+      value: {
+        type: 'String'
+      }
     }
   },
   s4: {

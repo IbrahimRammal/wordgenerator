@@ -6,7 +6,7 @@
         <div class="form-group col">
             <!-- <label for="paid_list">Clients paid history</label> -->
             <select class="mdb-select md-form" searchable="Search here.." id="paid_list">
-                <option value="op1" disabled selected>Select from Pre Clients paid ....</option>
+                <option value="op1" disabled selected>Select from Clients List</option>
                 <!-- <select class="form-control form-control-xs selectpicker" name="" data-live-search="true" data-title="Language"
             id="paid_list" data-width="100%"> -->
                 <!-- <option value="" selected>Client Select ...</option> -->
@@ -71,22 +71,22 @@
             <!-- <div class="form-group col"> -->
                 <select class="mdb-select md-form" searchable="Search Type.." name="category" id="category" value="<%= %>"
                     required>
-                    <option value="" disabled selected>Type Select ...</option>
+                    <!-- <option value="Sworn legal" selected>Sworn legal</option> -->
                     <option value="Pronto">Pronto</option>
-                    <option value="Sworn legal">Sworn legal</option>
+                    <option value="Sworn legal" selected>Sworn legal</option>
                     <option value="Unofficial">Unofficial</option>
                 </select>
             <!-- </div> -->
             <!-- <div class="form-group col">
                 <input type="text" class="form-control" name="type" id="type" placeholder="Type" value="<%= %>">
             </div> -->
-            <div class="md-form col" style="padding-left: 35px;">
+            <div class="md-form col" style="padding-left: 35px; display: none;">
                 <input type="number" class="form-control" name="paid" id="paid" placeholder="Paid" value="<%= %>">
             </div>
             <!-- <div class="md-form col">
                 <input type="number" style="display: none;" class="form-control" name="remain" id="remain" placeholder="Remain" value="<%= %>">
             </div> -->
-            <div class="md-form col">
+            <div class="md-form col" style="display: none;">
                 <input type="number" class="form-control" name="total" id="total" placeholder="Total" value="<%= %>">
             </div>
         </div>

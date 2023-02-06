@@ -30,6 +30,32 @@ const PIUSA = require("../models/ProntoInvoiceinUSA");
 const PILBD = require("../models/ProntoInvoiceinLBP");
 const SWORNI = require("../models/SwornTranslationInvoice");
 
+const SwornReceiptVoucherS = require("../models/SwornReceiptVoucher");
+const SwornRV = SwornReceiptVoucherS.SwornRV;
+const SwornReceiptCounter = SwornReceiptVoucherS.SwornReceiptCounter; 
+
+const SwornPaymentVoucherS = require("../models/SwornPaymentVoucher");
+const SwornPV = SwornPaymentVoucherS.SwornPV;
+const SwornPaymentCounter = SwornPaymentVoucherS.SwornPaymentCounter; 
+
+
+const ProntoReceiptVoucherS = require("../models/ProntoReceiptVoucher");
+const ProntoRV = ProntoReceiptVoucherS.ProntoRV;
+const ProntoReceiptCounter = ProntoReceiptVoucherS.ProntoReceiptCounter; 
+
+const ProntoPaymentVoucherS = require("../models/ProntoPaymentVoucher");
+const ProntoPV = ProntoPaymentVoucherS.ProntoPV;
+const ProntoPaymentCounter = ProntoPaymentVoucherS.ProntoPaymentCounter; 
+
+
+const UnofficialReceiptVoucherS = require("../models/UnofficialReceiptVoucher");
+const UnofficialRV = UnofficialReceiptVoucherS.UnofficialRV;
+const UnofficialReceiptCounter = UnofficialReceiptVoucherS.UnofficialReceiptCounter; 
+
+const UnofficialPaymentVoucherS = require("../models/UnofficialPaymentVoucher");
+const UnofficialPV = UnofficialPaymentVoucherS.UnofficialPV;
+const UnofficialPaymentCounter = UnofficialPaymentVoucherS.UnofficialPaymentCounter; 
+
 //const dateFormat = require("dateformat");
 var PizZip = require("pizzip");
 var Docxtemplater = require("docxtemplater");
@@ -39,11 +65,14 @@ var mongoose = require("mongoose");
 
 //model client paider
 const PaidModel = require("../models/Paid");
+const SupplierModel = require("../models/Supplier");
+
 const Expense = require("../models/Expense");
 
 const History = require("../models/History");
 
 const Paid = PaidModel.Paid;
+const Suppliers = SupplierModel.Supplier;
 const Payment = PaidModel.Payment;
 
 const paidpath = "./GenerateHtml/paidform.ejs";
@@ -1470,6 +1499,292 @@ router.post("/datainvoice", verify, async (req, res) => {
   }
 });
 
+router.post("/InvoiceSearch/GetData", verify, async (req, res) => {
+  var result = [];
+  var subresult = [];
+
+  console.log("start action");
+  console.log(req.query);
+  console.log(req.body);
+  var flag = 0;
+
+  try {
+    var action = req.query.action;
+    var id = req.query.id;
+
+    var query;
+
+    if (req.body.action == "remove") {
+      //console.log(req.body);
+      //var keyID = mongoose.Types.ObjectId(req.body.key);
+      console.log("removed" + req.body["key"]);
+      // Equivalent to `parent.children.pull(_id)`
+      var key = req.body["key"];
+      var keys = [];
+      keys = key.split("_");
+
+      const anything = await Paid.findById(keys[0], function (err, user) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log();
+          // createHistoryLog(req.email,"Delete Payment", "Delete Payment for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
+          user.invoice.id(keys[1]).remove();
+          // Equivalent to `parent.child = null`
+          //user.child.remove();
+          user.save(function (err) {
+            if (err) return handleError(err);
+
+            console.log("the subdocs were removed");
+          });
+        }
+      });
+
+      await createHistoryLog(
+        req.email,
+        "Delete Invoice",
+        "Delete Invoice from client " + anything.fullname,
+        req.id
+      );
+      res.send({});
+      return;
+    }
+    if (!isUndefinedOrNull(req.body.where) && req.body.where.length > 1) {
+      // console.log(req.body.where);
+      // res.send({});
+      // return;
+    }
+
+    if (isEmptyOrSpaces(id) && action == "allsss") {
+      query = await Paid.find(
+        {},
+        { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
+      );
+    } else if (action == "all") { //sub
+      //var getById;
+      //var getById = id;
+      // if (isUndefinedOrNull(id) || isEmptyOrSpaces(id)) {
+      //   getById = req.body.where[0].value;
+      // } else {
+      //   var getById = id;
+      // }
+      //console.log("body.id: " + getById);
+      let subParent = {};
+
+      // query = await Paid.findById(getById, function (err, user) {
+
+      // });
+
+      query = await Paid.find(
+        {},
+        { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
+      );
+
+
+      //console.log(query[0]);
+      //console.log("queryinvoice.length " + query["invoice"].length); 
+      for(var x = 0; x < query.length; x++)
+      {
+        //console.log(query[x]["invoice"]);
+        for (var j = 0; j < query[x]["invoice"].length; j++) {
+          //console.log(user["invoice"][j].href);
+          try{
+            //new
+            // s1f0
+            //console.log("docid: " + user["invoice"][j].docid + "  category: " + user["invoice"][j].category);
+            let invoiceNumber = "";
+            //console.log(query[x]._id);
+          
+            subParent = {
+              //put parent id temor
+              // _id: getById,
+              combineid: query[x]._id + "_" + query[x]["invoice"][j]._id,
+              paymentid: query[x]._id,
+              fullname: query[x]["invoice"][j].fullname,
+              docid: query[x]["invoice"][j].docid,
+              invoiceNumber: "",
+              href: query[x]["invoice"][j].href,
+              category: query[x]["invoice"][j].category,
+              total: query[x]["invoice"][j].total,
+              remain: query[x]["invoice"][j].remain,
+              paid: query[x]["invoice"][j].paid,
+              currency: query[x]["invoice"][j].currency,
+              Download: "DOWNLOAD",
+              Edit: "EDIT",
+              createTime: query[x]["invoice"][j].createTime,
+              updateTime: query[x]["invoice"][j].updateTime
+            };
+
+            //console.log("docid: " + subParent.docid + "  category: " + subParent.category);
+
+            if (subParent.category.includes("SwornTranslationInvoice")) {
+              //if (ObjectId.isValid(subParent.docid)) {
+                //data["user_edit"] = email;
+                //console.log("Check doc by ID " + subParent.docid);
+                const sworni = await SWORNI.findById(
+                  { _id: subParent.docid },
+                  function (err, doc) {
+                    if (err) console.log(err);
+                    // console.log(doc.docArray)
+                  }
+                );
+              //}
+              //console.log(sworni["s2"]["f0"]["value"]);
+              invoiceNumber = sworni["s2"]["f0"]["value"];
+              //["s1"]["f0"]
+            } else if (modelCheck.includes("ProntoInvoiceinUSD")) {
+                console.log("Update doc by ID " + docID);
+                const piusa = await PIUSA.findById(
+                  { _id: subParent.docid },
+                  function (err, doc) {
+                    if (err) console.log(err);
+                    // console.log(doc.docArray)
+                  }
+                );
+              //console.log(sworni["s2"]["f0"]["value"]);
+              invoiceNumber = sworni["s2"]["f0"]["value"];
+            } else if (modelCheck.includes("ProntoInvoiceinLBP")) {
+                //console.log("Update doc by ID " + docID);
+                const pilbd = await PILBD.findById(
+                  { _id: subParent.docid },
+                  function (err, doc) {
+                    if (err) console.log(err);
+                    // console.log(doc.docArray)
+                  }
+                );
+                //console.log(sworni["s2"]["f0"]["value"]);
+                invoiceNumber = sworni["s2"]["f0"]["value"];
+            }
+            else {}
+
+            subParent.invoiceNumber = invoiceNumber;
+            //console.log(subParent);
+
+            result.push(subParent);
+
+          //console.log("subParent: " + JSON.stringify(subParent));
+        } catch(err){}
+        }
+      }
+
+      //console.log(result);
+      //res.send({ result: result, count: result.length });
+      res.send(result);
+      return;
+      //console.log(query);
+    } else {
+      res.send({});
+      return;
+    }
+
+    //Get all payment
+    for (var i = 0; i < query.length; i++) {
+      let totalpaidpriceUSD = 0;
+      let totalremainpriceUSD = 0;
+      let totalvaluepriceUSD = 0;
+      let unit = 0;
+      let totalpaidpriceLBP = 0;
+      let totalremainpriceLBP = 0;
+      let totalvaluepriceLBP = 0;
+
+      let totalLBP = 0;
+      let totalUSD = 0;
+
+      let parent = {
+        _id: "",
+        fullname: "",
+        mobile: "",
+        address: "",
+        unit: "",
+        // paid: "",
+        // remain: "",
+        // total: "",
+        subtasks: [],
+        totalpaidpriceUSD: "",
+        totalremainpriceUSD: "",
+        totalvaluepriceUSD: "",
+        totalpaidpriceLBP: "",
+        totalremainpriceLBP: "",
+        totalvaluepriceLBP: ""
+      };
+
+      parent._id = query[i]._id;
+      parent.fullname = query[i].fullname;
+      parent.mobile = query[i].mobile;
+      parent.address = query[i].address;
+      for (var j = 0; j < query[i]["invoice"].length; j++) {
+        try{
+        let subParent = {
+          _id: query[i]["invoice"][j]._id,
+          paymentid: query[i]._id,
+          fullname: query[i]["invoice"][j].fullname,
+          docid: query[i]["invoice"][j].docid,
+          href: query[i]["invoice"][j].href,
+          category: query[i]["invoice"][j].category,
+          total: query[i]["invoice"][j].total,
+          remains: query[i]["invoice"][j].remains,
+          paid: query[i]["invoice"][j].paid,
+          currency: query[i]["invoice"][j].currency,
+          Download: "DOWNLOAD",
+          Edit: "EDIT",
+          createTime: query[i]["invoice"][j].createTime,
+          updateTime: query[i]["invoice"][j].updateTime
+        };
+
+        // totalpaidpriceUSD: "",
+        // totalremainpriceUSD: "",
+        // totalvaluepriceUSD: "",
+        // totalpaidpriceLBP: "",
+        // totalremainpriceLBP: "",
+        // totalvaluepriceLBP: ""
+        //unit = j + 1;
+        // if(query[i]["invoice"][j].currency == "USD"){
+        //   totalpaidpriceUSD += query[i]["invoice"][j].paid;
+        //   totalremainpriceUSD += query[i]["invoice"][j].remain;
+        //   totalvaluepriceUSD += query[i]["invoice"][j].total;
+        // }
+        // else{
+        //   totalpaidpriceLBP += query[i]["invoice"][j].paid;
+        //   totalremainpriceLBP += query[i]["invoice"][j].remain;
+        //   totalvaluepriceLBP += query[i]["invoice"][j].total;
+        // }
+
+
+        if (action == "sub") {
+          //console.log("sudfasdjfkl jaslkdjf klasjdf lkjaskldj fklsdj ");
+          result.push(subParent);
+          console.log("result: " + JSON.stringify(result));
+        }
+      } catch(err){
+        console.log(err)
+      }
+
+      }
+
+      // parent.unit = unit;
+
+      // parent.totalPaidUSD = totalpaidpriceUSD;
+      // parent.totalRemainUSD = totalremainpriceUSD;
+      // parent.totalUSD = totalvaluepriceUSD;
+
+      // parent.totalPaidLBP = totalpaidpriceLBP;
+      // parent.totalRemainLBP = totalremainpriceLBP;
+      // parent.totalLBP = totalvaluepriceLBP;
+
+
+      // if (action == "all") result.push(parent);
+
+    }
+
+    //console.log("result: " + result);
+    //console.log("result: " + JSON.stringify(result));
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.send({});
+  }
+});
+
 router.post("/Invoice/GetData", verify, async (req, res) => {
   var result = [];
   var subresult = [];
@@ -1576,40 +1891,98 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
         var getById = id;
       }
       console.log("body.id: " + getById);
+      let subParent = {};
+
       query = await Paid.findById(getById, function (err, user) {
-        for (var j = 0; j < user["invoice"].length; j++) {
-          //console.log(user["invoice"][j].href);
-          try{
-          let subParent = {
+
+      });
+
+      //console.log("queryinvoice.length " + query["invoice"].length); 
+
+      for (var j = 0; j < query["invoice"].length; j++) {
+        //console.log(user["invoice"][j].href);
+        try{
+          //new
+          // s1f0
+          //console.log("docid: " + user["invoice"][j].docid + "  category: " + user["invoice"][j].category);
+          let invoiceNumber = "";
+        
+          subParent = {
             //put parent id temor
             _id: getById,
-            combineid: getById + "_" + user["invoice"][j]._id,
+            combineid: getById + "_" + query["invoice"][j]._id,
             paymentid: getById,
-            fullname: user["invoice"][j].fullname,
-            docid: user["invoice"][j].docid,
-            href: user["invoice"][j].href,
-            category: user["invoice"][j].category,
-            total: user["invoice"][j].total,
-            remain: user["invoice"][j].remain,
-            paid: user["invoice"][j].paid,
-            currency: user["invoice"][j].currency,
+            fullname: query["invoice"][j].fullname,
+            docid: query["invoice"][j].docid,
+            invoiceNumber: "",
+            href: query["invoice"][j].href,
+            category: query["invoice"][j].category,
+            total: query["invoice"][j].total,
+            remain: query["invoice"][j].remain,
+            paid: query["invoice"][j].paid,
+            currency: query["invoice"][j].currency,
             Download: "DOWNLOAD",
             Edit: "EDIT",
-            createTime: user["invoice"][j].createTime,
-            updateTime: user["invoice"][j].updateTime
+            createTime: query["invoice"][j].createTime,
+            updateTime: query["invoice"][j].updateTime
           };
+
+          //console.log("docid: " + subParent.docid + "  category: " + subParent.category);
+
+          if (subParent.category.includes("SwornTranslationInvoice")) {
+            //if (ObjectId.isValid(subParent.docid)) {
+              //data["user_edit"] = email;
+              console.log("Check doc by ID " + subParent.docid);
+              const sworni = await SWORNI.findById(
+                { _id: subParent.docid },
+                function (err, doc) {
+                  if (err) console.log(err);
+                  // console.log(doc.docArray)
+                }
+              );
+            //}
+            console.log(sworni["s2"]["f0"]["value"]);
+            invoiceNumber = sworni["s2"]["f0"]["value"];
+            //["s1"]["f0"]
+          } else if (modelCheck.includes("ProntoInvoiceinUSD")) {
+              console.log("Update doc by ID " + docID);
+              const piusa = await PIUSA.findById(
+                { _id: subParent.docid },
+                function (err, doc) {
+                  if (err) console.log(err);
+                  // console.log(doc.docArray)
+                }
+              );
+            console.log(sworni["s2"]["f0"]["value"]);
+            invoiceNumber = sworni["s2"]["f0"]["value"];
+          } else if (modelCheck.includes("ProntoInvoiceinLBP")) {
+              console.log("Update doc by ID " + docID);
+              const pilbd = await PILBD.findById(
+                { _id: subParent.docid },
+                function (err, doc) {
+                  if (err) console.log(err);
+                  // console.log(doc.docArray)
+                }
+              );
+              console.log(sworni["s2"]["f0"]["value"]);
+              invoiceNumber = sworni["s2"]["f0"]["value"];
+          }
+          else {}
+
+          subParent.invoiceNumber = invoiceNumber;
+          console.log(subParent);
 
           result.push(subParent);
 
-          //console.log("subParent: " + JSON.stringify(subParent));
-        } catch(err){}
-        }
-      });
+        //console.log("subParent: " + JSON.stringify(subParent));
+      } catch(err){}
+      }
+
       //console.log(result);
       res.send({ result: result, count: result.length });
       // res.send(result);
       return;
-      console.log(query);
+      //console.log(query);
     } else {
       res.send({});
       return;
@@ -1737,7 +2110,7 @@ router.post("/Invoice/GetData", verify, async (req, res) => {
       //console.log("subParent: " + JSON.stringify(parent));
     }
 
-    console.log("result: " + result);
+    //console.log("result: " + result);
     //console.log("result: " + JSON.stringify(result));
     res.send(result);
   } catch (err) {
@@ -1859,6 +2232,986 @@ router.post("/Invoice/BatchData", verify, async (req, res) => {
   } catch (err) {
     console.log(err);
     res.send("error");
+  }
+});
+
+router.post("/ReceiptSearch/GetData", verify, async (req, res) => {
+  var result = [];
+  var subresult = [];
+
+  console.log("start action");
+  console.log(req.query);
+  console.log(req.body);
+  var flag = 0;
+
+  try {
+    var action = req.query.action;
+    var id = req.query.id;
+
+    var query;
+
+    if (req.body.action == "remove") {
+      //console.log(req.body);
+      //var keyID = mongoose.Types.ObjectId(req.body.key);
+      console.log("removed" + req.body["key"]);
+      // Equivalent to `parent.children.pull(_id)`
+      var key = req.body["key"];
+      var keys = [];
+      keys = key.split("_");
+
+      const anything = await Paid.findById(keys[0], function (err, user) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log();
+          // createHistoryLog(req.email,"Delete Payment", "Delete Payment for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
+          user.invoice.id(keys[1]).remove();
+          // Equivalent to `parent.child = null`
+          //user.child.remove();
+          user.save(function (err) {
+            if (err) return handleError(err);
+
+            console.log("the subdocs were removed");
+          });
+        }
+      });
+
+      await createHistoryLog(
+        req.email,
+        "Delete Invoice",
+        "Delete Invoice from client " + anything.fullname,
+        req.id
+      );
+      res.send({});
+      return;
+    }
+    if (!isUndefinedOrNull(req.body.where) && req.body.where.length > 1) {
+      // console.log(req.body.where);
+      // res.send({});
+      // return;
+    }
+
+    if (isEmptyOrSpaces(id) && action == "allsss") {
+      query = await Paid.find(
+        {},
+        { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
+      );
+    } else if (action == "all") { //sub
+      //var getById;
+      //var getById = id;
+      // if (isUndefinedOrNull(id) || isEmptyOrSpaces(id)) {
+      //   getById = req.body.where[0].value;
+      // } else {
+      //   var getById = id;
+      // }
+      //console.log("body.id: " + getById);
+      let subParent = {};
+
+      // query = await Paid.findById(getById, function (err, user) {
+
+      // });
+
+      query = await Paid.find(
+        {},
+        { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
+      );
+
+
+      //console.log(query[0]);
+      //console.log("queryinvoice.length " + query["invoice"].length); 
+      for(var x = 0; x < query.length; x++)
+      {
+        //console.log(query[x]["invoice"]);
+        for (var j = 0; j < query[x]["invoiceS"].length; j++) {
+          //console.log(query[x]["invoiceS"][j] + "mmmmmmmmmmmmmmmmmmmmmmm");
+          try{
+            //new
+            // s1f0
+            //console.log("docid: " + user["invoiceS"][j].docid + "  category: " + user["invoiceS"][j].category);
+            let invoiceSNumber = "";
+            //console.log(query[x]._id);
+          
+            subParent = {
+              //put parent id temor
+              // _id: getById,
+              combineid: query[x]._id + "_" + query[x]["invoiceS"][j]._id,
+              paymentid: query[x]._id,
+              fullname: query[x]["invoiceS"][j].fullname,
+              docid: query[x]["invoiceS"][j].docid,
+              invoiceNumber: query[x]["invoiceS"][j].invoiceNumber,
+              countervalue: query[x]["invoiceS"][j].countervalue,
+              href: query[x]["invoiceS"][j].href,
+              category: query[x]["invoiceS"][j].category,
+              total: query[x]["invoiceS"][j].total,
+              remain: query[x]["invoiceS"][j].remain,
+              paid: query[x]["invoiceS"][j].paid,
+              currency: query[x]["invoiceS"][j].currency,
+              Download: "DOWNLOAD",
+              Edit: "EDIT",
+              createTime: query[x]["invoiceS"][j].createTime,
+              updateTime: query[x]["invoiceS"][j].updateTime
+            };
+
+            //console.log("docid: " + subParent.docid + "  category: " + subParent.category);
+            result.push(subParent);
+
+            //subParent.invoiceNumber = invoiceNumber;
+            //console.log(subParent);
+
+          //console.log("subParent: " + JSON.stringify(subParent));
+        } catch(err){}
+        }
+      }
+
+      //console.log(result);
+      //res.send({ result: result, count: result.length });
+      res.send(result);
+      return;
+      //console.log(query);
+    } else {
+      res.send({});
+      return;
+    }
+
+    //Get all payment
+    for (var i = 0; i < query.length; i++) {
+      let totalpaidpriceUSD = 0;
+      let totalremainpriceUSD = 0;
+      let totalvaluepriceUSD = 0;
+      let unit = 0;
+      let totalpaidpriceLBP = 0;
+      let totalremainpriceLBP = 0;
+      let totalvaluepriceLBP = 0;
+
+      let totalLBP = 0;
+      let totalUSD = 0;
+
+      let parent = {
+        _id: "",
+        fullname: "",
+        mobile: "",
+        address: "",
+        unit: "",
+        // paid: "",
+        // remain: "",
+        // total: "",
+        subtasks: [],
+        totalpaidpriceUSD: "",
+        totalremainpriceUSD: "",
+        totalvaluepriceUSD: "",
+        totalpaidpriceLBP: "",
+        totalremainpriceLBP: "",
+        totalvaluepriceLBP: ""
+      };
+
+      parent._id = query[i]._id;
+      parent.fullname = query[i].fullname;
+      parent.mobile = query[i].mobile;
+      parent.address = query[i].address;
+      for (var j = 0; j < query[i]["invoice"].length; j++) {
+        try{
+        let subParent = {
+          _id: query[i]["invoice"][j]._id,
+          paymentid: query[i]._id,
+          fullname: query[i]["invoice"][j].fullname,
+          docid: query[i]["invoice"][j].docid,
+          href: query[i]["invoice"][j].href,
+          category: query[i]["invoice"][j].category,
+          total: query[i]["invoice"][j].total,
+          remains: query[i]["invoice"][j].remains,
+          paid: query[i]["invoice"][j].paid,
+          currency: query[i]["invoice"][j].currency,
+          Download: "DOWNLOAD",
+          Edit: "EDIT",
+          createTime: query[i]["invoice"][j].createTime,
+          updateTime: query[i]["invoice"][j].updateTime
+        };
+
+        // totalpaidpriceUSD: "",
+        // totalremainpriceUSD: "",
+        // totalvaluepriceUSD: "",
+        // totalpaidpriceLBP: "",
+        // totalremainpriceLBP: "",
+        // totalvaluepriceLBP: ""
+        //unit = j + 1;
+        // if(query[i]["invoice"][j].currency == "USD"){
+        //   totalpaidpriceUSD += query[i]["invoice"][j].paid;
+        //   totalremainpriceUSD += query[i]["invoice"][j].remain;
+        //   totalvaluepriceUSD += query[i]["invoice"][j].total;
+        // }
+        // else{
+        //   totalpaidpriceLBP += query[i]["invoice"][j].paid;
+        //   totalremainpriceLBP += query[i]["invoice"][j].remain;
+        //   totalvaluepriceLBP += query[i]["invoice"][j].total;
+        // }
+
+
+        if (action == "sub") {
+          //console.log("sudfasdjfkl jaslkdjf klasjdf lkjaskldj fklsdj ");
+          result.push(subParent);
+          console.log("result: " + JSON.stringify(result));
+        }
+      } catch(err){
+        console.log(err)
+      }
+
+      }
+
+      // parent.unit = unit;
+
+      // parent.totalPaidUSD = totalpaidpriceUSD;
+      // parent.totalRemainUSD = totalremainpriceUSD;
+      // parent.totalUSD = totalvaluepriceUSD;
+
+      // parent.totalPaidLBP = totalpaidpriceLBP;
+      // parent.totalRemainLBP = totalremainpriceLBP;
+      // parent.totalLBP = totalvaluepriceLBP;
+
+
+      // if (action == "all") result.push(parent);
+
+    }
+
+    //console.log("result: " + result);
+    //console.log("result: " + JSON.stringify(result));
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.send({});
+  }
+});
+
+router.post("/datareceiptvoucher", verify, async (req, res) => {
+  try {
+    // req.query.lang req.query.lang doc
+    // get request parms
+    // make the path string
+    // check file if exits
+    // If else for every schema to save
+    // add path to parmaters on GenerateBCDocx function
+    //console.log(req.query);
+    if (
+      !isEmptyOrSpaces(req.query.doc) &&
+      !isEmptyOrSpaces(req.query.id)
+    ) {
+      let path = "./json/" + "English" + "/" + req.query.doc + ".json";
+      let docxPath =
+        "./DocumentTemplate/" + "English" + "/" + req.query.doc + ".docx";
+      //console.log(path)
+      if (fs.existsSync(path) && fs.existsSync(docxPath)) {
+        console.log("Begain");
+        let rawdata = fs.readFileSync(path, "utf-8");
+        let data = JSON.parse(rawdata);
+        let docArray = { clients: [], users: [], check: [] }; // sar fe mwskleh bel array fams:[]
+        let jsonObj = [];
+
+        //console.log(req.body);
+
+        //Search all filed had been submit when get to the paid form break from this loop and then make another keys's
+        //For paid client form to enter or check if there is already one there
+
+        Object.keys(req.body).forEach(function (key) {
+          let keys = key.split("_");
+          //console.log(keys);
+          if (keys.length == 2) {
+            docArray[keys[0] + keys[1]] = req.body[key];
+            data[keys[0]][keys[1]]["value"] = req.body[key];
+          } else if (keys.length == 3) {
+            docArray[keys[0] + keys[1] + keys[2]] = req.body[key];
+            data[keys[0]][keys[1]][keys[2]]["value"] = req.body[key];
+          } else if (keys.length == 4) {
+          } else {
+          }
+        });
+
+      //   {
+      //     "checkno": "",
+      //     "valuedate": "",
+      //     "bankname": ""
+      // },
+      let totalPayment = 0;
+
+        if (data.hasOwnProperty("s4")) {
+          if (data.s3.hasOwnProperty("check")) {
+            for (var i = 0; i < data.s4.check.length; i++) {
+              console.log(data.s4.check.length);
+              console.log(i);
+              if (req.body["s4_check_checkno_" + i] != null && !isEmptyOrSpaces(req.body["s4_check_checkno_" + i])) {
+                data.s4.check[i].checkno = req.body["s4_check_checkno_" + i];
+                data.s4.check[i].valuedate =
+                  req.body["s4_check_valuedate_" + i];
+                data.s4.check[i].bankname = req.body["s4_check_bankname_" + i];
+
+                docArray.check.push({
+                  pro: req.body["s4_check_checkno_" + i],
+                  stype: req.body["s4_check_valuedate_" + i],
+                  slan: req.body["s4_check_bankname_" + i]
+                });
+              }
+            }
+          } else{}
+        }
+
+        if (data.hasOwnProperty("s5")) {
+          if (data.s3.hasOwnProperty("jobs")) {
+            for (var i = 0; i < data.s3.jobs.length; i++) {
+              if (req.body["s3_jobs_pro_" + i] != null && !isEmptyOrSpaces(req.body["s3_jobs_pro_" + i])) {
+                data.s3.jobs[i].pro = req.body["s3_jobs_pro_" + i];
+                data.s3.jobs[i].stype =
+                  req.body["s3_jobs_stype_" + i];
+                  
+                data.s3.jobs[i].jn = req.body["s3_jobs_jn_" + i];
+                data.s3.jobs[i].slan = req.body["s3_jobs_slan_" + i];
+                data.s3.jobs[i].tlan = req.body["s3_jobs_tlan_" + i];
+                data.s3.jobs[i].unit = req.body["s3_jobs_unit_" + i];
+
+                data.s3.jobs[i].unitp = req.body["s3_jobs_unitp_" + i];
+                data.s3.jobs[i].nunit = req.body["s3_jobs_nunit_" + i];
+                data.s3.jobs[i].t = req.body["s3_jobs_t_" + i];
+
+                if(req.body["s3_jobs_t_" + i] != null && req.body["s3_jobs_t_" + i] != "" && !isNaN(parseFloat(req.body["s3_jobs_t_" + i])))
+                {
+                  totalPayment += parseFloat(req.body["s3_jobs_t_" + i]);
+                }
+
+                docArray.jobs.push({
+                  jn : req.body["s3_jobs_jn_" + i],
+                  pro: req.body["s3_jobs_pro_" + i],
+                  stype: req.body["s3_jobs_stype_" + i],
+                  slan: req.body["s3_jobs_slan_" + i],
+                  tlan: req.body["s3_jobs_tlan_" + i],
+                  unit: req.body["s3_jobs_unit_" + i],
+                  unitp: req.body["s3_jobs_unitp_" + i],
+                  nunit: req.body["s3_jobs_nunit_" + i],
+                  t: req.body["s3_jobs_t_" + i]
+                });
+              }
+            }
+          } else{}
+        }
+
+        // console.log(docArray)
+
+        //Time date
+        const event = new Date();
+
+        const options = { year: "numeric", month: "long", day: "numeric" };
+
+        var datetime = "";
+
+        // check if original or not
+        //docArray['o1'] = "True Copy of the Original";
+        //req.body["original"]
+        console.log("check if checked");
+
+        var originalFlag = true;
+        if (req.body["original"] == null) {
+          originalFlag = false;
+        }
+        //console.log();
+
+        docArray["o1"] = "0";
+        docArray["total"] = totalPayment;
+
+        datetime = event.toLocaleDateString("en-US", {
+          year: "numeric",
+          day: "numeric",
+          month: "long",
+        });
+
+        data["total"] = totalPayment;
+
+        
+
+
+        data["date"] = datetime;
+        docArray["date"] = datetime;
+
+        //track if original or not
+        data["original"] = docArray["o1"];
+
+        //return to defualt state ""
+        if (docArray["o1"] == "0") docArray["o1"] = "";
+
+        // console.log(docArray['o1'])
+        //console.log(data["o1"]);
+
+        // data['date'] = dateFormat(new Date(), "mmm d yyyy");
+        // docArray['date'] = dateFormat(new Date(), "mmm d yyyy");
+
+        console.log("before save");
+
+        var modelCheck = req.query.doc;
+        var langCheck = "English";
+        var id = req.query.id;
+        var docID = req.query.docID != null ? req.query.docID : "";
+        modelCheck = modelCheck.replace(/\s/g, "");
+
+        let clientData = await Paid.findOne({ _id: id });
+        data["client"]["id"] = id;
+
+        var downloadLinkGenerator = downloadLink(
+          datetime,
+          req.query.doc,
+          clientData["fullname"]
+        );
+
+        var part1 = encodeURIComponent(downloadLinkGenerator[0]);
+        var part2 = encodeURIComponent(downloadLinkGenerator[1]);
+
+        data["download"] = "/api/posts/r/?valid=" + part1 + "&pass=" + part2;
+        //console.log(data["download"]);
+
+        data["docArray"] = docArray;
+
+
+        //console.log(data["docArray"])
+        // docid: "string",
+        // clientID: "string",
+        // fullname: "string",
+        // category: "string",
+        // paid: "string",
+        // remain: "string",
+        // invoiceNumber: "string",
+        // href: "string",
+        // total: "Number",
+        // currency: "string",
+        // createUser: "string",
+        // updateUser: "string",
+        // createTime: "string",
+        // updateTime: "string"
+
+        // var docid = "";
+        var ObjectId = require("mongoose").Types.ObjectId;
+        var email = req.email;
+
+        var clientInvoiceHistory = {
+          fullname: clientData.fullname,
+          clientID: id,
+          docid: "",
+          paid: "",
+          total: totalPayment,
+          category: modelCheck,
+          createUser: "",
+          updateUser: "",
+          createTime: datetime,
+          updateTime: datetime,
+          remain: "",
+          currency: "",
+          invoiceNumber: "",
+          countervalue: "",
+          accountNumber: ""
+        };
+
+        console.log(modelCheck + "modelChecksdffffffff")
+        if (modelCheck.includes("SwornReceiptVoucher")) {
+          if (ObjectId.isValid(docID)) {
+            data["user_edit"] = email;
+            console.log("Update doc by ID " + docID);
+            const swornRV = await SwornRV.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                // console.log(doc.docArray)
+                console.log("Succesfully saved.");
+              }
+            );
+
+            var dummyData = await Paid.updateOne(
+              { _id: id,
+                "invoiceS.docid": docID,
+              },
+              {
+                $set: {
+                  // "invoice.$.category": req.body.value.category,
+                  "invoiceS.$.total": totalPayment,
+                  "invoiceS.$.updateTime": datetime
+                },
+              },
+              function (error, updatedData) {
+                if (error) {
+                  // return res.status(400).send(error);
+                }
+      
+                console.log(updatedData);
+                //return res.status(200).send(updatedData);
+              }
+            );
+
+          } else {
+            console.log("swornRV");
+            data["invoiceNumber"] = data.s3.f6.value;
+            //data["invoiceNumber"] = data.s1.f4.value;
+
+            clientInvoiceHistory.invoiceNumber = data["invoiceNumber"];
+
+            console.log(clientInvoiceHistory);
+
+            //return;
+            data["user_created"] = email;
+            console.log(data)
+            const swornRV = new SwornRV(data);
+            const savedSwornRV = await swornRV.save();
+            docid = savedSwornRV._id;
+
+            console.log(savedSwornRV.docArray);
+
+            console.log(savedSwornRV.countervalue + "counter valuefffffff");
+
+            clientInvoiceHistory.docid = docid;
+            clientInvoiceHistory.currency = "";
+            clientInvoiceHistory.countervalue = savedSwornRV.countervalue;
+            
+            //console.log(clientInvoiceHistory)
+
+            var savedPaid = await Paid.updateOne(
+              { _id: id },
+              { $push: { invoiceS: clientInvoiceHistory } },
+              { upsert: true, new: true  }
+            );
+
+            //console.log(savedPaid);
+          }
+        } else if (modelCheck.includes("ProntoInvoiceinLBPddd")) {
+          if (ObjectId.isValid(docID)) {
+            data["user_edit"] = email;
+
+            console.log(data["docArray"])
+            console.log("Update doc by ID " + docID);
+            const pilbd = await PILBD.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                // console.log(doc.docArray)
+              }
+            );
+
+            var dummyData = await Paid.updateOne(
+              { _id: id,
+                "invoice.docid": docID,
+              },
+              {
+                $set: {
+                  // "invoice.$.category": req.body.value.category,
+                  "invoice.$.total": totalPayment,
+                  "invoice.$.updateTime": datetime
+                },
+              },
+              function (error, updatedData) {
+                if (error) {
+                  // return res.status(400).send(error);
+                }
+      
+                console.log(updatedData);
+                //return res.status(200).send(updatedData);
+              }
+            );
+          } else {
+            data["user_created"] = email;
+            console.log(data["docArray"])
+            //console.log(data)
+            const pilbd = new PILBD(data);
+            const savedPilbd = await pilbd.save();
+            docid = savedPilbd._id;
+            clientInvoiceHistory.docid = docid;
+            clientInvoiceHistory.currency = "LBP";
+            
+            //console.log(clientInvoiceHistory)
+
+            var savedPaid = await Paid.updateOne(
+              { _id: id },
+              { $push: { invoice: clientInvoiceHistory } },
+              { upsert: true, new: true  }
+            );
+          } 
+        } else if (modelCheck.includes("SwornTranslationInvoicedfdfdf")) {
+          if (ObjectId.isValid(docID)) {
+            data["user_edit"] = email;
+            console.log("Update doc by ID " + docID);
+            const sworni = await SWORNI.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                // console.log(doc.docArray)
+              }
+            );
+
+            var dummyData = await Paid.updateOne(
+              { _id: id,
+                "invoice.docid": docID,
+              },
+              {
+                $set: {
+                  // "invoice.$.category": req.body.value.category,
+                  "invoice.$.total": totalPayment,
+                  "invoice.$.updateTime": datetime
+                },
+              },
+              function (error, updatedData) {
+                if (error) {
+                  // return res.status(400).send(error);
+                }
+      
+                console.log(updatedData);
+                //return res.status(200).send(updatedData);
+              }
+            );
+          } else {
+            data["user_created"] = email;
+            //console.log(data)
+            const sworni = new SWORNI(data);
+            const savedSworni = await sworni.save();
+            docid = savedSworni._id;
+            clientInvoiceHistory.docid = docid;
+            clientInvoiceHistory.currency = "LBP";
+            
+            //console.log(clientInvoiceHistory)
+
+            var savedPaid = await Paid.updateOne(
+              { _id: id },
+              { $push: { invoice: clientInvoiceHistory } },
+              { upsert: true, new: true  }
+            );
+          }
+        } else {
+        }
+
+        var clientName = clientData.fullname;
+
+        console.log("finish");
+
+        //Put condition if verified or not "/unverified"
+        var outputPath = GenerateDocx(
+          data,
+          docxPath,
+          docArray,
+          req.query.doc,
+          clientName,
+          datetime
+        );
+
+        //query = outputPath[0]
+        var string1 = encodeURIComponent(outputPath[0]);
+        var string2 = encodeURIComponent(outputPath[1]);
+
+        //download button on the form as a button
+        //res.redirect('/api/posts/r/?valid=' + string1 + '&pass=' + string2)
+        console.log("/api/posts/r/?valid=" + string1 + "&pass=" + string2);
+
+        var link = "/api/posts/r/?valid=" + string1 + "&pass=" + string2;
+
+        createHistoryLog(
+          req.email,
+          "Invoice Created",
+          "Invoice Created for client " +
+            clientName +
+            ", " +
+            modelCheck +
+            " Document",
+          req.id
+        );
+
+        res.send({ link: link});
+      }
+    } else {
+      //
+    }
+  } catch (err) {
+    console.log(err);
+    res.send("error");
+    // res.status(500).send(err)
+  }
+});
+
+router.post("/receiptvoucher", verify, async (req, res) => {
+  try {
+    if (
+      !isEmptyOrSpaces(req.body.type)
+    ) {
+      let path = "./json/" + "English" + "/" + req.body.type + ".json";
+      let htmlpath = "./GenerateHtml/" + req.body.type + ".ejs";
+      let id = req.body.ClientID;
+
+      console.log(req.body);
+      var invoiceTemplate = req.body.type;
+
+      // langCheck = langCheck.toLowerCase();
+
+      var docSaved = "";
+      var schemaData = "";
+
+      try {
+
+        var dataid = "";
+        // console.log(dataid);
+        if (!isEmptyOrSpaces(dataid)) {
+
+          url = "";
+          console.log('Before read ejs ')
+
+          const file = fs.readFileSync(htmlpath, "utf-8");
+          var fixture_template = ejs.compile(file, { client: true });
+          //const html = fixture_template({ obj: docSaved[0], url: url });
+          const html = fixture_template({ obj: [], url: url });
+
+          // console.log(html)
+          res.send({ html: html });
+          return;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      // console.log(htmlpath)
+      if (fs.existsSync(path) && fs.existsSync(htmlpath)) {
+
+        //console.log(path);
+        // if recode doesnot exits in data base file exists
+        let rawdata = fs.readFileSync(path, "utf-8");
+        let data = JSON.parse(rawdata);
+
+        
+
+        //console.log(id);
+        //Types.ObjectId()
+        var key = mongoose.Types.ObjectId(id);
+
+        var data1 = "";
+
+        // const anyThing = await Expense.findById(req.body["key"], function (
+        //   err,
+        //   user
+        // ) {
+        //   console.log("delete pyament" + user);
+        //   // createHistoryLog(req.email,"Delete Expense", "Delete Expense for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
+        // });
+        
+        try {
+          data1 = await Paid.find(
+            { _id: key }
+          );
+          data1 = data1[0];
+          //console.log(data1)
+        } catch (err) {
+          console.log(err);
+        }
+
+        //console.log(data1["fullname"])
+
+        console.log(data1);
+
+        //data["client"]["id"] = id;
+
+        //console.log(data.s0)
+
+        if (data.hasOwnProperty("s0")) {
+          Object.keys(data.s0).forEach(function (key) {
+            let keys = data.s0[key];
+
+            if (!isEmptyOrSpaces(keys)) {
+              keys = keys.split("_");
+              // console.log(keys)
+              // console.log(data1.s0[key])
+              if (keys.length == 2) {
+                console.log(key)
+                //if (data1.hasOwnProperty(key)) {
+                  console.log("key: " + key);
+                  console.log("mongodata: " + data1[key]);
+                  console.log(keys[0] + " " + keys[1]);
+                  data[keys[0]][keys[1]]["value"] = data1[key];
+                  console.log(data[keys[0]][keys[1]]["value"]);
+                //}
+                // else{
+                //   console.log("nothing")
+                // }
+                // data1.s0[key] = req.body[key]
+              } else if (keys.length == 3) {
+                if (data1.hasOwnProperty(key)) {
+                  data[keys[0]][keys[1]][keys[2]]["value"] = data1[key];
+                  console.log(data[keys[0]][keys[1]][keys[2]]["value"]);
+                }
+              } else {
+              }
+            }
+          });
+        }
+
+        //console.log(data)
+
+        /// /////////???????????????????????????????????????????????????????
+
+        // Document Template form box
+        //app.engine('html', require('ejs-locals'));
+        url =
+          "/api/posts/datareceiptvoucher?lang=" +
+          data["type"] +
+          "&doc=" +
+          data["caption"] +
+          "&id=" +
+          id;
+
+        const file = fs.readFileSync(htmlpath, "utf-8");
+        var fixture_template = ejs.compile(file, { client: true });
+        const html = fixture_template({ obj: data, url: url });
+
+        res.send({ html: html });
+        return;
+      }
+    }
+    res.send({ html: "No Template added yet!" });
+  } catch (err) {
+    console.log(err);
+    res.send({ html: "No Template added yet!" });
+    // res.status(500).send({ error: 'Something failed!' })
+  }
+});
+
+router.post("/paymentvoucher", verify, async (req, res) => {
+  try {
+    if (
+      !isEmptyOrSpaces(req.body.type)
+    ) {
+      let path = "./json/" + "English" + "/" + req.body.type + ".json";
+      let htmlpath = "./GenerateHtml/" + req.body.type + ".ejs";
+      let id = req.body.ClientID;
+
+      console.log(req.body);
+      var invoiceTemplate = req.body.type;
+
+      // langCheck = langCheck.toLowerCase();
+
+      var docSaved = "";
+      var schemaData = "";
+
+      try {
+
+        var dataid = "";
+        // console.log(dataid);
+        if (!isEmptyOrSpaces(dataid)) {
+
+          url = "";
+          console.log('Before read ejs ')
+
+          const file = fs.readFileSync(htmlpath, "utf-8");
+          var fixture_template = ejs.compile(file, { client: true });
+          //const html = fixture_template({ obj: docSaved[0], url: url });
+          const html = fixture_template({ obj: [], url: url });
+
+          // console.log(html)
+          res.send({ html: html });
+          return;
+        }
+      } catch (err) {
+        console.log(err);
+      }
+
+      // console.log(htmlpath)
+      if (fs.existsSync(path) && fs.existsSync(htmlpath)) {
+
+        //console.log(path);
+        // if recode doesnot exits in data base file exists
+        let rawdata = fs.readFileSync(path, "utf-8");
+        let data = JSON.parse(rawdata);
+
+        
+
+        //console.log(id);
+        //Types.ObjectId()
+        var key = mongoose.Types.ObjectId(id);
+
+        var data1 = "";
+
+        // const anyThing = await Expense.findById(req.body["key"], function (
+        //   err,
+        //   user
+        // ) {
+        //   console.log("delete pyament" + user);
+        //   // createHistoryLog(req.email,"Delete Expense", "Delete Expense for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
+        // });
+        
+        try {
+          data1 = await Paid.find(
+            { _id: key }
+          );
+          data1 = data1[0];
+          //console.log(data1)
+        } catch (err) {
+          console.log(err);
+        }
+
+        //console.log(data1["fullname"])
+
+        //console.log(data1);
+
+        //data["client"]["id"] = id;
+
+        //console.log(data.s0)
+
+        if (data.hasOwnProperty("s0")) {
+          Object.keys(data.s0).forEach(function (key) {
+            let keys = data.s0[key];
+
+            if (!isEmptyOrSpaces(keys)) {
+              keys = keys.split("_");
+              // console.log(keys)
+              // console.log(data1.s0[key])
+              if (keys.length == 2) {
+                console.log(key)
+                //if (data1.hasOwnProperty(key)) {
+                  console.log("key: " + key);
+                  console.log("mongodata: " + data1[key]);
+                  console.log(keys[0] + " " + keys[1]);
+                  data[keys[0]][keys[1]]["value"] = data1[key];
+                  console.log(data[keys[0]][keys[1]]["value"]);
+                //}
+                // else{
+                //   console.log("nothing")
+                // }
+                // data1.s0[key] = req.body[key]
+              } else if (keys.length == 3) {
+                if (data1.hasOwnProperty(key)) {
+                  data[keys[0]][keys[1]][keys[2]]["value"] = data1[key];
+                  console.log(data[keys[0]][keys[1]][keys[2]]["value"]);
+                }
+              } else {
+              }
+            }
+          });
+        }
+
+        //console.log(data)
+
+        /// /////////???????????????????????????????????????????????????????
+
+        // Document Template form box
+        //app.engine('html', require('ejs-locals'));
+        url =
+          "/api/posts/datainvoice?lang=" +
+          data["type"] +
+          "&doc=" +
+          data["caption"] +
+          "&id=" +
+          id;
+
+        const file = fs.readFileSync(htmlpath, "utf-8");
+        var fixture_template = ejs.compile(file, { client: true });
+        const html = fixture_template({ obj: data, url: url });
+
+        res.send({ html: html });
+        return;
+      }
+    }
+    res.send({ html: "No Template added yet!" });
+  } catch (err) {
+    console.log(err);
+    res.send({ html: "No Template added yet!" });
+    // res.status(500).send({ error: 'Something failed!' })
   }
 });
 
@@ -1994,7 +3347,7 @@ router.post("/template", verify, async (req, res) => {
       // langCheck = langCheck.toLowerCase();
       modelCheck = modelCheck.replace(/\s/g, "");
 
-      console.log(modelCheck);
+      //console.log(modelCheck);
 
       var docSaved = "";
       var schemaData = "";
@@ -2005,12 +3358,47 @@ router.post("/template", verify, async (req, res) => {
           { _id: 0, fullname: 0, s0: 0, __v: 0 }
         );
 
-        // console.log('docSaved: ' + docSaved[0])
+        //console.log('docSaved: ' + docSaved[0])
 
-        var dataid = ""
+        var dataid = "";
+        var flagEdit = true;
+        var flagValue = false;
+
+
+        //dataid = docID != "" ? docID : docSaved[0][langCheck][modelCheck];
+
+        //check if there is template presaved in history for the client
+        //var sameLangauageTemplateIfExists = "";
 
         dataid = docID != "" ? docID : docSaved[0][langCheck][modelCheck];
-        console.log(dataid);
+
+        if(docID == "" || docID == null){
+
+          var LanguageArray = ['English','Français','Español']
+
+          dataid = docSaved[0][langCheck][modelCheck];
+          docID = dataid;
+          flagEdit = false;
+          
+          if (dataid == "" || dataid == null) {
+
+            for (const langVal of LanguageArray) { // You can use `let` instead of `const` if you like
+              //if(langVal != langCheck){
+                console.log(langVal);
+                dataid = docSaved[0][langVal][modelCheck];
+                if(dataid !="" && dataid != null)
+                {
+                  flagValue = true;
+                  break;
+                }
+              //}
+            }
+            docID = dataid;
+          } else { flagValue = true; }
+        } else {}
+
+        //console.log(dataid);
+
         if (dataid !="" && dataid != null) {
           if (modelCheck.includes("Birth")) {
             docSaved = await Birth.find({ _id: docID });
@@ -2065,8 +3453,12 @@ router.post("/template", verify, async (req, res) => {
             docSaved = await Driver.find({ _id: docID });
           } else if (modelCheck.includes("Empty")) {
             console.log("foundit");
-            docSaved = await ETemplate.find({ _id: docID });
+            if(flagEdit)
+            {
+              docSaved = await ETemplate.find({ _id: docID });
+            }
           } else {
+
           }
 
           /// ////////////////////////////////////
@@ -2074,7 +3466,11 @@ router.post("/template", verify, async (req, res) => {
 
           //console.log("docSaved[0]" + docSaved[0]);
 
-          url =
+          // url if it's edit contains docId
+          var url = '';
+          if(flagEdit)
+          {
+            url =
             "/api/posts/data?lang=" +
             docSaved[0]["type"] +
             "&doc=" +
@@ -2084,13 +3480,43 @@ router.post("/template", verify, async (req, res) => {
             "&docID=" +
             docID;
 
-          // console.log('docSaved: ' + docSaved[0])
-          const file = fs.readFileSync(htmlpath, "utf-8");
-          var fixture_template = ejs.compile(file, { client: true });
-          const html = fixture_template({ obj: docSaved[0], url: url });
-          // console.log(html)
-          res.send({ html: html });
-          return;
+            // console.log('docSaved: ' + docSaved[0])
+            const file = fs.readFileSync(htmlpath, "utf-8");
+            var fixture_template = ejs.compile(file, { client: true });
+            const html = fixture_template({ obj: docSaved[0], url: url });
+            // console.log(html)
+            res.send({ html: html });
+            return;
+          }
+          else if(flagValue) {
+            url =
+            "/api/posts/data?lang=" +
+            langCheck +
+            "&doc=" +
+            docSaved[0]["caption"] +
+            "&id=" +
+            docSaved[0]["client"]["id"];
+
+            const file = fs.readFileSync(htmlpath, "utf-8");
+            var fixture_template = ejs.compile(file, { client: true });
+            const html = fixture_template({ obj: docSaved[0], url: url });
+    
+            // Document Paid Form
+            // Need to load paid template with data from stored on mango
+            // Need to put paid client id on data json
+    
+            // const paidfile = fs.readFileSync(paidpath, 'utf-8')
+            // var paid_template = ejs.compile(paidfile, { client: true })
+            // const paid = paid_template({ obj: data })
+    
+            // console.log(html)
+            //res.send({ html: html , paid: paid})
+            res.send({ html: html });
+            return;
+          }
+          else {}
+
+
         }
       } catch (err) {
         console.log(err);
@@ -2263,12 +3689,40 @@ router.post("/deleteAfterDownload", verify, async function (req, res) {
       console.log("foundit");
       docxPath = "./DocumentTemplate/" + language + "/" + "Pronto Invoice in LBP.docx";
       docSaved = await PILBP.find({ _id: docID });
+
     }else if (docModel.includes("ProntoInvoiceinUSA")) {
       console.log("foundit");
       docxPath = "./DocumentTemplate/" + language + "/" + "Pronto Invoice in USD.docx";
       docSaved = await PIUSA.find({ _id: docID });
+    }else if (docModel.includes("SwornReceiptVoucher")) {
+      console.log("founditffffff");
+      docxPath = "./DocumentTemplate/" + language + "/" + "Sworn Receipt Voucher.docx";
+      docSaved = await SwornRV.find({ _id: docID });
+    }else if (docModel.includes("SwornPaymentVoucher")) {
+      console.log("foundit");
+      docxPath = "./DocumentTemplate/" + language + "/" + "Sworn Payment Voucher.docx";
+      docSaved = await SwornPV.find({ _id: docID });
+    }else if (docModel.includes("ProntoReceiptVoucher")) {
+      console.log("foundit");
+      docxPath = "./DocumentTemplate/" + language + "/" + "Pronto Receipt Voucher.docx";
+      docSaved = await ProntoRV.find({ _id: docID });
+    }else if (docModel.includes("ProntoPaymentVoucher")) {
+      console.log("foundit");
+      docxPath = "./DocumentTemplate/" + language + "/" + "Pronto Payment Voucher.docx";
+      docSaved = await ProntoPV.find({ _id: docID });
+    }else if (docModel.includes("UnofficialReceiptVoucher")) {
+      console.log("foundit");
+      docxPath = "./DocumentTemplate/" + language + "/" + "Unofficial Receipt Voucher.docx";
+      docSaved = await UnofficialRV.find({ _id: docID });
+    }else if (docModel.includes("UnofficialPaymentVoucher")) {
+      console.log("foundit");
+      docxPath = "./DocumentTemplate/" + language + "/" + "Unofficial Payment Voucher.docx";
+      docSaved = await UnofficialPV.find({ _id: docID });
     }else {
     }
+
+
+    console.log(docSaved[0]["docArray"]);
 
     const event = new Date();
 
@@ -3023,6 +4477,157 @@ router.post("/Payment/BatchData", verify, async (req, res) => {
     res.send("error");
   }
 });
+
+router.post("/Suppliers/GetData", verify, async (req, res) => {
+  //console.log(req.body);
+
+  //var result = [];
+
+  var query = await Suppliers.find(
+    {},
+    { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
+  );
+
+  // for (var i = 0; i < query.length; i++) {
+  //   for(var j = 0; j < query[i]["payment"].length; j++)
+  //   {
+  //     console.log(query[i].payment[j])
+  //   }
+  // }
+
+  console.log(query);
+  res.send(query);
+});
+
+router.post("/Suppliers/BatchData", verify, async (req, res) => {
+  try {
+    // console.log(req.body.value);
+    var a = req.body.value;
+
+    var data = "";
+
+    var result = "";
+
+    var respnseAddID = "";
+    if (req.body.action == "insert") {
+      var userPaid = {};
+
+      createHistoryLog(
+        req.email,
+        "Insert Suppliers",
+        "Insert Suppliers with name " + a.fullname,
+        req.id
+      );
+
+      userPaid.fullname = a.fullname;
+      userPaid.first = isUndefinedOrNull(a.name) ? "" : a.name;
+      userPaid.last = isUndefinedOrNull(a.surname) ? "" : a.surname;
+      userPaid.middle = isUndefinedOrNull(a.father) ? "" : a.father;
+      userPaid.phone = isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+      userPaid.address = isUndefinedOrNull(a.address) ? "" : a.address;
+
+      var data = addPaidClient(
+        a.fullname,
+        userPaid.fullname + userPaid.phone,
+        userPaid
+      );
+      //data[req.query.lang][modelCheck].push(clientpaid)
+
+      const supplier = new Suppliers(data);
+      const savedPaid = await supplier.save();
+
+      result = {
+        _id: savedPaid._id,
+        fullname: savedPaid.fullname,
+        name: savedPaid.name,
+        surname: savedPaid.surname,
+        father: savedPaid.father,
+        mobile: savedPaid.mobile,
+        address: savedPaid.address,
+        combineid: savedPaid.combineid,
+      };
+
+      // console.log("New Client Paid: " + json.stringify(paid))
+    }
+    if (req.body.action == "update") {
+      console.log(req.body);
+
+      await Suppliers.findById(req.body["key"], function (err, user) {
+        if (err) {
+          console.log(err);
+        } else {
+          try {
+            createHistoryLog(
+              req.email,
+              "Update Supplier",
+              "Updated Supplier with name " + user.fullname,
+              req.id
+            );
+            //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
+            user.fullname = a.fullname;
+            // var combineid = a.fullname;
+            // combineid += isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+            user.combineid =
+              a.fullname + isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+            user.name = isUndefinedOrNull(a.name) ? "" : a.name;
+            user.surname = isUndefinedOrNull(a.surname) ? "" : a.surname;
+            user.father = isUndefinedOrNull(a.father) ? "" : a.father;
+            user.mobile = isUndefinedOrNull(a.mobile) ? "" : a.mobile;
+            user.address = isUndefinedOrNull(a.address) ? "" : a.address;
+
+            // console.log("New Client Paid: " + json.stringify(user))
+
+            user.save(function (err) {
+              if (err) {
+                //handleError(err)
+                console.log(err);
+              } else {
+                // res.send({})
+                // return
+              }
+            });
+          }
+          catch (error)
+          {
+            console.log(err);
+            res.send("error");
+          }
+        }
+      });
+    }
+    if (req.body.action == "remove") {
+      console.log(req.body);
+      var keyID = mongoose.Types.ObjectId(req.body.key);
+      console.log("removed" + req.body["key"]);
+      const anything = await Suppliers.findById(req.body["key"], function (
+        err,
+        user
+      ) {
+        console.log("delete pyament" + user);
+        // createHistoryLog(req.email,"Delete Paid Client", "Delete Paid Client with name " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
+      });
+
+      await createHistoryLog(
+        req.email,
+        "Delete supplier",
+        "Delete supplier with name " + anything.fullname,
+        req.id
+      );
+
+      await Suppliers.findByIdAndDelete(req.body["key"], function (err, user) {
+        if (err) console.log(err);
+        // createHistoryLog(req.email,"Delete Paid Client", "Delete Paid Client with name " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
+        console.log("Successful deletion");
+      });
+    }
+
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.send("error");
+  }
+});
+
 
 router.post("/Paid/GetData", verify, async (req, res) => {
   //console.log(req.body);
@@ -4118,7 +5723,8 @@ router.post("/data", verify, async (req, res) => {
           console.log(keys);
           if (keys.length == 2) {
             docArray[keys[0] + keys[1]] = req.body[key];
-            data[keys[0]][keys[1]]["value"] = req.body[key];
+            if(data[keys[0]][keys[1]] != null)
+              data[keys[0]][keys[1]]["value"] = req.body[key];
           } else if (keys.length == 3) {
             docArray[keys[0] + keys[1] + keys[2]] = req.body[key];
             data[keys[0]][keys[1]][keys[2]]["value"] = req.body[key];

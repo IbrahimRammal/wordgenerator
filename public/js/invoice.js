@@ -211,6 +211,14 @@ $(document).ready(function () {
               visible: false,
             },
             {
+              field: "invoiceNumber",
+              headerText: "invoiceNumber",
+              textAlign: "Left",
+              validationRules: { required: true },
+              width: 100,
+              allowEditing: true,
+            },
+            {
               field: "docid",
               headerText: "docid",
               textAlign: "Left",

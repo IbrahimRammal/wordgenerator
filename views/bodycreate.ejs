@@ -13,184 +13,443 @@
             <div class="sidebar-brand-text mx-3">Document Generator</div>
         </a>
 
-        <!-- Divider -->
-        <hr class="sidebar-divider my-0">
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
 
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item">
-            <!-- /api/user/ -->
-            <a class="nav-link" href="/api/actions/dashboard">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Interface
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item">
+        <a class="nav-link" href="/api/actions/dashboard">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+  
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+  
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Interface
+      </div>
+  
+      <li class="nav-item">
+        <a class="nav-link" href="/api/actions/create">
+            <i class="far fa-fw fa-file-word"></i>
+            <span>Create Docx</span></a>
+    </li>
+  
+    <li class="nav-item" style="display: none;">
+      <a class="nav-link" href="/api/actions/createpayment">
+        <i class="far fa-fw fa-edit"></i>
+        <span>Create Payment</span></a
+      >
+    </li>
+  
+  <li class="nav-item" style="display: none;">
+      <a class="nav-link" href="/api/actions/editdocx">
+        <i class="far fa-fw fa-edit"></i>
+        <span>Edit Docx By Payment</span></a
+      >
+    </li>
+       
+  <li class="nav-item">
+      <a class="nav-link" href="/api/actions/edit">
+          <i class="far fa-fw fa-edit"></i>
+          <span>Edit Docx By Client</span></a>
+  </li>
+  
+  
+      <!-- Nav Item - Utilities Collapse Menu -->
+      <li class="nav-item" style="display: none">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+          aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-fw fa-wrench"></i>
+          <span>Utilities</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Custom Utilities:</h6>
+            <a class="collapse-item" href="utilities-color.html">Colors</a>
+            <a class="collapse-item" href="utilities-border.html">Borders</a>
+            <a class="collapse-item" href="utilities-animation.html">Animations</a>
+            <a class="collapse-item" href="utilities-other.html">Other</a>
+          </div>
         </div>
-
-        <li class="nav-item">
-            <a class="nav-link" href="/api/actions/create">
-                <i class="far fa-fw fa-file-word"></i>
-                <span>Create Docx</span></a>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="/api/actions/createpayment">
-              <i class="far fa-fw fa-edit"></i>
-              <span>Create Payment</span></a
-            >
-          </li>
-
-        <li class="nav-item" style="display: none;">
-            <a class="nav-link" href="/api/actions/editdocx">
-              <i class="far fa-fw fa-edit"></i>
-              <span>Edit Docx By Payment</span></a
-            >
-          </li>
-             
-        <li class="nav-item">
-            <a class="nav-link" href="/api/actions/edit">
-                <i class="far fa-fw fa-edit"></i>
-                <span>Edit Docx By Client</span></a>
-        </li>
-
-        <!-- Nav Item - Utilities Collapse Menu -->
-        <li class="nav-item" style="display: none">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                aria-expanded="true" aria-controls="collapseUtilities">
-                <i class="fas fa-fw fa-wrench"></i>
-                <span>Utilities</span>
-            </a>
-            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Custom Utilities:</h6>
-                    <a class="collapse-item" href="utilities-color.html">Colors</a>
-                    <a class="collapse-item" href="utilities-border.html">Borders</a>
-                    <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                    <a class="collapse-item" href="utilities-other.html">Other</a>
-                </div>
+      </li>
+  
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="/api/actions/chart">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Charts</span></a>
+      </li> -->
+  
+      <!-- Divider -->
+      <hr class="sidebar-divider">
+  
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Tables
+      </div>
+  
+      <li class="nav-item" style="display: none">
+        <a class="nav-link" href="/api/manage/invoice">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Sales Invoice</span></a>
+      </li>
+  
+      <li class="nav-item" style="display: none">
+        <a class="nav-link" href="/api/manage/invoicesearch">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Invoice Search</span></a>
+      </li>
+  
+      <li class="nav-item">
+        <a class="nav-link" href="/api/manage/paid">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Clients List</span></a>
+      </li>
+  
+      <!-- Nav Item - Tables -->
+      <li class="nav-item">
+        <a class="nav-link" href="/api/manage/clients">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Sworn Translation Clients</span></a>
+      </li>
+  
+      <li class="nav-item">
+        <a class="nav-link" href="/api/manage/payment">
+          <i class="fas fa-fw fa-table"></i>
+          <span><small>Sworn Translation Clients Report</small></span></a>
+      </li>
+  
+      <!-- Nav Item - Tables -->
+      <li class="nav-item">
+        <a class="nav-link" href="/api/manage/suppliers">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Suppliers List</span></a>
+      </li>
+  
+      
+  
+  
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+  
+                        <!-- Heading -->
+              <div class="sidebar-heading">
+                Vouchers
+              </div>
+              
+                        <!-- Nav Item - Pages Collapse Menu -->
+              <li class="nav-item" style="display: none;">
+                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesVoucherCreate" aria-expanded="true"
+                    aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Create R/P Voucher</span>
+                  </a>
+                  <div id="collapsePagesVoucherCreate" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                      <h6 class="collapse-header">Voucher Create:</h6>
+                      <!-- <a class="collapse-item" href="/api/manage/users">User management</a> -->
+                      <a class="collapse-item" href="/api/voucher/createreceiptvoucher">Receipt Voucher</a>
+                      <a class="collapse-item" href="/api/voucher/createpaymentvoucher">Payment Voucher</a>
+                      <!-- <a class="collapse-item" href="/api/manage/history">Activity Log</a> -->
+                      <!-- <a class="collapse-item" href="/api/manage/setting">Settings</a> -->
+            
+                    </div>
+                  </div>
+                </li>
+    
+  
+  
+              <li class="nav-item" style="display: none">
+                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesVoucherEdit" aria-expanded="true"
+                    aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Voucher R/P Edit</span>
+                  </a>
+                  <div id="collapsePagesVoucherEdit" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                      <h6 class="collapse-header">Voucher Listing/Editing:</h6>
+                      <!-- <a class="collapse-item" href="/api/manage/users">User management</a> -->
+                      <a class="collapse-item" href="/api/voucher/receiptvoucheredit">Receipt Voucher Edit</a>
+                      <a class="collapse-item" href="/api/voucher/paymentvoucheredit"">Payment Voucher Edit</a>
+                      <!-- <a class="collapse-item" href="/api/manage/history">Activity Log</a> -->
+                      <!-- <a class="collapse-item" href="/api/manage/setting">Settings</a> -->
+            
+                    </div>
+                  </div>
+                </li>
+  
+                <li class="nav-item">
+                  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesVoucherTablelist" aria-expanded="true"
+                    aria-controls="collapsePages">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Voucher Table R/P</span>
+                  </a>
+                  <div id="collapsePagesVoucherTablelist" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                      <h6 class="collapse-header">Voucher Listing:</h6>
+                      <!-- <a class="collapse-item" href="/api/manage/users">User management</a> -->
+                      <a class="collapse-item" href="/api/voucher/receiptvouchertable">Receipt Voucher Table</a>
+                      <a class="collapse-item" href="/api/voucher/paymentvouchertable">Payment Voucher Table</a>
+                      <!-- <a class="collapse-item" href="/api/manage/history">Activity Log</a> -->
+                      <!-- <a class="collapse-item" href="/api/manage/setting">Settings</a> -->
+            
+                    </div>
+                  </div>
+                </li>
+  
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+  
+            <!-- Heading -->
+            <div class="sidebar-heading">
+              Invoice
             </div>
-        </li>
-
-        <!-- <li class="nav-item">
-            <a class="nav-link" href="/api/actions/chart">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Charts</span></a>
-        </li> -->
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Addons
+  
+                <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesinvoicecreate" aria-expanded="true"
+          aria-controls="collapsePages">
+          <i class="fas fa-fw fa-file-invoice-dollar"></i>
+          <span>Create Invoice</span>
+        </a>
+        <div id="collapsePagesinvoicecreate" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Create Invoice:</h6>
+            <!-- <a class="collapse-item" href="/api/manage/users">User management</a> -->
+            <a class="collapse-item" href="/api/invoice/invoicecreatenew"">Pronto/Sworn/Unofficial</a>
+            <a class="collapse-item" href="/api/invoice/invoicecreatepurchase"">Purchase</a>
+            <!-- <a class="collapse-item" href="/api/manage/history">Activity Log</a> -->
+            <!-- <a class="collapse-item" href="/api/manage/setting">Settings</a> -->
+  
+          </div>
         </div>
-
-        <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                aria-expanded="true" aria-controls="collapsePages">
-                <i class="fas fa-fw fa-tools"></i>
-                <span>configuration</span>
-            </a>
-            <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">User tools:</h6>
-                    <!-- <a class="collapse-item" href="/api/manage/users">User management</a> -->
-                    <a class="collapse-item" href="/api/user/config">Profile</a>
-                    <!-- <a class="collapse-item" href="/api/manage/history">Activity Log</a> -->
-                    <!-- <a class="collapse-item" href="/api/manage/setting">Settings</a> -->
-
-                </div>
-            </div>
-        </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="/api/manage/User">
-              <i class="fas fa-fw fa-users"></i>
-              <span>User Managment</span></a>
-          </li>
-
-        <li class="nav-item">
-            <a class="nav-link" href="/api/manage/expense">
+      </li>
+  
+  
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesinvoicelist" aria-expanded="true"
+          aria-controls="collapsePages">
+          <i class="fas fa-fw fa-file-invoice-dollar"></i>
+          <span>Edit Invoice</span>
+        </a>
+        <div id="collapsePagesinvoicelist" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Invoice Listing/Editing:</h6>
+            <!-- <a class="collapse-item" href="/api/manage/users">User management</a> -->
+            <a class="collapse-item" href="/api/invoice/listprontoinvoice"">Pronto</a>
+            <a class="collapse-item" href="/api/invoice/listsworninvoice"">Sworn</a>
+            <a class="collapse-item" href="/api/invoice/listunofficialinvoice"">Unofficial</a>
+            <a class="collapse-item" href="/api/invoice/listpurchaseprontoinvoice"">Purchase Pronto</a>
+            <a class="collapse-item" href="/api/invoice/listpurchaseunofficialinvoice"">Purchase Unofficial</a>
+            <!-- <a class="collapse-item" href="/api/manage/history">Activity Log</a> -->
+            <!-- <a class="collapse-item" href="/api/manage/setting">Settings</a> -->
+  
+          </div>
+        </div>
+      </li>
+  
+  
+                    <!-- Divider -->
+                    <hr class="sidebar-divider">
+  
+                    <!-- Heading -->
+          <div class="sidebar-heading">
+            Old Invoices
+          </div>
+          
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="/api/manage/invoicesearch">
               <i class="fas fa-fw fa-table"></i>
-              <span>Expense Tracker</span></a>
+              <span>Old Invoices</span></a>
+          </li> -->
+
+          <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePagesinvoicelistold" aria-expanded="true"
+              aria-controls="collapsePages">
+              <i class="fas fa-fw fa-file-invoice-dollar"></i>
+              <span>Old Data</span>
+            </a>
+            <div id="collapsePagesinvoicelistold" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+              <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Invoice Listing/Editing:</h6>
+                <!-- <a class="collapse-item" href="/api/manage/users">User management</a> -->
+                <a class="collapse-item" href="/api/invoice/listprontoinvoiceold"">Pronto Invoices</a>
+                <a class="collapse-item" href="/api/invoice/listsworninvoiceold"">Sworn Translation Invoices</a>
+                <a class="collapse-item" href="/api/invoice/listunofficialinvoiceold"">Unofficial Invoices</a>
+                <a class="collapse-item" href="/api/invoice/listpurchaseprontoinvoiceold"">Pronto Purchase Invoices</a>
+                <a class="collapse-item" href="/api/invoice/listpurchaseunofficialinvoiceold"">Unofficial Purchase Invoives</a>
+                <a class="collapse-item" href="/api/voucher/receiptvouchertableold">Receipt Vouchers</a>
+                <a class="collapse-item" href="/api/voucher/paymentvouchertableold">Payment Vouchers</a>
+                <!-- <a class="collapse-item" href="/api/manage/history">Activity Log</a> -->
+                <!-- <a class="collapse-item" href="/api/manage/setting">Settings</a> -->
+      
+              </div>
+            </div>
           </li>
-
-        <!-- Nav Item - Charts -->
-        <li class="nav-item" style="display: none">
-            <a class="nav-link" href="charts.html">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>Charts</span></a>
-        </li>
-
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
-
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            Tables
+  
+          <!-- /api/manage/invoicesearch -->
+          <!-- /api/manage/invoice -->
+  
+        
+  
+      <hr class="sidebar-divider">
+  
+      
+            <!-- Heading -->
+            <div class="sidebar-heading">
+              Code Number
+            </div>
+  
+                <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCode" aria-expanded="true"
+          aria-controls="collapsePages">
+          <i class="fas fa-fw fa-tools"></i>
+          <span>Code list</span>
+        </a>
+        <div id="collapseCode" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Code Create:</h6>
+          <!-- <a class="collapse-item" href="/api/manage/users">User management</a> -->
+          <!-- <a class="collapse-item" href="/api/invoice/projectview">Test Service Code</a> -->
+          <a class="collapse-item" href="/api/invoice/prontoview">Pronto Service Code</a>
+          <a class="collapse-item" href="/api/invoice/swornview">Sworn Service Code</a>
+          <!-- <a class="collapse-item" href="/api/invoice/prontocode">Pronto Service Code</a>
+          <a class="collapse-item" href="/api/invoice/sworncode">Sworn Service Code</a> -->
+          <a class="collapse-item" href="/api/invoice/languageview">Language Code</a>
+          <!-- <a class="collapse-item" href="/api/manage/history">Activity Log</a> -->
+          <!-- <a class="collapse-item" href="/api/manage/setting">Settings</a> -->
+  
+          </div>
         </div>
-
-        <li class="nav-item">
-            <a class="nav-link" href="/api/manage/invoice">
+      </li>
+  
+  
+  
+  
+            
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="/api/invoice/invoicecreatenew">
                 <i class="fas fa-fw fa-table"></i>
-                <span>Sales Invoice</span></a>
+                <span>Invoice Create Pronto/Sworn/Unofficial</span></a>
+            </li>
+  
+            <li class="nav-item">
+              <a class="nav-link" href="/api/invoice/invoicecreatepurchase">
+                <i class="fas fa-fw fa-table"></i>
+                <span>Invoice Create purchase</span></a>
+            </li> -->
+      
+            <!-- <li class="nav-item"> -->
+              <!-- <a class="nav-link" href="/api/invoice/listprontoinvoice">
+              <i class="fas fa-fw fa-table"></i>
+              <span>Pronto Invoice Listing/Editing</span></a>
+          </li>
+  
+          <li class="nav-item">
+            <a class="nav-link" href="/api/invoice/listpurchaseinvoice">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Purchase Invoice Listing/Editing</span></a>
+        </li>
+  
+        <li class="nav-item">
+          <a class="nav-link" href="/api/invoice/listsworninvoice">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Sworn Invoice Listing/Editing</span></a>
+      </li>
+  
+      <li class="nav-item">
+        <a class="nav-link" href="/api/invoice/listunofficialinvoice">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Unofficial Invoice Listing/Editing</span></a>
+    </li> -->
+  
+  
+      <!-- Utilites -->
+  
+          <!-- Divider -->
+          <hr class="sidebar-divider">
+  
+          <!-- Heading -->
+          <div class="sidebar-heading">
+            Developer Utilites
+          </div>
+      
+          <li class="nav-item">
+            <a class="nav-link" href="/api/admin/filemanager">
+                <i class="fas fa-fw fa-folder-open"></i>
+                <span>File Manager</span></a>
           </li>
       
           <!-- Nav Item - Tables -->
-          <li class="nav-item">
-            <a class="nav-link" href="/api/manage/clients">
-              <i class="fas fa-fw fa-table"></i>
-              <span>Sworn Translation Clients</span></a>
+          <li class="nav-item" style="display: none;">
+            <a class="nav-link" href="/api/admin/bugs">
+              <i class="fas fa-fw fa-bug"></i>
+              <span>Bugs Report</span></a>
           </li>
       
-          <li class="nav-item">
-            <a class="nav-link" href="/api/manage/paid">
-              <i class="fas fa-fw fa-table"></i>
-              <span>Clients List</span></a>
+          <!-- Nav Item - Tables -->
+          <li class="nav-item" style="display: none;">
+            <a class="nav-link" href="/api/admin/news">
+              <i class="fas fa-fw fa-book"></i>
+              <span>Updates News</span></a>
           </li>
-      
-          
-          <li class="nav-item">
-            <a class="nav-link" href="/api/manage/payment">
-              <i class="fas fa-fw fa-table"></i>
-              <span>Sworn Translation Clients Report</span></a>
-          </li>
+  
+              <!-- Divider -->
+      <hr class="sidebar-divider">
+  
+      <!-- Heading -->
+      <div class="sidebar-heading">
+        Addons
+      </div>
+  
+      <!-- Nav Item - Pages Collapse Menu -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
+          aria-controls="collapsePages">
+          <i class="fas fa-fw fa-tools"></i>
+          <span>configuration</span>
+        </a>
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">User tools:</h6>
+            <!-- <a class="collapse-item" href="/api/manage/users">User management</a> -->
+            <a class="collapse-item" href="/api/user/config">Profile</a>
+            <!-- <a class="collapse-item" href="/api/manage/history">Activity Log</a> -->
+            <!-- <a class="collapse-item" href="/api/manage/setting">Settings</a> -->
+  
+          </div>
+        </div>
+      </li>
+  
+  
+  
+      <li class="nav-item">
+        <a class="nav-link" href="/api/manage/User">
+          <i class="fas fa-fw fa-users"></i>
+          <span>User Managment</span></a>
+      </li>
 
-                <!-- Divider -->
-                <hr class="sidebar-divider">
-
-                <!-- Heading -->
-                <div class="sidebar-heading">
-                  Developer Utilites
-                </div>
-            
-                <li class="nav-item">
-                  <a class="nav-link" href="/api/admin/">
-                      <i class="fas fa-fw fa-folder-open"></i>
-                      <span>File Manager</span></a>
-                </li>
-            
-                <!-- Nav Item - Tables -->
-                <li class="nav-item" style="display: none;">
-                  <a class="nav-link" href="/api/admin/">
-                    <i class="fas fa-fw fa-bug"></i>
-                    <span>Bugs Report</span></a>
-                </li>
-            
-                <!-- Nav Item - Tables -->
-                <li class="nav-item" style="display: none;">
-                  <a class="nav-link" href="/api/admin/">
-                    <i class="fas fa-fw fa-book"></i>
-                    <span>Updates News</span></a>
-                </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/api/demofire/countermanage">
+          <i class="fas fa-fw fa-tools"></i>
+          <span>Invoice Counter Reset</span></a>
+      </li>
+  
+      <li class="nav-item" style="display: none">
+        <a class="nav-link" href="/api/manage/expense">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Expense Tracker</span></a>
+      </li>
+  
+      <!-- Nav Item - Charts -->
+      <li class="nav-item" style="display: none">
+        <a class="nav-link" href="charts.html">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Charts</span></a>
+      </li>
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">

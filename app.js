@@ -72,7 +72,7 @@ app.use(cors());
 // Create an HTTP service.
 http.createServer(app).listen(port);
 // Create an HTTPS service identical to the HTTP service.
-https.createServer(options, app).listen(443);
+//https.createServer(options, app).listen(533);
 
 //Import ROutes
 const authRoute = require("./routers/auth");
@@ -80,6 +80,9 @@ const postRoute = require("./routers/posts");
 const actionRoute = require("./routers/actions");
 const actionManage = require("./routers/manage");
 const actionAdmin = require("./routers/admin");
+const actionDemo = require("./routers/demofire");
+const actionInvoice = require("./routers/invoice");
+const actionVoucher = require("./routers/voucher");
 
 
 //connect to mongoose
@@ -130,6 +133,10 @@ app.use("/api/posts", postRoute);
 app.use("/api/actions", actionRoute);
 app.use("/api/manage", actionManage);
 app.use("/api/admin", actionAdmin);
+app.use("/api/demofire", actionDemo);
+app.use("/api/invoice", actionInvoice);
+app.use("/api/voucher", actionVoucher);
+
 
 
 // app.get('*', function(req, res) {  
@@ -140,7 +147,7 @@ app.use("/api/admin", actionAdmin);
 // });
 
 app.get("/", verify, function (req, res, next) {
-  res.redirect("/api/actions/dashboard");
+  res.redirect("/api/actions/create");
   //   res.render('dashbord',{
   //     name: req.name,
   //     email: req.email

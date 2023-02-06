@@ -183,6 +183,18 @@ router.get("/403", verify, async (req, res) => {
   });
 });
 
+router.get("/suppliers", verify, async (req, res) => {
+  // console.log(req.body);
+  req.keep = "true";
+
+  res.render("suppliers", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+    //data: data
+  });
+});
+
 router.get("/paid", verify, async (req, res) => {
   // console.log(req.body);
   req.keep = "true";
@@ -394,6 +406,19 @@ router.get("/invoice", verify, async (req, res) => {
     //data: data
   });
 });
+
+router.get("/invoicesearch", verify, async (req, res) => {
+  // console.log(req.body);
+  req.keep = "true";
+
+  res.render("invoicesearch", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+    //data: data
+  });
+});
+
 
 function isEmptyOrSpaces(str) {
   return str === null || str.match(/^ *$/) !== null;

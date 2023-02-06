@@ -1,0 +1,316 @@
+<form method="POST" action="<%= url %>"
+    id="my_form">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s1.caption %></h8>
+        <div class="form-row">
+            <div class="form-group col" style="display: none;">
+                <input type="text" class="form-control" id="s1f0" name="s1_f0" placeholder="<%= obj.s1.f0.caption %>"
+                    value="<%= obj.s1.f0.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f2" name="s1_f2" placeholder="<%= obj.s1.f2.caption %>"
+                    value="<%= obj.s1.f2.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f3" name="s1_f3" placeholder="<%= obj.s1.f3.caption %>"
+                    value="<%= obj.s1.f3.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f1" name="s1_f1" placeholder="<%= obj.s1.f1.caption %>"
+                    value="<%= obj.s1.f1.value %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s2.caption %></h8>
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s2_f1" id="s2f1" placeholder="<%= obj.s2.f1.caption %>"
+                    value="<%= obj.s2.f1.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s2_f3" id="s2f3" placeholder="<%= obj.s2.f3.caption %>"
+                    value="<%= obj.s2.f3.value %>">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s2_f2" id="s2f2" placeholder="<%= obj.s2.f2.caption %>"
+                    value="<%= obj.s2.f2.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s2_f4" id="s2f4" placeholder="<%= obj.s2.f4.caption %>"
+                    value="<%= obj.s2.f4.value %>">
+            </div>
+            <div class="form-group col" style="margin-top: -25px;">
+                <select   
+                  class="mdb-select md-form" class="form-group col" style="margin-left: 35px;" searchable="Currency Type.." name="s2_f6" id="s2f6" value="<%= %>"
+                required>
+                <%if (obj.s2.f6.value  != "") { %>
+                    <option value="<%= obj.s2.f6.value %>" ><%= obj.s2.f6.value %></option>
+                    <% } else {%>
+                        <option value="" disabled selected>Currency Type.. </option>
+                    <% }%>
+                <option value="USD">USD</option>
+                <option value="LBP">LBP</option>
+            </select>
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s2_f7" id="s2f7" placeholder="<%= obj.s2.f7.caption %>"
+                    value="<%= obj.s2.f7.value %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+
+        <!-- Collapse methode  -->
+    <!--Accordion wrapper-->
+    <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+        <!-- Accordion card -->
+        <div class="card">
+
+    <% for (var i = 0; i < obj.s3.jobs.length; i++) { %>
+        <%if (obj.type == "English") { %>
+
+            <%if (i % 10 == 0) { %>
+                <!-- Card header -->
+                <div class="card-header" role="tab" id="headingOne<%= i %>">
+                    <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne<%= i %>" 
+                        aria-expanded= "<%- i == 0 ? 'ture' : 'false' %>"
+                        aria-controls="collapseOne<%= i %>">
+                        <h5 class="mb-0">
+                            Collapsible Group Item #<%= i %> <i class="fas fa-angle-down rotate-icon"></i>
+                        </h5>
+                    </a>
+                </div>
+    
+                <!-- Card body -->
+                <div id="collapseOne<%= i %>" class="collapse <%- i == 0 ? 'show' : '' %>"" role="tabpanel" aria-labelledby="headingOne<%= i %>"
+                    data-parent="#accordionEx">
+                    <div class="card-body">
+    
+                        <% } %> 
+
+        <div class="form-group">
+            <div class="form-row">
+                <div class="form-group col" style="display: none;">
+                    <input type="text" class="form-control"  name="s3_jobs_jn_<%= i %>" id="s3jobsjn<%= i %>"
+                        placeholder="Job number" value="<%= obj.s3.jobs[i].jn %>">
+                </div>
+
+
+                <div class="form-group col" style="margin-top: -25px;">
+                            <select   
+                              class="mdb-select md-form"
+                              searchable="Search here.."
+                              name="s3_jobs_pro_<%= i %>"
+                              id="s3jobspro<%= i %>"
+                            >
+                            <%if (obj.s3.jobs[i].pro  != "") { %>
+                                <option value="<%= obj.s3.jobs[i].pro %>" ><%= obj.s3.jobs[i].pro %></option>
+
+                                <% } else {%>
+                                    <option value="" disabled selected>Project Select ... </option>
+                                <% }%>  
+
+                                <% for (var z = 0; z < obj.swornServiceType.length; z++) { %>
+                                    <option value="<%= obj.swornServiceType[z] %>"><%= obj.swornServiceType[z] %></option>
+                                <%}%>
+
+                            </select>
+
+                </div>
+                
+                <div class="form-group col" style="display: none;">
+                    <input type="text" class="form-control"  name="s3_jobs_stype_<%= i %>"
+                        id="s3jobsstype<%= i %>" placeholder="Service type"  value="<%= obj.s3.jobs[i].stype %>">
+                </div>
+
+
+                <div class="form-group col" style="margin-top: -25px;">
+                    <select   
+                      class="mdb-select md-form"
+                      searchable="Search here.."
+                      name="s3_jobs_slan_<%= i %>"
+                      id="s3jobsslan<%= i %>"
+                    >
+                        <%if (obj.s3.jobs[i].slan  != "") { %>
+                            <option value="<%= obj.s3.jobs[i].slan %>" ><%= obj.s3.jobs[i].slan %></option>
+    
+                            <% } else {%>
+                                <option value="" disabled selected>Language Select ... </option>
+                            <% }%>   
+                            
+                            <% for (var z = 0; z < obj.languageType.length; z++) { %>
+                                <option value="<%= obj.languageType[z] %>"><%= obj.languageType[z] %></option>
+                            <%}%>
+
+                    </select>
+                 </div>
+
+
+                <div class="form-group col" style="margin-top: -25px;">
+                    <select   
+                    class="mdb-select md-form"
+                    searchable="Search here.."
+                    name="s3_jobs_tlan_<%= i %>"
+                    id="s3jobstlan<%= i %>"
+                    >
+                    <%if (obj.s3.jobs[i].tlan  != "") { %>
+                        <option value="<%= obj.s3.jobs[i].tlan %>" ><%= obj.s3.jobs[i].tlan %></option>
+
+                        <% } else {%>
+                            <option value="" disabled selected>Language Select ... </option>
+                        <% }%>   
+                        
+                        <% for (var z = 0; z < obj.languageType.length; z++) { %>
+                            <option value="<%= obj.languageType[z] %>"><%= obj.languageType[z] %></option>
+                        <%}%>
+                    </select>
+
+                </div>
+
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s3_jobs_unit_<%= i %>" id="s2jobsunit<%= i %>"
+                        placeholder="Unit" value="<%= obj.s3.jobs[i].unit %>">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s3_jobs_unitp_<%= i %>" id="s2jobsunitp<%= i %>"
+                        placeholder="Unit price" value="<%= obj.s3.jobs[i].unitp %>">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s3_jobs_nunit_<%= i %>" id="s2jobsnunit<%= i %>"
+                        placeholder="Number Unit" value="<%= obj.s3.jobs[i].nunit %>">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s3_jobs_t_<%= i %>" id="s3jobst<%= i %>"
+                        placeholder="total" value="<%= obj.s3.jobs[i].t %>">
+                </div>
+            </div>
+        </div>
+        <% if ( (i+1) % 10 == 0) {%>
+        </div>
+    </div>
+
+    <% }%>
+<% } %>
+<% } %>
+    <br>
+    <br>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        <a href="" style="display: none;" name="download" id="download" class="btn btn-secondary">Download</a>
+    </div>
+</form>
+
+
+<!-- <script src="paidscript.js"></script> -->
+
+<script>
+    function populateSelect(element) {
+        // THE JSON ARRAY.
+        var birds = [
+            {"ID": "001", "Bird_Name": "Eurasian Collared-Dove"},
+            {"ID": "002", "Bird_Name": "Bald Eagle"},
+            {"ID": "003", "Bird_Name": "Cooper's Hawk"},
+        ];
+        
+        var serviceTypeJson = <%- JSON.stringify(obj["swornServiceType"]) %>;
+
+
+
+        var ele = document.getElementById(element);
+        ele.innerHTML = ele.innerHTML + '<option value="" disabled selected >' + "Project Select ..." + '</option>';
+                // '<option value="' + serviceTypeJson[i] + '">' + serviceTypeJson[i] + '</option>';
+
+        for (var i = 0; i < serviceTypeJson.length; i++) {
+            // POPULATE SELECT ELEMENT WITH JSON.
+            ele.innerHTML = ele.innerHTML +
+                '<option value="' + serviceTypeJson[i] + '">' + serviceTypeJson[i] + '</option>';
+        }
+    }
+
+    // function show(ele) {
+    //     // GET THE SELECTED VALUE FROM <select> ELEMENT AND SHOW IT.
+    //     var msg = document.getElementById('msg');
+    //     msg.innerHTML = 'Selected Project: <b>' + ele.options[ele.selectedIndex].text + '</b> </br>' +
+    //         'ID: <b>' + ele.value + '</b>';
+    // }
+
+    function service(element)
+    {
+        var serviceTypeJson = <%- JSON.stringify(obj["swornServiceType"]) %>;
+        //alert(serviceTypeJson["'" + x.value + "'"]);
+        var x = document.getElementById(element);
+        if(x!= null && x!= "")
+        {
+            if(serviceTypeJson[x.value])
+                x.value = serviceTypeJson[x.value]
+            //alert(x.value);
+        }
+        else
+        {
+            //alert(x.value);
+        }
+    }
+
+    function language(element)
+    {
+        var languageTypeJson = <%- JSON.stringify(obj["languageType"]) %>;
+        //alert(languageTypeJson["'" + x.value + "'"]);
+        var x = document.getElementById(element);
+        if(x!= null && x!= "")
+        {
+            if(languageTypeJson[x.value])
+                x.value = languageTypeJson[x.value]
+            //alert(x.value);
+        }
+        else
+        {
+            //alert(x.value);
+        }
+    }
+
+    
+
+    $("#my_form").submit(function (event) {
+        event.preventDefault(); //prevent default action 
+        var post_url = $(this).attr("action"); //get form action url
+        var request_method = $(this).attr("method"); //get form GET/POST method
+        var form_data = $(this).serialize(); //Encode form elements for submission
+
+        $.ajax({
+            url: post_url,
+            type: request_method,
+            data: form_data,
+            success: function (result) {
+                if(result == "error")
+                {
+                    toastr["error"]("Document not inserted", "Document Save error")
+                    return;
+                }
+                //alert(result);
+                toastr["success"]("Document successfully inserted", "Document saved");
+                toastr["success"]("Invoice Number: " + result['invoiceNumber'], "Invoice Number");
+                $("#download").show();
+                $("#download").attr("href", result['link']);
+            }
+        });
+    });
+
+          //Material Select Initialization
+          $(document).ready(function () {
+        $(".form-group .form-row .mdb-select").materialSelect();
+      });
+
+    //   $(document).ready(function () {
+    //     $(".dropdown-toggle").dropdown();
+    //   });
+
+      $(".form-group .form-row .mdb-select").on("contentChanged", function () {
+        $(this).material_select();
+      });
+</script>

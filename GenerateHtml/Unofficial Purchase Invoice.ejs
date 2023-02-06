@@ -1,0 +1,183 @@
+<form method="POST" action="<%= url %>"
+    id="my_form">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s2.caption %></h8>
+        <div class="form-row">
+            <div class="form-group col" style="display: none;">
+                <input type="text" class="form-control" id="s2f0" name="s2_f0" placeholder="<%= obj.s2.f0.caption %>"
+                    value="<%= obj.s2.f0.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s2f1" name="s2_f1" placeholder="<%= obj.s2.f1.caption %>"
+                    value="<%= obj.s2.f1.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s2f2" name="s2_f2" placeholder="<%= obj.s2.f2.caption %>"
+                    value="<%= obj.s2.f2.value %>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s2_f3" id="s2f3" placeholder="<%= obj.s2.f3.caption %>"
+                    value="<%= obj.s2.f3.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s2_f4" id="s2f4" placeholder="<%= obj.s2.f4.caption %>"
+                    value="<%= obj.s2.f4.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s2_f5" id="s2f5" placeholder="<%= obj.s2.f5.caption %>"
+                    value="<%= obj.s2.f5.value %>">
+            </div>
+            <div class="form-group col" style="margin-top: -25px;">
+                <select   
+                  class="mdb-select md-form" class="form-group col" style="margin-left: 35px;" searchable="Currency Type.." name="s2_f6" id="s2f6" value="<%= %>"
+                required>
+                <%if (obj.s2.f6.value  != "") { %>
+                    <option value="<%= obj.s2.f6.value %>" ><%= obj.s2.f6.value %></option>
+                    <% } else {%>
+                        <option value="" disabled selected>Currency Type.. </option>
+                    <% }%>
+                <option value="USD">USD</option>
+                <option value="LBP">LBP</option>
+            </select>
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s2_f7" id="s2f7" placeholder="<%= obj.s2.f7.caption %>"
+                    value="<%= obj.s2.f7.value %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+
+        <!-- Collapse methode  -->
+    <!--Accordion wrapper-->
+    <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+        <!-- Accordion card -->
+        <div class="card">
+
+    <% for (var i = 0; i < obj.s3.jobsP.length; i++) { %>
+
+        <%if (obj.type == "English") { %>
+
+            <%if (i % 10 == 0) { %>
+                <!-- Card header -->
+                <div class="card-header" role="tab" id="headingOne<%= i %>">
+                    <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne<%= i %>" 
+                        aria-expanded= "<%- i == 0 ? 'ture' : 'false' %>"
+                        aria-controls="collapseOne<%= i %>">
+                        <h5 class="mb-0">
+                            Collapsible Group Item #<%= i %> <i class="fas fa-angle-down rotate-icon"></i>
+                        </h5>
+                    </a>
+                </div>
+    
+                <!-- Card body -->
+                <div id="collapseOne<%= i %>" class="collapse <%- i == 0 ? 'show' : '' %>"" role="tabpanel" aria-labelledby="headingOne<%= i %>"
+                    data-parent="#accordionEx">
+                    <div class="card-body">
+    
+                        <% } %>
+
+        <div class="form-group">
+            <div class="form-row">
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s3_jobsP_quan_<%= i %>" id="s3jobsPquan<%= i %>"
+                        placeholder="Quantity" value="<%= obj.s3.jobsP[i].quan %>" oninput="calculate('<%= i %>')">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s3_jobsP_desc_<%= i %>"
+                        id="s3jobsPdesc<%= i %>" placeholder="Description" value="<%= obj.s3.jobsP[i].desc %>">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s3_jobsP_unitp_<%= i %>" id="s3jobsPunitp<%= i %>"
+                        placeholder="Unit price (Currency)" value="<%= obj.s3.jobsP[i].unitp %>" oninput="calculate('<%= i %>')">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s3_jobsP_t_<%= i %>" id="s3jobsPt<%= i %>"
+                        placeholder="total (Currency)" value="<%= obj.s3.jobsP[i].t %>">
+                </div>
+            </div>
+        </div>
+        <% if ( (i+1) % 10 == 0) {%>
+        </div>
+    </div>
+
+    <% }%>
+<% } %>
+<% } %>
+</div>
+</div>
+<br>
+<br>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        <a href="" style="display: none;" name="download" id="download" class="btn btn-secondary">Download</a>
+    </div>
+</form>
+
+<!-- <script src="paidscript.js"></script> -->
+
+<script>
+
+    function calculate(i) {
+        //console.log(i);
+        var wordCount = document.getElementById('s3jobsPquan' + i).value; 
+        var unitPrice = document.getElementById('s3jobsPunitp' + i).value;
+        var totalPrice = document.getElementById('s3jobsPt' + i);
+
+        var total = parseFloat(unitPrice) * parseFloat(wordCount);
+        total = total || 0
+        if(parseInt(total) === total ){
+            totalPrice.value = parseInt(total);
+        }
+        else{
+            totalPrice.value = parseFloat(total).toFixed(2);
+        }
+
+    }
+
+
+
+
+    $("#my_form").submit(function (event) {
+        event.preventDefault(); //prevent default action 
+        var post_url = $(this).attr("action"); //get form action url
+        var request_method = $(this).attr("method"); //get form GET/POST method
+        var form_data = $(this).serialize(); //Encode form elements for submission
+
+        $.ajax({
+            url: post_url,
+            type: request_method,
+            data: form_data,
+            success: function (result) {
+                if(result == "error")
+                {
+                    toastr["error"]("Document not inserted", "Document Save error")
+                    return;
+                }
+                //alert(result);
+                toastr["success"]("Document successfully inserted", "Document saved")
+                toastr["success"]("Invoice Number: " + result['invoiceNumber'], "Invoice Number")
+                $("#download").show();
+                $("#download").attr("href", result['link']);
+            }
+        });
+    });
+
+                  //Material Select Initialization
+                  $(document).ready(function () {
+        $(".form-group .form-row .mdb-select").materialSelect();
+      });
+
+    //   $(document).ready(function () {
+    //     $(".dropdown-toggle").dropdown();
+    //   });
+
+      $(".form-group .form-row .mdb-select").on("contentChanged", function () {
+        $(this).material_select();
+      });
+</script>

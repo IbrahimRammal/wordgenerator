@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="../../css/horsey.min.css"></link>
+    <%- include('header'); -%>
+    <!-- Latest compiled and minified CSS -->
+
+    <style></style>
+  </head>
+
+  <body id="page-top">
+    <%- include('body1'); -%>
+    <!-- End of Topbar -->
+
+    <!-- Begin Page Content -->
+    <!-- Begin Page Content -->
+
+    <h5
+      style="
+        margin: auto;
+        width: 30%;
+        /* border: 3px solid green; */
+        padding: 5px;
+      "
+    >
+    Invoice Generate <span class="badge badge-primary">Form</span>
+    </h5>
+
+    <div class="container-fluid">
+      <div class="container">
+
+        <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <select
+                  class="mdb-select md-form"
+                  searchable="Search here.."
+                  id="client_list"
+                >
+                  <option value="" disabled selected>Client Select ...</option>
+                  <% if(locals.clientname && typeof clientname != 'undefined') {
+                  %> <% for (var x = 0; x < clientname.length; x++) { %>
+                  <option value="<%= clientname[x]['_id'] %>"
+                    ><%= clientname[x]['fullname'] %></option
+                  >
+                  <% } %> <%}%>
+                </select>
+              </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <select
+                class="mdb-select md-form"
+                searchable="Search here.."
+                id="invoice_list"
+              >
+                <option value="" disabled selected>Invoice Type Select ...</option>
+                <!-- <select class="form-control form-control-xs selectpicker" name="" data-size="3" data-live-search="true"
+              data-title="Language" id="inv_list" data-width="100%">
+              <option value="" selected>Language Select ...</option> -->
+                <option value="Sworn Invoice">Sworn Invoice</option>
+                <option value="Pronto Invoice">Pronto Invoice</option>
+                <option value="Unofficial Invoice">Unofficial Invoice</option>
+                <!-- <option value="Purchase Invoice">Purchase Invoice</option> -->
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xl-3 col-md-6 mb-4">
+            <button
+              type="button"
+              id="load"
+              name="load"
+              class="btn btn-outline-primary"
+              onclick="getData()"
+            >
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </button>
+          </div>
+          <!--Big blue-->
+          <!--Big blue-->
+          <div id="spinner" style="display: none;" class="preloader-wrapper big crazy">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div
+            class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+          >
+            <h6 class="m-0 font-weight-bold text-primary" id="card_label">
+              Invoice Card
+            </h6>
+            <div class="dropdown no-arrow">
+              <a
+                class="dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                aria-labelledby="dropdownMenuLink"
+                x-placement="bottom-end"
+                style="
+                  position: absolute;
+                  will-change: transform;
+                  top: 0px;
+                  left: 0px;
+                  transform: translate3d(17px, 18px, 0px);
+                "
+              >
+                <div class="dropdown-header">Dropdown Header:</div>
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </div>
+          </div>
+          <!-- Card Body -->
+
+          <div class="card-body">
+            <div id="panel"></div>
+          </div>
+        </div>
+      </div>
+
+      <br />
+    </div>
+    <!-- End of Main Continer -->
+
+    <!-- End of Main Content -->
+    <%- include('body2'); -%>
+    <!-- <script src="../../js/horsey.min.js"></script> -->
+    <!-- <script src="../../js/autocomplete.min.js"></script> -->
+
+    <script type="text/javascript">
+      /* When the user clicks on the button,
+                toggle between hiding and showing the dropdown content */
+
+    //   $("#inv_list").on("change", function () {
+    //     var inv = $(this).val();
+    //     if (inv != null && inv != "Invoice Select ...") {
+    //       $.ajax({
+    //         url: "/api/posts/invoice",
+    //         type: "POST",
+    //         dataType: "json",
+    //         cache: true,
+    //         data: { type: inv },
+    //         success: function (fixtures) {
+    //           var newOptions = fixtures["html"];
+    //           var select = $("#tem_list");
+    //           var selectedOption = "Document Select ...";
+
+    //         },
+    //         error: function (jqXHR, textStatus, err) {
+    //           alert("text status " + textStatus + ", err " + err);
+    //         },
+    //       });
+    //     }
+    //   });
+
+      function getData() {
+
+        var e = document.getElementById("invoice_list");
+
+        var strType = e.options[e.selectedIndex].value;
+
+
+        var clinetID = document.getElementById("client_list");
+        var strClient = clinetID.options[clinetID.selectedIndex].value;
+
+        
+
+        //var parms = getUrlVars();
+        //console.log(parms);
+        //console.log(parms["_id"]);
+
+        //&& parms["_id"] != ""
+
+        //window.alert(strClient);
+        // Grab the template
+        if (
+          strType != "Invoice Type Select ..." 
+        ) {
+
+          $('#load').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+          // $("#spinner").show();
+          $("#spinner").toggleClass( "active");
+          $("#panel").html("");
+          $("#card_label").html("Invoice Card");
+          $.ajax({
+            url: "/api/invoice/invoiceloadcreate",
+            type: "POST",
+            dataType: "json",
+            cache: true,
+            data: { type: strType, ClientID: strClient}, //, id: parms["_id"] 
+            success: function (fixtures) {
+              // $("#spinner").hide();
+              // alert(fixtures["html"]);
+              $('#load').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;').toggleClass("disabled");
+              $( "#spinner" ).toggleClass( "active");
+              var html = fixtures["html"];
+
+              $("#panel").html(html);
+
+              //$('#paid').html(paid);
+              $("#card_label").html(strType);
+            },
+            error: function (jqXHR, textStatus, err) {
+              $('#load').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;').toggleClass("disabled");
+              $( "#spinner" ).toggleClass( "active");
+
+              toastr["error"]("Loading Receipt Voucher Error", "Load error")
+              //alert("text status " + textStatus + ", err " + err);
+            },
+          });
+        } else {
+            toastr["error"]("Please pick a Receipt Voucher!", "Pick error")
+          //alert("Please pick a Invoice!");
+        }
+      }
+
+    //   function getUrlVars()
+    //   {
+    //       var vars = [], hash;
+    //       var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    //       for(var i = 0; i < hashes.length; i++)
+    //       {
+    //           hash = hashes[i].split('=');
+    //           vars.push(hash[0]);
+    //           vars[hash[0]] = hash[1];
+    //       }
+    //       return vars;
+    //   }
+
+      // $('#load').click(function() {
+      //   $('#load').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+      // });
+
+      // Material Select Initialization
+      $(document).ready(function () {
+        $(".mdb-select").materialSelect();
+      });
+
+      $(document).ready(function () {
+        $(".dropdown-toggle").dropdown();
+      });
+
+      $(".mdb-select").on("contentChanged", function () {
+        $(this).material_select();
+      });
+    </script>
+  </body>
+</html>
