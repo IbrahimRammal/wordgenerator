@@ -232,8 +232,22 @@
             "value": ""
         },
         "f4": {
-            "caption": "Lugar y número de registro",
-            "value": ""
+            "caption": "Profesión OR Lugar y número de registro",
+            "value": "",
+            "option2": "Profesión",
+            "option1": "Lugar y número de registro"
+        },
+        "f5": {
+            "caption": "Profesión OR Lugar y número de registro",
+            "value": "Profesión",
+            "option2": "Profesión",
+            "option1": "Lugar y número de registro"
+        },
+        "f6": {
+            "caption": "Profesión OR Lugar y número de registro",
+            "value": "Profesión",
+            "option2": "Profesión",
+            "option1": "Lugar y número de registro"
         }
     },
     "s8": {
@@ -251,8 +265,22 @@
             "value": ""
         },
         "f4": {
-            "caption": "Lugar y número de registro",
-            "value": ""
+            "caption": "Profesión OR Lugar y número de registro",
+            "value": "",
+            "option2": "Profesión",
+            "option1": "Lugar y número de registro"
+        },
+        "f5": {
+            "caption": "Profesión OR Lugar y número de registro",
+            "value": "Profesión",
+            "option2": "Profesión",
+            "option1": "Lugar y número de registro"
+        },
+        "f6": {
+            "caption": "Profesión OR Lugar y número de registro",
+            "value": "Profesión",
+            "option2": "Profesión",
+            "option1": "Lugar y número de registro"
         }
     },
     "s9": {

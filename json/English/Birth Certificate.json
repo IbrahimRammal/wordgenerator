@@ -221,12 +221,22 @@
       "value": ""
     },
     "f4": {
-      "caption": "Profession",
-      "value": ""
+      "caption": "Profession OR Place and No. of Registry",
+      "value": "",
+      "option1": "Profession",
+      "option2": "Place and No. of Registry"
     },
     "f5": {
-      "caption": "Signature",
-      "value": "Signature"
+      "caption": "Profession OR Place and No. of Registry",
+      "value": "Profession",
+      "option1": "Profession",
+      "option2": "Place and No. of Registry"
+    },
+    "f6": {
+      "caption": "Profession OR Place and No. of Registry",
+      "value": "Profession",
+      "option1": "Profession",
+      "option2": "Place and No. of Registry"
     }
   },
   "s8": {
@@ -244,12 +254,22 @@
       "value": ""
     },
     "f4": {
-      "caption": "Profession",
-      "value": ""
+      "caption": "Profession OR Place and No. of Registry",
+      "value": "",
+      "option1": "Profession",
+      "option2": "Place and No. of Registry"
     },
     "f5": {
-      "caption": "Signature",
-      "value": ""
+      "caption": "Profession OR Place and No. of Registry",
+      "value": "Profession",
+      "option1": "Profession",
+      "option2": "Place and No. of Registry"
+    },
+    "f6": {
+      "caption": "Profession OR Place and No. of Registry",
+      "value": "Profession",
+      "option1": "Profession",
+      "option2": "Place and No. of Registry"
     }
   },
   "s9": {

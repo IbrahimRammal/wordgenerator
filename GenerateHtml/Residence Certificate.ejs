@@ -4,9 +4,17 @@
         <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s1.caption %></h8>
         <div class="form-row">
             <div class="form-group col">
+                <input type="text" class="form-control" id="s1f0" name="s1_f0" placeholder="<%= obj.s1.f0.caption %>"
+                    value="<%= obj.s1.f0.value %>">
+            </div>
+            <div class="form-group col">
                 <input type="text" class="form-control" id="s1f1" name="s1_f1" placeholder="<%= obj.s1.f1.caption %>"
                     value="<%= obj.s1.f1.value %>">
             </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
             <div class="form-group col">
                 <input type="text" class="form-control" name="s1_f2" id="s1f2" placeholder="<%= obj.s1.f2.caption %>"
                     value="<%= obj.s1.f2.value %>">
@@ -60,10 +68,10 @@
                 <input type="text" class="form-control" name="s2_f6_s1" id="s2f6s1"
                     placeholder="<%= obj.s2.f6.s1.caption %>" value="<%= obj.s2.f6.s1.value %>">
             </div>
-            <div class="form-group col">
+            <!-- <div class="form-group col">
                 <input type="text" class="form-control" name="s2_f6_s2" id="s2f6s2"
                     placeholder="<%= obj.s2.f6.s2.caption %>" value="<%= obj.s2.f6.s2.value %>">
-            </div>
+            </div> -->
             <div class="form-group col">
                 <input type="text" class="form-control" name="s2_f7" id="s2f7" placeholder="<%= obj.s2.f7.caption %>"
                     value="<%= obj.s2.f7.value %>">

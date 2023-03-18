@@ -66,6 +66,14 @@
             "caption": "Police record No.",
             "value": ""
         },
+        "f33": {
+            "caption": "District",
+            "value": ""
+        },
+        "f34": {
+            "caption": "Province",
+            "value": ""
+        },
         "f4": {
             "caption": "Name and Surname",
             "s1":{

@@ -46,6 +46,10 @@
     },
     "s1": {
         "caption": "Header",
+        "f0": {
+            "caption": "Ce certificat a été délivré pour utilisation :",
+            "value": ""
+        },
         "f1": {
             "caption": "Gouvernorat",
             "value": ""
@@ -209,7 +213,7 @@
         }
     },
     "s4": {
-        "caption": "la mère",
+        "caption": "Le maire",
         "f1": {
             "caption": "Nom",
             "value": ""

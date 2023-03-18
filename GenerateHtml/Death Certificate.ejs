@@ -235,6 +235,10 @@
                     <input type="text" class="form-control" name="s6_f2" id="s6f2"
                         placeholder="<%= obj.s6.f2.caption %>" value="<%= obj.s6.f2.value %>">
                 </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s6_f3" id="s6f3"
+                        placeholder="<%= obj.s6.f3.caption %>" value="<%= obj.s6.f3.value %>">
+                </div>
             </div>
         </div>
         <hr class="sidebar-divider">
@@ -257,6 +261,52 @@
         </div>
         <div class="form-group">
             <div class="form-row">
+                <div class="form-group col" style="margin-top: -25px;">
+                    <select   
+                        class="mdb-select md-form" class="form-group col" style="margin-left: 35px;" searchable="<%= obj.s7.f6.caption %>" name="s7_f6" id="s7f6" value="<%= %>"
+                    required>
+                    <%if (obj.type == "English") { %>
+                        <%if (obj.s7.f6.value) { %>
+                            <option value="<%= obj.s7.f6.value %>" ><%= obj.s7.f6.value %></option>
+                            <% } else {%>
+                                <option value="" disabled selected>Profession OR Place and No. of Registry</option>
+                        <% }%>
+                        <%if (obj.s7.f6.option1 &&  obj.s7.f6.option2) { %>
+                            <option value="<%= obj.s7.f6.option1 %>"><%= obj.s7.f6.option1 %></option>
+                            <option value="<%= obj.s7.f6.option2 %>"><%= obj.s7.f6.option2 %></option>
+                        <% } else {%>
+                            <option value="Place and No. of Registry">Place and No. of Registry</option>
+                            <option value="Profession">Profession</option>
+                        <% }%>
+                    <% } else if (obj.type == "Español") {%>
+                        <%if (obj.s7.f6.value) { %>
+                            <option value="<%= obj.s7.f6.value %>" ><%= obj.s7.f6.value %></option>
+                            <% } else {%>
+                                <option value="" disabled selected>Profesión OR Lugar y número de registro</option>
+                        <% }%>
+                        <%if (obj.s7.f6.option1 &&  obj.s7.f6.option2) { %>
+                            <option value="<%= obj.s7.f6.option1 %>"><%= obj.s7.f6.option1 %></option>
+                            <option value="<%= obj.s7.f6.option2 %>"><%= obj.s7.f6.option2 %></option>
+                        <% } else {%>
+                            <option value="Lugar y número de registro">Lugar y número de registro</option>
+                            <option value="Profesión">Profesión</option>
+                        <% }%>
+                    <% } else if (obj.type == "Français") {%>
+                        <%if (obj.s7.f6.value) { %>
+                            <option value="<%= obj.s7.f6.value %>" ><%= obj.s7.f6.value %></option>
+                            <% } else {%>
+                                <option value="" disabled selected>Profession OR Lieu et numéro du registre</option>
+                        <% }%>
+                        <%if (obj.s7.f6.option1 &&  obj.s7.f6.option2) { %>
+                            <option value="<%= obj.s7.f6.option1 %>"><%= obj.s7.f6.option1 %></option>
+                            <option value="<%= obj.s7.f6.option2 %>"><%= obj.s7.f6.option2 %></option>
+                        <% } else {%>
+                            <option value="Lieu et numéro du registre">Lieu et numéro du registre</option>
+                            <option value="Profession">Profession</option>
+                        <% }%>
+                    <% }%>
+                    </select>
+                </div>
                 <div class="form-group col">
                     <input type="text" class="form-control" name="s7_f4" id="s7f4"
                         placeholder="<%= obj.s7.f4.caption %>" value="<%= obj.s7.f4.value %>">
@@ -287,6 +337,52 @@
         </div>
         <div class="form-group">
             <div class="form-row">
+                <div class="form-group col" style="margin-top: -25px;">
+                    <select   
+                        class="mdb-select md-form" class="form-group col" style="margin-left: 35px;" searchable="<%= obj.s8.f6.caption %>" name="s8_f6" id="s8f6" value="<%= %>"
+                    required>
+                    <%if (obj.type == "English") { %>
+                        <%if (obj.s8.f6.value) { %>
+                            <option value="<%= obj.s8.f6.value %>" ><%= obj.s8.f6.value %></option>
+                            <% } else {%>
+                                <option value="" disabled selected>Profession OR Place and No. of Registry</option>
+                        <% }%>
+                        <%if (obj.s8.f6.option1 &&  obj.s8.f6.option2) { %>
+                            <option value="<%= obj.s8.f6.option1 %>"><%= obj.s8.f6.option1 %></option>
+                            <option value="<%= obj.s8.f6.option2 %>"><%= obj.s8.f6.option2 %></option>
+                        <% } else {%>
+                            <option value="Place and No. of Registry">Place and No. of Registry</option>
+                            <option value="Profession">Profession</option>
+                        <% }%>
+                    <% } else if (obj.type == "Español") {%>
+                        <%if (obj.s8.f6.value) { %>
+                            <option value="<%= obj.s8.f6.value %>" ><%= obj.s8.f6.value %></option>
+                            <% } else {%>
+                                <option value="" disabled selected>Profesión OR Lugar y número de registro</option>
+                        <% }%>
+                        <%if (obj.s8.f6.option1 &&  obj.s8.f6.option2) { %>
+                            <option value="<%= obj.s8.f6.option1 %>"><%= obj.s8.f6.option1 %></option>
+                            <option value="<%= obj.s8.f6.option2 %>"><%= obj.s8.f6.option2 %></option>
+                        <% } else {%>
+                            <option value="Lugar y número de registro">Lugar y número de registro</option>
+                            <option value="Profesión">Profesión</option>
+                        <% }%>
+                    <% } else if (obj.type == "Français") {%>
+                        <%if (obj.s8.f6.value) { %>
+                            <option value="<%= obj.s8.f6.value %>" ><%= obj.s8.f6.value %></option>
+                            <% } else {%>
+                                <option value="" disabled selected>Profession OR Lieu et numéro du registre</option>
+                        <% }%>
+                        <%if (obj.s8.f6.option1 &&  obj.s8.f6.option2) { %>
+                            <option value="<%= obj.s8.f6.option1 %>"><%= obj.s8.f6.option1 %></option>
+                            <option value="<%= obj.s8.f6.option2 %>"><%= obj.s8.f6.option2 %></option>
+                        <% } else {%>
+                            <option value="Lieu et numéro du registre">Lieu et numéro du registre</option>
+                            <option value="Profession">Profession</option>
+                        <% }%>
+                    <% }%>
+                    </select>
+                </div>
                 <div class="form-group col">
                     <input type="text" class="form-control" name="s8_f4" id="s8f4"
                         placeholder="<%= obj.s8.f4.caption %>" value="<%= obj.s8.f4.value %>">
@@ -439,4 +535,12 @@
             }
         });
     });
+
+    $(document).ready(function () {
+        $(".form-group .form-row .mdb-select").materialSelect();
+      });
+
+    $(".form-group .form-row .mdb-select").on("contentChanged", function () {
+        $(this).material_select();
+      });
 </script>

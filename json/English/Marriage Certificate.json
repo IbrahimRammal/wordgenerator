@@ -252,8 +252,20 @@
             "value": ""
         },
         "f4": {
-            "caption": "Place and No. of registry",
+            "caption": "Profession OR Place and No. of Registry",
+            "value": "",
+            "option1": "Place and No. of registry",
+            "option2": "Profession"
+        },
+        "f5": {
+            "caption": "Degree of kinship to the deceased",
             "value": ""
+        },
+        "f6": {
+            "caption": "Profession OR Place and No. of Registry",
+            "value": "Place and No. of Registry",
+            "option1": "Place and No. of Registry",
+            "option2": "Profession"
         }
     },
     "s8": {
@@ -271,8 +283,20 @@
             "value": ""
         },
         "f4": {
-            "caption": "Place and No. of registry",
+            "caption": "Profession OR Place and No. of Registry",
+            "value": "",
+            "option1": "Place and No. of registry",
+            "option2": "Profession"
+        },
+        "f5": {
+            "caption": "Degree of kinship to the deceased",
             "value": ""
+        },
+        "f6": {
+            "caption": "Profession OR Place and No. of Registry",
+            "value": "Place and No. of Registry",
+            "option1": "Place and No. of Registry",
+            "option2": "Profession"
         }
     },
     "s9": {

@@ -66,6 +66,14 @@
             "caption": "Ficha Policial No.",
             "value": ""
         },
+        "f33": {
+            "caption": "Distrito",
+            "value": ""
+        },
+        "f34": {
+            "caption": "Provincia",
+            "value": ""
+        },
         "f4": {
             "caption": "Nombre y apellido",
             "s1":{

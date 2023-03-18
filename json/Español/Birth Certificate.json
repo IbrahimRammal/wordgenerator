@@ -221,12 +221,22 @@
             "value": ""
         },
         "f4": {
-            "caption": "Ocupación",
-            "value": ""
+            "caption": "Profesión OR Lugar y número de registro",
+            "value": "",
+            "option1": "Profesión",
+            "option2": "Lugar y número de registro"
         },
         "f5": {
-            "caption": "Firma",
-            "value": "Firma"
+            "caption": "Profesión OR Lugar y número de registro",
+            "value": "Profesión",
+            "option1": "Profesión",
+            "option2": "Lugar y número de registro"
+        },
+        "f6": {
+            "caption": "Profesión OR Lugar y número de registro",
+            "value": "Profesión",
+            "option1": "Profesión",
+            "option2": "Lugar y número de registro"
         }
     },
     "s8": {
@@ -244,12 +254,22 @@
             "value": ""
         },
         "f4": {
-            "caption": "Ocupación",
-            "value": ""
+            "caption": "Profesión OR Lugar y número de registro",
+            "value": "",
+            "option1": "Profesión",
+            "option2": "Lugar y número de registro"
         },
         "f5": {
-            "caption": "Firma",
-            "value": ""
+            "caption": "Profesión OR Lugar y número de registro",
+            "value": "Profesión",
+            "option1": "Profesión",
+            "option2": "Lugar y número de registro"
+        },
+        "f6": {
+            "caption": "Profesión OR Lugar y número de registro",
+            "value": "Profesión",
+            "option1": "Profesión",
+            "option2": "Lugar y número de registro"
         }
     },
     "s9": {

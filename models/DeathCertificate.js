@@ -480,6 +480,14 @@ const deathSchema = mongoose.Schema({
       value: {
         type: 'String'
       }
+    },
+    f3: {
+      caption: {
+        type: 'String'
+      },
+      value: {
+        type: 'String'
+      }
     }
   },
   s7: {
@@ -510,20 +518,46 @@ const deathSchema = mongoose.Schema({
         type: 'String'
       }
     },
-    f4: {
-      caption: {
-        type: 'String'
+    "f4": {
+      "caption": {
+        "type": "String"
       },
-      value: {
-        type: 'String'
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
       }
     },
-    f5: {
-      caption: {
-        type: 'String'
+    "f5": {
+      "caption": {
+        "type": "String"
       },
-      value: {
-        type: 'String'
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
+      }
+    },
+    "f6": {
+      "caption": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
       }
     }
   },
@@ -555,20 +589,46 @@ const deathSchema = mongoose.Schema({
         type: 'String'
       }
     },
-    f4: {
-      caption: {
-        type: 'String'
+    "f4": {
+      "caption": {
+        "type": "String"
       },
-      value: {
-        type: 'String'
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
       }
     },
-    f5: {
-      caption: {
-        type: 'String'
+    "f5": {
+      "caption": {
+        "type": "String"
       },
-      value: {
-        type: 'String'
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
+      }
+    },
+    "f6": {
+      "caption": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
       }
     }
   },

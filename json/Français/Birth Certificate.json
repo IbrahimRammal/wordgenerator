@@ -225,12 +225,22 @@
             "value": ""
         },
         "f4": {
-            "caption": "Occupation",
-            "value": ""
+            "caption": "Profession OR Lieu et numéro du registre",
+            "value": "",
+            "option1": "Profession",
+            "option2": "Lieu et numéro du registre"
         },
         "f5": {
-            "caption": "Signature",
-            "value": "Signature"
+            "caption": "Profession OR Lieu et numéro du registre",
+            "value": "",
+            "option1": "Profession",
+            "option2": "Lieu et numéro du registre"
+        },
+        "f6": {
+            "caption": "Profession OR Lieu et numéro du registre",
+            "value": "Profession",
+            "option1": "Profession",
+            "option2": "Lieu et numéro du registre"
         }
     },
     "s8": {
@@ -248,12 +258,22 @@
             "value": ""
         },
         "f4": {
-            "caption": "Occupation",
-            "value": ""
+            "caption": "Profession OR Lieu et numéro du registre",
+            "value": "",
+            "option1": "Profession",
+            "option2": "Lieu et numéro du registre"
         },
         "f5": {
-            "caption": "Signature",
-            "value": ""
+            "caption": "Profession OR Lieu et numéro du registre",
+            "value": "Profession",
+            "option1": "Profession",
+            "option2": "Lieu et numéro du registre"
+        },
+        "f6": {
+            "caption": "Profession OR Lieu et numéro du registre",
+            "value": "Profession",
+            "option1": "Profession",
+            "option2": "Lieu et numéro du registre"
         }
     },
     "s9": {

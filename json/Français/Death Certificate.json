@@ -227,6 +227,10 @@
         "f2": {
             "caption": "Adresse",
             "value": ""
+        },
+        "f3": {
+            "caption": "Date",
+            "value": ""
         }
     },
     "s7": {
@@ -244,12 +248,20 @@
             "value": ""
         },
         "f4": {
-            "caption": "Lieu et numéro de registre ",
-            "value": ""
+            "caption": "Profession OR Lieu et numéro du registre",
+            "value": "",
+            "option2": "Profession",
+            "option1": "Lieu et numéro du registre"
         },
         "f5": {
             "caption": "Grade de parenté avec le décédé ",
             "value": ""
+        },
+        "f6": {
+            "caption": "Profession OR Lieu et numéro du registre",
+            "value": "Lieu et numéro de registre",
+            "option2": "Profession",
+            "option1": "Lieu et numéro du registre"
         }
     },
     "s8": {
@@ -267,12 +279,20 @@
             "value": ""
         },
         "f4": {
-            "caption": "Lieu et numéro de registre ",
-            "value": ""
+            "caption": "Profession OR Lieu et numéro du registre",
+            "value": "",
+            "option2": "Profession",
+            "option1": "Lieu et numéro du registre"
         },
         "f5": {
             "caption": "Grade de parenté avec le décédé ",
             "value": ""
+        },
+        "f6": {
+            "caption": "Profession OR Lieu et numéro du registre",
+            "value": "Lieu et numéro de registre",
+            "option2": "Profession",
+            "option1": "Lieu et numéro du registre"
         }
     },
     "s9": {

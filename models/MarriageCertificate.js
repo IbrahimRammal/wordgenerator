@@ -526,12 +526,46 @@ const marriageSchema = mongoose.Schema({
         type: 'String'
       }
     },
-    f4: {
-      caption: {
-        type: 'String'
+    "f4": {
+      "caption": {
+        "type": "String"
       },
-      value: {
-        type: 'String'
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
+      }
+    },
+    "f5": {
+      "caption": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
+      }
+    },
+    "f6": {
+      "caption": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
       }
     }
   },
@@ -563,12 +597,46 @@ const marriageSchema = mongoose.Schema({
         type: 'String'
       }
     },
-    f4: {
-      caption: {
-        type: 'String'
+    "f4": {
+      "caption": {
+        "type": "String"
       },
-      value: {
-        type: 'String'
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
+      }
+    },
+    "f5": {
+      "caption": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
+      }
+    },
+    "f6": {
+      "caption": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
       }
     }
   },

@@ -479,6 +479,12 @@ const birthSchema = mongoose.Schema({
       },
       "value": {
         "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
       }
     },
     "f5": {
@@ -486,6 +492,26 @@ const birthSchema = mongoose.Schema({
         "type": "String"
       },
       "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
+      }
+    },
+    "f6": {
+      "caption": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
         "type": "String"
       }
     }
@@ -524,6 +550,12 @@ const birthSchema = mongoose.Schema({
       },
       "value": {
         "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
       }
     },
     "f5": {
@@ -531,6 +563,26 @@ const birthSchema = mongoose.Schema({
         "type": "String"
       },
       "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
+        "type": "String"
+      }
+    },
+    "f6": {
+      "caption": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "option1": {
+        "type": "String"
+      },
+      "option2": {
         "type": "String"
       }
     }

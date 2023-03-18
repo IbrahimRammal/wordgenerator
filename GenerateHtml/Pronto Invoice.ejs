@@ -221,10 +221,10 @@
         var totalPrice = document.getElementById('s3jobpt' + i); 
 
         var unit = unit.replace(/^\D+/g, '');
-        unit = parseInt(unit);
+        unit = parseFloat(unit);
         unit = unit || 1;
         
-        var ratio = parseInt(wordCount) / unit;
+        var ratio = parseFloat(wordCount) / unit;
         var total = parseFloat(unitPrice) * parseFloat(ratio);
         total = total || 0
         if(parseInt(total) === total ){

@@ -66,6 +66,14 @@
             "caption": "Casier Judiciaire",
             "value": ""
         },
+        "f33": {
+            "caption": "District",
+            "value": ""
+        },
+        "f34": {
+            "caption": "Province",
+            "value": ""
+        },
         "f4": {
             "caption": "Prénom et nom",
             "s1":{
