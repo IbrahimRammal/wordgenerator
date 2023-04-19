@@ -99,6 +99,19 @@
                 <input type="text" class="form-control" name="s1_f9_s2" id="s1f9s2"
                     placeholder="<%= obj.s1.f9.s2.caption %>" value="<%= obj.s1.f9.s2.value %>">
             </div>
+
+            <%if (obj.s1.f15.caption == "District") { %>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s1_f15" id="s1f15"
+                        placeholder="<%= obj.s1.f15.caption %>" value="<%= obj.s1.f15.value %>">
+                </div>
+                <div class="form-group col">
+                    <input type="text" class="form-control" name="s1_f16" id="s1f16"
+                        placeholder="<%= obj.s1.f16.caption %>" value="<%= obj.s1.f16.value %>">
+                </div>
+            <% } else {%>
+
+            <% }%>
         </div>
     </div>
     <hr class="sidebar-divider">

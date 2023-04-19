@@ -146,6 +146,14 @@
         "f14": {
             "caption": "No.",
             "value": ""
+        },
+        "f15": {
+            "caption": "District",
+            "value": ""
+        },
+        "f16": {
+            "caption": "Province",
+            "value": ""
         }
     },
     "date": "", "original": "0",   "download": "",
