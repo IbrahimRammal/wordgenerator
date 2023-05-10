@@ -25,7 +25,7 @@ const pattern = /(\.\.\/)/g;
 // *****************************************************************
 
 // var fs = require('fs');
-// var https = require('https');
+var https = require('https');
 const port = process.env.PORT;
 const verify = require("./middleware/verifyToken");
 
@@ -72,7 +72,7 @@ app.use(cors());
 // Create an HTTP service.
 http.createServer(app).listen(port);
 // Create an HTTPS service identical to the HTTP service.
-//https.createServer(options, app).listen(533);
+https.createServer(options, app).listen(443);
 
 //Import ROutes
 const authRoute = require("./routers/auth");

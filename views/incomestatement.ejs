@@ -88,11 +88,9 @@
     }
             
     </style>
-    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/19.2.8/css/dx.common.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn3.devexpress.com/jslib/19.2.8/css/dx.light.css" />
-    <script src="https://cdn3.devexpress.com/jslib/22.2.6/js/dx.all.js"></script>
 
 </head>
+
 <body id="page-top">
 
     <%- include('body1'); -%>
@@ -110,77 +108,34 @@
     <br> -->
     <br>
 
+
+
     <div class="container-fluid">
 
         <div class="container" id="chartContainer">
             <div id="chartContainer-year"></div> 
-            <div id="revenueChart"></div>
-            <div id="expensesChart"></div>
         </div>
         
     </div>
+    <!-- End of Main Continer -->
 
+
+    <!-- End of Main Content -->
     <%- include('body2'); -%>
-
-    <script src="../../js/charts.js" type="text/javascript"></script>
 
 
 
     <script>
-        // // Sample income statement data for three companies
-        // var companyData = [
-        //     { company: 'Company A', revenue: 100000, expenses: 70000 },
-        //     { company: 'Company B', revenue: 120000, expenses: 80000 },
-        //     { company: 'Company C', revenue: 90000, expenses: 60000 }
-        // ];
-
-        // // Prepare the data for revenue chart
-        // var revenueData = companyData.map(function (item) {
-        //     return { company: item.company, value: item.revenue };
-        // });
-
-        // // Prepare the data for expenses chart
-        // var expensesData = companyData.map(function (item) {
-        //     return { company: item.company, value: item.expenses };
-        // });
-
-        // // Create the revenue chart
-        // var revenueChart = new DevExpress.viz.dxPieChart("#revenueChart", {
-        //     title: "Revenue",
-        //     dataSource: revenueData,
-        //     series: [{
-        //         argumentField: "company",
-        //         valueField: "value"
-        //     }],
-        //     tooltip: {
-        //         enabled: true,
-        //         format: "currency",
-        //         customizeTooltip: function (args) {
-        //             return {
-        //                 text: args.argumentText + ": " + args.valueText
-        //             };
-        //         }
-        //     }
-        // });
-
-        // // Create the expenses chart
-        // var expensesChart = new DevExpress.viz.dxPieChart("#expensesChart", {
-        //     title: "Expenses",
-        //     dataSource: expensesData,
-        //     series: [{
-        //         argumentField: "company",
-        //         valueField: "value"
-        //     }],
-        //     tooltip: {
-        //         enabled: true,
-        //         format: "currency",
-        //         customizeTooltip: function (args) {
-        //             return {
-        //                 text: args.argumentText + ": " + args.valueText
-        //             };
-        //         }
-        //     }
-        // });
+        
     </script>
+
+<!-- public/vendor/DevExtreme -->
+
+    <!-- <script src="../../vendor/DevExtreme/Sources/Lib/js/dx.all.js" type="text/javascript"></script> -->
+    <script src="../../js/incomestatement.js" type="text/javascript"></script>
+
+
+
 </body>
+
 </html>

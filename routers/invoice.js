@@ -493,6 +493,312 @@ router.post("/Pronto", verify, async (req, res) => {
   }
 });
 
+router.get("/incomestatement", verify, async (req, res) => {
+  // console.log(req.body);
+  req.keep = "true";
+
+  res.render("incomestatement", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+    //data: data
+  });
+});
+
+router.post("/invoicestatement/GetData", verify, async (req, res) => {
+  var result = [];
+  var subresult = [];
+
+  console.log("start action");
+  console.log(req.query);
+  console.log(req.body);
+  var flag = 0;
+
+  try {
+    var action = req.query.action;
+    var id = req.query.id;
+
+    var query;
+
+    // 👇️ Get the last 2 digits of the current year
+    const twoDigitYear = new Date().getFullYear().toString().slice(-2);
+    console.log(twoDigitYear); // 👉️ '23'
+    const last2Num = Number(twoDigitYear);
+    
+    if (action == "monthyear") {
+
+      query = await Transaction.find(
+          {}
+        );
+
+      //console.log("queryinvoice.length " + query["invoice"].length); 
+      for(var i = 0; i< query.length;i++){
+          try{
+
+            //{ company: 'Company A', month: 'January', revenue: 5000, expenses: 3000 },
+            // let invoiceNumber = "";
+            // let invoiceYear = query[i].invoiceNumber;
+            let swornIncomeY = 0,prontoIncomeY = 0,unofficialIncomeY = 0,swornExpenseY = 0,prontoExpenseY = 0,unofficialExpenseY = 0;
+            let swornIncomeM = 0,prontoIncomeM = 0,unofficialIncomeM = 0,swornExpenseM = 0,prontoExpenseM = 0,unofficialExpenseM = 0;
+
+            var totalValue = parseFloat(query[i]["prontoInvoice"].total);
+            var rateValue = parseFloat(query[i]["prontoInvoice"].rate);
+            var currencyCheck = query[i].currency;
+  
+            if(currencyCheck == "LBP")
+            {
+              totalValue = totalValue / rateValue;
+              totalValue = totalValue.toFixed(2)
+            } else {
+  
+            }
+          
+            subParent = {
+              
+            };
+  
+  
+            //subParent.invoiceNumber = invoiceNumber;
+            console.log(subParent);
+  
+            result.push(subParent);
+  
+          //console.log("subParent: " + JSON.stringify(subParent));
+        } 
+        catch(err){
+          console.log(err);
+        }
+    }
+      //console.log(result);
+      res.send(result);
+      // res.send(result);
+      return;
+      //console.log(query);
+    } else if (action == "purchaseunofficial") {
+
+      query = await Suppliers.find(
+          {},
+          { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 }
+        );
+
+      //console.log("queryinvoice.length " + query["invoice"].length); 
+      for(var i = 0; i< query.length;i++){
+      for (var j = 0; j < query[i]["unofficialPurchaseInvoice"].length; j++) {
+        //console.log(user["invoice"][j].href);
+          try{
+            //new
+            // s1fi
+            //console.log("query invoice" + query[i]["unofficialPurchaseInvoice"]);
+            let invoiceNumber = "";
+            let invoiceYear = query[i]["unofficialPurchaseInvoice"][j].invoiceNumber;
+            var totalValue = parseFloat(query[i]["unofficialPurchaseInvoice"][j].total);
+            var rateValue = parseFloat(query[i]["unofficialPurchaseInvoice"][j].rate);
+            var currencyCheck = query[i]["unofficialPurchaseInvoice"][j].currency;
+  
+            if(currencyCheck == "LBP")
+            {
+              totalValue = totalValue / rateValue;
+              totalValue = totalValue.toFixed(2)
+            } else {
+  
+            }
+
+            if(parseInt(id) == 1)
+            {
+              if(!invoiceYear.endsWith("/" + last2Num)){
+                console.log(last2Num + " not same year");
+                continue;
+              }
+            } else if(parseInt(id) == 2) {
+              if(invoiceYear.endsWith("/" + last2Num)){
+                console.log(last2Num + " same year");
+                continue;
+              }
+            } else {}
+          
+            subParent = {
+              //put parent id temor
+              _id: query[i]["unofficialPurchaseInvoice"][j].clientID,
+              combineid: query[i]["unofficialPurchaseInvoice"][j].clientID + "_" + query[i]["unofficialPurchaseInvoice"][j]._id + "_" + query[i]["unofficialPurchaseInvoice"][j].docid  + "_" + query[i]["unofficialPurchaseInvoice"][j].voucher  + "_" + query[i]["unofficialPurchaseInvoice"][j].transcation,
+              transcation: query[i]["unofficialPurchaseInvoice"][j].transcation,
+              voucher: query[i]["unofficialPurchaseInvoice"][j].voucher,
+              paymentid: query[i]["unofficialPurchaseInvoice"][j].clientID,
+              clientID: query[i]["unofficialPurchaseInvoice"][j].clientID,
+              fullname: query[i]["unofficialPurchaseInvoice"][j].fullname,
+              docid: query[i]["unofficialPurchaseInvoice"][j].docid,
+              invoiceNumber: query[i]["unofficialPurchaseInvoice"][j].invoiceNumber,
+              countervalue: query[i]["unofficialPurchaseInvoice"][j].countervalue,
+              href: query[i]["unofficialPurchaseInvoice"][j].href,
+              category: query[i]["unofficialPurchaseInvoice"][j].category,
+              total: query[i]["unofficialPurchaseInvoice"][j].total,
+              totalValue: totalValue,
+              remain: query[i]["unofficialPurchaseInvoice"][j].remain,
+              paid: query[i]["unofficialPurchaseInvoice"][j].paid,
+              rate: query[i]["unofficialPurchaseInvoice"][j].rate,
+              currency: query[i]["unofficialPurchaseInvoice"][j].currency,
+              Type: query[i]["unofficialPurchaseInvoice"][j].voucherType,
+              Download: "DOWNLOAD",
+              Voucher: "VOUCHER",
+              Edit: "EDIT",
+              createTime: query[i]["unofficialPurchaseInvoice"][j].createTime,
+              updateTime: query[i]["unofficialPurchaseInvoice"][j].updateTime
+            };
+  
+  
+            //subParent.invoiceNumber = invoiceNumber;
+            console.log(subParent);
+  
+            result.push(subParent);
+  
+          //console.log("subParent: " + JSON.stringify(subParent));
+        } 
+        catch(err){
+          console.log(err);
+        }
+      }
+    }
+      //console.log(result);
+      res.send(result);
+      // res.send(result);
+      return;
+      //console.log(query);
+    } else {
+      res.send({});
+      return;
+    }
+
+    //Get all payment
+    for (var i = 0; i < query.length; i++) {
+      let totalpaidpriceUSD = 0;
+      let totalremainpriceUSD = 0;
+      let totalvaluepriceUSD = 0;
+      let unit = 0;
+      let totalpaidpriceLBP = 0;
+      let totalremainpriceLBP = 0;
+      let totalvaluepriceLBP = 0;
+
+      let totalLBP = 0;
+      let totalUSD = 0;
+
+      let parent = {
+        _id: "",
+        fullname: "",
+        mobile: "",
+        address: "",
+        unit: "",
+        // paid: "",
+        // remain: "",
+        // total: "",
+        subtasks: [],
+        totalpaidpriceUSD: "",
+        totalremainpriceUSD: "",
+        totalvaluepriceUSD: "",
+        totalpaidpriceLBP: "",
+        totalremainpriceLBP: "",
+        totalvaluepriceLBP: ""
+      };
+
+      parent._id = query[i]._id;
+      parent.fullname = query[i].fullname;
+      parent.mobile = query[i].mobile;
+      parent.address = query[i].address;
+      for (var j = 0; j < query[i]["invoice"].length; j++) {
+        try{
+        let subParent = {
+          _id: query[i]["invoice"][j]._id,
+          paymentid: query[i]._id,
+          fullname: query[i]["invoice"][j].fullname,
+          docid: query[i]["invoice"][j].docid,
+          href: query[i]["invoice"][j].href,
+          category: query[i]["invoice"][j].category,
+          total: query[i]["invoice"][j].total,
+          remains: query[i]["invoice"][j].remains,
+          paid: query[i]["invoice"][j].paid,
+          currency: query[i]["invoice"][j].currency,
+          Download: "DOWNLOAD",
+          Edit: "EDIT",
+          createTime: query[i]["invoice"][j].createTime,
+          updateTime: query[i]["invoice"][j].updateTime
+        };
+
+
+        unit = j + 1;
+        if(query[i]["invoice"][j].currency == "USD"){
+          totalpaidpriceUSD += query[i]["invoice"][j].paid;
+          totalremainpriceUSD += query[i]["invoice"][j].remain;
+          totalvaluepriceUSD += query[i]["invoice"][j].total;
+        }
+        else{
+          totalpaidpriceLBP += query[i]["invoice"][j].paid;
+          totalremainpriceLBP += query[i]["invoice"][j].remain;
+          totalvaluepriceLBP += query[i]["invoice"][j].total;
+        }
+
+
+        if (action == "sub") {
+          console.log("sudfasdjfkl jaslkdjf klasjdf lkjaskldj fklsdj ");
+          result.push(subParent);
+          console.log("result: " + JSON.stringify(result));
+        }
+      } catch(err){
+        console.log(err)
+      }
+
+        //console.log("subParent: " + JSON.stringify(subParent));
+      }
+
+      parent.unit = unit;
+
+      parent.totalPaidUSD = totalpaidpriceUSD;
+      parent.totalRemainUSD = totalremainpriceUSD;
+      parent.totalUSD = totalvaluepriceUSD;
+
+      parent.totalPaidLBP = totalpaidpriceLBP;
+      parent.totalRemainLBP = totalremainpriceLBP;
+      parent.totalLBP = totalvaluepriceLBP;
+
+      // parent.paid = totalpaidprice;
+      // parent.remain = totalremainprice;
+      // parent.total = totalvalueprice;
+
+      if (action == "all") result.push(parent);
+
+    }
+
+    //console.log("result: " + result);
+    //console.log("result: " + JSON.stringify(result));
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.send({});
+  }
+});
+
+router.get("/charts", verify, async (req, res) => {
+  // console.log(req.body);
+  req.keep = "true";
+
+  res.render("charts", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+    //data: data
+  });
+});
+
+router.get("/transaction", verify, async (req, res) => {
+  // console.log(req.body);
+  req.keep = "true";
+
+  res.render("transaction", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+    //data: data
+  });
+});
+
+
 router.get("/swornview", verify, async (req, res) => {
   // console.log(req.body);
   req.keep = "true";
@@ -503,6 +809,47 @@ router.get("/swornview", verify, async (req, res) => {
     email: req.email,
     //data: data
   });
+});
+
+router.post("/GetDataTransaction", verify, async (req, res) => {
+  console.log(req.body);
+
+  var result = [];
+
+  var query = await Transaction.find(
+    {},
+    { __v: 0 }
+  );
+
+  //Format the json
+  for (var i = 0; i < query.length; i++) {
+    let temp = {
+      _id: query[i]._id,
+      paidClinetName: query[i].paidClinetName,
+      voucherAddress: query[i].voucherAddress,
+      voucherType: query[i].voucherType,
+      invoiceType: query[i].invoiceType,
+      invoiceAddress: query[i].invoiceAddress,
+      invoiceNumber: query[i].invoiceNumber,
+      rate: query[i].rate,
+      currency: query[i].currency,
+      ready: query[i].ready,
+      deleted: query[i].deleted,
+      flag: query[i].flag,
+      total: query[i].total,
+      paidClinetName: query[i].paidClinetName,
+      paidClientID: query[i].paidClientID,
+      counter: query[i].counter,
+      debit: query[i].debit,
+      credit: query[i].credit,
+      created_at: query[i].created_at,
+      updated_at: query[i].updated_at,
+    };
+    result.push(temp);
+  }
+
+  // console.log(result);
+  res.send(result);
 });
 
 router.post("/GetDataSworn", verify, async (req, res) => {
