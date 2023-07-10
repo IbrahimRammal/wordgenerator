@@ -505,6 +505,42 @@ router.get("/incomestatement", verify, async (req, res) => {
   });
 });
 
+router.get("/clientstatement", verify, async (req, res) => {
+  req.keep = "true";
+  var query = Client.find({}, { s0: 0, __v: 0 });
+  query.exec(function (err, result) {
+    if (!err) {
+      //let rawdata = "";
+      //console.log(rawdata);
+      //rawdata = result
+      let dataReturn = result;
+
+      //console.log(result)
+
+      res.render("clientstatement", {
+        // req.session.
+        name: req.name,
+        email: req.email,
+        clientname: result,
+      });
+    } else {
+      console.log(err);
+    }
+  });
+});
+
+router.get("/supplierstatement", verify, async (req, res) => {
+  // console.log(req.body);
+  req.keep = "true";
+
+  res.render("supplierstatement", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+    //data: data
+  });
+});
+
 router.post("/invoicestatement/GetData", verify, async (req, res) => {
   var result = [];
   var subresult = [];

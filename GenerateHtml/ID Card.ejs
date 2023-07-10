@@ -26,16 +26,16 @@
 
                 <!-- <select class="form-control" name="s1_f7" id="s1_f7">
                     <option selected><%= obj.s1.f7.value %></option>
-                    <option>male</option>
-                    <option>female</option>
+                    <option>Male</option>
+                    <option>Female</option>
                 </select> -->
 
                 <input class="form-control awesomplete" list="sex" name="s1_f7" id="s1f7"
                     placeholder="<%= obj.s1.f7.caption %>" value="<%= obj.s1.f7.value %>">
                 <%if (obj.type == "English") { %>
                 <datalist id="sex">
-                    <option>male</option>
-                    <option>female</option>
+                    <option>Male</option>
+                    <option>Female</option>
                 </datalist>
                 <% } else if (obj.type == "Français") {%>
                 <datalist id="sex">
@@ -89,6 +89,10 @@
             <div class="form-group col">
                 <input type="text" class="form-control" name="s1_f8" id="s1f8" placeholder="<%= obj.s1.f8.caption %>"
                     value="<%= obj.s1.f8.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f17" id="s1f17" placeholder="<%= obj.s1.f17.caption %>"
+                    value="<%= obj.s1.f17.value %>">
             </div>
             <div class="form-group col">
                 <input type="text" class="form-control" name="s1_f9" id="s1f9" placeholder="<%= obj.s1.f9.caption %>"

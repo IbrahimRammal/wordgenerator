@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('header'); -%>
+    <!-- Latest compiled and minified CSS -->
+
+    <style></style>
+  </head>
+
+  <body id="page-top">
+    <%- include('body1'); -%>
+    <!-- End of Topbar -->
+
+    <!-- Begin Page Content -->
+    <!-- Begin Page Content -->
+
+    <h5
+      style="
+        margin: auto;
+        width: 30%;
+        /* border: 3px solid green; */
+        padding: 5px;
+      "
+    >
+    Client Transaction <span class="badge badge-primary">Data</span>
+    </h5>
+
+    <div class="container-fluid">
+      <div class="container">
+
+        <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <select
+                  class="mdb-select md-form"
+                  searchable="Search here.."
+                  id="client_list"
+                >
+                  <option value="" disabled selected>Client Select ...</option>
+                  <% if(locals.clientname && typeof clientname != 'undefined') {
+                  %> <% for (var x = 0; x < clientname.length; x++) { %>
+                  <option value="<%= clientname[x]['_id'] %>"
+                    ><%= clientname[x]['fullname'] %></option
+                  >
+                  <% } %> <%}%>
+                </select>
+              </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <!-- <label>Start Date:</label>
+                        <input type="text" class="form-control start-date" placeholder="Select Start Date"> -->
+                        <input id='element' type="text" />
+                    </div>
+                </div>
+                <!-- <div class="col-md-6">
+                    <div class="form-group">
+                        <label>End Date:</label>
+                        <input type="text" class="form-control end-date" placeholder="Select End Date">
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+      </div>
+
+      <br />
+    </div>
+    <!-- End of Main Continer -->
+
+    <!-- End of Main Content -->
+    <%- include('body2'); -%>
+    <!-- <script src="../../js/horsey.min.js"></script> -->
+    <!-- <script src="../../js/autocomplete.min.js"></script> -->
+    
+
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".mdb-select").materialSelect();
+        $(".dropdown-toggle").dropdown();
+        $(this).material_select();
+
+        let dateRangePicker = new DateRangePicker({
+        //sets the start date in the range
+            startDate: new Date("01/01/2023"),
+            //sets the end date in the range
+            endDate: new Date("31/12/2023")
+        });
+        daterangepicker.appendTo('#element');
+
+    });
+
+    $(".mdb-select").on("contentChanged", function () {
+    
+    });
+
+    </script>
+  </body>
+</html>

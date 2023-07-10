@@ -3372,7 +3372,7 @@ router.post("/template", verify, async (req, res) => {
 
         dataid = docID != "" ? docID : docSaved[0][langCheck][modelCheck];
 
-        if(docID == "" || docID == null){
+        if((docID == "" || docID == null) && false ){
 
           var LanguageArray = ['English','Français','Español']
 

@@ -11,16 +11,16 @@
                 <!-- <label for="Input2"><%= obj.s1.f2.caption %></label> -->
                 <!-- <select class="form-control" name="s1_f2" id="s1f2" required>
                     <option selected><%= obj.s1.f2.value %></option>
-                    <option>male</option>
-                    <option>female</option>
+                    <option>Male</option>
+                    <option>Female</option>
                 </select> -->
 
                 <input class="form-control awesomplete" list="sex" name="s1_f2" id="s1f2"
                     placeholder="<%= obj.s1.f2.caption %>" value="<%= obj.s1.f2.value %>">
                 <%if (obj.type == "English") { %>
                 <datalist id="sex">
-                    <option>male</option>
-                    <option>female</option>
+                    <option>Male</option>
+                    <option>Female</option>
                 </datalist>
                 <% } else if (obj.type == "Français") {%>
                 <datalist id="sex">

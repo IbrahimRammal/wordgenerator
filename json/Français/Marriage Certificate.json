@@ -263,7 +263,7 @@
         },
         "f6": {
             "caption": "Profession OR Lieu et numéro du registre",
-            "value": "Profession",
+            "value": "",
             "option1": "Profession",
             "option2": "Lieu et numéro du registre"
         }
@@ -294,7 +294,7 @@
         },
         "f6": {
             "caption": "Profession OR Lieu et numéro du registre",
-            "value": "Profession",
+            "value": "",
             "option1": "Profession",
             "option2": "Lieu et numéro du registre"
         }

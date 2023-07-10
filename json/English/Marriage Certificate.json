@@ -263,7 +263,7 @@
         },
         "f6": {
             "caption": "Profession OR Place and No. of Registry",
-            "value": "Place and No. of Registry",
+            "value": "",
             "option1": "Place and No. of Registry",
             "option2": "Profession"
         }
@@ -294,7 +294,7 @@
         },
         "f6": {
             "caption": "Profession OR Place and No. of Registry",
-            "value": "Place and No. of Registry",
+            "value": "",
             "option1": "Place and No. of Registry",
             "option2": "Profession"
         }

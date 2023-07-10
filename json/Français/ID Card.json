@@ -131,6 +131,10 @@
         "f16": {
             "caption": "poste du fonctionnaire",
             "value": ""
+        },
+        "f17": {
+            "caption": "Groupe sanguin",
+            "value": ""
         }
     },
     "date": "",
