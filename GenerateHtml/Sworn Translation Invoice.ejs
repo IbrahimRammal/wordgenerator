@@ -120,27 +120,163 @@
 <!-- <script src="paidscript.js"></script> -->
 
 <script>
-    $("#my_form").submit(function (event) {
-        event.preventDefault(); //prevent default action 
-        var post_url = $(this).attr("action"); //get form action url
-        var request_method = $(this).attr("method"); //get form GET/POST method
-        var form_data = $(this).serialize(); //Encode form elements for submission
+    // $("#my_form").submit(function (event) {
+    //     event.preventDefault(); //prevent default action 
+    //     var post_url = $(this).attr("action"); //get form action url
+    //     var request_method = $(this).attr("method"); //get form GET/POST method
+    //     var form_data = $(this).serialize(); //Encode form elements for submission
 
-        $.ajax({
-            url: post_url,
-            type: request_method,
-            data: form_data,
-            success: function (result) {
-                if(result == "error")
-                {
-                    toastr["error"]("Document not inserted", "Document Save error")
-                    return;
-                }
-                //alert(result);
-                toastr["success"]("Document successfully inserted", "Document saved")
-                $("#download").show();
-                $("#download").attr("href", result['link']);
+    //     $.ajax({
+    //         url: post_url,
+    //         type: request_method,
+    //         data: form_data,
+    //         success: function (result) {
+    //             if(result == "error")
+    //             {
+    //                 toastr["error"]("Document not inserted", "Document Save error")
+    //                 return;
+    //             }
+    //             //alert(result);
+    //             toastr["success"]("Document successfully inserted", "Document saved")
+    //             $("#download").show();
+    //             $("#download").attr("href", result['link']);
+    //         }
+    //     });
+    // });
+       $(document).ready(function () {
+
+    var urlString = "<%= url %>";
+    var idString = urlString.substring(urlString.indexOf("id=") + 3);
+    console.log(idString);
+
+    // Retrieve form data from local storage
+    var saved_data = localStorage.getItem("form_data_inv");
+    var saved_type = localStorage.getItem("form_type_inv");
+    var saved_language = localStorage.getItem("form_language_inv");
+    var saved_user = localStorage.getItem("form_user_inv");
+
+    // Check if the saved data matches the specific type, language, and user
+    if (saved_data && saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
+        var formDataArray = saved_data.split("&");
+        for (var i = 0; i < formDataArray.length; i++) {
+            var fieldData = formDataArray[i].split("=");
+            var fieldName = decodeURIComponent(fieldData[0]);
+            var fieldValue = decodeURIComponent(fieldData[1]);
+            $('#my_form [name="' + fieldName + '"]').val(fieldValue);
+        }
+    }
+});
+
+// Auto-save form data
+var autoSaveTimer;
+
+$("#my_form input, #my_form select, #my_form textarea").on("input", function () {
+    clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(function () {
+        saveFormData();
+    }, 1000);
+});
+
+function saveFormData() {
+    var form_data = $('#my_form').serialize();
+
+    var urlString = "<%= url %>";
+    var idString = urlString.substring(urlString.indexOf("id=") + 3);
+    console.log(idString);
+
+    // Save form data and parameters to local storage
+    localStorage.setItem("form_data_inv", form_data);
+    localStorage.setItem("form_type_inv", "<%= obj.caption %>");
+    localStorage.setItem("form_language_inv", "<%= obj.type %>");
+    localStorage.setItem("form_user_inv", idString);
+}
+
+$("#my_form").submit(function (event) {
+    event.preventDefault(); // prevent default action
+
+    clearTimeout(autoSaveTimer);
+    saveFormData();
+
+    var post_url = $(this).attr("action"); // get form action URL
+    var request_method = $(this).attr("method"); // get form GET/POST method
+    var form_data = $(this).serialize(); // encode form elements for submission
+
+    $.ajax({
+        url: post_url,
+        type: request_method,
+        data: form_data,
+        success: function (result) {
+            if (result === "error") {
+                toastr["error"]("Document not inserted", "Document Save error");
+                return;
             }
-        });
+
+            toastr["success"]("Document successfully inserted", "Document saved");
+            toastr["success"]("Invoice Number: " + result['invoiceNumber'], "Invoice Number");
+            $("#download").show();
+            $("#download").attr("href", result['link']);
+
+            // Remove saved form data and parameters from local storage if the request matches
+            var saved_type = localStorage.getItem("form_type_inv");
+            var saved_language = localStorage.getItem("form_language_inv");
+            var saved_user = localStorage.getItem("form_user_inv");
+
+            var urlString = "<%= url %>";
+            var idString = urlString.substring(urlString.indexOf("id=") + 3);
+            console.log(idString);
+
+            if (saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
+                localStorage.removeItem("form_data_inv");
+                localStorage.removeItem("form_type_inv");
+                localStorage.removeItem("form_language_inv");
+                localStorage.removeItem("form_user_inv");
+            }
+        },
+        error: function () {
+            // Handle error and attempt to resend data
+            toastr["error"]("Server not responding. Resending data when connection is reestablished.");
+
+            // Retrieve form data from local storage
+            var saved_data = localStorage.getItem("form_data_inv");
+            var saved_type = localStorage.getItem("form_type_inv");
+            var saved_language = localStorage.getItem("form_language_inv");
+            var saved_user = localStorage.getItem("form_user_inv");
+
+            var urlString = "<%= url %>";
+            var idString = urlString.substring(urlString.indexOf("id=") + 3);
+            console.log(idString);
+
+            if (saved_data && saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
+                $.ajax({
+                    url: post_url,
+                    type: request_method,
+                    data: saved_data,
+                    success: function (result) {
+                        if (result === "error") {
+                            toastr["error"]("Document not inserted", "Document Save error");
+                            return;
+                        }
+
+                        toastr["success"]("Document successfully inserted", "Document saved");
+                        toastr["success"]("Invoice Number: " + result['invoiceNumber'], "Invoice Number");
+                        $("#download").show();
+                        $("#download").attr("href", result['link']);
+
+                        // Remove saved form data and parameters from local storage
+                        localStorage.removeItem("form_data_inv");
+                        localStorage.removeItem("form_type_inv");
+                        localStorage.removeItem("form_language_inv");
+                        localStorage.removeItem("form_user_inv");
+                    },
+                    error: function () {
+                        toastr["error"]("Failed to resend data. Please try again later.");
+                    }
+                });
+            } else {
+                toastr["error"]("No saved form data found.");
+            }
+        }
+     });
     });
+
 </script>

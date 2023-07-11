@@ -549,26 +549,64 @@
 <!-- <script src="paidscript.js"></script> -->
 
 <script>
-    // toastr.options = {
-    //     "closeButton": false,
-    //     "debug": false,
-    //     "newestOnTop": false,
-    //     "progressBar": false,
-    //     "positionClass": "md-toast-top-center",
-    //     "preventDuplicates": false,
-    //     "onclick": null,
-    //     "showDuration": 300,
-    //     "hideDuration": 1000,
-    //     "timeOut": 2500,
-    //     "extendedTimeOut": 1000,
-    //     "showEasing": "swing",
-    //     "hideEasing": "linear",
-    //     "showMethod": "fadeIn",
-    //     "hideMethod": "fadeOut"
-    // }
+
+        
+        
+        $(document).ready(function () {
+
+        // Retrieve form data from local storage
+        var saved_data = localStorage.getItem("form_data");
+        var saved_type = localStorage.getItem("form_type");
+        var saved_language = localStorage.getItem("form_language");
+
+        var urlString = "<%= url %>";
+        var idString = urlString.substring(urlString.indexOf("id=") + 3);
+        console.log(idString);
+
+        var saved_user = localStorage.getItem("form_user");
+
+        // Check if the saved data matches the specific type, language, and user
+        if (saved_data && saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
+            //$('#my_form').deserialize(saved_data);
+            var formDataArray = saved_data.split("&");
+            for (var i = 0; i < formDataArray.length; i++) {
+                var fieldData = formDataArray[i].split("=");
+                var fieldName = decodeURIComponent(fieldData[0]);
+                var fieldValue = decodeURIComponent(fieldData[1]);
+                $('#my_form [name="' + fieldName + '"]').val(fieldValue);
+            }
+        }
+    });
+
+    // Auto-save form data
+    var autoSaveTimer;
+
+    $("#my_form input, #my_form select, #my_form textarea").on("input", function () {
+        clearTimeout(autoSaveTimer);
+        autoSaveTimer = setTimeout(function () {
+            saveFormData();
+        }, 1000);
+    });
+
+    function saveFormData() {
+        var form_data = $('#my_form').serialize();
+
+        // Save form data and parameters to local storage
+        localStorage.setItem("form_data", form_data);
+        localStorage.setItem("form_type", "<%= obj.caption %>");
+        localStorage.setItem("form_language", "<%= obj.type %>");
+
+        var urlString = "<%= url %>";
+        var idString = urlString.substring(urlString.indexOf("id=") + 3);
+
+        localStorage.setItem("form_user", idString);
+    }
 
     $("#my_form").submit(function (event) {
         event.preventDefault(); //prevent default action 
+
+        clearTimeout(autoSaveTimer);
+        saveFormData();
         var post_url = $(this).attr("action"); //get form action url
         var request_method = $(this).attr("method"); //get form GET/POST method
         var form_data = $(this).serialize(); //Encode form elements for submission
@@ -589,6 +627,69 @@
                 $("#download").attr("href", result['link']);
                 $('#paid').show();
                 $('#paid').html(result['paid']);
+
+
+                // Remove saved form data and parameters from local storage if the request matches
+                var saved_type = localStorage.getItem("form_type");
+                var saved_language = localStorage.getItem("form_language");
+                var saved_user = localStorage.getItem("form_user");
+                
+                var urlString = "<%= url %>";
+                var idString = urlString.substring(urlString.indexOf("id=") + 3);
+                console.log(idString);
+
+                if (saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
+                    localStorage.removeItem("form_data");
+                    localStorage.removeItem("form_type");
+                    localStorage.removeItem("form_language");
+                    localStorage.removeItem("form_user");
+                }
+
+            },
+            error: function () {
+                // Handle error and attempt to resend data
+                toastr["error"]("Server not responding. Resending data when connection is reestablished.");
+
+                // Retrieve form data from local storage
+                var saved_data = localStorage.getItem("form_data");
+                var saved_type = localStorage.getItem("form_type");
+                var saved_language = localStorage.getItem("form_language");
+                var saved_user = localStorage.getItem("form_user");
+
+                var urlString = "<%= url %>";
+                var idString = urlString.substring(urlString.indexOf("id=") + 3);
+                console.log(idString);
+
+                if (saved_data && saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
+                    $.ajax({
+                        url: post_url,
+                        type: request_method,
+                        data: saved_data,
+                        success: function (result) {
+                            if (result === "error") {
+                                toastr["error"]("Document not inserted", "Document Save error");
+                                return;
+                            }
+
+                            toastr["success"]("Document successfully inserted", "Document saved");
+                            $("#download").show();
+                            $("#download").attr("href", result['link']);
+                            $('#paid').show();
+                            $('#paid').html(result['paid']);
+ 
+                            // Remove saved form data and parameters from local storage
+                            localStorage.removeItem("form_data");
+                            localStorage.removeItem("form_type");
+                            localStorage.removeItem("form_language");
+                            localStorage.removeItem("form_user");
+                        },
+                        error: function () {
+                            toastr["error"]("Failed to resend data. Please try again later.");
+                        }
+                    });
+                } else {
+                    toastr["error"]("No saved form data found.");
+                }
             }
         });
     });
