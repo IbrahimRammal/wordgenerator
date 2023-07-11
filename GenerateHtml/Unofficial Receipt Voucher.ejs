@@ -243,10 +243,10 @@
     console.log(idString);
 
     // Retrieve form data from local storage
-    var saved_data = localStorage.getItem("form_data_inv");
-    var saved_type = localStorage.getItem("form_type_inv");
-    var saved_language = localStorage.getItem("form_language_inv");
-    var saved_user = localStorage.getItem("form_user_inv");
+    var saved_data = localStorage.getItem("form_data_vouc");
+    var saved_type = localStorage.getItem("form_type_vouc");
+    var saved_language = localStorage.getItem("form_language_vouc");
+    var saved_user = localStorage.getItem("form_user_vouc");
 
     // Check if the saved data matches the specific type, language, and user
     if (saved_data && saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
@@ -278,10 +278,10 @@ function saveFormData() {
     console.log(idString);
 
     // Save form data and parameters to local storage
-    localStorage.setItem("form_data_inv", form_data);
-    localStorage.setItem("form_type_inv", "<%= obj.caption %>");
-    localStorage.setItem("form_language_inv", "<%= obj.type %>");
-    localStorage.setItem("form_user_inv", idString);
+    localStorage.setItem("form_data_vouc", form_data);
+    localStorage.setItem("form_type_vouc", "<%= obj.caption %>");
+    localStorage.setItem("form_language_vouc", "<%= obj.type %>");
+    localStorage.setItem("form_user_vouc", idString);
 }
 
 $("#my_form").submit(function (event) {
@@ -310,19 +310,19 @@ $("#my_form").submit(function (event) {
             $("#download").attr("href", result['link']);
 
             // Remove saved form data and parameters from local storage if the request matches
-            var saved_type = localStorage.getItem("form_type_inv");
-            var saved_language = localStorage.getItem("form_language_inv");
-            var saved_user = localStorage.getItem("form_user_inv");
+            var saved_type = localStorage.getItem("form_type_vouc");
+            var saved_language = localStorage.getItem("form_language_vouc");
+            var saved_user = localStorage.getItem("form_user_vouc");
 
             var urlString = "<%= url %>";
             var idString = urlString.substring(urlString.indexOf("id=") + 3);
             console.log(idString);
 
             if (saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
-                localStorage.removeItem("form_data_inv");
-                localStorage.removeItem("form_type_inv");
-                localStorage.removeItem("form_language_inv");
-                localStorage.removeItem("form_user_inv");
+                localStorage.removeItem("form_data_vouc");
+                localStorage.removeItem("form_type_vouc");
+                localStorage.removeItem("form_language_vouc");
+                localStorage.removeItem("form_user_vouc");
             }
         },
         error: function () {
@@ -330,10 +330,10 @@ $("#my_form").submit(function (event) {
             toastr["error"]("Server not responding. Resending data when connection is reestablished.");
 
             // Retrieve form data from local storage
-            var saved_data = localStorage.getItem("form_data_inv");
-            var saved_type = localStorage.getItem("form_type_inv");
-            var saved_language = localStorage.getItem("form_language_inv");
-            var saved_user = localStorage.getItem("form_user_inv");
+            var saved_data = localStorage.getItem("form_data_vouc");
+            var saved_type = localStorage.getItem("form_type_vouc");
+            var saved_language = localStorage.getItem("form_language_vouc");
+            var saved_user = localStorage.getItem("form_user_vouc");
 
             var urlString = "<%= url %>";
             var idString = urlString.substring(urlString.indexOf("id=") + 3);
@@ -356,10 +356,10 @@ $("#my_form").submit(function (event) {
                         $("#download").attr("href", result['link']);
 
                         // Remove saved form data and parameters from local storage
-                        localStorage.removeItem("form_data_inv");
-                        localStorage.removeItem("form_type_inv");
-                        localStorage.removeItem("form_language_inv");
-                        localStorage.removeItem("form_user_inv");
+                        localStorage.removeItem("form_data_vouc");
+                        localStorage.removeItem("form_type_vouc");
+                        localStorage.removeItem("form_language_vouc");
+                        localStorage.removeItem("form_user_vouc");
                     },
                     error: function () {
                         toastr["error"]("Failed to resend data. Please try again later.");
