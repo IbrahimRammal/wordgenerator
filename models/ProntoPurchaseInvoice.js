@@ -182,6 +182,14 @@ const ProntoPurchaseInvoiceSchema = mongoose.Schema({
           "type": "String"
         }
       },
+      "f8": {
+        "caption": {
+          "type": "String"
+        },
+        "value": {
+          "type": "String"
+        }
+      }
     },
     "s3": {
       "jobsP": {

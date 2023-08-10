@@ -209,9 +209,17 @@ $(document).ready(function () {
           visible: false,
         },
         {
+          field: "expenseType",
+          headerText: "expenseType",
+          width: 85,
+          textAlign: "Left",
+          allowEditing: false,
+          visible: true,
+        },
+        {
           field: "currency",
           headerText: "Currency",
-          width: 90,
+          width: 50,
           // format: "C",
           textAlign: "Left"
           //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
@@ -219,7 +227,7 @@ $(document).ready(function () {
         {
           field: "rate",
           headerText: "Dollar Rate",
-          width: 90,
+          width: 80,
           // format: "C",
           textAlign: "Left"
           //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
@@ -227,7 +235,7 @@ $(document).ready(function () {
         {
           field: "total",
           headerText: "Total Price",
-          width: 90,
+          width: 80,
           // format: "C",
           textAlign: "Right",
           type: "number"
@@ -236,7 +244,7 @@ $(document).ready(function () {
         {
           field: "totalValue",
           headerText: "$",
-          width: 90,
+          width: 80,
           // format: "C",
           textAlign: "Right",
           type: "number"
@@ -245,7 +253,7 @@ $(document).ready(function () {
         {
           field: "paid",
           headerText: "Paid Price",
-          width: 90,
+          width: 80,
           // format: "C",
           textAlign: "Right",
           type: "number",
@@ -256,7 +264,7 @@ $(document).ready(function () {
           field: "Download",
           headerText: "",
           textAlign: "Right",
-          width: 90,
+          width: 80,
           type: "number",
           visible: true,
         },
@@ -264,7 +272,7 @@ $(document).ready(function () {
           field: "Voucher",
           headerText: "",
           textAlign: "Right",
-          width: 90,
+          width: 80,
           type: "number",
           visible: true,
         },
@@ -278,7 +286,7 @@ $(document).ready(function () {
         {
           field: "currency",
           headerText: "currency",
-          width: 90,
+          width: 80,
           // format: "C",
           textAlign: "Right",
           visible: false,
@@ -286,7 +294,7 @@ $(document).ready(function () {
         {
           field: "href",
           headerText: "DocLink",
-          width: 90,
+          width: 80,
           // format: "C",
           textAlign: "Right",
           visible: false,

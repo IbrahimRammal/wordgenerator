@@ -101,7 +101,7 @@ router.post("/login", async (req, res) => {
       //   email: user.email,
       //   clientname: result,
       // });
-      res.redirect('/api/actions/dashboard');
+      res.redirect('/api/invoice/dashboard');
 
     } else {
       console.log(err);
@@ -184,7 +184,7 @@ router.post("/config", verify, async (req, res) => {
 
         console.log(result);
 
-        res.redirect("/api/actions/dashboard");
+        res.redirect("/api/invoice/dashboard");
         // res.render("/api/posts/dashboard", {
         //   // req.session.
         //   name: req.body.name,

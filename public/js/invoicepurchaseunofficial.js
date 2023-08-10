@@ -211,15 +211,23 @@ $(document).ready(function () {
         {
           field: "currency",
           headerText: "Currency",
-          width: 90,
+          width: 50,
           // format: "C",
           textAlign: "Left"
           //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
         },
         {
+          field: "expenseType",
+          headerText: "expenseType",
+          width: 85,
+          textAlign: "Left",
+          allowEditing: false,
+          visible: true,
+        },
+        {
           field: "rate",
           headerText: "Dollar Rate",
-          width: 90,
+          width: 80,
           // format: "C",
           textAlign: "Left"
           //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
@@ -227,7 +235,7 @@ $(document).ready(function () {
         {
           field: "total",
           headerText: "Total Price",
-          width: 90,
+          width: 80,
           // format: "C",
           textAlign: "Right",
           type: "number"
@@ -236,7 +244,7 @@ $(document).ready(function () {
         {
           field: "totalValue",
           headerText: "$",
-          width: 90,
+          width: 80,
           // format: "C",
           textAlign: "Right",
           type: "number"
@@ -256,7 +264,7 @@ $(document).ready(function () {
           field: "Download",
           headerText: "",
           textAlign: "Right",
-          width: 90,
+          width: 80,
           type: "number",
           visible: true,
         },
@@ -264,9 +272,9 @@ $(document).ready(function () {
           field: "Type",
           headerText: "Type",
           textAlign: "Right",
-          width: 90,
+          width: 80,
           type: "number",
-          visible: true,
+          visible: false,
         },
         {
           field: "Voucher",

@@ -52,6 +52,15 @@ const transactionSchema = mongoose.Schema({
     credit: {
         type: String
     },
+    date: {
+        type: Date
+    },
+    expenseType: {
+        type: String
+    },
+    revenuType: {
+        type: String
+    },
     user_created: {type: 'String'},
     user_edit: {type: 'String'},
     created_at: { type: Date, default: Date.now },

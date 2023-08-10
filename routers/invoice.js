@@ -90,6 +90,7 @@ const Transaction = require("../models/Transaction");
 //const dateFormat = require("dateformat");
 var PizZip = require("pizzip");
 var Docxtemplater = require("docxtemplater");
+//const XlsxModule = require("docxtemplater-xlsx-module");
 var path = require("path");
 
 var mongoose = require("mongoose");
@@ -98,6 +99,11 @@ var mongoose = require("mongoose");
 const ProjectServices = require("../models/ProjectServices");
 const SwornServices = require("../models/SwornServices");
 const ProntoServices = require("../models/ProntoServices");
+const ExpenseTypeCode = require("../models/ExpenseTypeCode");
+
+const DetailedIncomeStatement = require("../models/DetailedIncomeStatement");
+const GeneralIncomeStatement = require("../models/GeneralIncomeStatement");
+
 
 //Language Model
 const Language = require("../models/Language");
@@ -125,6 +131,7 @@ const {
 const { Console } = require("console");
 const { PaymentProntoInvoiceinUSA, swornVoucher } = require("../models/Paid");
 const PILBP = require("../models/ProntoInvoiceinLBP");
+const { default: isFloat } = require("validator/lib/isFloat");
 
 router.get("/languageview", verify, async (req, res) => {
   // console.log(req.body);
@@ -134,6 +141,485 @@ router.get("/languageview", verify, async (req, res) => {
     // req.session.
     name: req.name,
     email: req.email,
+    //data: data
+  });
+});
+
+function saveDataToJsonFile(data, filename) {
+  const jsonData = JSON.stringify(data, null, 2); // Convert data to pretty JSON format
+  fs.writeFile(filename, jsonData, (err) => {
+    if (err) {
+      console.error('Error saving data to file:', err);
+    } else {
+      console.log('Data saved to file:', filename);
+    }
+  });
+}
+
+router.get("/generalincomestatement", verify, async (req, res) => {
+  try {
+
+      let path = "./json/" + "English" + "/dataExpRev.json";
+	  let docxPath = "./DocumentTemplate/" + "English" + "/Pronto-General-Income-Statement.docx";
+      //console.log(path)
+      if (fs.existsSync(path) && fs.existsSync(docxPath)) {
+        console.log("Begain");
+        let rawdata = fs.readFileSync(path, "utf-8");
+        let data = JSON.parse(rawdata);
+        let docArray = { s1f1: "", s1f2s1: data.revenueJson.annual, s1f2s2: 0, s1f3s1: data.expenseJson.annual, s1f3s2: 0};
+
+        
+
+        //Time date
+        const event = new Date();
+        const options = { year: "numeric", month: "long", day: "numeric" };
+
+        var datetime = "";
+
+        datetime = event.toLocaleDateString("en-US", {
+          year: "numeric",
+          day: "numeric",
+          month: "long",
+        });
+
+
+        docArray["s1f1"] = datetime;
+
+ 
+
+
+        //Put condition if verified or not "/unverified"
+        var outputPath = GenerateDocx(
+          data,
+          docxPath,
+          docArray,
+          "GeneralIncomeStatement",
+          "Pronto",
+          datetime,
+		      ".docx"
+        );
+
+        //query = outputPath[0]
+        var string1 = encodeURIComponent(outputPath[0]);
+        var string2 = encodeURIComponent(outputPath[1]);
+
+
+        //var link = "/api/posts/r/?valid=" + string1 + "&pass=" + string2;
+		
+		console.log("download request: " + req.query.valid);
+		  var passedVariable = string1;
+		  //console.log(passedVariable)
+		  var passedpassVariable = string2 + ".docx";
+		  console.log("passedpassVariable: " + passedpassVariable);
+		  //console.log(passedpassVariable)
+		  res.download(passedVariable, passedpassVariable, (err) => {
+			if (err) {
+			  // handle error
+			  console.log(err);
+			} else {
+			  // var file = fs.createReadStream(passedVariable);
+			  // file.on('end', function() {
+			  //   fs.unlink(passedVariable, function() {
+			  //     // file deleted
+			  //   });
+			  // });
+			  // file.pipe(res);
+			}
+		  });
+
+      } else {
+      //
+      }
+  } catch (err) {
+    console.log(err);
+    res.send("error");
+    // res.status(500).send(err)
+  }
+});
+
+router.get("/dashboard", verify, async (req, res) => {
+  // console.log(req.body);
+  req.keep = "true";
+
+  let pathRevenue = "./json/" + "English" + "/revenue.json";
+  let pathExpense = "./json/" + "English" + "/expense.json";
+  let pathDataExpRev = "./json/" + "English" + "/dataExpRev.json";
+
+  const currentYear = new Date().getFullYear();
+  let totalRevenue = 0;
+  const monthlyRevenue = Array(12).fill(0);
+  const monthlyRevenueSwornInvoice = Array(12).fill(0);
+  const monthlyRevenueProntoInvoice = Array(12).fill(0);
+  const monthlyRevenueUnofficialInvoice = Array(12).fill(0);
+  const monthlyExpenses = Array(12).fill(0);
+  const monthlyExpensesUnofficialPurchaseInvoice = Array(12).fill(0);
+  const monthlyExpensesProntoPurchaseInvoice = Array(12).fill(0);
+  let transactionNumber = 0;
+
+  let annualRevenue = 0;
+  let annualExpenses = 0;
+  let expenseJson = {};
+  let revenueJson  = {};
+  let errorLog = {};
+  let revenuePercentage = {
+    swornInvoice: 0,
+    prontoInvoice: 0,
+    unofficialInvoice: 0,
+  };
+
+  let expensePercentage = {
+    swornInvoice: 0,
+    prontoInvoice: 0,
+    unofficialInvoice: 0,
+  };
+
+  let link = "#";
+  let linkGeneralIncome = "";
+  let linkDetailIncome = "";
+
+
+
+  if (fs.existsSync(pathDataExpRev)) {
+    console.log("Begain");
+    let rawdata = fs.readFileSync(pathDataExpRev, "utf-8");
+    //let data = JSON.parse(rawdata);
+    let data;
+    // Step 1: Get the current time
+    let currentTime; 
+    let savedTime; 
+    let fourHoursInMs;
+    let timeDifferenceMs;
+    let flag = true;
+
+    try {
+      // Parse the JSON data
+      data = JSON.parse(rawdata);
+
+      // Check if the data is an empty object or array (assuming valid JSON format)
+      if (typeof data === 'object' && data !== null && Object.keys(data).length === 0) {
+        console.log('The data is an empty object or array.');
+      } else {
+        console.log('The data is valid JSON and not empty.');
+        // Step 1: Get the current time
+        currentTime = new Date();
+
+        // Step 2: Parse the saved time from the JSON object
+        savedTime = new Date(data.fetchTime);
+
+        // Step 3: Calculate the time difference (in milliseconds)
+        timeDifferenceMs = currentTime.getTime() - savedTime.getTime();
+
+        // Step 4: Compare the time difference to the desired interval (4 hours in this example)
+        fourHoursInMs = 4 * 60 * 60 * 1000; // 4 hours in milliseconds
+        //fourHoursInMs = 4;
+        flag = false;
+      }
+    } catch (error) {
+      console.error('Error parsing JSON:', error.message);
+    }
+
+
+    if(flag || timeDifferenceMs >= fourHoursInMs){
+      try {
+        
+        // Query to find all revenue-generating transactions from the current year
+        const revenueTransactions = await Transaction.find({
+          $and: [
+            { $or: [
+              { invoiceType: 'swornInvoice' },
+              { invoiceType: 'ProntoInvoice' },
+              { invoiceType: 'UnofficialInvoice' },
+            ]},
+            { $expr: { $eq: [{ $year: '$created_at' }, currentYear] } },
+          ],
+        });
+
+        // Calculate total revenue
+        // Calculate total revenue for each month and annual revenue
+        revenueTransactions.forEach((transaction) => {
+          // Convert credit and debit from string to float
+          const credit = parseFloat(transaction.credit || '0').toFixed(2);
+          const debit = parseFloat(transaction.debit || '0').toFixed(2);
+          let amount = parseFloat(credit || debit);
+          //amount = parseFloat(amount).toFixed(2);
+          let lbpToUsdExchangeRate = transaction.rate;
+          if (transaction.currency === 'LBP') {
+            if (lbpToUsdExchangeRate === null || isNaN(lbpToUsdExchangeRate) || lbpToUsdExchangeRate <= 0 ) {
+              console.log('No valid exchange rate found. Skipping revenue calculation.');
+              errorLog['exchangeRateError'] = 'No valid exchange rate found for USD.';
+              amount = 0;
+            } else
+            {
+              amount = parseFloat(amount / lbpToUsdExchangeRate).toFixed(2);
+              annualRevenue += parseFloat(amount);
+              transactionNumber += 1;
+            }
+          } else if (transaction.currency === 'USD') {
+            if((lbpToUsdExchangeRate === null || isNaN(lbpToUsdExchangeRate) || lbpToUsdExchangeRate <= 0) ){
+              if(amount < 50000){
+                annualRevenue += parseFloat(amount);
+                transactionNumber += 1;
+              } else {
+                errorLog['usdAmmountError'] = 'LBP invoice set as USD.';
+                amount = 0;
+              }
+            }
+            else{
+              amount = parseFloat(amount / lbpToUsdExchangeRate).toFixed(2);
+              annualRevenue += parseFloat(amount);
+              transactionNumber += 1;
+            }
+
+          } else {
+            amount = 0;
+          }
+
+          const transactionMonth = transaction.created_at.getMonth();
+          monthlyRevenue[transactionMonth] += parseFloat(amount);
+
+          // Categorize revenue based on invoice type
+          if (transaction.invoiceType === 'swornInvoice') {
+            monthlyRevenueSwornInvoice[transactionMonth] += parseFloat(amount);
+          } else if (transaction.invoiceType === 'ProntoInvoice') {
+            monthlyRevenueProntoInvoice[transactionMonth] += parseFloat(amount);
+          } else if (transaction.invoiceType === 'UnofficialInvoice') {
+            monthlyRevenueUnofficialInvoice[transactionMonth] += parseFloat(amount);
+          }
+
+        });
+
+        let swornRevenue = 0;
+        let prontoRevenue = 0;
+        let unofficialRevenue = 0;
+
+        for (let i = 0; i < 12; i++) {
+          monthlyRevenue[i] = parseFloat(monthlyRevenue[i]).toFixed(2);
+          monthlyRevenueProntoInvoice[i] = parseFloat(monthlyRevenueProntoInvoice[i]).toFixed(2);
+          monthlyRevenueSwornInvoice[i] = parseFloat(monthlyRevenueSwornInvoice[i]).toFixed(2);
+          monthlyRevenueUnofficialInvoice[i] = parseFloat(monthlyRevenueUnofficialInvoice[i]).toFixed(2);
+          prontoRevenue += parseFloat(monthlyRevenueProntoInvoice[i]);
+          swornRevenue += parseFloat(monthlyRevenueSwornInvoice[i]);
+          unofficialRevenue += parseFloat(monthlyRevenueUnofficialInvoice[i]);
+          //annualExpenses += monthlyRevenue[i];
+        }
+
+        for (let i = 0; i < 12; i++) {
+          monthlyRevenue[i] = parseFloat(monthlyRevenue[i]).toFixed(2);
+          //annualRevenue += monthlyRevenue[i];
+        }
+
+        // Display monthly revenue
+        console.log('Monthly Revenue:');
+        for (let i = 0; i < 12; i++) {
+          console.log(`${i + 1}: ${monthlyRevenue[i]}`);
+        }
+
+        annualRevenue = parseFloat(annualRevenue).toFixed(2);
+
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+
+        revenueJson = {
+          invoiceType: 'revenue',
+          monthly: monthlyRevenue,
+          currentMonth: monthlyRevenue[currentMonth],
+          monthlyRevenueSwornInvoice: monthlyRevenueSwornInvoice,
+          monthlyRevenueProntoInvoice: monthlyRevenueProntoInvoice,
+          monthlyRevenueUnofficialInvoice: monthlyRevenueUnofficialInvoice,
+          swornRevenue : swornRevenue.toFixed(2),
+          prontoRevenue : prontoRevenue.toFixed(2),
+          unofficialRevenue : unofficialRevenue.toFixed(2),
+          annual: annualRevenue,
+        };
+
+        //saveDataToJsonFile(revenueJson, './json/English/revenue.json');
+        // Display annual revenue
+        console.log('Annual Revenue:', annualRevenue);
+
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        // Close the MongoDB connection
+      }
+
+      try {
+        // Query to find expense-generating transactions from the current year (case-insensitive voucherType)
+        const expenseTransactions = await Transaction.find({
+          $and: [
+            { $or: [
+              { invoiceType: 'UnofficialPurchaseInvoice' },
+              { invoiceType: 'ProntoPurchaseInvoice' },
+            ]},
+            { $expr: { $eq: [{ $year: '$created_at' }, currentYear] } },
+          ],
+        });
+
+
+
+
+        expenseTransactions.forEach((transaction) => {
+          // Convert credit and debit from string to float
+          const credit = parseFloat(transaction.credit || '0').toFixed(2);
+          const debit = parseFloat(transaction.debit || '0').toFixed(2);
+          let amount = parseFloat(debit || credit);
+          //amount = parseFloat(amount).toFixed(2);
+          let lbpToUsdExchangeRate = transaction.rate;
+          if (transaction.currency === 'LBP') {
+            if (lbpToUsdExchangeRate === null || isNaN(lbpToUsdExchangeRate) || lbpToUsdExchangeRate <= 0 ) {
+              console.log('No valid exchange rate found. Skipping revenue calculation.');
+              errorLog['exchangeRateError'] = 'No valid exchange rate found for USD Invoice.';
+              amount = 0;
+            } else
+            {
+              amount = parseFloat(amount / lbpToUsdExchangeRate).toFixed(2);
+              annualExpenses += parseFloat(amount);
+              transactionNumber += 1;
+            }
+          } else if (transaction.currency === 'USD') {
+            if(lbpToUsdExchangeRate === null || isNaN(lbpToUsdExchangeRate) || lbpToUsdExchangeRate <= 0){
+              if(amount < 10000){
+                annualExpenses += parseFloat(amount);
+                transactionNumber += 1;
+              } else {
+                errorLog['usdAmmountError'] = 'LBP invoice set as USD.';
+                amount = 0;
+              }
+            }
+            else{
+              amount = parseFloat(amount / lbpToUsdExchangeRate).toFixed(2);
+              annualExpenses += parseFloat(amount);
+              transactionNumber += 1;
+            }
+
+          } else {
+            amount = 0;
+          }
+
+          const transactionMonth = transaction.created_at.getMonth();
+          monthlyExpenses[transactionMonth] += parseFloat(amount);
+
+          // Categorize expenses based on invoice type
+          if (transaction.invoiceType === 'UnofficialPurchaseInvoice') {
+            monthlyExpensesUnofficialPurchaseInvoice[transactionMonth] += parseFloat(amount);
+          } else if (transaction.invoiceType === 'ProntoPurchaseInvoice') {
+            monthlyExpensesProntoPurchaseInvoice[transactionMonth] += parseFloat(amount);
+          }
+        });
+
+        let swornExpense = 0;
+        let prontoExpense = 0.0;
+        let unofficialExpense = 0.0;
+
+        for (let i = 0; i < 12; i++) {
+          monthlyExpenses[i] = parseFloat(monthlyExpenses[i]).toFixed(2);
+          monthlyExpensesUnofficialPurchaseInvoice[i] = parseFloat(monthlyExpensesUnofficialPurchaseInvoice[i]).toFixed(2);
+          monthlyExpensesProntoPurchaseInvoice[i] = parseFloat(monthlyExpensesProntoPurchaseInvoice[i]).toFixed(2);
+          unofficialExpense += parseFloat(monthlyExpensesUnofficialPurchaseInvoice[i]);
+          prontoExpense += parseFloat(monthlyExpensesProntoPurchaseInvoice[i]);
+          //annualExpenses += monthlyRevenue[i];
+        }
+
+
+        // Display monthly expenses
+        console.log('Monthly Expenses:');
+        for (let i = 0; i < 12; i++) {
+          console.log(`${i + 1}: ${monthlyExpenses[i]}`);
+        }
+
+        annualExpenses = annualExpenses.toFixed(2);
+        // Display annual expenses
+        console.log('Annual Expenses:', annualExpenses);
+
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+
+        expenseJson = {
+          invoiceType: 'expense',
+          monthly: monthlyExpenses,
+          currentMonth: monthlyExpenses[currentMonth],
+          monthlyExpensesUnofficialPurchaseInvoice: monthlyExpensesUnofficialPurchaseInvoice,
+          monthlyExpensesProntoPurchaseInvoice: monthlyExpensesProntoPurchaseInvoice,
+          unofficialExpense: unofficialExpense.toFixed(2),
+          prontoExpense: prontoExpense.toFixed(2),
+          annual: annualExpenses,
+        };
+
+        //saveDataToJsonFile(expenseJson, './json/English/expense.json');
+
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        
+      }
+
+      try {
+        const currentTime = new Date();
+
+        revenuePercentage.swornInvoice = ((revenueJson.swornRevenue / annualRevenue) * 100).toFixed(2);
+        revenuePercentage.prontoInvoice = ((revenueJson.prontoRevenue / annualRevenue) * 100).toFixed(2);
+        revenuePercentage.unofficialInvoice = ((revenueJson.unofficialRevenue / annualRevenue) * 100).toFixed(2);
+
+        // Calculate the percentage for each expense type
+        expensePercentage.prontoInvoice = ((expenseJson.prontoExpense / annualExpenses) * 100).toFixed(2);
+        expensePercentage.unofficialInvoice = ((expenseJson.unofficialExpense / annualExpenses) * 100).toFixed(2);
+
+        //create two function that generate the two document 
+        //then put the path of first to link1 and secode to link2
+
+        const jsonData = JSON.stringify({
+          // req.session.
+          link: link,
+          linkGeneralIncome: linkGeneralIncome,
+          linkDetailIncome: linkDetailIncome,
+          fetchTime: currentTime,
+          transactionNumber: transactionNumber,
+          name: req.name,
+          email: req.email,
+          revenueJson: revenueJson,
+          expenseJson: expenseJson,
+          annualRevenue: annualRevenue,
+          annualExpenses: annualExpenses,
+          revenuePercentage: revenuePercentage,
+          expensePercentage: expensePercentage
+          //data: data
+        }, null, 2); // Convert data to pretty JSON format
+        fs.writeFile(pathDataExpRev, jsonData, (err) => {
+          if (err) {
+            console.error('Error saving data to file:', err);
+          } else {
+            console.log('Data saved to file:', pathDataExpRev);
+          }
+        });
+      } catch(error) {
+
+      }
+    } else {
+      console.log("fetch data from less than 4 hours");
+      link = data.link;
+      linkGeneralIncome = data.linkGeneralIncome;
+      linkDetailIncome = data.linkDetailIncome;
+      revenueJson = data.revenueJson;
+      expenseJson = data.expenseJson;
+      annualRevenue = data.annualRevenue;
+      annualExpenses = data.annualExpenses;
+      revenuePercentage = data.revenuePercentage;
+      expensePercentage = data.expensePercentage;
+    }
+  }
+
+  res.render("index", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+    link: link,
+    linkGeneralIncome: linkGeneralIncome,
+    linkDetailIncome: linkDetailIncome,
+    revenueJson: revenueJson,
+    expenseJson: expenseJson,
+    annualRevenue: annualRevenue,
+    annualExpenses: annualExpenses,
+    revenuePercentage: revenuePercentage,
+    expensePercentage: expensePercentage
     //data: data
   });
 });
@@ -480,6 +966,192 @@ router.post("/Pronto", verify, async (req, res) => {
     let result = {
       _id: respnseAddID,
       pronto: data.pronto,
+      name: data.s0.name,
+      nameA: data.s0.nameA,
+      father: data.s0.father,
+    };
+
+    //console.log("Add client : " + JSON.stringify(result))
+    res.send(result);
+  } catch (err) {
+    console.log(err);
+    res.send("error");
+  }
+});
+
+router.get("/expensetypecodeview", verify, async (req, res) => {
+  // console.log(req.body);
+  req.keep = "true";
+
+  res.render("expensetypecode", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+    //data: data
+  });
+});
+
+router.post("/GetExpenseTypeCode", verify, async (req, res) => {
+  console.log(req.body);
+
+  var result = [];
+
+  var query = await ExpenseTypeCode.find(
+    {},
+    { __v: 0 }
+  );
+
+  //Format the json
+  for (var i = 0; i < query.length; i++) {
+    let temp = {
+      _id: query[i]._id,
+      expenseType: query[i].expenseType,
+      name: query[i].s0.name,
+      nameA: query[i].s0.nameA,
+      father: query[i].s0.father,
+    };
+    result.push(temp);
+  }
+
+  // console.log(result);
+  res.send(result);
+});
+
+router.post("/ExpenseCodeManage", verify, async (req, res) => {
+  try {
+    // console.log(req.body.value);
+    var a = req.body.value;
+    console.log(a);
+
+    var data = "";
+
+    var respnseAddID = "";
+    if (req.body.action == "insert") {
+      if (!isEmptyOrSpaces(a.expenseType)) {
+        data = {
+          expenseType: a.expenseType,
+          s0: {
+            name: isUndefinedOrNull(a.name) ? "" : a.name,
+            nameA: isUndefinedOrNull(a.nameA) ? "" : a.nameA,
+            father: isUndefinedOrNull(a.father) ? "" : a.father,
+          }
+        };
+
+        // let promise = new Promise((resolve, reject) => {
+        //   setTimeout(() => resolve("done!"), 1000)
+        // });
+
+        const expenseCode = new ExpenseTypeCode(data);
+        const savedExpenseCode= await expenseCode.save();
+
+        console.log("save new expenseCode :" + savedExpenseCode);
+
+        // wait 3 seconds
+        //await new Promise((resolve, reject) => setTimeout(resolve, 500));
+        // createHistoryLog(
+        //   req.email,
+        //   "Create New Client",
+        //   "Created a new Client with name " + a.fullname,
+        //   req.id
+        // );
+
+        console.log(savedExpenseCode["_id"] + "asdfsadfds");
+        respnseAddID = savedExpenseCode["_id"];
+      }
+
+      //return savedClient['_id']
+    }
+    if (req.body.action == "update") {
+      console.log(req.body);
+
+      // await createHistoryLog(
+      //   req.email,
+      //   "Update Client",
+      //   "Updated Client with name " + a.fullname,
+      //   req.id
+      // );
+
+      var anyThing = await ExpenseTypeCode.findById(req.body["key"], function (
+        err,
+        user
+      ) {
+        if (err) {
+          console.log(err);
+        } else {
+          try {
+            //you should to some checking if the supplied value is present (!= undefined) and if it differs from the currently stored one
+            user.expenseType = a.expenseType;
+            user.s0.name = isUndefinedOrNull(a.name) ? "" : a.name;
+            user.s0.nameA = isUndefinedOrNull(a.nameA) ? "" : a.nameA;
+            user.s0.father = isUndefinedOrNull(a.father) ? "" : a.father;
+
+            user.save(function (err) {
+              if (err) {
+                //handleError(err)
+                console.log(err);
+              } else {
+                res.send({});
+
+                return;
+              }
+            });
+          }
+          catch (error)
+          {
+            console.log(err);
+            res.send("error");
+          }
+        }
+      });
+
+      //res.send({})
+
+      return;
+    }
+    if (req.body.action == "remove") {
+      console.log(req.body);
+      //console.log("removed" + a)
+      // var query = {}
+      // var criteria = language + "." + modelCheck
+      // query[criteria] = clientpaid
+
+      var keyID = mongoose.Types.ObjectId(req.body.key);
+      console.log("removed" + req.body["key"]);
+      // var userFullname = "";
+      const anyThing = await ExpenseTypeCode.findById(req.body["key"], function (
+        err,
+        user
+      ) {
+        // console.log("delete pyament" + user);
+        // userFullname = isUndefinedOrNull(user.s0.fullname) ? "" : user.s0.fullname;
+        // const start = createHistoryLog(req.email,"Delete Client", "Delete Client with name " + isUndefinedOrNull(user.s0.fullname) ? "" : user.s0.fullname, req.id);
+      });
+
+      // console.log("delete pyament" + anyThing.fullname);
+      // await createHistoryLog(
+      //   req.email,
+      //   "Delete Client",
+      //   "Delete Client with name " + anyThing.fullname,
+      //   req.id
+      // );
+
+      await ExpenseTypeCode.findByIdAndDelete(req.body["key"], function (err, user) {
+        // createHistoryLog(req.email,"Delete Client", "Delete Client with name " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
+        if (err) console.log(err);
+        console.log("Successful deletion");
+      });
+
+      res.send({});
+
+      return;
+    }
+    //var query = await Client.find({}, { English: 0, Español: 0, Français: 0, Arabic: 0, __v: 0 })
+
+    var sendId = respnseAddID != "" ? respnseAddID : a["_id"];
+
+    let result = {
+      _id: respnseAddID,
+      expenseType: data.expenseType,
       name: data.s0.name,
       nameA: data.s0.nameA,
       father: data.s0.father,
@@ -1400,6 +2072,24 @@ router.get("/listunofficialinvoiceold", verify, async (req, res) => {
   });
 });
 ////////////////////////////
+function parseDateFromString(dateString) {
+  const months = [
+      'January', 'February', 'March', 'April', 'May', 'June', 'July',
+      'August', 'September', 'October', 'November', 'December'
+  ];
+
+  const parts = dateString.split(' ');
+  const monthIndex = months.indexOf(parts[0]);
+  const day = parseInt(parts[1].replace(',', ''), 10);
+  const year = parseInt(parts[2], 10);
+
+  if (monthIndex !== -1 && !isNaN(day) && !isNaN(year)) {
+      return new Date(year, monthIndex, day);
+  }
+
+  return null; // Return null if the format is not valid
+}
+////////////////////////////
 router.post("/datainvoice", verify, async (req, res) => {
   try {
     // req.query.lang req.query.lang doc
@@ -1558,6 +2248,7 @@ router.post("/datainvoice", verify, async (req, res) => {
 
           for (var i = 0; i < data.s3.jobsP.length; i++) {
             if (req.body["s3_jobsP_t_" + i] != null && !isEmptyOrSpaces(req.body["s3_jobsP_t_" + i])) {
+              //data.s3.jobsP[i].etype = req.body["s3_jobsP_etype_" + i];
               data.s3.jobsP[i].quan = req.body["s3_jobsP_quan_" + i];
               data.s3.jobsP[i].desc =
                 req.body["s3_jobsP_desc_" + i];
@@ -1571,6 +2262,7 @@ router.post("/datainvoice", verify, async (req, res) => {
               }
 
               docArray.jobsP.push({
+                //etype: req.body["s3_jobsP_etype_" + i],
                 quan: req.body["s3_jobsP_quan_" + i],
                 desc: req.body["s3_jobsP_desc_" + i],
                 unitp: req.body["s3_jobsP_unitp_" + i],
@@ -1729,7 +2421,9 @@ router.post("/datainvoice", verify, async (req, res) => {
           accountNumber: "",
           transcation: "",
           voucherType: "",
-          voucher: ""
+          voucher: "",
+          date: "",
+          expenseType: ""
         };
 
         var transcationInvoiceHistory = {
@@ -1748,186 +2442,216 @@ router.post("/datainvoice", verify, async (req, res) => {
           paidClientID: "",
           counter: "",
           debit: "",
-          credit: ""
-        };
+          credit: "",
+          date: "",
+          expenseType: "",
+          revenuType: "",
+          revenuList: ""
+         };
 
 
         if (modelCheck.includes("SwornInvoice")) {
+          let swornDate = data.s2.f4.value;
+          let  parsedDate = parseDateFromString(swornDate);
+
+          if (parsedDate !== null) {
+            console.log(parsedDate); // Output: Sun Jul 24 2023 00:00:00 GMT+0000 (Coordinated Universal Time)
+          } else {
+              parsedDate = swornDate;
+              console.log('Invalid date format');
+          }
+
           data["currency"] = data.s2.f6.value;
           var currencyEdit = data["currency"];
-          if (ObjectId.isValid(docID)) {
-            data["user_edit"] = email;
+            if (ObjectId.isValid(docID)) {
+              data["user_edit"] = email;
 
-            //var transcation = req.query.transcation;
-            var voucher = req.query.voucher;
+              //var transcation = req.query.transcation;
+              var voucher = req.query.voucher;
 
-            const swornIV = await SwornIV.findOneAndUpdate(
-              { _id: docID },
-              data,
-              { upsert: true },
-              function (err, doc) {
-                if (err) //console.log(err);
-                console.log("Succesfully saved.");
-              }
-            );
-            data.s1.f0.value = swornIV.countervalue;
-            var invoiceNumberEdit = data.s1.f0.value;
-            invoiceNumberSend = invoiceNumberEdit;
-
-            //var rateEdit = data.s2.f7.value;
-            //rateEditSend = rateEdit;
-
-            docArray['s1f0'] = invoiceNumberSend;
-
-            var dummyData = await Paid.updateOne(
-              { _id: id,
-                "swornInvoice.docid": docID,
-              },
-              {
-                $set: {
-                  "swornInvoice.$.invoiceNumber": invoiceNumberEdit,
-                  "swornInvoice.$.currency": currencyEdit,
-                  "swornInvoice.$.total": totalPayment,
-                  "swornInvoice.$.updateTime": datetime,
-                  "swornInvoice.$.rate": rateEdit,
-                },
-              },
-              function (error, updatedData) {
-                if (error) {
-                  // return res.status(400).send(error);
-                }
-                //return res.status(200).send(updatedData);
-              }
-            );
-
-            if(transcation != ""){
-              var transactionEdit = await Transaction.updateOne(
-                { _id: transcation },
-                {
-                  $set: {
-                    // "invoice.$.category": req.body.value.category,
-                    "credit": totalPayment,
-                    "currency": currencyEdit,
-                    "rate": rateEdit,
-                    "total": totalPayment
-                  },
-                },
-                function (error, updatedData) {
-                  if (error) {
-                    // return res.status(400).send(error);
-                  }
-        
-                  console.log(updatedData);
-                  //return res.status(200).send(updatedData);
+              const swornIV = await SwornIV.findOneAndUpdate(
+                { _id: docID },
+                data,
+                { upsert: true },
+                function (err, doc) {
+                  if (err) //console.log(err);
+                  console.log("Succesfully saved.");
                 }
               );
-            }
+              data.s1.f0.value = swornIV.countervalue;
+              var invoiceNumberEdit = data.s1.f0.value;
+              invoiceNumberSend = invoiceNumberEdit;
 
-            
-            if(voucher != ""){
+              //var rateEdit = data.s2.f7.value;
+              //rateEditSend = rateEdit;
+
+              docArray['s1f0'] = invoiceNumberSend;
+
               var dummyData = await Paid.updateOne(
                 { _id: id,
-                  "swornVoucher.docid": voucher,
+                  "swornInvoice.docid": docID,
                 },
                 {
                   $set: {
-                    // "invoice.$.category": req.body.value.category,
-                    "swornVoucher.$.currency": currencyEdit,
-                    "swornVoucher.$.rate": rateEdit,
-                    "swornVoucher.$.total": totalPayment,
-                    "swornVoucher.$.updateTime": datetime
+                    "swornInvoice.$.invoiceNumber": invoiceNumberEdit,
+                    "swornInvoice.$.currency": currencyEdit,
+                    "swornInvoice.$.total": totalPayment,
+                    "swornInvoice.$.updateTime": datetime,
+                    "swornInvoice.$.rate": rateEdit,
+                    "swornInvoice.$.date": parsedDate
                   },
                 },
                 function (error, updatedData) {
                   if (error) {
                     // return res.status(400).send(error);
                   }
-        
-                  console.log(updatedData);
                   //return res.status(200).send(updatedData);
                 }
               );
-            }
 
-          } else {
-            //console.log("swornIV");
-            
-            //data["invoiceNumber"] = data.s1.f4.value;
-
-            
-
-            //console.log(clientInvoiceHistory);
-            data["currency"] = currencyEdit;
-
-            //return;
-            data["user_created"] = email;
-            //console.log(data)
-            const swornIV = new SwornIV(data);
-            const savedSwornIV = await swornIV.save();
-            docid = savedSwornIV._id;
-
-            //console.log(savedSwornIV.docArray);
-
-            //console.log(savedSwornIV.countervalue + "counter valuefffffff");
-
-            clientInvoiceHistory.docid = docid;
-            clientInvoiceHistory.currency = currencyEdit;
-            clientInvoiceHistory.countervalue = savedSwornIV.countervalue;
-            clientInvoiceHistory.invoiceNumber = savedSwornIV.countervalue;
-            clientInvoiceHistory.rate = rateEdit;
-            data.s1.f0.value = savedSwornIV.countervalue;
-            invoiceNumberSend = savedSwornIV.countervalue;
-            //docArray[keys[0] + keys[1]] = req.body[key];
-            docArray['s1f0'] = savedSwornIV.countervalue;
-            console.log(savedSwornIV.countervalue + "ffffffffffff   " + docArray['s1f0'] )
-            data["invoiceNumber"] = savedSwornIV.countervalue;
-
-            await SwornIV.findOneAndUpdate(
-              { _id: docid },
-              data,
-              { upsert: true },
-              function (err, doc) {
-                if (err) //console.log(err);
-                // //console.log(doc.docArray)
-                console.log("Succesfully saved.");
+              if(transcation != ""){
+                var transactionEdit = await Transaction.updateOne(
+                  { _id: transcation },
+                  {
+                    $set: {
+                      // "invoice.$.category": req.body.value.category,
+                      "credit": totalPayment,
+                      "currency": currencyEdit,
+                      "rate": rateEdit,
+                      "total": totalPayment,
+                      "date": parsedDate
+                    },
+                  },
+                  function (error, updatedData) {
+                    if (error) {
+                      // return res.status(400).send(error);
+                    }
+          
+                    console.log(updatedData);
+                    //return res.status(200).send(updatedData);
+                  }
+                );
               }
-            );
+
+              
+              if(voucher != ""){
+                var dummyData = await Paid.updateOne(
+                  { _id: id,
+                    "swornVoucher.docid": voucher,
+                  },
+                  {
+                    $set: {
+                      // "invoice.$.category": req.body.value.category,
+                      "swornVoucher.$.currency": currencyEdit,
+                      "swornVoucher.$.rate": rateEdit,
+                      "swornVoucher.$.total": totalPayment,
+                      "swornVoucher.$.updateTime": datetime
+                    },
+                  },
+                  function (error, updatedData) {
+                    if (error) {
+                      // return res.status(400).send(error);
+                    }
+          
+                    console.log(updatedData);
+                    //return res.status(200).send(updatedData);
+                  }
+                );
+              }
+
+            } else {
+              //console.log("swornIV");
+              
+              //data["invoiceNumber"] = data.s1.f4.value;
+
+              
+
+              //console.log(clientInvoiceHistory);
+              data["currency"] = currencyEdit;
+
+              //return;
+              data["user_created"] = email;
+              //console.log(data)
+              const swornIV = new SwornIV(data);
+              const savedSwornIV = await swornIV.save();
+              docid = savedSwornIV._id;
+
+              //console.log(savedSwornIV.docArray);
+
+              //console.log(savedSwornIV.countervalue + "counter valuefffffff");
+
+              clientInvoiceHistory.docid = docid;
+              clientInvoiceHistory.currency = currencyEdit;
+              clientInvoiceHistory.countervalue = savedSwornIV.countervalue;
+              clientInvoiceHistory.invoiceNumber = savedSwornIV.countervalue;
+              clientInvoiceHistory.rate = rateEdit;
+              clientInvoiceHistory.date = parsedDate;
+              data.s1.f0.value = savedSwornIV.countervalue;
+              invoiceNumberSend = savedSwornIV.countervalue;
+              //docArray[keys[0] + keys[1]] = req.body[key];
+              docArray['s1f0'] = savedSwornIV.countervalue;
+              console.log(savedSwornIV.countervalue + "ffffffffffff   " + docArray['s1f0'] )
+              data["invoiceNumber"] = savedSwornIV.countervalue;
+
+              await SwornIV.findOneAndUpdate(
+                { _id: docid },
+                data,
+                { upsert: true },
+                function (err, doc) {
+                  if (err) //console.log(err);
+                  // //console.log(doc.docArray)
+                  console.log("Succesfully saved.");
+                }
+              );
 
 
-            transcationInvoiceHistory.total = data["total"];
-            transcationInvoiceHistory.credit = data["total"];
-            transcationInvoiceHistory.invoiceType = "swornInvoice";
-            transcationInvoiceHistory.voucherType = "Receipt";
+              transcationInvoiceHistory.total = data["total"];
+              transcationInvoiceHistory.credit = data["total"];
+              transcationInvoiceHistory.invoiceType = "swornInvoice";
+              transcationInvoiceHistory.voucherType = "Receipt";
 
-            transcationInvoiceHistory.invoiceAddress = docid;
-            transcationInvoiceHistory.invoiceNumber = invoiceNumberSend;
-            transcationInvoiceHistory.currency = currencyEdit;
-            transcationInvoiceHistory.rate = rateEdit;
-            transcationInvoiceHistory.ready = "yes";
-            transcationInvoiceHistory.paidClinetName = clientData["fullname"];
-            transcationInvoiceHistory.paidClientID = id;
+              transcationInvoiceHistory.date = parsedDate;
 
-            const transaction = new Transaction(transcationInvoiceHistory);
-            const savedtransaction= await transaction.save();
-            const transactionID = savedtransaction._id;
+              transcationInvoiceHistory.invoiceAddress = docid;
+              transcationInvoiceHistory.invoiceNumber = invoiceNumberSend;
+              transcationInvoiceHistory.currency = currencyEdit;
+              transcationInvoiceHistory.rate = rateEdit;
+              transcationInvoiceHistory.ready = "yes";
+              transcationInvoiceHistory.paidClinetName = clientData["fullname"];
+              transcationInvoiceHistory.paidClientID = id;
 
-            clientInvoiceHistory.transcation = transactionID;
+              const transaction = new Transaction(transcationInvoiceHistory);
+              const savedtransaction= await transaction.save();
+              const transactionID = savedtransaction._id;
 
-            
-            //console.log(data)
+              clientInvoiceHistory.transcation = transactionID;
 
-            var savedPaid = await Paid.updateOne(
-              { _id: id },
-              { $push: { swornInvoice: clientInvoiceHistory } },
-              { upsert: true, new: true  }
-            );
+              
+              //console.log(data)
 
-            ////console.log(savedPaid);
-          }
+              var savedPaid = await Paid.updateOne(
+                { _id: id },
+                { $push: { swornInvoice: clientInvoiceHistory } },
+                { upsert: true, new: true  }
+              );
+
+              ////console.log(savedPaid);
+            }
           } else if (modelCheck.includes("ProntoInvoice")) {
             //currency
             data["currency"] = data.s2.f6.value;
             var currencyEdit = data["currency"];
+
+            let prontoDate = data.s2.f5.value;
+            let parsedDate = parseDateFromString(prontoDate);
+  
+            if (parsedDate !== null) {
+              console.log(parsedDate); // Output: Sun Jul 24 2023 00:00:00 GMT+0000 (Coordinated Universal Time)
+            } else {
+                parsedDate = prontoDate;
+                console.log('Invalid date format');
+            }
+
             if (ObjectId.isValid(docID)) {
               data["user_edit"] = email;
               var transcation = req.query.transcation;
@@ -1958,7 +2682,8 @@ router.post("/datainvoice", verify, async (req, res) => {
                     "prontoInvoice.$.invoiceNumber": invoiceNumberEdit,
                     "prontoInvoice.$.total": totalPayment,
                     "prontoInvoice.$.rate": rateEdit,
-                    "prontoInvoice.$.updateTime": datetime
+                    "prontoInvoice.$.updateTime": datetime,
+                    "prontoInvoice.$.date": parsedDate
                   },
                 },
                 function (error, updatedData) {
@@ -1980,7 +2705,8 @@ router.post("/datainvoice", verify, async (req, res) => {
                       "credit": totalPayment,
                       "currency": data["currency"],
                       "rate": rateEdit,
-                      "total": totalPayment
+                      "total": totalPayment,
+                      "date": parsedDate
                     },
                   },
                   function (error, updatedData) {
@@ -2045,6 +2771,7 @@ router.post("/datainvoice", verify, async (req, res) => {
               clientInvoiceHistory.rate = rateEdit;
               clientInvoiceHistory.countervalue = savedprontoIV.countervalue;
               clientInvoiceHistory.invoiceNumber = savedprontoIV.countervalue;
+              clientInvoiceHistory.date = parsedDate;
               data.s1.f0.value = savedprontoIV.countervalue;
               invoiceNumberSend = savedprontoIV.countervalue;
               docArray['s1f0'] = savedprontoIV.countervalue;
@@ -2062,27 +2789,6 @@ router.post("/datainvoice", verify, async (req, res) => {
                 }
               );
 
-              var transactionEdit = await Transaction.updateOne(
-                { _id: transcation },
-                {
-                  $set: {
-                    // "invoice.$.category": req.body.value.category,
-                    "credit": totalPayment,
-                    "currency": data["currency"],
-                    "rate": rateEdit,
-                    "total": totalPayment
-                  },
-                },
-                function (error, updatedData) {
-                  if (error) {
-                    // return res.status(400).send(error);
-                  }
-        
-                  console.log(updatedData);
-                  //return res.status(200).send(updatedData);
-                }
-              );
-
               //await savedprontoIV.save();
 
 
@@ -2090,6 +2796,7 @@ router.post("/datainvoice", verify, async (req, res) => {
               transcationInvoiceHistory.credit = data["total"];
               transcationInvoiceHistory.invoiceType = "ProntoInvoice";
               transcationInvoiceHistory.voucherType = "Receipt";
+              transcationInvoiceHistory.date = parsedDate;
 
               transcationInvoiceHistory.invoiceAddress = docid;
               transcationInvoiceHistory.invoiceNumber = invoiceNumberSend;
@@ -2121,6 +2828,16 @@ router.post("/datainvoice", verify, async (req, res) => {
             data["currency"] = data.s2.f6.value;
             var currencyEdit = data["currency"];
 
+            let unofficialDate = data.s2.f5.value;
+            let parsedDate = parseDateFromString(unofficialDate);
+  
+            if (parsedDate !== null) {
+              console.log(parsedDate); // Output: Sun Jul 24 2023 00:00:00 GMT+0000 (Coordinated Universal Time)
+            } else {
+              parsedDate = unofficialDate;
+                console.log('Invalid date format');
+            }
+
             if (ObjectId.isValid(docID)) {
               data["user_edit"] = email;
               //var invoiceNumberEdit = data.s2.f0.value;
@@ -2151,7 +2868,8 @@ router.post("/datainvoice", verify, async (req, res) => {
                     "unofficialInvoice.$.invoiceNumber": invoiceNumberEdit,
                     "unofficialInvoice.$.total": totalPayment,
                     "unofficialInvoice.$.rate": rateEdit,
-                    "unofficialInvoice.$.updateTime": datetime
+                    "unofficialInvoice.$.updateTime": datetime,
+                    "unofficialInvoice.$.date": parsedDate
                   },
                 },
                 function (error, updatedData) {
@@ -2173,7 +2891,8 @@ router.post("/datainvoice", verify, async (req, res) => {
                       "credit": totalPayment,
                       "currency": data["currency"],
                       "rate": rateEdit,
-                      "total": totalPayment
+                      "total": totalPayment,
+                      "date": parsedDate
                     },
                   },
                   function (error, updatedData) {
@@ -2232,6 +2951,8 @@ router.post("/datainvoice", verify, async (req, res) => {
               clientInvoiceHistory.rate = rateEdit;
               clientInvoiceHistory.countervalue = savedunofficialIV.countervalue;
               clientInvoiceHistory.invoiceNumber = savedunofficialIV.countervalue;
+              clientInvoiceHistory.date = parsedDate;
+
               data.s1.f0.value = savedunofficialIV.countervalue;
               invoiceNumberSend = savedunofficialIV.countervalue;
               docArray['s1f0'] = savedunofficialIV.countervalue;
@@ -2242,6 +2963,7 @@ router.post("/datainvoice", verify, async (req, res) => {
               transcationInvoiceHistory.credit = data["total"];
               transcationInvoiceHistory.invoiceType = "UnofficialInvoice";
               transcationInvoiceHistory.voucherType = "Receipt";
+              transcationInvoiceHistory.date = parsedDate;
 
               transcationInvoiceHistory.invoiceAddress = docid;
               transcationInvoiceHistory.invoiceNumber = invoiceNumberSend;
@@ -2386,6 +3108,17 @@ router.post("/datainvoice", verify, async (req, res) => {
             data["currency"] = data.s2.f6.value;
             data["Currency"] = data.s2.f6.value;
             var currencyEdit = data["currency"];
+
+            let prontoDate = data.s2.f5.value;
+            let parsedDate = parseDateFromString(prontoDate);
+  
+            if (parsedDate !== null) {
+              console.log(parsedDate); // Output: Sun Jul 24 2023 00:00:00 GMT+0000 (Coordinated Universal Time)
+            } else {
+                parsedDate = prontoDate;
+                console.log('Invalid date format');
+            }
+
             if (ObjectId.isValid(docID)) {
               data["user_edit"] = email;
               var transcation = req.query.transcation;
@@ -2418,7 +3151,9 @@ router.post("/datainvoice", verify, async (req, res) => {
                     "prontoPurchaseInvoice.$.currency": currencyEdit,
                     "prontoPurchaseInvoice.$.rate": rateEdit,
                     "prontoPurchaseInvoice.$.total": totalPayment,
-                    "prontoPurchaseInvoice.$.updateTime": datetime
+                    "prontoPurchaseInvoice.$.updateTime": datetime,
+                    "prontoPurchaseInvoice.$.date": parsedDate,
+                    "prontoPurchaseInvoice.$.expenseType": data.s2.f8.value
                   },
                 },
                 function (error, updatedData) {
@@ -2430,6 +3165,30 @@ router.post("/datainvoice", verify, async (req, res) => {
                   //return res.status(200).send(updatedData);
                 }
               );
+              if(transcation != ""){
+                var transactionEdit = await Transaction.updateOne(
+                  { _id: transcation },
+                  {
+                    $set: {
+                      // "invoice.$.category": req.body.value.category,
+                      "credit": totalPayment,
+                      "currency": data["currency"],
+                      "rate": rateEdit,
+                      "total": totalPayment,
+                      "date": parsedDate,
+                      "expenseType": data.s2.f8.value
+                    },
+                  },
+                  function (error, updatedData) {
+                    if (error) {
+                      // return res.status(400).send(error);
+                    }
+          
+                    console.log(updatedData);
+                    //return res.status(200).send(updatedData);
+                  }
+                );
+              }
 
               if(voucher != ""){
                 var dummyData = await Suppliers.updateOne(
@@ -2442,7 +3201,9 @@ router.post("/datainvoice", verify, async (req, res) => {
                       "prontoPurchaseInvoice.$.currency": currencyEdit,
                       "prontoPurchaseInvoice.$.rate": rateEdit,
                       "prontoPurchaseInvoice.$.total": totalPayment,
-                      "prontoPurchaseInvoice.$.updateTime": datetime
+                      "prontoPurchaseInvoice.$.updateTime": datetime,
+                      "prontoPurchaseInvoice.$.date": parsedDate,
+                      "prontoPurchaseInvoice.$.expenseType": data.s2.f8.value
                     },
                   },
                   function (error, updatedData) {
@@ -2481,6 +3242,8 @@ router.post("/datainvoice", verify, async (req, res) => {
               clientInvoiceHistory.rate = rateEdit;
               clientInvoiceHistory.countervalue = savedpurchaseIV.countervalue;
               clientInvoiceHistory.invoiceNumber = savedpurchaseIV.countervalue;
+              clientInvoiceHistory.date = parsedDate;
+              clientInvoiceHistory.expenseType = data.s2.f8.value;
               data.s1.f0.value = savedpurchaseIV.countervalue;
               invoiceNumberSend = savedpurchaseIV.countervalue;
               docArray['s1f0'] = savedpurchaseIV.countervalue;
@@ -2491,6 +3254,8 @@ router.post("/datainvoice", verify, async (req, res) => {
               transcationInvoiceHistory.credit = data["total"];
               transcationInvoiceHistory.invoiceType = "ProntoPurchaseInvoice";
               transcationInvoiceHistory.voucher = "";
+              transcationInvoiceHistory.date = parsedDate;
+              transcationInvoiceHistory.expenseType = data.s2.f8.value;
 
               transcationInvoiceHistory.invoiceAddress = docid;
               transcationInvoiceHistory.invoiceNumber = invoiceNumberSend;
@@ -2533,6 +3298,16 @@ router.post("/datainvoice", verify, async (req, res) => {
             data["currency"] = data.s2.f6.value;
             data["Currency"] = data.s2.f6.value;
             var currencyEdit = data["currency"];
+
+            let unofficialDate = data.s2.f5.value;
+            const parsedDate = parseDateFromString(unofficialDate);
+  
+            if (parsedDate !== null) {
+              console.log(parsedDate); // Output: Sun Jul 24 2023 00:00:00 GMT+0000 (Coordinated Universal Time)
+            } else {
+                parsedDate = unofficialDate;
+                console.log('Invalid date format');
+            }
             if (ObjectId.isValid(docID)) {
               data["user_edit"] = email;
               var transcation = req.query.transcation;
@@ -2569,7 +3344,9 @@ router.post("/datainvoice", verify, async (req, res) => {
                     "unofficialPurchaseInvoice.$.currency": currencyEdit,
                     "unofficialPurchaseInvoice.$.rate": rateEdit,
                     "unofficialPurchaseInvoice.$.total": totalPayment,
-                    "unofficialPurchaseInvoice.$.updateTime": datetime
+                    "unofficialPurchaseInvoice.$.updateTime": datetime,
+                    "unofficialPurchaseInvoice.$.date": parsedDate,
+                    "unofficialPurchaseInvoice.$.expenseType": data.s2.f8.value
                   },
                 },
                 function (error, updatedData) {
@@ -2582,6 +3359,31 @@ router.post("/datainvoice", verify, async (req, res) => {
                 }
               );
 
+              if(transcation != ""){
+                var transactionEdit = await Transaction.updateOne(
+                  { _id: transcation },
+                  {
+                    $set: {
+                      // "invoice.$.category": req.body.value.category,
+                      "credit": totalPayment,
+                      "currency": data["currency"],
+                      "rate": rateEdit,
+                      "total": totalPayment,
+                      "date": parsedDate,
+                      "expenseType": data.s2.f8.value
+                    },
+                  },
+                  function (error, updatedData) {
+                    if (error) {
+                      // return res.status(400).send(error);
+                    }
+          
+                    console.log(updatedData);
+                    //return res.status(200).send(updatedData);
+                  }
+                );
+              }
+
               if(voucher != ""){
                 var dummyData = await Suppliers.updateOne(
                   { _id: id,
@@ -2593,7 +3395,9 @@ router.post("/datainvoice", verify, async (req, res) => {
                       "unofficialPurchaseInvoice.$.currency": currencyEdit,
                       "unofficialPurchaseInvoice.$.rate": rateEdit,
                       "unofficialPurchaseInvoice.$.total": totalPayment,
-                      "unofficialPurchaseInvoice.$.updateTime": datetime
+                      "unofficialPurchaseInvoice.$.updateTime": datetime,
+                      "unofficialPurchaseInvoice.$.date": parsedDate,
+                      "unofficialPurchaseInvoice.$.expenseType": data.s2.f8.value
                     },
                   },
                   function (error, updatedData) {
@@ -2632,6 +3436,8 @@ router.post("/datainvoice", verify, async (req, res) => {
               clientInvoiceHistory.rate = rateEdit;
               clientInvoiceHistory.countervalue = savedpurchaseIV.countervalue;
               clientInvoiceHistory.invoiceNumber = savedpurchaseIV.countervalue;
+              clientInvoiceHistory.date = parsedDate;
+              clientInvoiceHistory.expenseType = data.s2.f8.value;
               data.s1.f0.value = savedpurchaseIV.countervalue;
               invoiceNumberSend = savedpurchaseIV.countervalue;
               docArray['s1f0'] = savedpurchaseIV.countervalue;
@@ -2653,6 +3459,8 @@ router.post("/datainvoice", verify, async (req, res) => {
               transcationInvoiceHistory.credit = data["total"];
               transcationInvoiceHistory.invoiceType = "UnofficialPurchaseInvoice";
               transcationInvoiceHistory.voucher = "";
+              transcationInvoiceHistory.date = parsedDate;
+              transcationInvoiceHistory.expenseType = data.s2.f8.value;
 
               transcationInvoiceHistory.invoiceAddress = docid;
               transcationInvoiceHistory.invoiceNumber = invoiceNumberSend;
@@ -3434,6 +4242,7 @@ router.post("/invoiceedit/GetData", verify, async (req, res) => {
               paid: query[i]["prontoPurchaseInvoice"][j].paid,
               rate: query[i]["prontoPurchaseInvoice"][j].rate,
               currency: query[i]["prontoPurchaseInvoice"][j].currency,
+              expenseType: query[i]["prontoPurchaseInvoice"][j].expenseType,
               Type: query[i]["prontoPurchaseInvoice"][j].voucherType,
               Download: "DOWNLOAD",
               Voucher: "VOUCHER",
@@ -3522,6 +4331,7 @@ router.post("/invoiceedit/GetData", verify, async (req, res) => {
               paid: query[i]["unofficialPurchaseInvoice"][j].paid,
               rate: query[i]["unofficialPurchaseInvoice"][j].rate,
               currency: query[i]["unofficialPurchaseInvoice"][j].currency,
+              expenseType: query[i]["unofficialPurchaseInvoice"][j].expenseType,
               Type: query[i]["unofficialPurchaseInvoice"][j].voucherType,
               Download: "DOWNLOAD",
               Voucher: "VOUCHER",
@@ -3765,23 +4575,28 @@ router.post("/invoicepurchaseload", verify, async (req, res) => {
           let rawdataLanguage = fs.readFileSync("./json/" + "English" + "/language.json", "utf-8");
           let languageType = JSON.parse(rawdataLanguage);
           let data = JSON.parse(rawdata);
-  
-  
+
+          let expensetypecodeResult = [];
+
+          var queryExpense = await ExpenseTypeCode.find(
+            {},
+            { __v: 0 }
+          );
+        
+          //Format the json
+          for (var i = 0; i < queryExpense.length; i++) {
+            expensetypecodeResult.push(queryExpense[i].expenseType);
+          }
+
+
+          data["expenseTypeCode"] = expensetypecodeResult;
           
-  
+          
           //console.log(id);
           //Types.ObjectId()
           var key = mongoose.Types.ObjectId(id);
   
           var data1 = "";
-  
-          // const anyThing = await Expense.findById(req.body["key"], function (
-          //   err,
-          //   user
-          // ) {
-          //   console.log("delete pyament" + user);
-          //   // createHistoryLog(req.email,"Delete Expense", "Delete Expense for client " + isUndefinedOrNull(user.fullname) ? "" : user.fullname, req.id);
-          // });
           
           try {
             data1 = await Suppliers.find(
@@ -3819,14 +4634,6 @@ router.post("/invoicepurchaseload", verify, async (req, res) => {
 
           }
 
-          
-          //console.log(data1["fullname"])
-  
-          //console.log(data1);
-  
-          //data["client"]["id"] = id;
-  
-          //console.log(data.s0)
   
           if (data.hasOwnProperty("s0")) {
             Object.keys(data.s0).forEach(function (key) {
@@ -3944,6 +4751,29 @@ router.post("/invoiceloadcreate", verify, async (req, res) => {
           let languageType = JSON.parse(rawdataLanguage);
           let data = JSON.parse(rawdata);
 
+          console.log("Check error");
+
+          let expensetypecodeResult = [];
+
+          var queryExpense = await ExpenseTypeCode.find(
+            {},
+            { __v: 0 }
+          );
+        
+          //Format the json
+          for (var i = 0; i < queryExpense.length; i++) {
+            let temp = {
+              _id: queryExpense[i]._id,
+              expenseType: queryExpense[i].expenseType,
+              name: queryExpense[i].s0.name,
+              nameA: queryExpense[i].s0.nameA,
+              father: queryExpense[i].s0.father,
+            };
+
+            countservice = i +1;
+            expensetypecodeResult.push(queryExpense[i].expenseType);
+          }
+
           var swornServiceResult = [];
 
           var query = await SwornServices.find(
@@ -4008,7 +4838,7 @@ router.post("/invoiceloadcreate", verify, async (req, res) => {
             languageResult.push(queryL[i].language);
           }
         
-  
+          data["expenseTypeCode"] = expensetypecodeResult;
           data["prontoServiceType"] = prontoServiceResult;
           data["swornServiceType"] = swornServiceResult; //JSON.stringify(swornSerive);
           data["languageType"] = languageResult;
@@ -4228,7 +5058,27 @@ router.post("/invoicetemplate", verify, async (req, res) => {
                else {
             }
 
-            
+            let expensetypecodeResult = [];
+
+            var queryExpense = await ExpenseTypeCode.find(
+              {},
+              { __v: 0 }
+            );
+          
+            //Format the json
+            for (var i = 0; i < queryExpense.length; i++) {
+              // let temp = {
+              //   _id: queryExpense[i]._id,
+              //   expenseType: queryExpense[i].expenseType,
+              //   name: queryExpense[i].s0.name,
+              //   nameA: queryExpense[i].s0.nameA,
+              //   father: queryExpense[i].s0.father,
+              // };
+  
+              countservice = i +1;
+              expensetypecodeResult.push(queryExpense[i].expenseType);
+            }
+  
 
           var swornServiceResult = [];
 
@@ -4297,6 +5147,7 @@ router.post("/invoicetemplate", verify, async (req, res) => {
             docSaved[0]["prontoServiceType"] = prontoServiceResult;
             docSaved[0]["swornServiceType"] = swornServiceResult;
             docSaved[0]["languageType"] = languageResult;
+            docSaved[0]["expenseTypeCode"] = expensetypecodeResult;
   
             /// ////////////////////////////////////
   
@@ -4515,7 +5366,7 @@ router.post("/code", verify, async (req, res) => {
 });
 
 
-function downloadLink(datetime, modelCheck, clientName, language = "English") {
+function downloadLink(datetime, modelCheck, clientName, language = "English", type = ".docx") {
   let rawdata;
   if (language == "English") {
     rawdata = fs.readFileSync("./json/English/template.json", "utf-8");
@@ -4597,7 +5448,7 @@ function downloadLink(datetime, modelCheck, clientName, language = "English") {
   }
 
   var outputPath =
-    "./Output/" + docModelViewText + " - " + clientName + " - " + datetime + ".docx";
+    "./Output/" + docModelViewText + " - " + clientName + " - " + datetime + type;
 
   return [outputPath, docModelViewText + " - " + clientName + " - " + datetime];
 }
@@ -4610,7 +5461,8 @@ function GenerateDocx(
   modelCheck,
   clientName,
   datetime = "0",
-  language = "English"
+  language = "English",
+  type = ".docx"
 ) {
   // Load the docx file as a binary
   var content = fs.readFileSync(docxPath, "binary");
@@ -4651,7 +5503,7 @@ function GenerateDocx(
   var date = datetime == "0" ? docArray["date"] : datetime;
   console.log("FUll path with time date" + date);
 
-  var downloadLinkGenerator = downloadLink(datetime, modelCheck, clientName, language)
+  var downloadLinkGenerator = downloadLink(datetime, modelCheck, clientName, language,type)
 
   
   

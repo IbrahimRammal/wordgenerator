@@ -1,0 +1,90 @@
+{
+  "type": "English",
+  "client": {
+    "id": "1",
+    "email": "admin@admin.com",
+    "name": "admin"
+  },
+  "createuser": {
+    "id": "1",
+    "email": "admin@admin.com",
+    "name": "admin"
+  },
+  "modifieduser": {
+    "id": "1",
+    "email": "admin@admin.com",
+    "name": "admin"
+  },
+  "revenue": [
+      {
+          "rev": "",
+          "cyear": "",
+          "pyear": ""
+      }
+  ],
+  "expense": [
+      {
+          "exp": "",
+          "cyear": "",
+          "pyear": ""
+      },
+      {
+          "exp": "",
+          "cyear": "",
+          "pyear": ""
+      },
+      {
+          "exp": "",
+          "cyear": "",
+          "pyear": ""
+      },
+      {
+          "exp": "",
+          "cyear": "",
+          "pyear": ""
+      },
+      {
+          "exp": "",
+          "cyear": "",
+          "pyear": ""
+      },
+      {
+          "exp": "",
+          "cyear": "",
+          "pyear": ""
+      },
+      {
+          "exp": "",
+          "cyear": "",
+          "pyear": ""
+      },
+      {
+          "exp": "",
+          "cyear": "",
+          "pyear": ""
+      },
+      {
+          "exp": "",
+          "cyear": "",
+          "pyear": ""
+      },
+      {
+          "exp": "",
+          "cyear": "",
+          "pyear": ""
+      }
+  ],
+  "ctrev": "",
+  "ptrev": "",
+  "ctexp": "",
+  "ptexp": "",
+  "ctax": "",
+  "ptax": "",
+  "cbtax": "",
+  "pbtax": "",
+  "cnet": "",
+  "pnet": "",
+  "date": "",
+  "download": "",
+  "caption": "General Income Statement"
+}

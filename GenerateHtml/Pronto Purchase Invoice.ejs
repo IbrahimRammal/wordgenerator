@@ -50,6 +50,32 @@
             </div>
         </div>
     </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col" style="margin-top: -25px;">
+                <select   
+                class="mdb-select md-form"
+                searchable="Search here.."
+                name="s2_f8"
+                id="s2f8"
+                required
+                >
+
+                <%if (obj.s2.f8.value !== null && obj.s2.f8.value !== undefined && obj.s2.f8.value !== '' && obj.s2.f8.value  != "") { %>
+                    <option value="<%= obj.s2.f8.value %>" ><%= obj.s2.f8.value %></option>
+
+                    <% } else {%>
+                        <option value="" disabled selected>Expense Type Code Select ... </option>
+                    <% }%>   
+                    
+                    <% for (var z = 0; z < obj.expenseTypeCode.length; z++) { %>
+                        <option value="<%= obj.expenseTypeCode[z] %>"><%= obj.expenseTypeCode[z] %></option>
+                    <%}%>
+                </select>
+            </div>
+        </div>
+    </div>
+
     <hr class="sidebar-divider">
 
         <!-- Collapse methode  -->
@@ -140,6 +166,8 @@
         }
 
     }
+
+
 
        $(document).ready(function () {
 

@@ -78,252 +78,289 @@
         "f7": {
             "caption": "Dollar Rate",
             "value": ""
+        },
+        "f8": {
+            "caption": "Expense Type Code",
+            "value": ""
         }
     },
     "s3": {
         "jobsP": [
             {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },
             {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },
+            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },             {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },
+            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },             {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },
+            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },             {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },
+            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },             {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },
+            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },             {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },
+            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },             {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },
+            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },             {
+                "etype": "",
+                "quan": "",
+                "desc": "",
+                "unitp": "",
+                "t": ""
+            },
+            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
                 "t": ""
             },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
-                "quan": "",
-                "desc": "",
-                "unitp": "",
-                "t": ""
-            },            {
+                "etype": "",
                 "quan": "",
                 "desc": "",
                 "unitp": "",
