@@ -198,7 +198,7 @@ const familySchema = mongoose.Schema({
     }
   },
   s2: {
-    fams: {
+    famsn: {
       type: ['Mixed']
     }
   },
