@@ -245,21 +245,25 @@ function getData() {
               visible: false
               //validationRules: { required: true, minLength: [customFn, 'Need to be less than total value']}
             },
-            {
-              field: "Download",
-              headerText: "",
-              textAlign: "Right",
-              width: 90,
-              type: "number",
-              //visible: false,
-            },
-            {
-              field: "Edit",
-              headerText: "",
-              textAlign: "Left",
-              width: 60,
-              //   visible: false,
-            },
+        {
+          field: "Download",
+          headerText: "",
+          textAlign: "Right",
+          width: 40,
+          type: "number",
+          template: '<i class="fas fa-download"></i>',
+          visible: true,
+          autoFit: true
+        },
+        {
+          field: "Edit",
+          headerText: "",
+          textAlign: "Left",
+          width: 40,
+          template: '<i class="fas fa-edit"></i>',
+          autoFit: true
+          //   visible: false,
+        }, 
             {
               field: "currency",
               headerText: "currency",
@@ -290,7 +294,10 @@ function getData() {
             // console.log(args);
             //console.log(args.data.href);
             //console.log(args.currentCell.outerText);
-            if (args.currentCell.outerText == "DOWNLOAD") {
+                    const cellContent = args.currentCell.innerHTML;
+
+        //if (args.currentCell.outerText == "DOWNLOAD") {
+        if (cellContent.includes('fa-download')) {
                 $.ajax({
                     url: "/api/posts/deleteAfterDownload",
                     type: "POST",
@@ -310,7 +317,7 @@ function getData() {
                       //   alert("text status " + textStatus + ", err " + err);
                     },
                   });
-            } else if (args.currentCell.outerText == "EDIT") {
+            } else if (cellContent.includes('fa-edit')) {
                 // console.log(args);
 
               $.ajax({

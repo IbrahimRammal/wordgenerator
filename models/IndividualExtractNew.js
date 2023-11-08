@@ -315,6 +315,14 @@ const individualSchema = mongoose.Schema({
       value: {
         type: 'String'
       }
+     },
+    f18: {
+      caption: {
+        type: 'String'
+      },
+      value: {
+        type: 'String'
+      }
      }
   },
   date: {
@@ -404,6 +412,6 @@ individualSchema.pre("save", function (next) {
   next();
 });
 
-const Individual = mongoose.model('IndividualExtract', individualSchema)
+const IndividualNew = mongoose.model('IndividualExtractNew', individualSchema)
 
-module.exports = Individual
+module.exports = IndividualNew

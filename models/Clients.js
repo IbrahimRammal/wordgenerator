@@ -120,10 +120,16 @@ const clientSchema = mongoose.Schema({
     FamilyExtract: {
       type: 'String'
     },
+    FamilyExtractNew: {
+      type: 'String'
+    },
     IDCard: {
       type: 'String'
     },
     IndividualExtract: {
+      type: 'String'
+    },
+    IndividualExtractNew: {
       type: 'String'
     },
     MarriageCertificate: {
@@ -173,10 +179,16 @@ const clientSchema = mongoose.Schema({
     FamilyExtract: {
       type: 'String'
     },
+    FamilyExtractNew: {
+      type: 'String'
+    },
     IDCard: {
       type: 'String'
     },
     IndividualExtract: {
+      type: 'String'
+    },
+    IndividualExtractNew: {
       type: 'String'
     },
     MarriageCertificate: {
@@ -226,10 +238,16 @@ const clientSchema = mongoose.Schema({
     FamilyExtract: {
       type: 'String'
     },
+    FamilyExtractNew: {
+      type: 'String'
+    },
     IDCard: {
       type: 'String'
     },
     IndividualExtract: {
+      type: 'String'
+    },
+    IndividualExtractNew: {
       type: 'String'
     },
     MarriageCertificate: {
@@ -269,8 +287,10 @@ const clientSchema = mongoose.Schema({
       Driverslicensecertificate: {type : "Array"},
       PrivateDriverslicense: {type : "Array"},
       FamilyExtract: {type : "Array"},
+      FamilyExtractNew: {type : "Array"},
       IDCard: {type : "Array"},
       IndividualExtract: {type : "Array"},
+      IndividualExtractNew: {type : "Array"},
       MarriageCertificate: {type : "Array"},
       MoFRegistration: {type : "Array"},
       NSSFServiceCertificate: {type : "Array"},
@@ -288,8 +308,10 @@ const clientSchema = mongoose.Schema({
       Driverslicensecertificate: {type : "Array"},
       PrivateDriverslicense: {type : "Array"},
       FamilyExtract: {type : "Array"},
+      FamilyExtractNew: {type : "Array"},
       IDCard: {type : "Array"},
       IndividualExtract: {type : "Array"},
+      IndividualExtractNew: {type : "Array"},
       MarriageCertificate: {type : "Array"},
       MoFRegistration: {type : "Array"},
       NSSFServiceCertificate: {type : "Array"},
@@ -307,8 +329,10 @@ const clientSchema = mongoose.Schema({
       Driverslicensecertificate: {type : "Array"},
       PrivateDriverslicense: {type : "Array"},
       FamilyExtract: {type : "Array"},
+      FamilyExtractNew: {type : "Array"},
       IDCard: {type : "Array"},
       IndividualExtract: {type : "Array"},
+      IndividualExtractNew: {type : "Array"},
       MarriageCertificate: {type : "Array"},
       MoFRegistration: {type : "Array"},
       NSSFServiceCertificate: {type : "Array"},

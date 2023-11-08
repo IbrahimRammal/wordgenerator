@@ -14,8 +14,10 @@ const Divorce = require("../models/DivorceCertificate");
 const Driver = require("../models/Driverslicensecertificate");
 const Private = require("../models/PrivateDriverslicense");
 const Family = require("../models/FamilyExtract");
+const FamilyNew = require("../models/FamilyExtractNew");
 const IDCard = require("../models/IDCard");
 const Individual = require("../models/IndividualExtract");
+const IndividualNew = require("../models/IndividualExtractNew");
 const Marriage = require("../models/MarriageCertificate");
 const MoF = require("../models/MoFRegistration");
 const NSSF = require("../models/NSSFServiceCertificate");
@@ -209,8 +211,10 @@ router.post("/addclient", verify, async (req, res) => {
           Driverslicensecertificate: "",
           PrivateDriverslicense: "",
           FamilyExtract: "",
+          FamilyExtractNew: "",
           IDCard: "",
           IndividualExtract: "",
+          IndividualExtractNew: "",
           MarriageCertificate: "",
           MoFRegistration: "",
           NSSFServiceCertificate: "",
@@ -228,8 +232,10 @@ router.post("/addclient", verify, async (req, res) => {
           Driverslicensecertificate: "",
           PrivateDriverslicense: "",
           FamilyExtract: "",
+          FamilyExtractNew: "",
           IDCard: "",
           IndividualExtract: "",
+          IndividualExtractNew: "",
           MarriageCertificate: "",
           MoFRegistration: "",
           NSSFServiceCertificate: "",
@@ -247,8 +253,10 @@ router.post("/addclient", verify, async (req, res) => {
           Driverslicensecertificate: "",
           PrivateDriverslicense: "",
           FamilyExtract: "",
+          FamilyExtractNew: "",
           IDCard: "",
           IndividualExtract: "",
+          IndividualExtractNew: "",
           MarriageCertificate: "",
           MoFRegistration: "",
           NSSFServiceCertificate: "",
@@ -270,8 +278,10 @@ router.post("/addclient", verify, async (req, res) => {
             Driverslicensecertificate: [],
             PrivateDriverslicense: [],
             FamilyExtract: [],
+            FamilyExtractNew: [],
             IDCard: [],
             IndividualExtract: [],
+            IndividualExtractNew: [],
             MarriageCertificate: [],
             MoFRegistration: [],
             NSSFServiceCertificate: [],
@@ -289,8 +299,10 @@ router.post("/addclient", verify, async (req, res) => {
             Driverslicensecertificate: [],
             PrivateDriverslicense: [],
             FamilyExtract: [],
+            FamilyExtractNew: [],
             IDCard: [],
             IndividualExtract: [],
+            IndividualExtractNew: [],
             MarriageCertificate: [],
             MoFRegistration: [],
             NSSFServiceCertificate: [],
@@ -308,8 +320,10 @@ router.post("/addclient", verify, async (req, res) => {
             Driverslicensecertificate: [],
             PrivateDriverslicense: [],
             FamilyExtract: [],
+            FamilyExtractNew: [],
             IDCard: [],
             IndividualExtract: [],
+            IndividualExtractNew: [],
             MarriageCertificate: [],
             MoFRegistration: [],
             NSSFServiceCertificate: [],
@@ -398,6 +412,7 @@ router.post("/edit", verify, async (req, res) => {
               // console.log(docLanguage[docModel][0][0]);
               if (docLanguage[docModel][0] != null && ObjectId.isValid(docLanguage[docModel][0][0])) {
                 console.log(docLanguage[docModel]);
+                console.log(docModel);
                 if (docModel.includes("Birth")) {
                   for (var j = 0; j < docLanguage[docModel].length; j++) {
                     var docSaved = await Birth.find({
@@ -621,6 +636,48 @@ router.post("/edit", verify, async (req, res) => {
                       language: language[i],
                       docModel: "NSSF Service Certificate",
                       docModelView: docView["NSSF Service Certificate"],
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                      delete: "DELETE",
+                    });
+                  }
+                } else if (docModel == "IndividualExtractNew") {
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await IndividualNew.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Individual Extract New",
+                      docModelView: docView["Individual Extract New"],
+                      created_at: docSaved[0].created_at,
+                      updated_at: docSaved[0].updated_at,
+                      createdBy: docSaved[0].user_created,
+                      updateddBy: docSaved[0].user_edit,
+                      note: docSaved[0].note,
+                      download: "DOWNLOAD",
+                      edit: "EDIT",
+                      delete: "DELETE",
+                    });
+                  }
+                } else if (docModel == "FamilyExtractNew") {
+                  for (var j = 0; j < docLanguage[docModel].length; j++) {
+                    var docSaved = await FamilyNew.find({
+                      _id: docLanguage[docModel][j],
+                    });
+                    result.push({
+                      _id: docLanguage[docModel][j],
+                      client_id: id,
+                      language: language[i],
+                      docModel: "Family Extract New",
+                      docModelView: docView["Family Extract New"],
                       created_at: docSaved[0].created_at,
                       updated_at: docSaved[0].updated_at,
                       createdBy: docSaved[0].user_created,
@@ -3422,6 +3479,32 @@ router.post("/template", verify, async (req, res) => {
             docSaved = await Police.find({ _id: docID });
           } else if (modelCheck.includes("NSSF")) {
             docSaved = await NSSF.find({ _id: docID });
+          } else if (modelCheck == "IndividualExtractNew") {
+            docSaved = await IndividualNew.find({ _id: docID });
+          } else if (modelCheck == "FamilyExtractNew") {
+            docSaved = await FamilyNew.find({ _id: docID });
+            console.log("Family extract length: dfd " + docSaved[0]["s2"]["famsn"].length);
+            if(docSaved[0]["s2"]["famsn"].length != null && docSaved[0]["s2"]["famsn"].length < 30)
+            {
+              console.log("Family extract length: " + docSaved[0]["s2"]["famsn"].length);
+              var familyMember =  {
+                  "num": "",
+                  "nsname": "",
+                  "faname": "",
+                  "moname": "",
+                  "pbirth": "",
+                  "dbirth": "",
+                  "sect": "",
+                  "stat": "",
+                  "s": "",
+                  "regdet": "",
+                  "remark": ""
+              };
+              for(var iteration = 0; iteration < 15; iteration++)
+              {
+                docSaved[0]["s2"]["famsn"].push(familyMember);
+              }
+            }
           } else if (modelCheck.includes("Individual")) {
             docSaved = await Individual.find({ _id: docID });
           } else if (modelCheck.includes("Family")) {
@@ -5707,7 +5790,8 @@ router.post("/data", verify, async (req, res) => {
       let path = "./json/" + req.query.lang + "/" + req.query.doc + ".json";
       let docxPath =
         "./DocumentTemplate/" + req.query.lang + "/" + req.query.doc + ".docx";
-      //console.log(path)
+      console.log(path);
+      console.log(docxPath);
       if (fs.existsSync(path) && fs.existsSync(docxPath)) {
         console.log("Begain");
         let rawdata = fs.readFileSync(path, "utf-8");
@@ -5720,7 +5804,7 @@ router.post("/data", verify, async (req, res) => {
 
         Object.keys(req.body).forEach(function (key) {
           let keys = key.split("_");
-          console.log(keys);
+          //console.log(keys);
           if (keys.length == 2) {
             docArray[keys[0] + keys[1]] = req.body[key];
             if(data[keys[0]][keys[1]] != null)
@@ -5772,6 +5856,35 @@ router.post("/data", verify, async (req, res) => {
                   stat: req.body["s2_fams_stat_" + i],
                   s: req.body["s2_fams_s_" + i],
                   remark: req.body["s2_fams_remark_" + i],
+                });
+              }
+            }
+          } else if (data.s2.hasOwnProperty("famsn")) {
+            for (var i = 0; i < data.s2.famsn.length; i++) {
+              if (!isEmptyOrSpaces(req.body["s2_famsn_nsname_" + i])) {
+                data.s2.famsn[i].num = i + 1;
+                data.s2.famsn[i].nsname = req.body["s2_famsn_nsname_" + i];
+                data.s2.famsn[i].faname = req.body["s2_famsn_faname_" + i];
+                data.s2.famsn[i].moname = req.body["s2_famsn_moname_" + i];
+                data.s2.famsn[i].pbirth = req.body["s2_famsn_pbirth_" + i];
+                data.s2.famsn[i].dbirth = req.body["s2_famsn_dbirth_" + i];
+                data.s2.famsn[i].sect = req.body["s2_famsn_sect_" + i];
+                data.s2.famsn[i].stat = req.body["s2_famsn_stat_" + i];
+                data.s2.famsn[i].regdet = req.body["s2_famsn_regdet_" + i];
+                data.s2.famsn[i].s = req.body["s2_famsn_s_" + i];
+                data.s2.famsn[i].remark = req.body["s2_famsn_remark_" + i];
+                docArray.users.push({
+                  num: req.body["s2_famsn_num_" + i],
+                  nsname: req.body["s2_famsn_nsname_" + i],
+                  faname: req.body["s2_famsn_faname_" + i],
+                  moname: req.body["s2_famsn_moname_" + i],
+                  pbirth: req.body["s2_famsn_pbirth_" + i],
+                  dbirth: req.body["s2_famsn_dbirth_" + i],
+                  sect: req.body["s2_famsn_sect_" + i],
+                  stat: req.body["s2_famsn_stat_" + i],
+                  s: req.body["s2_famsn_s_" + i],
+                  regdet: req.body["s2_famsn_regdet_" + i],
+                  remark: req.body["s2_famsn_remark_" + i],
                 });
               }
             }
@@ -6196,7 +6309,7 @@ router.post("/data", verify, async (req, res) => {
             clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
-        } else if (modelCheck.includes("Individual")) {
+        } else if (modelCheck == "IndividualExtract") {
           if (ObjectId.isValid(docID)) {
             data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
@@ -6221,7 +6334,7 @@ router.post("/data", verify, async (req, res) => {
             clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
           }
-        } else if (modelCheck.includes("Family")) {
+        } else if (modelCheck == "FamilyExtract") {
           if (ObjectId.isValid(docID)) {
             data["user_edit"] = email;
             console.log("Update doc by ID " + docID);
@@ -6245,6 +6358,86 @@ router.post("/data", verify, async (req, res) => {
             clientData[langCheck][modelCheck] = familyid._id;
             clientData["History"][langCheck][modelCheck].push(docid);
             await clientData.save();
+          }
+        } else if (modelCheck.includes("IndividualExtractNew")) {
+          if (ObjectId.isValid(docID)) {
+            data["user_edit"] = email;
+            console.log("Update doc by ID " + docID);
+            const birth = await IndividualNew.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            data["user_created"] = email;
+            const individualNew = new IndividualNew(data);
+            const individualNewid = await individualNew.save();
+            docid = individualNewid._id;
+
+            console.log(individualNewid._id);
+
+            // Check if "IndividualExtractNewNew" already exists in "English"
+            if (!clientData["History"][langCheck].hasOwnProperty(modelCheck)) {
+              // If it doesn't exist, add an empty array for "IndividualExtractNewNew"
+              clientData["History"][langCheck][modelCheck] = [];
+            }
+
+            if (!clientData[langCheck].hasOwnProperty(modelCheck)) {
+              // If it doesn't exist, add an empty array for "IndividualExtractNewNew"
+              clientData[langCheck][modelCheck] = "";
+            }
+
+            clientData[langCheck][modelCheck] = individualNewid._id;
+            clientData["History"][langCheck][modelCheck].push(docid);
+
+            console.log(clientData);
+
+            await clientData.save();
+          }
+        } else if (modelCheck.includes("FamilyExtractNew")) {
+          if (ObjectId.isValid(docID)) {
+            data["user_edit"] = email;
+            console.log("Update doc by ID " + docID);
+            const birth = await FamilyNew.findOneAndUpdate(
+              { _id: docID },
+              data,
+              { upsert: true },
+              function (err, doc) {
+                if (err) console.log(err);
+                console.log("Succesfully saved.");
+              }
+            );
+          } else {
+            data["user_created"] = email;
+            const familyNew = new FamilyNew(data);
+            const familyNewid = await familyNew.save();
+            docid = familyNewid._id;
+
+            console.log(familyNewid._id);
+
+            // Check if "IndividualExtractNewNew" already exists in "English"
+            if (!clientData["History"][langCheck].hasOwnProperty(modelCheck)) {
+              // If it doesn't exist, add an empty array for "IndividualExtractNewNew"
+              clientData["History"][langCheck][modelCheck] = [];
+            }
+
+            if (!clientData[langCheck].hasOwnProperty(modelCheck)) {
+              // If it doesn't exist, add an empty array for "IndividualExtractNewNew"
+              clientData[langCheck][modelCheck] = "";
+            }
+
+            clientData["History"][langCheck][modelCheck].push(docid);
+
+            clientData[langCheck][modelCheck] = familyNewid._id;
+
+            
+            await clientData.save();
+            console.log(clientData[langCheck]);
+            console.log(clientData["History"][langCheck]);
           }
         } else if (modelCheck.includes("Consent")) {
           if (ObjectId.isValid(docID)) {

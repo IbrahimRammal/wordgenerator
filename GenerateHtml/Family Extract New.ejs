@@ -1,0 +1,528 @@
+<form method="POST" action="<%= url %>"
+    id="my_form">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s1.caption %></h8>
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f1" name="s1_f1" placeholder="<%= obj.s1.f1.caption %>"
+                    value="<%= obj.s1.f1.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f2" name="s1_f2" placeholder="<%= obj.s1.f2.caption %>"
+                    value="<%= obj.s1.f2.value %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s1.f3.caption %></h8>
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f3_s1" id="s1f3s1"
+                    placeholder="<%= obj.s1.f3.s1.caption %>" value="<%= obj.s1.f3.s1.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f3_s2" id="s1f3s2"
+                    placeholder="<%= obj.s1.f3.s2.caption %>" value="<%= obj.s1.f3.s2.value %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f7" id="s1f7" placeholder="<%= obj.s1.f7.caption %>"
+                    value="<%= obj.s1.f7.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f4" id="s1f4" placeholder="<%= obj.s1.f4.caption %>"
+                    value="<%= obj.s1.f4.value %>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f5" id="s1f5" placeholder="<%= obj.s1.f5.caption %>"
+                    value="<%= obj.s1.f5.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f6" id="s1f6" placeholder="<%= obj.s1.f6.caption %>"
+                    value="<%= obj.s1.f6.value %>">
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Collapse methode  -->
+    <!--Accordion wrapper-->
+    <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="true">
+
+        <!-- Accordion card -->
+        <div class="card">
+
+
+            <% for (var i = 0; i < obj.s2.famsn.length; i++) { %>
+            <hr class="sidebar-divider">
+            <%if (obj.type == "English") { %>
+
+            <%if (i % 5 == 0) { %>
+            <!-- Card header -->
+            <div class="card-header" role="tab" id="headingOne<%= i %>">
+                <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne<%= i %>" 
+                    aria-expanded= "<%- i == 0 ? 'ture' : 'false' %>"
+                    aria-controls="collapseOne<%= i %>">
+                    <h5 class="mb-0">
+                        Collapsible Group Item #<%= i %> <i class="fas fa-angle-down rotate-icon"></i>
+                    </h5>
+                </a>
+            </div>
+
+            <!--data.s2.famsn[i].nsname = req.body["s2_famsn_nsname_" + i];
+                data.s2.famsn[i].faname = req.body["s2_famsn_faname_" + i];
+                data.s2.famsn[i].moname = req.body["s2_famsn_moname_" + i];
+                data.s2.famsn[i].pdbirth = req.body["s2_famsn_pdbirth_" + i];
+                data.s2.famsn[i].sect = req.body["s2_famsn_sect_" + i];
+                data.s2.famsn[i].stat = req.body["s2_famsn_stat_" + i];
+                data.s2.famsn[i].s = req.body["s2_famsn_s_" + i];
+                data.s2.famsn[i].remark = req.body["s2_famsn_remark_" + i]; -->
+
+            <!-- Card body -->
+            <div id="collapseOne<%= i %>" class="collapse <%- i == 0 ? 'show' : '' %>"" role="tabpanel" aria-labelledby="headingOne<%= i %>"
+                data-parent="#accordionEx">
+                <div class="card-body">
+
+                    <% } %>
+
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_famsn_num_<%= i %>" id="s2famsnnum<%= i %>"
+                                    placeholder="number" value="<%= obj.s2.famsn[i].num %>">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_famsn_nsname_<%= i %>"
+                                    id="s2famsnnsname<%= i %>" placeholder="Name and Surname" value="<%= obj.s2.famsn[i].nsname %>">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_famsn_faname_<%= i %>"
+                                    id="s2famsnfaname<%= i %>" placeholder="Father Name" value="<%= obj.s2.famsn[i].faname %>">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_famsn_moname_<%= i %>"
+                                    id="s2famsnmoname<%= i %>" placeholder="Mother Name" value="<%= obj.s2.famsn[i].moname %>">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_famsn_pdbirth_<%= i %>"
+                                    id="s2famsnpdbirth<%= i %>" placeholder="Place and Birth Date" value="<%= obj.s2.famsn[i].pdbirth %>">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_famsn_pbirth_<%= i %>"
+                                    id="s2famsnpbirth<%= i %>" placeholder="Place of Birth" value="<%= obj.s2.famsn[i].pbirth %>">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_famsn_dbirth_<%= i %>"
+                                    id="s2famsndbirth<%= i %>" placeholder="Date of Birth" value="<%= obj.s2.famsn[i].dbirth %>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_famsn_sect_<%= i %>"
+                                    id="s2famsnsect<%= i %>" placeholder="sect" value="<%= obj.s2.famsn[i].sect %>">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_famsn_stat_<%= i %>"
+                                    id="s2famsnstat<%= i %>" placeholder="Family Status" value="<%= obj.s2.famsn[i].stat %>">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_famsn_s_<%= i %>" id="s2famsns<%= i %>"
+                                    placeholder="Sex" value="<%= obj.s2.famsn[i].s %>">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_famsn_regdet_<%= i %>" id="s2famsnregdet<%= i %>"
+                                    placeholder="Registration details" value="<%= obj.s2.famsn[i].regdet %>">
+                            </div>
+                            <div class="form-group col">
+                                <input type="text" class="form-control" name="s2_famsn_remark_<%= i %>"
+                                    id="s2famsnremark<%= i %>" placeholder="remark" value="<%= obj.s2.famsn[i].remark %>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <% if ( (i+1) % 5 == 0) {%>
+                </div>
+            </div>
+        
+            <% }%>
+
+            <% } else if (obj.type == "Français") {%>
+
+                <%if (i % 5 == 0) { %>
+                    <!-- Card header -->
+                    <div class="card-header" role="tab" id="headingOne<%= i %>">
+                        <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne<%= i %>" 
+                            aria-expanded= "<%- i == 0 ? 'ture' : 'false' %>"
+                            aria-controls="collapseOne<%= i %>">
+                            <h5 class="mb-0">
+                                Collapsible Group Item #<%= i %> <i class="fas fa-angle-down rotate-icon"></i>
+                            </h5>
+                        </a>
+                    </div>
+        
+                    <!-- Card body -->
+                    <div id="collapseOne<%= i %>" class="collapse <%- i == 0 ? 'show' : '' %>"" role="tabpanel" aria-labelledby="headingOne<%= i %>"
+                        data-parent="#accordionEx">
+                        <div class="card-body">
+        
+                            <% } %>
+           
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_num_<%= i %>" id="s2famsnnum<%= i %>"
+                            placeholder="número" value="<%= obj.s2.famsn[i].num %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_nsname_<%= i %>" id="s2famsnnsname<%= i %>"
+                            placeholder="Nom et surnom" value="<%= obj.s2.famsn[i].nsname %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_faname_<%= i %>" id="s2famsnfaname<%= i %>"
+                            placeholder="Nom du père" value="<%= obj.s2.famsn[i].faname %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_moname_<%= i %>" id="s2famsnmoname<%= i %>"
+                            placeholder="Nom de la mère" value="<%= obj.s2.famsn[i].moname %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_pdbirth_<%= i %>"
+                            id="s2famsnpdbirth<%= i %>" placeholder="Lieu et date de naissance" value="<%= obj.s2.famsn[i].pdbirth %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_pbirth_<%= i %>"
+                            id="s2famsnpbirth<%= i %>" placeholder="Lieu de naissance" value="<%= obj.s2.famsn[i].pbirth %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_dbirth_<%= i %>"
+                            id="s2famsndbirth<%= i %>" placeholder="date de naissance" value="<%= obj.s2.famsn[i].dbirth %>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_sect_<%= i %>" id="s2famsnsect<%= i %>"
+                            placeholder="Religion" value="<%= obj.s2.famsn[i].sect %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_stat_<%= i %>" id="s2famsnstat<%= i %>"
+                            placeholder="État Civil" value="<%= obj.s2.famsn[i].stat %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_s_<%= i %>" id="s2famsns<%= i %>"
+                            placeholder="Sexe" value="<%= obj.s2.famsn[i].s %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_regdet_<%= i %>" id="s2famsnregdet<%= i %>"
+                            placeholder="Inscription et date" value="<%= obj.s2.famsn[i].regdet %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_remark_<%= i %>" id="s2famsnremark<%= i %>"
+                            placeholder="Remarques" value="<%= obj.s2.famsn[i].remark %>">
+                    </div>
+                </div>
+            </div>
+
+            <% if ( (i+1) % 5 == 0) {%>
+            </div>
+        </div>
+    
+        <% }%>
+
+            <% } else if (obj.type == "Español") {%>
+
+                <%if (i % 5 == 0) { %>
+                    <!-- Card header -->
+                    <div class="card-header" role="tab" id="headingOne<%= i %>">
+                        <a data-toggle="collapse" data-parent="#accordionEx" href="#collapseOne<%= i %>" 
+                            aria-expanded= "<%- i == 0 ? 'ture' : 'false' %>"
+                            aria-controls="collapseOne<%= i %>">
+                            <h5 class="mb-0">
+                                Collapsible Group Item #<%= i %> <i class="fas fa-angle-down rotate-icon"></i>
+                            </h5>
+                        </a>
+                    </div>
+        
+                    <!-- Card body -->
+                    <div id="collapseOne<%= i %>" class="collapse <%- i == 0 ? 'show' : '' %>"" role="tabpanel" aria-labelledby="headingOne<%= i %>"
+                        data-parent="#accordionEx">
+                        <div class="card-body">
+        
+                            <% } %>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_num_<%= i %>" id="s2famsnnum<%= i %>"
+                            placeholder="número" value="<%= obj.s2.famsn[i].num %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_nsname_<%= i %>" id="s2famsnnsname<%= i %>"
+                            placeholder="Nombre y apellido" value="<%= obj.s2.famsn[i].nsname %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_faname_<%= i %>" id="s2famsnfaname<%= i %>"
+                            placeholder="Nombre del padre" value="<%= obj.s2.famsn[i].faname %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_moname_<%= i %>" id="s2famsnmoname<%= i %>"
+                            placeholder="Nombre y apellido de la madre" value="<%= obj.s2.famsn[i].moname %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_pbirth_<%= i %>"
+                            id="s2famsnpbirth<%= i %>" placeholder="Lugar y fecha de nacimiento" value="<%= obj.s2.famsn[i].pbirth %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_pbirth_<%= i %>"
+                            id="s2famsnpbirth<%= i %>" placeholder="Lugar" value="<%= obj.s2.famsn[i].pbirth %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_dbirth_<%= i %>"
+                            id="s2famsndbirth<%= i %>" placeholder="fecha de nacimiento" value="<%= obj.s2.famsn[i].dbirth %>">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_sect_<%= i %>" id="s2famsnsect<%= i %>"
+                            placeholder="Religión" value="<%= obj.s2.famsn[i].sect %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_stat_<%= i %>" id="s2famsnstat<%= i %>"
+                            placeholder="Estado civil" value="<%= obj.s2.famsn[i].stat %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_s_<%= i %>" id="s2famsns<%= i %>"
+                            placeholder="Sexo" value="<%= obj.s2.famsn[i].s %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_regdet_<%= i %>" id="s2famsnregdet<%= i %>"
+                            placeholder="registray details" value="<%= obj.s2.famsn[i].regdet %>">
+                    </div>
+                    <div class="form-group col">
+                        <input type="text" class="form-control" name="s2_famsn_remark_<%= i %>" id="s2famsnremark<%= i %>"
+                            placeholder="Observación" value="<%= obj.s2.famsn[i].remark %>">
+                    </div>
+                </div>
+            </div>
+
+            <% if ( (i+1) % 5 == 0) {%>
+            </div>
+        </div>
+    
+        <% }%>
+
+            <% } else {%>
+
+            <% }%>
+            <!-- </div> -->
+            <% } %>
+        </div>
+
+        </div>
+        <br>
+        <!-- Accordion wrapper -->
+
+            <%if (obj.original == "0") { %>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="original" id="original">
+
+                <!-- <input type="checkbox" id="original" name="original"> -->
+                <% } else { %>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" name="original" id="original" checked>
+
+                    <!-- <input type="checkbox" id="original" name="original" checked> -->
+                    <% }%>
+
+                    <%if (obj.type == "English") { %>
+                    <label class="form-check-label" for="original">True Copy of the Original</label>
+                </div>
+                <!-- <label for="original">True Copy of the Original</label> -->
+                <% } else if (obj.type == "Français") {%>
+                <label class="form-check-label" for="original">Véritable copie de l'original</label>
+            </div>
+            <!-- <label for="original">Véritable copie de l'original</label> -->
+            <% } else if (obj.type == "Español") {%>
+            <label class="form-check-label" for="original">Copia verdadera del origina</label>
+        </div>
+        <!-- <label for="original">Copia verdadera del original</label> -->
+        <% } else {%>
+        <% }%>
+        <br>
+        <br>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+            <a href="" style="display: none;" name="download" id="download" class="btn btn-secondary">Download</a>
+        </div>
+</form>
+
+
+<!-- <script src="paidscript.js"></script> -->
+
+<script>
+
+    function myFunction(myDIV) {
+        var x = document.getElementById(myDIV);
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+
+    $(document).ready(function () {
+
+        // Retrieve form data from local storage
+        var saved_data = localStorage.getItem("form_data");
+        var saved_type = localStorage.getItem("form_type");
+        var saved_language = localStorage.getItem("form_language");
+
+        var urlString = "<%= url %>";
+        var idString = urlString.substring(urlString.indexOf("id=") + 3);
+        console.log(idString);
+
+        var saved_user = localStorage.getItem("form_user");
+
+        // Check if the saved data matches the specific type, language, and user
+        if (saved_data && saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
+            //$('#my_form').deserialize(saved_data);
+            var formDataArray = saved_data.split("&");
+            for (var i = 0; i < formDataArray.length; i++) {
+                var fieldData = formDataArray[i].split("=");
+                var fieldName = decodeURIComponent(fieldData[0]);
+                var fieldValue = decodeURIComponent(fieldData[1]);
+                $('#my_form [name="' + fieldName + '"]').val(fieldValue);
+            }
+        }
+    });
+
+    // Auto-save form data
+    var autoSaveTimer;
+
+    $("#my_form input, #my_form select, #my_form textarea").on("input", function () {
+        clearTimeout(autoSaveTimer);
+        autoSaveTimer = setTimeout(function () {
+            saveFormData();
+        }, 1000);
+    });
+
+    function saveFormData() {
+        var form_data = $('#my_form').serialize();
+
+        // Save form data and parameters to local storage
+        localStorage.setItem("form_data", form_data);
+        localStorage.setItem("form_type", "<%= obj.caption %>");
+        localStorage.setItem("form_language", "<%= obj.type %>");
+
+        var urlString = "<%= url %>";
+        var idString = urlString.substring(urlString.indexOf("id=") + 3);
+
+        localStorage.setItem("form_user", idString);
+    }
+
+    $("#my_form").submit(function (event) {
+        event.preventDefault(); //prevent default action 
+
+        clearTimeout(autoSaveTimer);
+        saveFormData();
+        var post_url = $(this).attr("action"); //get form action url
+        var request_method = $(this).attr("method"); //get form GET/POST method
+        var form_data = $(this).serialize(); //Encode form elements for submission
+
+        $.ajax({
+            url: post_url,
+            type: request_method,
+            data: form_data,
+            success: function (result) {
+                if(result == "error")
+                {
+                    toastr["error"]("Document not inserted", "Document Save error")
+                    return;
+                }
+
+                toastr["success"]("Document successfully inserted", "Document saved")
+                $("#download").show();
+                $("#download").attr("href", result['link']);
+                $('#paid').show();
+                $('#paid').html(result['paid']);
+
+
+                // Remove saved form data and parameters from local storage if the request matches
+                var saved_type = localStorage.getItem("form_type");
+                var saved_language = localStorage.getItem("form_language");
+                var saved_user = localStorage.getItem("form_user");
+                
+                var urlString = "<%= url %>";
+                var idString = urlString.substring(urlString.indexOf("id=") + 3);
+                console.log(idString);
+
+                if (saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
+                    localStorage.removeItem("form_data");
+                    localStorage.removeItem("form_type");
+                    localStorage.removeItem("form_language");
+                    localStorage.removeItem("form_user");
+                }
+
+            },
+            error: function () {
+                // Handle error and attempt to resend data
+                toastr["error"]("Server not responding. Resending data when connection is reestablished.");
+
+                // Retrieve form data from local storage
+                var saved_data = localStorage.getItem("form_data");
+                var saved_type = localStorage.getItem("form_type");
+                var saved_language = localStorage.getItem("form_language");
+                var saved_user = localStorage.getItem("form_user");
+
+                var urlString = "<%= url %>";
+                var idString = urlString.substring(urlString.indexOf("id=") + 3);
+                console.log(idString);
+
+                if (saved_data && saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
+                    $.ajax({
+                        url: post_url,
+                        type: request_method,
+                        data: saved_data,
+                        success: function (result) {
+                            if (result === "error") {
+                                toastr["error"]("Document not inserted", "Document Save error");
+                                return;
+                            }
+
+                            toastr["success"]("Document successfully inserted", "Document saved");
+                            $("#download").show();
+                            $("#download").attr("href", result['link']);
+                            $('#paid').show();
+                            $('#paid').html(result['paid']);
+ 
+                            // Remove saved form data and parameters from local storage
+                            localStorage.removeItem("form_data");
+                            localStorage.removeItem("form_type");
+                            localStorage.removeItem("form_language");
+                            localStorage.removeItem("form_user");
+                        },
+                        error: function () {
+                            toastr["error"]("Failed to resend data. Please try again later.");
+                        }
+                    });
+                } else {
+                    toastr["error"]("No saved form data found.");
+                }
+            }
+        });
+    });
+</script>

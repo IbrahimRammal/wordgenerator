@@ -188,6 +188,7 @@ $(document).ready(function () {
               isPrimaryKey: true,
               validationRules: { required: true },
               textAlign: "center",
+              autoFit: true,
               width: 120,
               visible: false,
               allowEditing: false,
@@ -198,6 +199,7 @@ $(document).ready(function () {
               //isPrimaryKey: true,
               validationRules: { required: true },
               textAlign: "center",
+              autoFit: true,
               width: 120,
               visible: false,
               allowEditing: false,
@@ -206,6 +208,7 @@ $(document).ready(function () {
               field: "fullname",
               headerText: "fullname",
               validationRules: { required: true },
+              autoFit: true,
               width: 100,
               allowEditing: false,
               visible: false,
@@ -215,6 +218,7 @@ $(document).ready(function () {
               headerText: "invoiceNumber",
               textAlign: "Left",
               validationRules: { required: true },
+              autoFit: true,
               width: 100,
               allowEditing: true,
             },
@@ -223,6 +227,7 @@ $(document).ready(function () {
               headerText: "docid",
               textAlign: "Left",
               validationRules: { required: true },
+              autoFit: true,
               width: 100,
               visible: false,
               allowEditing: false,
@@ -232,6 +237,7 @@ $(document).ready(function () {
               headerText: "type",
               textAlign: "Left",
               validationRules: { required: true },
+              autoFit: true,
               width: 90,
               edit: {
                 create: function () {
@@ -271,6 +277,7 @@ $(document).ready(function () {
               headerText: "language",
               textAlign: "Left",
               validationRules: { required: true },
+              autoFit: true,
               width: 80,
               visible: false,
               allowEditing: false,
@@ -278,6 +285,7 @@ $(document).ready(function () {
             {
               field: "docModel",
               headerText: "docModel",
+              autoFit: true,
               width: 120,
               textAlign: "Left",
               allowEditing: false,
@@ -286,6 +294,7 @@ $(document).ready(function () {
             {
               field: "createTime",
               headerText: "CreateTime",
+              autoFit: true,
               width: 85,
               textAlign: "Left",
               allowEditing: false,
@@ -293,23 +302,27 @@ $(document).ready(function () {
             {
               field: "updateTime",
               headerText: "UpdateTime",
+              autoFit: true,
               width: 85,
               textAlign: "Left",
               allowEditing: false,
             },
             {
-              field: "total",
-              headerText: "Total Price",
-              width: 90,
-              // format: "C",
-              textAlign: "Right",
-              type: "number",
+          field: "total",
+          headerText: "Amount",
+          autoFit: true,
+          width: 60,
+          // format: "C",
+          textAlign: "Right",
+          type: "number",
+          format: 'N2',
               valueAccessor: currencyFormatter,
               //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
             },
             {
               field: "paid",
               headerText: "Paid Price",
+              autoFit: true,
               width: 90,
               // format: "C",
               textAlign: "Right",
@@ -317,24 +330,29 @@ $(document).ready(function () {
               valueAccessor: currencyFormatter,
               //validationRules: { required: true, minLength: [customFn, 'Need to be less than total value']}
             },
-            {
-              field: "Download",
-              headerText: "",
-              textAlign: "Right",
-              width: 90,
-              type: "number",
-              //visible: false,
-            },
-            {
-              field: "Edit",
-              headerText: "",
-              textAlign: "Left",
-              width: 60,
-              //   visible: false,
-            },
+        {
+          field: "Download",
+          headerText: "",
+          textAlign: "Right",
+          width: 40,
+          type: "number",
+          template: '<i class="fas fa-download"></i>',
+          visible: true,
+          autoFit: true
+        },
+        {
+          field: "Edit",
+          headerText: "",
+          textAlign: "Left",
+          autoFit: true,
+          width: 40,
+          template: '<i class="fas fa-edit"></i>',
+          //   visible: false,
+        }, 
             {
               field: "currency",
               headerText: "currency",
+              autoFit: true,
               width: 90,
               // format: "C",
               textAlign: "Right",
@@ -343,6 +361,7 @@ $(document).ready(function () {
             {
               field: "href",
               headerText: "DocLink",
+              autoFit: true,
               width: 90,
               // format: "C",
               textAlign: "Right",
@@ -353,7 +372,10 @@ $(document).ready(function () {
           cellSelected: (args) => {
             //console.log(args.data.href);
             // console.log(args.currentCell.outerText);
-            if (args.currentCell.outerText == "DOWNLOAD") {
+                    const cellContent = args.currentCell.innerHTML;
+
+        //if (args.currentCell.outerText == "DOWNLOAD") {
+        if (cellContent.includes('fa-download')) {
               $.ajax({
                 url: "/api/posts/deleteAfterDownload",
                 type: "POST",
@@ -373,7 +395,7 @@ $(document).ready(function () {
                   //   alert("text status " + textStatus + ", err " + err);
                 },
               });
-            }  else if (args.currentCell.outerText == "EDIT") {
+            }  else if (cellContent.includes('fa-edit')) {
               //console.log(args);
               // var _id = this.parentDetails.parentRowData._id;
               // //var fullname = this.parentDetails.parentRowData.fullname;

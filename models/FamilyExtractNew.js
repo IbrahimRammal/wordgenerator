@@ -3,7 +3,7 @@ const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const individualSchema = mongoose.Schema({
+const familySchema = mongoose.Schema({
   type: {
     type: 'String'
   },
@@ -107,9 +107,6 @@ const individualSchema = mongoose.Schema({
     telephone: {
       type: 'String'
     },
-    religion: {
-      type: 'String'
-    },
     placeofbirthlocal: {
       type: 'String'
     },
@@ -130,14 +127,6 @@ const individualSchema = mongoose.Schema({
     caption: {
       type: 'String'
     },
-    f0: {
-      caption: {
-        type: 'String'
-      },
-      value: {
-        type: 'String'
-      }
-    },
     f1: {
       caption: {
         type: 'String'
@@ -147,6 +136,14 @@ const individualSchema = mongoose.Schema({
       }
     },
     f2: {
+      caption: {
+        type: 'String'
+      },
+      value: {
+        type: 'String'
+      }
+    },
+    f3: {
       caption: {
         type: 'String'
       },
@@ -165,14 +162,6 @@ const individualSchema = mongoose.Schema({
         value: {
           type: 'String'
         }
-      }
-    },
-    f3: {
-      caption: {
-        type: 'String'
-      },
-      value: {
-        type: 'String'
       }
     },
     f4: {
@@ -203,119 +192,15 @@ const individualSchema = mongoose.Schema({
       caption: {
         type: 'String'
       },
-      s1: {
-        caption: {
-          type: 'String'
-        },
-        value: {
-          type: 'String'
-        }
-      },
-      s2: {
-        caption: {
-          type: 'String'
-        },
-        value: {
-          type: 'String'
-        }
-      },
-      s3: {
-        caption: {
-          type: 'String'
-        },
-        value: {
-          type: 'String'
-        }
-      }
-    },
-    f77: {
-      caption: {
-        type: 'String'
-      },
       value: {
         type: 'String'
       }
-    },
-    f8: {
-      caption: {
-        type: 'String'
-      },
-      value: {
-        type: 'String'
-      }
-    },
-    f9: {
-      caption: {
-        type: 'String'
-      },
-      value: {
-        type: 'String'
-      }
-    },
-    f10: {
-      caption: {
-        type: 'String'
-      },
-      value: {
-        type: 'String'
-      }
-    },
-    f11: {
-      caption: {
-        type: 'String'
-      },
-      value: {
-        type: 'String'
-      }
-    },
-    f12: {
-      caption: {
-        type: 'String'
-      },
-      value: {
-        type: 'String'
-      }
-    },
-    f13: {
-      caption: {
-        type: 'String'
-      },
-      value: {
-        type: 'String'
-      }
-    },
-    f14: {
-      caption: {
-        type: 'String'
-      },
-      value: {
-        type: 'String'
-      }
-    },
-    f15: {
-      caption: {
-        type: 'String'
-      },
-      value: {
-        type: 'String'
-      }
-    },
-      f16: {
-        caption: {
-          type: 'String'
-        },
-        value: {
-          type: 'String'
-        }
-    },
-    f17: {
-      caption: {
-        type: 'String'
-      },
-      value: {
-        type: 'String'
-      }
-     }
+    }
+  },
+  s2: {
+    fams: {
+      type: ['Mixed']
+    }
   },
   date: {
     type: 'String'
@@ -395,7 +280,7 @@ const individualSchema = mongoose.Schema({
 });
 
 // Sets the created_at parameter equal to the current time
-individualSchema.pre("save", function (next) {
+familySchema.pre("save", function (next) {
   now = new Date();
   this.updated_at = now;
   if (!this.created_at) {
@@ -404,6 +289,6 @@ individualSchema.pre("save", function (next) {
   next();
 });
 
-const Individual = mongoose.model('IndividualExtract', individualSchema)
+const FamilyNew = mongoose.model('FamilyExtractNew', familySchema)
 
-module.exports = Individual
+module.exports = FamilyNew

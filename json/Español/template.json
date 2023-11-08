@@ -1,8 +1,10 @@
 {
     "Birth Certificate" : "Acta de Nacimiento",
     "Family Extract" : "Extracto del estado civil familiar",
+    "Family Extract New" : "Extracto del estado civil familiar nueva",
     "Divorce Certificate" : "Acta de Divorcio",
     "Individual Extract" : "Extracto del estado civil individual",
+    "Individual Extract New" : "Extracto del estado civil individual nueva",
     "Police record" : "Ficha Policial",
     "Residence Certificate" : "Certificado de Residencia",
     "Empty Template" : "Plantilla vacía",

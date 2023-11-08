@@ -81,6 +81,7 @@ $(document).ready(function () {
             textAlign: "center",
             width: 120,
             visible: false,
+            autoFit: true
           },
           {
             field: "paymentid",
@@ -88,6 +89,7 @@ $(document).ready(function () {
             textAlign: "center",
             width: 120,
             visible: false,
+            autoFit: true
           },
           {
             field: "combineid",
@@ -96,6 +98,7 @@ $(document).ready(function () {
             textAlign: "center",
             width: 120,
             visible: false,
+            autoFit: true
           },
           {
             field: "countervalue",
@@ -103,20 +106,23 @@ $(document).ready(function () {
             textAlign: "Left",
             validationRules: { required: true },
             width: 50,
-            visible: false
+            visible: false,
+            autoFit: true
           },
           {
             field: "fullname",
             headerText: "fullname",
             validationRules: { required: true },
             width: 100,
+            autoFit: false
           },
           {
             field: "invoiceNumber",
-            headerText: "invoiceNumber",
+            headerText: "invoiceNo",
             textAlign: "Left",
             validationRules: { required: true },
-            width: 100,
+            width: 40,
+            autoFit: true
           },
           {
             field: "href",
@@ -125,44 +131,91 @@ $(document).ready(function () {
             validationRules: { required: true },
             width: 100,
             visible: false,
+            autoFit: true
           },
           {
             field: "category",
             headerText: "category",
             textAlign: "Left",
             validationRules: { required: true },
-            width: 100,
+            width: 50,
+            autoFit: true
           },
           {
-            field: "Download",
-            headerText: "DOWNLOAD",
+            field: "createTime",
+            headerText: "CreateTime",
+            autoFit: true,
+            width: 85,
             textAlign: "Left",
-            validationRules: { required: true },
-            width: 100,
-          },          {
+            allowEditing: false,
+            visible: true
+          },
+          {
+            field: "updateTime",
+            headerText: "UpdateTime",
+            autoFit: true,
+            width: 85,
+            textAlign: "Left",
+            allowEditing: false,
+            visible: false
+          },
+                  {
             field: "currency",
             headerText: "currency",
             textAlign: "Left",
             validationRules: { required: true },
             width: 50,
-            visible: true
+            visible: true,
+            autoFit: true
           },
           {
             field: "rate",
-            headerText: "Dollar Rate",
-            width: 90,
+            headerText: "Rate",
+            width: 40,
             // format: "C",
-            textAlign: "Left"
-            //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
+            textAlign: "Left",
+            autoFit: true
           },
           {
-            field: "Edit",
-            headerText: "EDIT",
-            textAlign: "Left",
-            validationRules: { required: true },
+            field: "total",
+            headerText: "Amount",
+            autoFit: true,
             width: 50,
-            visible: true
-          }
+            // format: "C",
+            textAlign: "Right",
+            type: "number",
+            format: 'N2'
+          //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
+        },
+        {
+          field: "totalValue",
+          headerText: "$",
+          autoFit: true,
+          width: 40,
+          // format: "C",
+          textAlign: "Right",
+          format: 'N2',
+          type: "number"
+          //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
+        },{
+          field: "Download",
+          headerText: "",
+          textAlign: "Right",
+          width: 30,
+          type: "number",
+          template: '<i class="fas fa-download"></i>',
+          visible: true,
+          autoFit: true
+        },
+        {
+          field: "Edit",
+          headerText: "",
+          textAlign: "Left",
+          width: 30,
+          template: '<i class="fas fa-edit"></i>',
+          autoFit: true
+          //   visible: false,
+        },
         // createTime: query[x]["invoice"][j].createTime,
         // updateTime: query[x]["invoice"][j].updateTime
         ],
@@ -170,7 +223,10 @@ $(document).ready(function () {
           //console.log(args);
           //console.log(args.data.href);
           // console.log(args.currentCell.outerText);
-          if (args.currentCell.outerText == "DOWNLOAD") {
+                  const cellContent = args.currentCell.innerHTML;
+
+        //if (args.currentCell.outerText == "DOWNLOAD") {
+        if (cellContent.includes('fa-download')) {
             //console.log(args);
             $.ajax({
               url: "/api/voucher/deleteAfterDownload",
@@ -191,7 +247,7 @@ $(document).ready(function () {
                 //   alert("text status " + textStatus + ", err " + err);
               },
             });
-          }  else if (args.currentCell.outerText == "EDIT") {
+          }  else if (cellContent.includes('fa-edit')) {
             //console.log(args);
             // var _id = this.parentDetails.parentRowData._id;
             // //var fullname = this.parentDetails.parentRowData.fullname;

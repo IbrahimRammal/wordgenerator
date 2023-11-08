@@ -1,0 +1,325 @@
+<form method="POST" action="<%= url %>"
+    id="my_form">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f0" name="s1_f0" placeholder="<%= obj.s1.f0.caption %>"
+                    value="<%= obj.s1.f0.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f1" name="s1_f1" placeholder="<%= obj.s1.f1.caption %>"
+                    value="<%= obj.s1.f1.value %>">
+            </div>
+            <div class="form-group col">
+
+                <input class="form-control awesomplete" list="sex" name="s1_f10" id="s1f10"
+                    placeholder="<%= obj.s1.f10.caption %>" value="<%= obj.s1.f10.value %>" required>
+                <%if (obj.type == "English") { %>
+                <datalist id="sex">
+                    <option>Male</option>
+                    <option>Female</option>
+                </datalist>
+                <% } else if (obj.type == "Français") {%>
+                <datalist id="sex">
+                    <option>mâle</option>
+                    <option>femelle</option>
+                </datalist>
+                <% } else if (obj.type == "Español") {%>
+                <datalist id="sex">
+                    <option>masculino</option>
+                    <option>femenino</option>
+                </datalist>
+                <% } else {%>
+                <% }%>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s1.f2.caption %></h8>
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f2s1" name="s1_f2_s1"
+                    placeholder="<%= obj.s1.f2.s1.caption %>" value="<%= obj.s1.f2.s1.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" id="s1f2s2" name="s1_f2_s2"
+                    placeholder="<%= obj.s1.f2.s2.caption %>" value="<%= obj.s1.f2.s2.value %>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f3" id="s1f3" placeholder="<%= obj.s1.f3.caption %>"
+                    value="<%= obj.s1.f3.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f4" id="s1f4" placeholder="<%= obj.s1.f4.caption %>"
+                    value="<%= obj.s1.f4.value %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f5" id="s1f5" placeholder="<%= obj.s1.f5.caption %>"
+                    value="<%= obj.s1.f5.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f6" id="s1f6" placeholder="<%= obj.s1.f6.caption %>"
+                    value="<%= obj.s1.f6.value %>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f8" id="s1f8" placeholder="<%= obj.s1.f8.caption %>"
+                    value="<%= obj.s1.f8.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f9" id="s1f9" placeholder="<%= obj.s1.f9.caption %>"
+                    value="<%= obj.s1.f9.value %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary"><%= obj.s1.f7.caption %></h8>
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f7_s1" id="s1f7s1"
+                    placeholder="<%= obj.s1.f7.s1.caption %>" value="<%= obj.s1.f7.s1.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f7_s2" id="s1f7s2"
+                    placeholder="<%= obj.s1.f7.s2.caption %>" value="<%= obj.s1.f7.s2.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f77" id="s1f77" placeholder="<%= obj.s1.f77.caption %>"
+                    value="<%= obj.s1.f77.value %>">
+            </div>
+        </div>
+    </div>
+    <hr class="sidebar-divider">
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f11" id="s1f11" placeholder="<%= obj.s1.f11.caption %>"
+                    value="<%= obj.s1.f11.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f18" id="s1f18" placeholder="<%= obj.s1.f18.caption %>"
+                    value="<%= obj.s1.f18.value %>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f13" id="s1f13" placeholder="<%= obj.s1.f13.caption %>"
+                    value="<%= obj.s1.f13.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f14" id="s1f14" placeholder="<%= obj.s1.f14.caption %>"
+                    value="<%= obj.s1.f14.value %>">
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f17" id="s1f17" placeholder="<%= obj.s1.f17.caption %>"
+                    value="<%= obj.s1.f17.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f16" id="s1f16" placeholder="<%= obj.s1.f16.caption %>"
+                    value="<%= obj.s1.f16.value %>">
+            </div>
+            <div class="form-group col">
+                <input type="text" class="form-control" name="s1_f15" id="s1f15" placeholder="<%= obj.s1.f15.caption %>"
+                    value="<%= obj.s1.f15.value %>">
+            </div>
+        </div>
+    </div>
+    <%if (obj.original == "0") { %>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="original" id="original">
+
+    <!-- <input type="checkbox" id="original" name="original"> -->
+    <% } else { %>
+    <div class="form-check">
+        <input type="checkbox" class="form-check-input" name="original" id="original" checked>
+
+        <!-- <input type="checkbox" id="original" name="original" checked> -->
+        <% }%>
+
+        <%if (obj.type == "English") { %>
+        <label class="form-check-label" for="original">True Copy of the Original</label>
+    </div>
+    <!-- <label for="original">True Copy of the Original</label> -->
+    <% } else if (obj.type == "Français") {%>
+    <label class="form-check-label" for="original">Véritable copie de l'original</label>
+    </div>
+    <!-- <label for="original">Véritable copie de l'original</label> -->
+    <% } else if (obj.type == "Español") {%>
+    <label class="form-check-label" for="original">Copia verdadera del origina</label>
+    </div>
+    <!-- <label for="original">Copia verdadera del original</label> -->
+    <% } else {%>
+    <% }%>
+    <br>
+    <br>
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+        <a href="" style="display: none;" name="download" id="download" class="btn btn-secondary">Download</a>
+    </div>
+</form>
+
+
+<!-- <script src="paidscript.js"></script> -->
+
+<script>
+    $(document).ready(function () {
+
+        // Retrieve form data from local storage
+        var saved_data = localStorage.getItem("form_data");
+        var saved_type = localStorage.getItem("form_type");
+        var saved_language = localStorage.getItem("form_language");
+
+        var urlString = "<%= url %>";
+        var idString = urlString.substring(urlString.indexOf("id=") + 3);
+        console.log(idString);
+
+        var saved_user = localStorage.getItem("form_user");
+
+        // Check if the saved data matches the specific type, language, and user
+        if (saved_data && saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
+            //$('#my_form').deserialize(saved_data);
+            var formDataArray = saved_data.split("&");
+            for (var i = 0; i < formDataArray.length; i++) {
+                var fieldData = formDataArray[i].split("=");
+                var fieldName = decodeURIComponent(fieldData[0]);
+                var fieldValue = decodeURIComponent(fieldData[1]);
+                $('#my_form [name="' + fieldName + '"]').val(fieldValue);
+            }
+        }
+    });
+
+    // Auto-save form data
+    var autoSaveTimer;
+
+    $("#my_form input, #my_form select, #my_form textarea").on("input", function () {
+        clearTimeout(autoSaveTimer);
+        autoSaveTimer = setTimeout(function () {
+            saveFormData();
+        }, 1000);
+    });
+
+    function saveFormData() {
+        var form_data = $('#my_form').serialize();
+
+        // Save form data and parameters to local storage
+        localStorage.setItem("form_data", form_data);
+        localStorage.setItem("form_type", "<%= obj.caption %>");
+        localStorage.setItem("form_language", "<%= obj.type %>");
+
+        var urlString = "<%= url %>";
+        var idString = urlString.substring(urlString.indexOf("id=") + 3);
+
+        localStorage.setItem("form_user", idString);
+    }
+
+    $("#my_form").submit(function (event) {
+        event.preventDefault(); //prevent default action 
+
+        clearTimeout(autoSaveTimer);
+        saveFormData();
+        var post_url = $(this).attr("action"); //get form action url
+        var request_method = $(this).attr("method"); //get form GET/POST method
+        var form_data = $(this).serialize(); //Encode form elements for submission
+
+        $.ajax({
+            url: post_url,
+            type: request_method,
+            data: form_data,
+            success: function (result) {
+                if(result == "error")
+                {
+                    toastr["error"]("Document not inserted", "Document Save error")
+                    return;
+                }
+
+                toastr["success"]("Document successfully inserted", "Document saved")
+                $("#download").show();
+                $("#download").attr("href", result['link']);
+                $('#paid').show();
+                $('#paid').html(result['paid']);
+
+
+                // Remove saved form data and parameters from local storage if the request matches
+                var saved_type = localStorage.getItem("form_type");
+                var saved_language = localStorage.getItem("form_language");
+                var saved_user = localStorage.getItem("form_user");
+                
+                var urlString = "<%= url %>";
+                var idString = urlString.substring(urlString.indexOf("id=") + 3);
+                console.log(idString);
+
+                if (saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
+                    localStorage.removeItem("form_data");
+                    localStorage.removeItem("form_type");
+                    localStorage.removeItem("form_language");
+                    localStorage.removeItem("form_user");
+                }
+
+            },
+            error: function () {
+                // Handle error and attempt to resend data
+                toastr["error"]("Server not responding. Resending data when connection is reestablished.");
+
+                // Retrieve form data from local storage
+                var saved_data = localStorage.getItem("form_data");
+                var saved_type = localStorage.getItem("form_type");
+                var saved_language = localStorage.getItem("form_language");
+                var saved_user = localStorage.getItem("form_user");
+
+                var urlString = "<%= url %>";
+                var idString = urlString.substring(urlString.indexOf("id=") + 3);
+                console.log(idString);
+
+                if (saved_data && saved_type === "<%= obj.caption %>" && saved_language === "<%= obj.type %>" && saved_user === idString) {
+                    $.ajax({
+                        url: post_url,
+                        type: request_method,
+                        data: saved_data,
+                        success: function (result) {
+                            if (result === "error") {
+                                toastr["error"]("Document not inserted", "Document Save error");
+                                return;
+                            }
+
+                            toastr["success"]("Document successfully inserted", "Document saved");
+                            $("#download").show();
+                            $("#download").attr("href", result['link']);
+                            $('#paid').show();
+                            $('#paid').html(result['paid']);
+ 
+                            // Remove saved form data and parameters from local storage
+                            localStorage.removeItem("form_data");
+                            localStorage.removeItem("form_type");
+                            localStorage.removeItem("form_language");
+                            localStorage.removeItem("form_user");
+                        },
+                        error: function () {
+                            toastr["error"]("Failed to resend data. Please try again later.");
+                        }
+                    });
+                } else {
+                    toastr["error"]("No saved form data found.");
+                }
+            }
+        });
+    });
+</script>

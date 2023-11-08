@@ -827,6 +827,18 @@ router.post("/ReceiptSearch/GetData", verify, async (req, res) => {
                     let invoiceSNumber = "";
                     let invoiceYear = query[x][element][j].invoiceNumber;
 
+                    var totalValue = parseFloat(query[x][element][j].total);
+                    var rateValue = parseFloat(query[x][element][j].rate);
+                    var currencyCheck = query[x][element][j].currency;
+          
+                    if(currencyCheck == "LBP")
+                    {
+                      totalValue = totalValue / rateValue;
+                      totalValue = totalValue.toFixed(2)
+                    } else {
+          
+                    }
+
                     if(parseInt(id) == 1)
                     {
                       if(!invoiceYear.endsWith("/" + last2Num)){
@@ -852,6 +864,7 @@ router.post("/ReceiptSearch/GetData", verify, async (req, res) => {
                         href: query[x][element][j].href,
                         category: query[x][element][j].category,
                         total: query[x][element][j].total,
+                        totalValue: totalValue,
                         remain: query[x][element][j].remain,
                         paid: query[x][element][j].paid,
                         currency: query[x][element][j].currency,
@@ -1348,6 +1361,18 @@ router.post("/PaymentSearch/GetData", verify, async (req, res) => {
                 let invoiceSNumber = "";
                 let invoiceYear = query[x][element][j].invoiceNumber;
 
+                var totalValue = parseFloat(query[x][element][j].total);
+                var rateValue = parseFloat(query[x][element][j].rate);
+                var currencyCheck = query[x][element][j].currency;
+      
+                if(currencyCheck == "LBP")
+                {
+                  totalValue = totalValue / rateValue;
+                  totalValue = totalValue.toFixed(2)
+                } else {
+      
+                }
+
                 if(parseInt(id) == 1)
                 {
                   if(!invoiceYear.endsWith("/" + last2Num)){
@@ -1373,6 +1398,7 @@ router.post("/PaymentSearch/GetData", verify, async (req, res) => {
                     href: query[x][element][j].href,
                     category: query[x][element][j].category,
                     total: query[x][element][j].total,
+                    totalValue: totalValue,
                     remain: query[x][element][j].remain,
                     paid: query[x][element][j].paid,
                     rate: query[x][element][j].rate,

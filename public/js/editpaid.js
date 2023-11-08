@@ -103,6 +103,7 @@ function getData() {
               field: "language",
               headerText: "Language",
               validationRules: { required: true },
+              autoFit: true,
               width: 85,
             },
             {
@@ -110,6 +111,7 @@ function getData() {
               headerText: "Doc ID",
               isPrimaryKey: true,
               textAlign: "center",
+              autoFit: true,
               width: 120,
               visible: false,
             },
@@ -133,6 +135,7 @@ function getData() {
               field: "docModel",
               headerText: "docModel",
               textAlign: "Left",
+              autoFit: true,
               width: 120,
               validationRules: { required: true },
               visible: false,
@@ -142,6 +145,7 @@ function getData() {
               field: "createdBy",
               headerText: "Created By",
               textAlign: "Left",
+              autoFit: true,
               width: 100,
               validationRules: { required: true },
               //   validationRules: { required: true },
@@ -150,6 +154,7 @@ function getData() {
               field: "updateddBy",
               headerText: "Updated By",
               textAlign: "Left",
+              autoFit: true,
               width: 100,
               validationRules: { required: true },
               //   validationRules: { required: true },
@@ -158,6 +163,7 @@ function getData() {
               field: "created_at",
               headerText: "created_at",
               textAlign: "Left",
+              autoFit: true,
               width: 130,
               allowEditing: false,
               type: "datetime",
@@ -167,30 +173,36 @@ function getData() {
               field: "updated_at",
               headerText: "updated_at",
               textAlign: "Left",
+              autoFit: true,
               width: 130,
               allowEditing: false,
               type: "datetime",
               format: "dd/MM/yyyy hh:mm a",
             },
-            {
-              field: "download",
-              headerText: "",
-              textAlign: "Left",
-              width: 90,
-              type: "number",
-              //visible: false,
-            },
-            {
-              field: "edit",
-              headerText: "",
-              textAlign: "Left",
-              width: 60,
-              //   visible: false,
-            },
+        {
+          field: "Download",
+          headerText: "",
+          textAlign: "Right",
+          width: 40,
+          type: "number",
+          template: '<i class="fas fa-download"></i>',
+          visible: true,
+          autoFit: true
+        },
+        {
+          field: "Edit",
+          headerText: "",
+          textAlign: "Left",
+          width: 40,
+          template: '<i class="fas fa-edit"></i>',
+          autoFit: true
+          //   visible: false,
+        }, 
             {
               field: "note",
               headerText: "Note",
               textAlign: "Left",
+              autoFit: true,
               width: 100,
               visible: false,
             },
@@ -215,7 +227,10 @@ function getData() {
             // console.log(args);
             //console.log(args.data.href);
             //console.log(args.currentCell.outerText);
-            if (args.currentCell.outerText == "DOWNLOAD") {
+                    const cellContent = args.currentCell.innerHTML;
+
+        //if (args.currentCell.outerText == "DOWNLOAD") {
+        if (cellContent.includes('fa-download')) {
                 $.ajax({
                     url: "/api/posts/deleteAfterDownload",
                     type: "POST",
@@ -235,7 +250,7 @@ function getData() {
                       //   alert("text status " + textStatus + ", err " + err);
                     },
                   });
-              } else if (args.currentCell.outerText == "EDIT") {
+              } else if (cellContent.includes('fa-edit')) {
                 // console.log(args);
 
               $.ajax({

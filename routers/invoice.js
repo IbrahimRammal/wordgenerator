@@ -3300,7 +3300,7 @@ router.post("/datainvoice", verify, async (req, res) => {
             var currencyEdit = data["currency"];
 
             let unofficialDate = data.s2.f5.value;
-            const parsedDate = parseDateFromString(unofficialDate);
+            let parsedDate = parseDateFromString(unofficialDate);
   
             if (parsedDate !== null) {
               console.log(parsedDate); // Output: Sun Jul 24 2023 00:00:00 GMT+0000 (Coordinated Universal Time)

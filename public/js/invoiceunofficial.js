@@ -86,6 +86,7 @@ $(document).ready(function () {
         isPrimaryKey: true,
         validationRules: { required: true },
         textAlign: "center",
+        autoFit: true,
         width: 120,
         visible: false,
         allowEditing: false,
@@ -96,6 +97,7 @@ $(document).ready(function () {
         //isPrimaryKey: true,
         validationRules: { required: true },
         textAlign: "center",
+        autoFit: true,
         width: 50,
         visible: false,
         //allowEditing: false,
@@ -104,6 +106,7 @@ $(document).ready(function () {
         field: "fullname",
         headerText: "fullname",
         validationRules: { required: true },
+        autoFit: true,
         width: 120,
         allowEditing: false,
         visible: true,
@@ -114,16 +117,18 @@ $(document).ready(function () {
         //isPrimaryKey: true,
         validationRules: { required: true },
         textAlign: "center",
+        autoFit: true,
         width: 50,
         visible: false,
         //allowEditing: false,
       },
       {
         field: "invoiceNumber",
-        headerText: "invoiceNumber",
+        headerText: "invoiceNo",
         textAlign: "Left",
         validationRules: { required: true },
-        width: 80,
+        autoFit: true,
+        width: 50,
         allowEditing: true,
       },
       {
@@ -131,6 +136,7 @@ $(document).ready(function () {
         headerText: "docid",
         textAlign: "Left",
         validationRules: { required: true },
+        autoFit: true,
         width: 100,
         visible: false,
         allowEditing: false,
@@ -141,6 +147,7 @@ $(document).ready(function () {
         textAlign: "Left",
         visible: false,
         validationRules: { required: true },
+        autoFit: true,
         width: 90,
         edit: {
           create: function () {
@@ -180,6 +187,7 @@ $(document).ready(function () {
         headerText: "language",
         textAlign: "Left",
         validationRules: { required: true },
+        autoFit: true,
         width: 80,
         visible: false,
         allowEditing: false,
@@ -187,6 +195,7 @@ $(document).ready(function () {
       {
         field: "docModel",
         headerText: "docModel",
+        autoFit: true,
         width: 120,
         textAlign: "Left",
         allowEditing: false,
@@ -195,14 +204,16 @@ $(document).ready(function () {
       {
         field: "createTime",
         headerText: "CreateTime",
+        autoFit: true,
         width: 85,
         textAlign: "Left",
         allowEditing: false,
-        visible: false
+        visible: true
       },
       {
         field: "updateTime",
         headerText: "UpdateTime",
+        autoFit: true,
         width: 85,
         textAlign: "Left",
         allowEditing: false,
@@ -211,40 +222,47 @@ $(document).ready(function () {
       {
         field: "currency",
         headerText: "Currency",
-        width: 90,
+        autoFit: true,
+        width: 30,
         // format: "C",
         textAlign: "Left"
         //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
       },
       {
         field: "rate",
-        headerText: "Dollar Rate",
-        width: 90,
+        headerText: "Rate",
+        autoFit: true,
+        width: 40,
         // format: "C",
         textAlign: "Left"
         //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
       },
       {
-        field: "total",
-        headerText: "Total Price",
-        width: 90,
-        // format: "C",
-        textAlign: "Right",
-        type: "number"
+          field: "total",
+          headerText: "Amount",
+          autoFit: true,
+          width: 50,
+          // format: "C",
+          textAlign: "Right",
+          type: "number",
+          format: 'N2'
         //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
       },
       {
         field: "totalValue",
         headerText: "$",
-        width: 90,
+        autoFit: true,
+        width: 40,
         // format: "C",
         textAlign: "Right",
+        format: 'N2',
         type: "number"
         //validationRules: { required: true, minLength: [customFn, 'Need to be less than paid value']}
       },
       {
         field: "paid",
         headerText: "Paid Price",
+        autoFit: true,
         width: 90,
         // format: "C",
         textAlign: "Right",
@@ -252,32 +270,39 @@ $(document).ready(function () {
         visible: false,
         //validationRules: { required: true, minLength: [customFn, 'Need to be less than total value']}
       },
-      {
-        field: "Download",
-        headerText: "",
-        textAlign: "Right",
-        width: 90,
-        type: "number",
-        visible: true,
-      },
-      {
-        field: "Voucher",
-        headerText: "",
-        textAlign: "Right",
-        width: 90,
-        type: "number",
-        visible: true,
-      },
-      {
-        field: "Edit",
-        headerText: "",
-        textAlign: "Left",
-        width: 60,
-        //   visible: false,
-      },
+        {
+          field: "Download",
+          headerText: "",
+          textAlign: "Right",
+          width: 30,
+          type: "number",
+          template: '<i class="fas fa-download"></i>',
+          visible: true,
+          autoFit: true
+        },
+        {
+          field: "Voucher",
+          headerText: "",
+          textAlign: "Right",
+          width: 30,
+          type: "number",
+          template: '<i class="fas fa-file-alt"></i>',
+          visible: true,
+          autoFit: true
+        },
+        {
+          field: "Edit",
+          headerText: "",
+          textAlign: "Left",
+          width: 30,
+          template: '<i class="fas fa-edit"></i>',
+          autoFit: true
+          //   visible: false,
+        },
       {
         field: "currency",
         headerText: "currency",
+        autoFit: true,
         width: 90,
         // format: "C",
         textAlign: "Right",
@@ -286,6 +311,7 @@ $(document).ready(function () {
       {
         field: "href",
         headerText: "DocLink",
+        autoFit: true,
         width: 90,
         // format: "C",
         textAlign: "Right",
@@ -296,7 +322,10 @@ $(document).ready(function () {
     cellSelected: (args) => {
       //console.log(args.data.href);
       // console.log(args.currentCell.outerText);
-      if (args.currentCell.outerText == "DOWNLOAD") {
+              const cellContent = args.currentCell.innerHTML;
+
+        //if (args.currentCell.outerText == "DOWNLOAD") {
+        if (cellContent.includes('fa-download')) {
           //console.log(args);
         $.ajax({
           url: "/api/voucher/deleteAfterDownload",
@@ -317,7 +346,7 @@ $(document).ready(function () {
             //   alert("text status " + textStatus + ", err " + err);
           },
         });
-      }  else if (args.currentCell.outerText == "EDIT") {
+      }  else if (cellContent.includes('fa-edit')) {
         var transcationID = "";
         var keys = [];
         keys = args.data.combineid.split("_");
@@ -354,7 +383,7 @@ $(document).ready(function () {
           //   alert("text status " + textStatus + ", err " + err);
         },
       });
-    }       else if (args.currentCell.outerText == "VOUCHER") {
+    }       else if (cellContent.includes('fa-file-alt')) {
         //console.log(args);
         //var _id = this.parentDetails.parentRowData._id;
         //var fullname = this.parentDetails.parentRowData.fullname;

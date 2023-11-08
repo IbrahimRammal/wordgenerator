@@ -145,7 +145,10 @@ $(document).ready(function () {
           //console.log(args);
           //console.log(args.data.href);
           // console.log(args.currentCell.outerText);
-          if (args.currentCell.outerText == "DOWNLOAD") {
+                  const cellContent = args.currentCell.innerHTML;
+
+        //if (args.currentCell.outerText == "DOWNLOAD") {
+        if (cellContent.includes('fa-download')) {
             //console.log(args);
             $.ajax({
               url: "/api/posts/deleteAfterDownload",
@@ -166,7 +169,7 @@ $(document).ready(function () {
                 //   alert("text status " + textStatus + ", err " + err);
               },
             });
-          }  else if (args.currentCell.outerText == "EDIT") {
+          }  else if (cellContent.includes('fa-edit')) {
             //console.log(args);
             // var _id = this.parentDetails.parentRowData._id;
             // //var fullname = this.parentDetails.parentRowData.fullname;
