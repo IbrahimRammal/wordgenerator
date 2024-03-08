@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('header'); -%>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/themes/default.date.min.css">
+
+    <style></style>
+  </head>
+
+  <body id="page-top">
+    <%- include('body1'); -%>
+    
+    
+    <!-- End of Topbar -->
+
+    <!-- Begin Page Content -->
+    <!-- Begin Page Content -->
+
+    <h5
+      style="
+        margin: auto;
+        width: 30%;
+        /* border: 3px solid green; */
+        padding: 5px;
+      "
+    >
+      Detailed Income <span class="badge badge-primary">Statement</span>
+    </h5>
+    <br>
+    <br>
+
+    <div class="container-fluid">
+      <div class="container">
+        <div class="form-group">
+          <div class="row">
+            <div class="col">
+              <div class="form-outline" data-mdb-format="dd, mmm, yyyy">
+                <input type="text" class="form-control datepicker" id="startDate" placeholder="dd, mmm, yyyy">
+                <label for="startDate" class="form-label">Start Date</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-outline" data-mdb-format="dd, mmm, yyyy">
+                <input type="text" class="form-control datepicker" id="endDate" placeholder="dd, mmm, yyyy">
+                <label for="endDate" class="form-label">End Date</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-xl-3 col-md-6 mb-4">
+            <button
+              type="button"
+              id="load"
+              name="load"
+              class="btn btn-outline-primary"
+              onclick="getData()"
+            >
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </button>
+          </div>
+          <!--Big blue-->
+          <!--Big blue-->
+          <div id="spinner" style="display: none;" class="preloader-wrapper big crazy">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+        <div class="card shadow mb-4">
+          <!-- Card Header - Dropdown -->
+          <div
+            class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+          >
+            <h6 class="m-0 font-weight-bold text-primary" id="card_label">
+              Detailed Income Statement Card
+            </h6>
+            <div class="dropdown no-arrow">
+              <a
+                class="dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                aria-labelledby="dropdownMenuLink"
+                x-placement="bottom-end"
+                style="
+                  position: absolute;
+                  will-change: transform;
+                  top: 0px;
+                  left: 0px;
+                  transform: translate3d(17px, 18px, 0px);
+                "
+              >
+                <div class="dropdown-header">Dropdown Header:</div>
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </div>
+          </div>
+          <!-- Card Body -->
+
+          <div class="card-body">
+            <div id="panel"></div>
+          </div>
+        </div>
+      </div>
+
+      <br />
+    </div>
+    <!-- End of Main Continer -->
+
+    <!-- End of Main Content -->
+    <%- include('body2'); -%>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/compressed/picker.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pickadate.js/3.6.4/compressed/picker.date.js"></script>
+
+    <script type="text/javascript">
+
+      function isDateValid(dateStr) {
+      return !isNaN(new Date(dateStr));
+      }
+
+      function getData() {
+
+        var f = document.getElementById("startDate");
+        var g = document.getElementById("endDate");
+
+        //console.log(f);
+
+        var startDate = f.value;
+        var endDate = g.value;
+
+        var startDateObj = new Date(startDate);
+        var endDateObj = new Date(endDate);
+
+        //console.log(isDateValid(startDate)); // Check if startDate is valid
+        //console.log(isDateValid(endDate)); // Check if endDate is valid
+
+        console.log(startDateObj);
+        console.log(endDateObj);
+
+        if (
+          isDateValid(startDate) && isDateValid(endDate) && (startDateObj < endDateObj)
+        ) {
+          $('#load').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Loading...').addClass('disabled');
+          // $("#spinner").show();
+          $("#spinner").toggleClass( "active");
+          $("#panel").html("");
+          $("#card_label").html("Detailed Income Statement Card");
+          $.ajax({
+            url: "/api/invoice/detailedincomedashboard",
+            type: "POST",
+            dataType: "json",
+            cache: true,
+            data: { startDateF: startDate, endDateF: endDate },
+            success: function (fixtures) {
+              // console.log(fixtures);
+              // $("#spinner").hide();
+              $('#load').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;').toggleClass("disabled");
+              $( "#spinner" ).toggleClass( "active");
+              var html = fixtures["html"];
+              $("#panel").html(html);
+              $("#card_label").html("Detailed Income Statement");
+            },
+            error: function (jqXHR, textStatus, err) {
+              $('#load').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Load&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;').toggleClass("disabled");
+              $( "#spinner" ).toggleClass( "active");
+              toastr["error"]("Loading Template Error", "Load error")
+              //alert("text status " + textStatus + ", err " + err);
+            },
+          });
+        } else {
+          alert("Please pick a time interval !");
+        }
+      }
+
+      $(document).ready(function () {
+        $('.datepicker').pickadate();
+        $(".dropdown-toggle").dropdown();
+      });
+
+    </script>
+  </body>
+</html>

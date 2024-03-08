@@ -1,0 +1,47 @@
+<form method="POST" action="<%= obj.url %>" id="my_form">
+    <!-- Sales Revenue -->
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary">Sales Revenue From Date <%= obj.startDate %> to <%= obj.endDate %> </h8>
+    </div>
+
+    <!-- Total Revenue & Gains -->
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary">Total Revenue & Gains</h8>
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" id="trg" name="trg" placeholder="<%= obj.trg %>"
+                    value="<%= obj.trg %>">
+            </div>
+        </div>
+    </div>
+
+    <!-- Tolal Expense -->
+    <hr class="sidebar-divider">
+    <h8 class="m-0 font-weight-bold text-secondary">Total Expense</h8>
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="tex" id="tex" placeholder="<%= obj.tex %>"
+                    value="<%= obj.tex %>">
+            </div>
+        </div>
+    </div>
+
+    <!-- Net profit loss -->
+    <div class="form-group">
+        <h8 class="m-0 font-weight-bold text-secondary">Net profit loss</h8>
+        <div class="form-row">
+            <div class="form-group col">
+                <input type="text" class="form-control" name="npl" id="npl" placeholder="<%= obj.npl %>"
+                    value="<%= obj.npl %>">
+            </div>
+        </div>
+    </div>
+
+        <!-- Make download button make a request of the data and downalod at same time -->
+        <br>
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <a href="" name="download" id="download" class="btn btn-secondary">Download</a>
+        </div>
+</form>
+

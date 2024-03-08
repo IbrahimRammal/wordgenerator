@@ -1,5 +1,6 @@
 // const compression = require('compression');
 const router = require("express").Router();
+const BigDecimal = require('bigdecimal');
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -121,6 +122,9 @@ const Suppliers = SupplierModel.Supplier;
 const Payment = PaidModel.Payment;
 
 const paidpath = "./GenerateHtml/paidform.ejs";
+//const winston = require('winston');
+
+
 
 var testdb = require("../db/test");
 
@@ -461,8 +465,14 @@ router.get("/dashboard", verify, async (req, res) => {
           // Convert credit and debit from string to float
           const credit = parseFloat(transaction.credit || '0').toFixed(2);
           const debit = parseFloat(transaction.debit || '0').toFixed(2);
-          let amount = parseFloat(debit || credit);
-          //amount = parseFloat(amount).toFixed(2);
+
+          // Convert credit and debit to float
+          let creditFloat = parseFloat(credit);
+          let debitFloat = parseFloat(debit);
+
+          // Assign the larger of credit or debit to amount
+          let amount = Math.max(creditFloat, debitFloat);
+          
           let lbpToUsdExchangeRate = transaction.rate;
           if (transaction.currency === 'LBP') {
             if (lbpToUsdExchangeRate === null || isNaN(lbpToUsdExchangeRate) || lbpToUsdExchangeRate <= 0 ) {
@@ -624,6 +634,823 @@ router.get("/dashboard", verify, async (req, res) => {
   });
 });
 
+router.get("/generalincomestatementpage", verify, async (req, res) => {
+  req.keep = "true";
+
+  res.render("generalincomestatement", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+  });
+});
+
+router.get("/detailedincomestatementpage", verify, async (req, res) => {
+  req.keep = "true";
+
+  res.render("detailedincomestatement", {
+    // req.session.
+    name: req.name,
+    email: req.email,
+  });
+  
+});
+
+router.post("/detailedincomedashboard", verify, async (req, res) => {
+  // console.log(req.body);
+  req.keep = "true";
+  let startDate = req.body.startDateF;
+  let endDate = req.body.endDateF;
+
+  console.log(req.body);
+
+  if (
+    !isEmptyOrSpaces(startDate) &&
+    !isEmptyOrSpaces(endDate)
+  ) {
+    
+    //const currentYear = new Date().getFullYear();
+    //let totalRevenue = 0;
+    const monthlyRevenue = Array(12).fill(0);
+    const monthlyRevenueSwornInvoice = Array(12).fill(0);
+    const monthlyRevenueProntoInvoice = Array(12).fill(0);
+    const monthlyRevenueUnofficialInvoice = Array(12).fill(0);
+    const monthlyExpenses = Array(12).fill(0);
+    const monthlyExpensesUnofficialPurchaseInvoice = Array(12).fill(0);
+    const monthlyExpensesProntoPurchaseInvoice = Array(12).fill(0);
+    let transactionNumber = 0;
+
+    let expensesType = {};
+
+    let annualRevenue = 0;
+    let annualExpenses = 0;
+    let expenseJson = {};
+    let revenueJson  = {};
+    let errorLog = {};
+    let revenuePercentage = {
+      swornInvoice: 0,
+      prontoInvoice: 0,
+      unofficialInvoice: 0,
+    };
+
+    let expensePercentage = {
+      swornInvoice: 0,
+      prontoInvoice: 0,
+      unofficialInvoice: 0,
+    };
+
+      try {
+        
+        // Query to find all revenue-generating transactions from the current year
+        const revenueTransactions = await Transaction.find({
+          $and: [
+            { $or: [
+              { invoiceType: 'swornInvoice' },
+              { invoiceType: 'ProntoInvoice' },
+              { invoiceType: 'UnofficialInvoice' },
+            ]},
+            {          date: {
+              $gte: startDate,
+              $lte: endDate
+          } },
+          ],
+        });
+
+        // Calculate total revenue
+        // Calculate total revenue for each month and annual revenue
+        revenueTransactions.forEach((transaction) => {
+          // Convert credit and debit from string to float
+          const credit = parseFloat(transaction.credit || '0').toFixed(2);
+          const debit = parseFloat(transaction.debit || '0').toFixed(2);
+          let amount = parseFloat(credit || debit);
+          //amount = parseFloat(amount).toFixed(2);
+          let lbpToUsdExchangeRate = transaction.rate;
+          if (transaction.currency === 'LBP') {
+            if(amount < 50000){
+              console.log(parseFloat(amount) + transaction + "error usdAmmountError");
+            }
+            if (lbpToUsdExchangeRate === null || isNaN(lbpToUsdExchangeRate) || lbpToUsdExchangeRate <= 0 ) {
+              console.log('No valid exchange rate found. Skipping revenue calculation.');
+              errorLog['exchangeRateError'] = 'No valid exchange rate found for USD.';
+              amount = 0;
+            } else
+            {
+              amount = parseFloat(amount / lbpToUsdExchangeRate).toFixed(2);
+              annualRevenue += parseFloat(amount);
+              transactionNumber += 1;
+            }
+          } else if (transaction.currency === 'USD') {
+            if((lbpToUsdExchangeRate === null || isNaN(lbpToUsdExchangeRate) || lbpToUsdExchangeRate <= 0) ){
+              if(amount < 50000){
+                annualRevenue += parseFloat(amount);
+                transactionNumber += 1;
+              } else {
+                errorLog['usdAmmountError'] = 'LBP invoice set as USD.';
+                console.log(parseFloat(amount) + transaction + "error usdAmmountError");
+                amount = 0;
+              }
+            }
+            else{
+              console.log("miss dollar f");
+              console.log("miss dollar f" + transaction);
+              amount = parseFloat(amount / lbpToUsdExchangeRate).toFixed(2);
+              annualRevenue += parseFloat(amount);
+              transactionNumber += 1;
+            }
+
+          } else {
+            console.log("miss dollar f" + transaction);
+            amount = 0;
+          }
+
+          const transactionMonth = transaction.created_at.getMonth();
+          monthlyRevenue[transactionMonth] += parseFloat(amount);
+
+          // Categorize revenue based on invoice type
+          if (transaction.invoiceType === 'swornInvoice') {
+            monthlyRevenueSwornInvoice[transactionMonth] += parseFloat(amount);
+          } else if (transaction.invoiceType === 'ProntoInvoice') {
+            monthlyRevenueProntoInvoice[transactionMonth] += parseFloat(amount);
+          } else if (transaction.invoiceType === 'UnofficialInvoice') {
+            monthlyRevenueUnofficialInvoice[transactionMonth] += parseFloat(amount);
+          }
+
+        });
+
+        let swornRevenue = 0;
+        let prontoRevenue = 0;
+        let unofficialRevenue = 0;
+
+        for (let i = 0; i < 12; i++) {
+          monthlyRevenue[i] = parseFloat(monthlyRevenue[i]).toFixed(2);
+          monthlyRevenueProntoInvoice[i] = parseFloat(monthlyRevenueProntoInvoice[i]).toFixed(2);
+          monthlyRevenueSwornInvoice[i] = parseFloat(monthlyRevenueSwornInvoice[i]).toFixed(2);
+          monthlyRevenueUnofficialInvoice[i] = parseFloat(monthlyRevenueUnofficialInvoice[i]).toFixed(2);
+          prontoRevenue += parseFloat(monthlyRevenueProntoInvoice[i]);
+          swornRevenue += parseFloat(monthlyRevenueSwornInvoice[i]);
+          unofficialRevenue += parseFloat(monthlyRevenueUnofficialInvoice[i]);
+          //annualExpenses += monthlyRevenue[i];
+        }
+
+        for (let i = 0; i < 12; i++) {
+          monthlyRevenue[i] = parseFloat(monthlyRevenue[i]).toFixed(2);
+          //annualRevenue += monthlyRevenue[i];
+        }
+
+        // Display monthly revenue
+        //console.log('Monthly Revenue:');
+        // for (let i = 0; i < 12; i++) {
+        //   console.log(`${i + 1}: ${monthlyRevenue[i]}`);
+        // }
+
+        annualRevenue = parseFloat(annualRevenue).toFixed(2);
+
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+
+        revenueJson = {
+          invoiceType: 'revenue',
+          monthly: monthlyRevenue,
+          currentMonth: monthlyRevenue[currentMonth],
+          monthlyRevenueSwornInvoice: monthlyRevenueSwornInvoice,
+          monthlyRevenueProntoInvoice: monthlyRevenueProntoInvoice,
+          monthlyRevenueUnofficialInvoice: monthlyRevenueUnofficialInvoice,
+          swornRevenue : swornRevenue.toFixed(2),
+          prontoRevenue : prontoRevenue.toFixed(2),
+          unofficialRevenue : unofficialRevenue.toFixed(2),
+          annual: annualRevenue,
+        };
+
+        //saveDataToJsonFile(revenueJson, './json/English/revenue.json');
+        // Display annual revenue
+        //console.log('Annual Revenue:', annualRevenue);
+
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        // Close the MongoDB connection
+      }
+
+      try {
+        // Query to find expense-generating transactions from the current year (case-insensitive voucherType)
+        const expenseTransactions = await Transaction.find({
+          $and: [
+            { $or: [
+              { invoiceType: 'UnofficialPurchaseInvoice' },
+              { invoiceType: 'ProntoPurchaseInvoice' },
+            ]},
+            {          date: {
+              $gte: startDate,
+              $lte: endDate
+          } },
+          ],
+        });
+
+
+
+
+        expenseTransactions.forEach((transaction) => {
+          //expenseType
+          //paidClinetName
+          //console.log(transaction);
+          // Convert credit and debit from string to float
+          const credit = parseFloat(transaction.credit || '0').toFixed(2);
+          const debit = parseFloat(transaction.debit || '0').toFixed(2);
+
+          // Convert credit and debit to float
+          //let creditFloat = parseFloat(credit);
+          //let debitFloat = parseFloat(debit);
+
+          // Assign the larger of credit or debit to amount
+          //let amount = Math.max(creditFloat, debitFloat);
+          let amount = credit;
+
+          let lbpToUsdExchangeRate = transaction.rate;
+          if (transaction.currency === 'LBP') {
+            if (lbpToUsdExchangeRate === null || isNaN(lbpToUsdExchangeRate) || lbpToUsdExchangeRate <= 0 ) {
+              console.log('No valid exchange rate found. Skipping revenue calculation.');
+              errorLog['exchangeRateError'] = 'No valid exchange rate found for USD Invoice.';
+              amount = 0;
+            } else
+            {
+              amount = parseFloat(amount / lbpToUsdExchangeRate).toFixed(2);
+              annualExpenses += parseFloat(amount);
+              transactionNumber += 1;
+            }
+          } else if (transaction.currency === 'USD') {
+            if(lbpToUsdExchangeRate === null || isNaN(lbpToUsdExchangeRate) || lbpToUsdExchangeRate <= 0){
+              if(amount < 10000){
+                annualExpenses += parseFloat(amount);
+                transactionNumber += 1;
+              } else {
+                errorLog['usdAmmountError'] = 'LBP invoice set as USD.';
+                amount = 0;
+              }
+            }
+            else{
+
+              amount = parseFloat(amount / lbpToUsdExchangeRate).toFixed(2);
+              annualExpenses += parseFloat(amount);
+              transactionNumber += 1;
+            }
+
+          } else {
+            amount = 0;
+          }
+
+          //expensesType
+          if (expensesType[transaction.expenseType]) {
+              // If the expense type already exists, add the amount to the existing total
+              //console.log(parseFloat(amount).toFixed(2));
+              amount = parseFloat(amount).toFixed(2);
+              expensesType[transaction.expenseType] += parseFloat(amount);
+          } else {
+              // Otherwise, create a new property with the expense type as the key and the amount as the value
+              amount = parseFloat(amount).toFixed(2);
+              expensesType[transaction.expenseType] = parseFloat(amount);
+          }
+
+          // if(transaction.expenseType === "Wages")
+          // {
+          //   //(parseFloat(transaction.credit) > 2000)
+          //   //{
+          //     console.log("Wages = " + parseFloat(transaction.credit).toFixed(2) + " type " + expensesType[transaction.expenseType]);
+          //   // } else
+          //   // {
+          //   //  console.log(transaction.credit);
+          //   //}
+          // } else {
+
+          // }
+
+          const transactionMonth = transaction.created_at.getMonth();
+          monthlyExpenses[transactionMonth] += parseFloat(amount);
+
+          // Categorize expenses based on invoice type
+          if (transaction.invoiceType === 'UnofficialPurchaseInvoice') {
+            monthlyExpensesUnofficialPurchaseInvoice[transactionMonth] += parseFloat(amount);
+          } else if (transaction.invoiceType === 'ProntoPurchaseInvoice') {
+            monthlyExpensesProntoPurchaseInvoice[transactionMonth] += parseFloat(amount);
+          }
+        });
+
+        let swornExpense = 0;
+        let prontoExpense = 0.0;
+        let unofficialExpense = 0.0;
+
+        for (let i = 0; i < 12; i++) {
+          monthlyExpenses[i] = parseFloat(monthlyExpenses[i]).toFixed(2);
+          monthlyExpensesUnofficialPurchaseInvoice[i] = parseFloat(monthlyExpensesUnofficialPurchaseInvoice[i]).toFixed(2);
+          monthlyExpensesProntoPurchaseInvoice[i] = parseFloat(monthlyExpensesProntoPurchaseInvoice[i]).toFixed(2);
+          unofficialExpense += parseFloat(monthlyExpensesUnofficialPurchaseInvoice[i]);
+          prontoExpense += parseFloat(monthlyExpensesProntoPurchaseInvoice[i]);
+          //annualExpenses += monthlyRevenue[i];
+        }
+
+
+        // Display monthly expenses
+        // console.log('Monthly Expenses:');
+        // for (let i = 0; i < 12; i++) {
+        //   console.log(`${i + 1}: ${monthlyExpenses[i]}`);
+        // }
+
+        annualExpenses = annualExpenses.toFixed(2);
+        // Display annual expenses
+        //console.log('Annual Expenses:', annualExpenses);
+
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+
+        expenseJson = {
+          invoiceType: 'expense',
+          expensesType: expensesType,
+          monthly: monthlyExpenses,
+          currentMonth: monthlyExpenses[currentMonth],
+          monthlyExpensesUnofficialPurchaseInvoice: monthlyExpensesUnofficialPurchaseInvoice,
+          monthlyExpensesProntoPurchaseInvoice: monthlyExpensesProntoPurchaseInvoice,
+          unofficialExpense: unofficialExpense.toFixed(2),
+          prontoExpense: prontoExpense.toFixed(2),
+          annual: annualExpenses,
+        };
+
+        //saveDataToJsonFile(expenseJson, './json/English/expense.json');
+
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+          
+      }
+
+        try {
+          const currentTime = new Date();
+
+          revenuePercentage.swornInvoice = ((revenueJson.swornRevenue / annualRevenue) * 100).toFixed(2);
+          revenuePercentage.prontoInvoice = ((revenueJson.prontoRevenue / annualRevenue) * 100).toFixed(2);
+          revenuePercentage.unofficialInvoice = ((revenueJson.unofficialRevenue / annualRevenue) * 100).toFixed(2);
+
+          // Calculate the percentage for each expense type
+          expensePercentage.prontoInvoice = ((expenseJson.prontoExpense / annualExpenses) * 100).toFixed(2);
+          expensePercentage.unofficialInvoice = ((expenseJson.unofficialExpense / annualExpenses) * 100).toFixed(2);
+
+          //create two function that generate the two document 
+          //then put the path of first to link1 and secode to link2
+
+          const jsonData = JSON.stringify({
+            // req.session.
+            link: link,
+            linkGeneralIncome: linkGeneralIncome,
+            linkDetailIncome: linkDetailIncome,
+            fetchTime: currentTime,
+            transactionNumber: transactionNumber,
+            name: req.name,
+            email: req.email,
+            revenueJson: revenueJson,
+            expenseJson: expenseJson,
+            annualRevenue: annualRevenue,
+            annualExpenses: annualExpenses,
+            revenuePercentage: revenuePercentage,
+            expensePercentage: expensePercentage
+            //data: data
+          }, null, 2); // Convert data to pretty JSON format
+        } catch(error) {
+
+        }
+
+        let netProfit = annualRevenue - annualExpenses;
+
+        let htmlData = {
+          url: "url",
+          startDate: startDate,
+          endDate: endDate,
+          linkDownload: "link",
+          expenseJson: expenseJson,
+          trg: annualRevenue,
+          tex: annualExpenses,
+          ibt: netProfit,
+          npl: netProfit
+          //data: data
+        };
+        //startDate 
+        //endDate
+        //trg total reven and gain
+        //tex total expense
+        //ibt income before tax 
+        //npl net profit loss
+
+        let result = {
+          // req.session.
+          // name: req.name,
+          // email: req.email,
+          linkDownload: "link",
+          revenueJson: revenueJson,
+          expenseJson: expenseJson,
+          annualRevenue: annualRevenue,
+          annualExpenses: annualExpenses,
+          revenuePercentage: revenuePercentage,
+          expensePercentage: expensePercentage
+          //data: data
+        };
+
+        let htmlpath = "./GenerateHtml/DetailedIncomeStatementDateInterval.ejs";
+
+        const file = fs.readFileSync(htmlpath, "utf-8");
+        var fixture_template = ejs.compile(file, { client: true });
+        const html = fixture_template({ obj: htmlData});
+        // console.log(html)
+        res.send({ result: result, html: html });
+        
+
+        //res.send({ result: result});
+  }
+
+  if(false){
+    let pathRevenue = "./json/" + "English" + "/revenue.json";
+    let pathExpense = "./json/" + "English" + "/expense.json";
+    let pathDataExpRev = "./json/" + "English" + "/dataExpRevG.json";
+  }
+});
+
+router.post("/generalincomedashboard", verify, async (req, res) => {
+  // console.log(req.body);
+  req.keep = "true";
+  let startDate = req.body.startDateF;
+  let endDate = req.body.endDateF;
+
+  console.log(req.body);
+
+  if (
+    !isEmptyOrSpaces(startDate) &&
+    !isEmptyOrSpaces(endDate)
+  ) {
+    
+    //const currentYear = new Date().getFullYear();
+    //let totalRevenue = 0;
+    const monthlyRevenue = Array(12).fill(0);
+    const monthlyRevenueSwornInvoice = Array(12).fill(0);
+    const monthlyRevenueProntoInvoice = Array(12).fill(0);
+    const monthlyRevenueUnofficialInvoice = Array(12).fill(0);
+    const monthlyExpenses = Array(12).fill(0);
+    const monthlyExpensesUnofficialPurchaseInvoice = Array(12).fill(0);
+    const monthlyExpensesProntoPurchaseInvoice = Array(12).fill(0);
+    let transactionNumber = 0;
+
+    let expensesType = {};
+
+    let annualRevenue = 0;
+    let annualExpenses = 0;
+    let expenseJson = {};
+    let revenueJson  = {};
+    let errorLog = {};
+    let revenuePercentage = {
+      swornInvoice: 0,
+      prontoInvoice: 0,
+      unofficialInvoice: 0,
+    };
+
+    let expensePercentage = {
+      swornInvoice: 0,
+      prontoInvoice: 0,
+      unofficialInvoice: 0,
+    };
+
+      try {
+        
+        // Query to find all revenue-generating transactions from the current year
+        const revenueTransactions = await Transaction.find({
+          $and: [
+            { $or: [
+              { invoiceType: 'swornInvoice' },
+              { invoiceType: 'ProntoInvoice' },
+              { invoiceType: 'UnofficialInvoice' },
+            ]},
+            {          date: {
+              $gte: startDate,
+              $lte: endDate
+          } },
+          ],
+        });
+
+        // Calculate total revenue
+        // Calculate total revenue for each month and annual revenue
+        revenueTransactions.forEach((transaction) => {
+          // Convert credit and debit from string to float
+          const credit = parseFloat(transaction.credit || '0').toFixed(2);
+          const debit = parseFloat(transaction.debit || '0').toFixed(2);
+          let amount = parseFloat(credit || debit);
+          //amount = parseFloat(amount).toFixed(2);
+          let lbpToUsdExchangeRate = transaction.rate;
+          if (transaction.currency === 'LBP') {
+            if (lbpToUsdExchangeRate === null || isNaN(lbpToUsdExchangeRate) || lbpToUsdExchangeRate <= 0 ) {
+              console.log('No valid exchange rate found. Skipping revenue calculation.');
+              errorLog['exchangeRateError'] = 'No valid exchange rate found for USD.';
+              amount = 0;
+            } else
+            {
+              amount = parseFloat(amount / lbpToUsdExchangeRate).toFixed(2);
+              annualRevenue += parseFloat(amount);
+              transactionNumber += 1;
+            }
+          } else if (transaction.currency === 'USD') {
+            if((lbpToUsdExchangeRate === null || isNaN(lbpToUsdExchangeRate) || lbpToUsdExchangeRate <= 0) ){
+              if(amount < 50000){
+                annualRevenue += parseFloat(amount);
+                transactionNumber += 1;
+              } else {
+                errorLog['usdAmmountError'] = 'LBP invoice set as USD.';
+                amount = 0;
+              }
+            }
+            else{
+              amount = parseFloat(amount / lbpToUsdExchangeRate).toFixed(2);
+              annualRevenue += parseFloat(amount);
+              transactionNumber += 1;
+            }
+
+          } else {
+            amount = 0;
+          }
+
+          const transactionMonth = transaction.created_at.getMonth();
+          monthlyRevenue[transactionMonth] += parseFloat(amount);
+
+          // Categorize revenue based on invoice type
+          if (transaction.invoiceType === 'swornInvoice') {
+            monthlyRevenueSwornInvoice[transactionMonth] += parseFloat(amount);
+          } else if (transaction.invoiceType === 'ProntoInvoice') {
+            monthlyRevenueProntoInvoice[transactionMonth] += parseFloat(amount);
+          } else if (transaction.invoiceType === 'UnofficialInvoice') {
+            monthlyRevenueUnofficialInvoice[transactionMonth] += parseFloat(amount);
+          }
+
+        });
+
+        let swornRevenue = 0;
+        let prontoRevenue = 0;
+        let unofficialRevenue = 0;
+
+        for (let i = 0; i < 12; i++) {
+          monthlyRevenue[i] = parseFloat(monthlyRevenue[i]).toFixed(2);
+          monthlyRevenueProntoInvoice[i] = parseFloat(monthlyRevenueProntoInvoice[i]).toFixed(2);
+          monthlyRevenueSwornInvoice[i] = parseFloat(monthlyRevenueSwornInvoice[i]).toFixed(2);
+          monthlyRevenueUnofficialInvoice[i] = parseFloat(monthlyRevenueUnofficialInvoice[i]).toFixed(2);
+          prontoRevenue += parseFloat(monthlyRevenueProntoInvoice[i]);
+          swornRevenue += parseFloat(monthlyRevenueSwornInvoice[i]);
+          unofficialRevenue += parseFloat(monthlyRevenueUnofficialInvoice[i]);
+          //annualExpenses += monthlyRevenue[i];
+        }
+
+        for (let i = 0; i < 12; i++) {
+          monthlyRevenue[i] = parseFloat(monthlyRevenue[i]).toFixed(2);
+          //annualRevenue += monthlyRevenue[i];
+        }
+
+        // Display monthly revenue
+        console.log('Monthly Revenue:');
+        for (let i = 0; i < 12; i++) {
+          console.log(`${i + 1}: ${monthlyRevenue[i]}`);
+        }
+
+        annualRevenue = parseFloat(annualRevenue).toFixed(2);
+
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+
+        revenueJson = {
+          invoiceType: 'revenue',
+          monthly: monthlyRevenue,
+          currentMonth: monthlyRevenue[currentMonth],
+          monthlyRevenueSwornInvoice: monthlyRevenueSwornInvoice,
+          monthlyRevenueProntoInvoice: monthlyRevenueProntoInvoice,
+          monthlyRevenueUnofficialInvoice: monthlyRevenueUnofficialInvoice,
+          swornRevenue : swornRevenue.toFixed(2),
+          prontoRevenue : prontoRevenue.toFixed(2),
+          unofficialRevenue : unofficialRevenue.toFixed(2),
+          annual: annualRevenue,
+        };
+
+        //saveDataToJsonFile(revenueJson, './json/English/revenue.json');
+        // Display annual revenue
+        console.log('Annual Revenue:', annualRevenue);
+
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        // Close the MongoDB connection
+      }
+
+      try {
+        // Query to find expense-generating transactions from the current year (case-insensitive voucherType)
+        const expenseTransactions = await Transaction.find({
+          $and: [
+            { $or: [
+              { invoiceType: 'UnofficialPurchaseInvoice' },
+              { invoiceType: 'ProntoPurchaseInvoice' },
+            ]},
+            {          date: {
+              $gte: startDate,
+              $lte: endDate
+          } },
+          ],
+        });
+
+
+
+
+        expenseTransactions.forEach((transaction) => {
+          //expenseType
+          //paidClinetName
+          //console.log(transaction);
+          // Convert credit and debit from string to float
+          const credit = parseFloat(transaction.credit || '0').toFixed(2);
+          const debit = parseFloat(transaction.debit || '0').toFixed(2);
+
+          // Convert credit and debit to float
+          let creditFloat = parseFloat(credit);
+          let debitFloat = parseFloat(debit);
+
+          // Assign the larger of credit or debit to amount
+          let amount = Math.max(creditFloat, debitFloat);
+
+          let lbpToUsdExchangeRate = transaction.rate;
+          if (transaction.currency === 'LBP') {
+            if (lbpToUsdExchangeRate === null || isNaN(lbpToUsdExchangeRate) || lbpToUsdExchangeRate <= 0 ) {
+              console.log('No valid exchange rate found. Skipping revenue calculation.');
+              errorLog['exchangeRateError'] = 'No valid exchange rate found for USD Invoice.';
+              amount = 0;
+            } else
+            {
+              amount = parseFloat(amount / lbpToUsdExchangeRate).toFixed(2);
+              annualExpenses += parseFloat(amount);
+              transactionNumber += 1;
+            }
+          } else if (transaction.currency === 'USD') {
+            if(lbpToUsdExchangeRate === null || isNaN(lbpToUsdExchangeRate) || lbpToUsdExchangeRate <= 0){
+              if(amount < 10000){
+                annualExpenses += parseFloat(amount);
+                transactionNumber += 1;
+              } else {
+                errorLog['usdAmmountError'] = 'LBP invoice set as USD.';
+                amount = 0;
+              }
+            }
+            else{
+              amount = parseFloat(amount / lbpToUsdExchangeRate).toFixed(2);
+              annualExpenses += parseFloat(amount);
+              transactionNumber += 1;
+            }
+
+          } else {
+            amount = 0;
+          }
+
+          //expensesType
+          if (expensesType[transaction.expenseType]) {
+              // If the expense type already exists, add the amount to the existing total
+              expensesType[transaction.expenseType] += parseFloat(amount);
+          } else {
+              // Otherwise, create a new property with the expense type as the key and the amount as the value
+              expensesType[transaction.expenseType] = parseFloat(amount);
+          }
+
+          const transactionMonth = transaction.created_at.getMonth();
+          monthlyExpenses[transactionMonth] += parseFloat(amount);
+
+          // Categorize expenses based on invoice type
+          if (transaction.invoiceType === 'UnofficialPurchaseInvoice') {
+            monthlyExpensesUnofficialPurchaseInvoice[transactionMonth] += parseFloat(amount);
+          } else if (transaction.invoiceType === 'ProntoPurchaseInvoice') {
+            monthlyExpensesProntoPurchaseInvoice[transactionMonth] += parseFloat(amount);
+          }
+        });
+
+        let swornExpense = 0;
+        let prontoExpense = 0.0;
+        let unofficialExpense = 0.0;
+
+        for (let i = 0; i < 12; i++) {
+          monthlyExpenses[i] = parseFloat(monthlyExpenses[i]).toFixed(2);
+          monthlyExpensesUnofficialPurchaseInvoice[i] = parseFloat(monthlyExpensesUnofficialPurchaseInvoice[i]).toFixed(2);
+          monthlyExpensesProntoPurchaseInvoice[i] = parseFloat(monthlyExpensesProntoPurchaseInvoice[i]).toFixed(2);
+          unofficialExpense += parseFloat(monthlyExpensesUnofficialPurchaseInvoice[i]);
+          prontoExpense += parseFloat(monthlyExpensesProntoPurchaseInvoice[i]);
+          //annualExpenses += monthlyRevenue[i];
+        }
+
+
+        // Display monthly expenses
+        console.log('Monthly Expenses:');
+        for (let i = 0; i < 12; i++) {
+          console.log(`${i + 1}: ${monthlyExpenses[i]}`);
+        }
+
+        annualExpenses = annualExpenses.toFixed(2);
+        // Display annual expenses
+        console.log('Annual Expenses:', annualExpenses);
+
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+
+        expenseJson = {
+          invoiceType: 'expense',
+          expensesType: expensesType,
+          monthly: monthlyExpenses,
+          currentMonth: monthlyExpenses[currentMonth],
+          monthlyExpensesUnofficialPurchaseInvoice: monthlyExpensesUnofficialPurchaseInvoice,
+          monthlyExpensesProntoPurchaseInvoice: monthlyExpensesProntoPurchaseInvoice,
+          unofficialExpense: unofficialExpense.toFixed(2),
+          prontoExpense: prontoExpense.toFixed(2),
+          annual: annualExpenses,
+        };
+
+        //saveDataToJsonFile(expenseJson, './json/English/expense.json');
+
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+          
+      }
+
+        try {
+          const currentTime = new Date();
+
+          revenuePercentage.swornInvoice = ((revenueJson.swornRevenue / annualRevenue) * 100).toFixed(2);
+          revenuePercentage.prontoInvoice = ((revenueJson.prontoRevenue / annualRevenue) * 100).toFixed(2);
+          revenuePercentage.unofficialInvoice = ((revenueJson.unofficialRevenue / annualRevenue) * 100).toFixed(2);
+
+          // Calculate the percentage for each expense type
+          expensePercentage.prontoInvoice = ((expenseJson.prontoExpense / annualExpenses) * 100).toFixed(2);
+          expensePercentage.unofficialInvoice = ((expenseJson.unofficialExpense / annualExpenses) * 100).toFixed(2);
+
+          //create two function that generate the two document 
+          //then put the path of first to link1 and secode to link2
+
+          const jsonData = JSON.stringify({
+            // req.session.
+            link: link,
+            linkGeneralIncome: linkGeneralIncome,
+            linkDetailIncome: linkDetailIncome,
+            fetchTime: currentTime,
+            transactionNumber: transactionNumber,
+            name: req.name,
+            email: req.email,
+            revenueJson: revenueJson,
+            expenseJson: expenseJson,
+            annualRevenue: annualRevenue,
+            annualExpenses: annualExpenses,
+            revenuePercentage: revenuePercentage,
+            expensePercentage: expensePercentage
+            //data: data
+          }, null, 2); // Convert data to pretty JSON format
+        } catch(error) {
+
+        }
+
+        let netProfit = annualRevenue - annualExpenses;
+
+        let htmlData = {
+          url: "url",
+          startDate: startDate,
+          endDate: endDate,
+          linkDownload: "link",
+          expenseJson: expenseJson,
+          trg: annualRevenue,
+          tex: annualExpenses,
+          ibt: netProfit,
+          npl: netProfit
+          //data: data
+        };
+        //startDate 
+        //endDate
+        //trg total reven and gain
+        //tex total expense
+        //ibt income before tax 
+        //npl net profit loss
+
+        let result = {
+          // req.session.
+          // name: req.name,
+          // email: req.email,
+          linkDownload: "link",
+          revenueJson: revenueJson,
+          expenseJson: expenseJson,
+          annualRevenue: annualRevenue,
+          annualExpenses: annualExpenses,
+          revenuePercentage: revenuePercentage,
+          expensePercentage: expensePercentage
+          //data: data
+        };
+
+        let htmlpath = "./GenerateHtml/GeneralIncomeStatementDateInterval.ejs";
+
+        const file = fs.readFileSync(htmlpath, "utf-8");
+        var fixture_template = ejs.compile(file, { client: true });
+        const html = fixture_template({ obj: htmlData});
+        // console.log(html)
+        res.send({ result: result, html: html });
+        
+
+        //res.send({ result: result});
+  }
+});
 
 router.post("/GetDataLanguage", verify, async (req, res) => {
   console.log(req.body);
@@ -803,7 +1630,6 @@ router.get("/prontoview", verify, async (req, res) => {
     //data: data
   });
 });
-
 
 router.post("/GetDataPronto", verify, async (req, res) => {
   console.log(req.body);
@@ -1956,7 +2782,6 @@ router.get("/listpurchaseprontoinvoice", verify, async (req, res) => {
   });
 });
 
-
 router.get("/listpurchaseunofficialinvoice", verify, async (req, res) => {
   // console.log(req.body);
   req.keep = "true";
@@ -1968,8 +2793,6 @@ router.get("/listpurchaseunofficialinvoice", verify, async (req, res) => {
     //data: data
   });
 });
-
-
 
 router.get("/listsworninvoice", verify, async (req, res) => {
   // console.log(req.body);
@@ -2033,7 +2856,6 @@ router.get("/listpurchaseprontoinvoiceold", verify, async (req, res) => {
   });
 });
 
-
 router.get("/listpurchaseunofficialinvoiceold", verify, async (req, res) => {
   // console.log(req.body);
   req.keep = "true";
@@ -2045,8 +2867,6 @@ router.get("/listpurchaseunofficialinvoiceold", verify, async (req, res) => {
     //data: data
   });
 });
-
-
 
 router.get("/listsworninvoiceold", verify, async (req, res) => {
   // console.log(req.body);
@@ -5196,7 +6016,6 @@ router.post("/invoicetemplate", verify, async (req, res) => {
   }
 });
   
-
 router.get("/invoicecreatenew", verify, async (req, res) => {
   req.keep = "true";
   var query = Paid.find(
