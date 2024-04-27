@@ -3408,6 +3408,7 @@ router.post("/template", verify, async (req, res) => {
 
       var docSaved = "";
       var schemaData = "";
+      let flagNewTemplate = false;
 
       try {
         docSaved = await Client.find(
@@ -3429,7 +3430,7 @@ router.post("/template", verify, async (req, res) => {
 
         dataid = docID != "" ? docID : docSaved[0][langCheck][modelCheck];
 
-        if((docID == "" || docID == null) && false ){
+        if((docID == "" || docID == null)){
 
           var LanguageArray = ['English','Français','Español']
 
@@ -3450,6 +3451,41 @@ router.post("/template", verify, async (req, res) => {
                 }
               //}
             }
+
+            if(modelCheck == "IndividualExtractNew") {
+              for (const langVal of LanguageArray) { 
+                //if(langVal != langCheck){
+                  console.log(langVal);
+                  dataid = docSaved[0][langVal]["IndividualExtract"];
+                  if(dataid !="" && dataid != null)
+                  {
+                    docSaved = await Individual.find({ _id: dataid });
+                    docSaved[0]["caption"] = "Individual Extract New";
+                    flagValue = true;
+                    flagNewTemplate = true;
+                    break;
+                  }
+                //}
+              }
+            }
+
+            if(modelCheck == "FamilyExtractNew") {
+              for (const langVal of LanguageArray) { 
+                //if(langVal != langCheck){
+                  console.log(langVal);
+                  dataid = docSaved[0][langVal]["FamilyExtract"];
+                  if(dataid !="" && dataid != null)
+                  {
+                    docSaved = await Family.find({ _id: dataid });
+                    docSaved[0]["caption"] = "Family Extract New";
+                    flagValue = true;
+                    flagNewTemplate = true;
+                    break;
+                  }
+                //}
+              }
+            }
+
             docID = dataid;
           } else { flagValue = true; }
         } else {}
@@ -3479,9 +3515,9 @@ router.post("/template", verify, async (req, res) => {
             docSaved = await Police.find({ _id: docID });
           } else if (modelCheck.includes("NSSF")) {
             docSaved = await NSSF.find({ _id: docID });
-          } else if (modelCheck == "IndividualExtractNew") {
+          } else if (modelCheck == "IndividualExtractNew"  && !flagNewTemplate) {
             docSaved = await IndividualNew.find({ _id: docID });
-          } else if (modelCheck == "FamilyExtractNew") {
+          } else if (modelCheck == "FamilyExtractNew" && !flagNewTemplate) {
             docSaved = await FamilyNew.find({ _id: docID });
             console.log("Family extract length: dfd " + docSaved[0]["s2"]["famsn"].length);
             if(docSaved[0]["s2"]["famsn"].length != null && docSaved[0]["s2"]["famsn"].length < 30)
@@ -3507,7 +3543,7 @@ router.post("/template", verify, async (req, res) => {
             }
           } else if (modelCheck.includes("Individual")) {
             docSaved = await Individual.find({ _id: docID });
-          } else if (modelCheck.includes("Family")) {
+          } else if (modelCheck == "FamilyExtract") {
             docSaved = await Family.find({ _id: docID });
             console.log("Family extract length: dfd " + docSaved[0]["s2"]["fams"].length);
             if(docSaved[0]["s2"]["fams"].length != null && docSaved[0]["s2"]["fams"].length < 30)
@@ -3580,20 +3616,47 @@ router.post("/template", verify, async (req, res) => {
             "&id=" +
             docSaved[0]["client"]["id"];
 
+            let rawdata = fs.readFileSync(path, "utf-8");
+            let data = JSON.parse(rawdata);
+
+            for (const key in data) {
+              if (typeof data[key] === 'object' && key !== 'client' && key !== 'createuser' && key !== 'modifieduser' && key !== 'caption'  && key !== 'category'  && key !== 'date' && key !== 'original' && key !== 'download') {
+                  for (const subKey in data[key]) {
+                      if (typeof data[key][subKey] === 'object' && subKey !== 'caption') {
+                          for (const subSubKey in data[key][subKey]) {
+                              if (docSaved[0][key] && docSaved[0][key][subKey] && docSaved[0][key][subKey][subSubKey] && subSubKey !== 'caption') {
+                                  data[key][subKey][subSubKey] = docSaved[0][key][subKey][subSubKey];
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+
+          if (docSaved[0].s2.hasOwnProperty("fams") && flagNewTemplate) {
+            for (var i = 0; i < docSaved[0].s2.fams.length; i++) {
+              if (!isEmptyOrSpaces(docSaved[0].s2.fams[i].nsname)) {
+              let num = i + 1;
+              data.s2.famsn[i].num =  num;
+              data.s2.famsn[i].nsname = docSaved[0].s2.fams[i].nsname;
+              data.s2.famsn[i].faname = docSaved[0].s2.fams[i].faname;
+              data.s2.famsn[i].moname = docSaved[0].s2.fams[i].moname;
+              data.s2.famsn[i].pbirth = docSaved[0].s2.fams[i].pdbirth;
+              data.s2.famsn[i].dbirth = docSaved[0].s2.fams[i].pdbirth;
+              data.s2.famsn[i].sect = docSaved[0].s2.fams[i].sect;
+              data.s2.famsn[i].stat = docSaved[0].s2.fams[i].stat;
+              data.s2.famsn[i].s = docSaved[0].s2.fams[i].s;
+              data.s2.famsn[i].regdet = "";
+              data.s2.famsn[i].remark = docSaved[0].s2.fams[i].remark;
+              }
+            }
+          }
+
             const file = fs.readFileSync(htmlpath, "utf-8");
             var fixture_template = ejs.compile(file, { client: true });
-            const html = fixture_template({ obj: docSaved[0], url: url });
+            const html = fixture_template({ obj: data, url: url });
     
-            // Document Paid Form
-            // Need to load paid template with data from stored on mango
-            // Need to put paid client id on data json
-    
-            // const paidfile = fs.readFileSync(paidpath, 'utf-8')
-            // var paid_template = ejs.compile(paidfile, { client: true })
-            // const paid = paid_template({ obj: data })
-    
-            // console.log(html)
-            //res.send({ html: html , paid: paid})
+
             res.send({ html: html });
             return;
           }
@@ -7423,21 +7486,9 @@ function isUndefinedOrNull(str) {
   return str == null;
 }
 
-function isNullOrDoesNotHaveCertainKeyWordOrEmptyOrSpaces(str,key){
-  if(isEmptyOrSpaces(str))
-  {
-    return "";
-  }
-}
 
 function isEmptyOrSpaces(str) {
   return str === null || str.match(/^ *$/) !== null;
 }
-
-function buildDocxHistory(str) {}
-
-const sleep = (milliseconds) => {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
-};
 
 module.exports = router;

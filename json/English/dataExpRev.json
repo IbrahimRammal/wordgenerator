@@ -2,8 +2,8 @@
   "link": "#",
   "linkGeneralIncome": "",
   "linkDetailIncome": "",
-  "fetchTime": "2024-03-08T08:23:43.655Z",
-  "transactionNumber": 44,
+  "fetchTime": "2024-04-26T10:42:34.605Z",
+  "transactionNumber": 95,
   "name": "Walaa Haydar",
   "email": "walaa.haydar@net.usj.edu.lb",
   "revenueJson": {
@@ -11,8 +11,8 @@
     "monthly": [
       "1099.95",
       "212.72",
-      "538.22",
-      "0.00",
+      "2287.74",
+      "2957.88",
       "0.00",
       "0.00",
       "0.00",
@@ -22,12 +22,12 @@
       "0.00",
       "0.00"
     ],
-    "currentMonth": "538.22",
+    "currentMonth": "2957.88",
     "monthlyRevenueSwornInvoice": [
       "258.00",
       "56.00",
-      "48.00",
-      "0.00",
+      "458.00",
+      "210.00",
       "0.00",
       "0.00",
       "0.00",
@@ -40,8 +40,8 @@
     "monthlyRevenueProntoInvoice": [
       "286.93",
       "156.72",
-      "0.00",
-      "0.00",
+      "1227.52",
+      "1043.85",
       "0.00",
       "0.00",
       "0.00",
@@ -54,8 +54,8 @@
     "monthlyRevenueUnofficialInvoice": [
       "555.02",
       "0.00",
-      "490.22",
-      "0.00",
+      "602.22",
+      "1704.03",
       "0.00",
       "0.00",
       "0.00",
@@ -65,18 +65,18 @@
       "0.00",
       "0.00"
     ],
-    "swornRevenue": "362.00",
-    "prontoRevenue": "443.65",
-    "unofficialRevenue": "1045.24",
-    "annual": "1850.89"
+    "swornRevenue": "982.00",
+    "prontoRevenue": "2715.02",
+    "unofficialRevenue": "2861.27",
+    "annual": "6558.29"
   },
   "expenseJson": {
     "invoiceType": "expense",
     "monthly": [
       "161.04",
       "1746.83",
-      "54.50",
-      "0.00",
+      "1223.03",
+      "1624.62",
       "0.00",
       "0.00",
       "0.00",
@@ -86,12 +86,12 @@
       "0.00",
       "0.00"
     ],
-    "currentMonth": "54.50",
+    "currentMonth": "1624.62",
     "monthlyExpensesUnofficialPurchaseInvoice": [
       "161.04",
       "198.83",
-      "54.50",
-      "0.00",
+      "388.88",
+      "453.69",
       "0.00",
       "0.00",
       "0.00",
@@ -104,8 +104,8 @@
     "monthlyExpensesProntoPurchaseInvoice": [
       "0.00",
       "1548.00",
-      "0.00",
-      "0.00",
+      "834.15",
+      "1170.93",
       "0.00",
       "0.00",
       "0.00",
@@ -115,20 +115,20 @@
       "0.00",
       "0.00"
     ],
-    "unofficialExpense": "414.37",
-    "prontoExpense": "1548.00",
-    "annual": "1962.37"
+    "unofficialExpense": "1202.44",
+    "prontoExpense": "3553.08",
+    "annual": "4755.52"
   },
-  "annualRevenue": "1850.89",
-  "annualExpenses": "1962.37",
+  "annualRevenue": "6558.29",
+  "annualExpenses": "4755.52",
   "revenuePercentage": {
-    "swornInvoice": "19.56",
-    "prontoInvoice": "23.97",
-    "unofficialInvoice": "56.47"
+    "swornInvoice": "14.97",
+    "prontoInvoice": "41.40",
+    "unofficialInvoice": "43.63"
   },
   "expensePercentage": {
     "swornInvoice": 0,
-    "prontoInvoice": "78.88",
-    "unofficialInvoice": "21.12"
+    "prontoInvoice": "74.71",
+    "unofficialInvoice": "25.29"
   }
 }
